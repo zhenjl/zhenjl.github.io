@@ -3,7 +3,7 @@
   <channel>
       <title>Golang on Zen 3.1 </title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://localhost:1313/categories/golang/index.xml/</link>
+    <link>http://zhen.org/categories/golang/index.xml/</link>
     <language>en-us</language>
     <author>Jian Zhen</author>
     <copyright>Jian Zhen</copyright>
@@ -11,10 +11,10 @@
     
     <item>
       <title>Graceful Shutdown of Go net.Listeners</title>
-      <link>http://localhost:1313/blog/graceful-shutdown-of-go-net-dot-listeners/</link>
+      <link>http://zhen.org/blog/graceful-shutdown-of-go-net-dot-listeners/</link>
       <pubDate>Thu, 12 Dec 2013 23:33:22 PST</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://localhost:1313/blog/graceful-shutdown-of-go-net-dot-listeners/</guid>
+      <guid>http://zhen.org/blog/graceful-shutdown-of-go-net-dot-listeners/</guid>
       <description>&lt;p&gt;Comments/Feedbacks at &lt;a href=&#34;https://news.ycombinator.com/item?id=6899568&#34;&gt;Hacker News&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1ss929/graceful_shutdown_of_go_netlisteners/&#34;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;The past few evenings I&amp;rsquo;ve been working on a Go program that listens on a TCP socket, accepts new connections, processes some data and then return some data to the client. This is actually fairly simple in Go. The &lt;a href=&#34;http://golang.org/pkg/net&#34;&gt;top&lt;/a&gt; of the &lt;em&gt;net&lt;/em&gt; package has some fairly simple examples of how to do that. Another example can be found about &lt;a href=&#34;http://golang.org/pkg/net/#example_Listener&#34;&gt;mid-section&lt;/a&gt; of the page. You can also find a TON of examples online that shows you how to build a simple TCP listener.&lt;/p&gt;
@@ -41,10 +41,10 @@
     
     <item>
       <title>Ring Buffer - Variable-Length, Low-Latency, Lock-Free, Disruptor-Style</title>
-      <link>http://localhost:1313/blog/ring-buffer-variable-length-low-latency-disruptor-style/</link>
+      <link>http://zhen.org/blog/ring-buffer-variable-length-low-latency-disruptor-style/</link>
       <pubDate>Sat, 30 Nov 2013 23:20:22 PST</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://localhost:1313/blog/ring-buffer-variable-length-low-latency-disruptor-style/</guid>
+      <guid>http://zhen.org/blog/ring-buffer-variable-length-low-latency-disruptor-style/</guid>
       <description>
 
 &lt;p&gt;Comments/feedbacks on &lt;a href=&#34;https://news.ycombinator.com/item?id=6831293&#34;&gt;Hacker News&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1rvvb6/ring_buffer_variablelength_lowlatency_lockfree/&#34;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
@@ -263,10 +263,10 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
     
     <item>
       <title>Go vs Java: Decoding Billions of Integers Per Second</title>
-      <link>http://localhost:1313/blog/go-vs-java-decoding-billions-of-integers-per-second/</link>
+      <link>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</link>
       <pubDate>Thu, 14 Nov 2013 19:40:22 PST</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://localhost:1313/blog/go-vs-java-decoding-billions-of-integers-per-second/</guid>
+      <guid>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</guid>
       <description>
 
 &lt;p&gt;Comments/feedbacks on &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1qquqz/go_vs_java_decoding_billions_of_integers_per/&#34;&gt;reddit&lt;/a&gt;, &lt;a href=&#34;https://news.ycombinator.com/item?id=6743821&#34;&gt;hacker news&lt;/a&gt;&lt;/p&gt;
@@ -569,10 +569,10 @@ gcc version 4.8.2 (GCC)
     
     <item>
       <title>Improving Cityhash Performance by Go Profiling</title>
-      <link>http://localhost:1313/blog/improving-cityhash-performance-by-go-profiling/</link>
+      <link>http://zhen.org/blog/improving-cityhash-performance-by-go-profiling/</link>
       <pubDate>Sun, 10 Nov 2013 15:04:22 PST</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://localhost:1313/blog/improving-cityhash-performance-by-go-profiling/</guid>
+      <guid>http://zhen.org/blog/improving-cityhash-performance-by-go-profiling/</guid>
       <description>
 
 &lt;p&gt;Comments/Feedback on &lt;a href=&#34;https://news.ycombinator.com/item?id=6710115&#34;&gt;Hacker News&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1qcygc/improving_cityhash_performance_by_go_profiling/&#34;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
@@ -679,10 +679,10 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
     
     <item>
       <title>Benchmarking Integer Compression in Go</title>
-      <link>http://localhost:1313/blog/benchmarking-integer-compression-in-go/</link>
+      <link>http://zhen.org/blog/benchmarking-integer-compression-in-go/</link>
       <pubDate>Fri, 11 Oct 2013 22:39:22 -0800</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://localhost:1313/blog/benchmarking-integer-compression-in-go/</guid>
+      <guid>http://zhen.org/blog/benchmarking-integer-compression-in-go/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6537688&#34;&gt;comments/feedback&lt;/a&gt;&lt;/p&gt;
@@ -839,10 +839,10 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
     
     <item>
       <title>Bitmap Compression using EWAH in Go</title>
-      <link>http://localhost:1313/blog/bitmap-compression-using-ewah-in-go/</link>
+      <link>http://zhen.org/blog/bitmap-compression-using-ewah-in-go/</link>
       <pubDate>Sun, 15 Sep 2013 23:08:22 -0800</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://localhost:1313/blog/bitmap-compression-using-ewah-in-go/</guid>
+      <guid>http://zhen.org/blog/bitmap-compression-using-ewah-in-go/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6392197&#34;&gt;comments/suggestions&lt;/a&gt;&lt;/p&gt;
@@ -1023,10 +1023,10 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
     
     <item>
       <title>Benchmarking Bloom Filters and Hash Functions in Go</title>
-      <link>http://localhost:1313/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</link>
+      <link>http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</link>
       <pubDate>Wed, 04 Sep 2013 00:23:22 -0800</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://localhost:1313/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</guid>
+      <guid>http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6329616&#34;&gt;discussion/comments&lt;/a&gt;&lt;/p&gt;
@@ -1172,10 +1172,10 @@ end
     
     <item>
       <title>Go Skiplist</title>
-      <link>http://localhost:1313/blog/go-skiplist/</link>
+      <link>http://zhen.org/blog/go-skiplist/</link>
       <pubDate>Mon, 02 Sep 2013 13:09:22 -0800</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://localhost:1313/blog/go-skiplist/</guid>
+      <guid>http://zhen.org/blog/go-skiplist/</guid>
       <description>
 
 &lt;p&gt;Most of my nights and weekends in the past week have been immersed in my &lt;a href=&#34;https://github.com/reducedb/skiplist&#34;&gt;new skiplist library&lt;/a&gt;, even sacrificing some family time (yikes, not good!). It&amp;rsquo;s one of those projects I picked up in order to learn &lt;a href=&#34;http://golang.org&#34;&gt;Go&lt;/a&gt;.&lt;/p&gt;
@@ -1267,10 +1267,10 @@ rIter, err = list.DeleteRange(1, 2)
     
     <item>
       <title>Testing MsgPack and BSON</title>
-      <link>http://localhost:1313/blog/testing-msgpack-and-bson/</link>
+      <link>http://zhen.org/blog/testing-msgpack-and-bson/</link>
       <pubDate>Wed, 28 Aug 2013 14:20:22 -0800</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://localhost:1313/blog/testing-msgpack-and-bson/</guid>
+      <guid>http://zhen.org/blog/testing-msgpack-and-bson/</guid>
       <description>&lt;p&gt;In one of the projects I am working on we are trying to select a message encoding scheme. The use case is pretty simple. We have a server that accepts data records from different clients, and our goal is support 100K messages per second per node. Our selection criteria are pretty simple as well:&lt;/p&gt;
 
 &lt;ul&gt;

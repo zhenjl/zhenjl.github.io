@@ -3,7 +3,7 @@
   <channel>
       <title>Compression on Zen 3.1 </title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://localhost:1313/categories/compression/index.xml/</link>
+    <link>http://zhen.org/categories/compression/index.xml/</link>
     <language>en-us</language>
     <author>Jian Zhen</author>
     <copyright>Jian Zhen</copyright>
@@ -11,10 +11,10 @@
     
     <item>
       <title>Go vs Java: Decoding Billions of Integers Per Second</title>
-      <link>http://localhost:1313/blog/go-vs-java-decoding-billions-of-integers-per-second/</link>
+      <link>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</link>
       <pubDate>Thu, 14 Nov 2013 19:40:22 PST</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://localhost:1313/blog/go-vs-java-decoding-billions-of-integers-per-second/</guid>
+      <guid>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</guid>
       <description>
 
 &lt;p&gt;Comments/feedbacks on &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1qquqz/go_vs_java_decoding_billions_of_integers_per/&#34;&gt;reddit&lt;/a&gt;, &lt;a href=&#34;https://news.ycombinator.com/item?id=6743821&#34;&gt;hacker news&lt;/a&gt;&lt;/p&gt;
@@ -317,10 +317,10 @@ gcc version 4.8.2 (GCC)
     
     <item>
       <title>Benchmarking Integer Compression in Go</title>
-      <link>http://localhost:1313/blog/benchmarking-integer-compression-in-go/</link>
+      <link>http://zhen.org/blog/benchmarking-integer-compression-in-go/</link>
       <pubDate>Fri, 11 Oct 2013 22:39:22 -0800</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://localhost:1313/blog/benchmarking-integer-compression-in-go/</guid>
+      <guid>http://zhen.org/blog/benchmarking-integer-compression-in-go/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6537688&#34;&gt;comments/feedback&lt;/a&gt;&lt;/p&gt;
