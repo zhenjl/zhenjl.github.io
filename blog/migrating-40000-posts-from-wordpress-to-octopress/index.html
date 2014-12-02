@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Migrating 40,000 Posts from Wordpress to Octopress &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org/blog">Posts</a></li>
+      
+    </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2014 Jian Zhen. All rights reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Migrating 40,000 Posts from Wordpress to Octopress</h1>
+  <span class="post-date">Sun, Aug 18, 2013</span>
+      
+
+<p>I just spent the weekend migrating several of my blogs, including this one (<a href="http://zhen.org">zhen.org</a>), <a href="http://cloudfeed.net">Cloudfeed</a>, <a href="http://mobileaware.net">Mobileaware</a>, <a href="http://dataaware.net">Dataaware</a>, and <a href="http://news.trustpath.com">TrustPath News</a>, from <a href="http://wordpress.org">wordpress</a> to <a href="http://octopress.org">octopress</a>.</p>
+
+<p>I have one more, <a href="http://cloudaware.net">Cloudaware</a>, that I need to migrate but that one will take a bit of work. I&rsquo;ll explain why a bit later.</p>
+
+<h3 id="toc_0">tl;dr</h3>
+
+<h4 id="toc_1">The Bad</h4>
+
+<ul>
+<li>If you are not familiar with git, don&rsquo;t use Octopress. I almost want to say if you don&rsquo;t use git on other development projects on a fairly regular basis, don&rsquo;t use Octopress because you will run into issues that you may not be able to resolve.</li>
+<li>If you have a very large site and need fast updates, don&rsquo;t use Octopress. Large sites with 1000&rsquo;s of posts will take a long time to generate. There&rsquo;s no incremental update currently. Everytime you update a post or create a new post you need to re-generate the whole site.</li>
+<li>If you are not comfortable with the command line (terminal windows), don&rsquo;t use Octopress. Most of everything you do with Octopress is in the terminal so be prepare to type. :)</li>
+<li>If your site uses a lot of wordpress plugins, you may not want to use Octopress. Octopress is still new so it may not have the plugins you are using. Do an inventory prior to determine feasibility.</li>
+<li>If your site uses a special theme you may want to investigate the effort of migrating the theme. There&rsquo;s not a large selection like Wordpress. If you want your own theme then prepare to get your hands dirty or pay someone to do it. Good thing is octopress themes are much simpler than wordpress.</li>
+</ul>
+
+<h4 id="toc_2">The Good</h4>
+
+<ul>
+<li>If you are a developer and have a blog with mostly static content, Octopress is for you.</li>
+<li>If you want a high performance static content site, Octopress is for you.</li>
+<li>If you free blog hosting with a reputable service (e.g., github), Octopress is for you.</li>
+<li>If you don&rsquo;t want to keep updating wordpress versions, Octopress is for you.</li>
+</ul>
+
+<h3 id="toc_3">The Reasons</h3>
+
+<p>So what caused me to make the jump all of a sudden?</p>
+
+<h4 id="toc_4">#1: I am lazy but I need better security</h4>
+
+<p>Due to family, work, and side project reasons, I&rsquo;ve been not been paying much attention to these blogs. Some of them are automated but even the automation scripts are failing as I have not kept up with the APIs. This blog especially has been dormant since June 2009. Well, until now at least. This is my first blog post using Octopress.</p>
+
+<p>Not only have I not kept the blogs fresh, I have also not kept Wordpress versions up to date. I&rsquo;ve upgraded wordpress a couple of times for these blogs over the years. The last update was April 6th, 2012 and the wordpress version was 3.3.1. The latest I checked is 3.6.</p>
+
+<p>You are probably wondering why I haven&rsquo;t been hacked given the <a href="http://www.cvedetails.com/vulnerability-list/vendor_id-2337/product_id-4096/">long list of Wordpress vulnerabilities</a>. Well, the fact is I have been hacked once before due to a wordpress xmlrpc way back when. I lost a bunch of files that time. I vowed to keep wordpress updated but as you can tell I have not been successful. So I consider myself lucky.</p>
+
+<p>So a static site hosted by someone else completely seems like the perfect approach.</p>
+
+<h4 id="toc_5">#2 and #3: I am cheap but I want flexibility and performance</h4>
+
+<p>For the past several years I&rsquo;ve been keeping a VPS just to run my blogs. I like to use my own domains and I don&rsquo;t feel like paying wordpress.com for mapping a custom domain and customizing themes. Not to mention you can&rsquo;t even customize the themes all that much. On top of that, I want to server my own ads, not pay wordpress.com NOT to display ads on my blog.</p>
+
+<p>I pay $10/month for my VPS, and I can host any number of blogs I want on it. A single blog on wordpress.com can cost me more than $100 (custom domain, premium theme, custom design, no ads). For the 6 blogs I would be paying $700/year. And every blog I add will cost me another $100+.</p>
+
+<p>Granted, the little VPS I have is barely sufficient to handle the load but it has been ok so far. However, I could really use a bit more horsepower.</p>
+
+<p>So the static site will give me the performance I need and I want the ability to customize the heck out of the site (not that I do it all that much, but the perception of flexibility is still good.)</p>
+
+<h3 id="toc_6">The Process</h3>
+
+<p>Another name for this post could be: Migrate From Wordpress to Octopress in 9 Not-So-Simple Steps</p>
+
+<ol>
+<li>Clone Octopress</li>
+<li>Export wordpress posts</li>
+<li>Convert using Exitwp</li>
+<li>Set up the Octopress Theme</li>
+<li>Generate the Static Site</li>
+<li>Preview the Site</li>
+<li>Prepare for Publishing</li>
+<li>Publish the Site</li>
+<li>Commit your source</li>
+</ol>
+
+<p>I&rsquo;ve been seeing experimenting hosting static sites with Github gh-pages recently, see <a href="http://topclouds.org">Top Clouds</a>, so I thought that&rsquo;s a good way to host sites that don&rsquo;t change a whole lot. I&rsquo;ve also been seeing quite a few mentions of Octopress recently so I&rsquo;ve been tempted to check it out.</p>
+
+<p>So with these reasons/excuses, I decided to take the plunge. I checked out many of the recent migrant blogs, including</p>
+
+<ul>
+<li><a href="http://jason.pureconcepts.net/2013/01/migrating-wordpress-octopress/">Jason McCreary</a></li>
+<li><a href="http://joelhooks.com/blog/2012/07/25/fresh-start-migrating-wordpress-octopress/">Joel Hooks</a></li>
+<li><a href="http://decodize.com/html/moving-from-wordpress-to-octopress/">Praveen Vijayan</a></li>
+<li><a href="http://blog.baugues.com/moving-from-wordpress-to-octopress">Greg Baugues</a></li>
+<li><a href="http://gotofritz.net/blog/weekly-challenge/migrating-wordpress-blogs-to-octopress/">Fabrizio (Fritz) Stelluto</a></li>
+<li><a href="http://mattgemmell.com/2011/09/12/blogging-with-octopress/">Matt Gemmell</a></li>
+</ul>
+
+<p>These are just a few that I read. There&rsquo;s <a href="https://www.google.com/search?q=migrate+from+wordpress+to+octopress&amp;oq=migrate+from+wordpress+to+octo">a ton more</a> you can browse.</p>
+
+<p>Many of these blogs explained how they migrated and were tremendously helpful. I can&rsquo;t thank these folks enough for sharing their experiences.</p>
+
+<h3 id="toc_7">The Details</h3>
+
+<p>For each of the blogs I migrated, I did the following.</p>
+
+<h4 id="toc_8">1. Clone Octopress</h4>
+
+<p>You need to do this once for each blog, so replace cloudfeed with the blog name.</p>
+
+<p><code>git clone https://github.com/imathis/octopress cloudfeed</code></p>
+
+<p>This will make a copy of octopress in a directory called &ldquo;cloudfeed&rdquo; for you. From there, you can run these git commands to save the copy in your own git repo.</p>
+
+<pre><code>git config remote.origin.url https://git@github.com/zhenjl/cloudfeed
+git push origin master
+</code></pre>
+
+<p>Github sets the first branch you push to in a new repo the default branch. So make sure you do this step before you publish to, say, the gh-pages branch.</p>
+
+<p>I would highly recommend anyone starting with Octopress to do clone instead of fork on Github. If you fork it on Github, you will end up getting all the branches as well. You really don&rsquo;t need the extra branches. Plus, it will confuse the heck out of you if you didn&rsquo;t realize you got all the branches and you want to use the gh-pages branch to host your blog.</p>
+
+<p>But if for whatever reason you did fork octopress, you can run these commands after you <code>git clone</code> your fork</p>
+
+<pre><code>git push origin :2.5
+git push origin :2.5-simplify-rakefile
+git push origin :3.0
+git push origin :commander
+git push origin :gh-pages
+git push origin :guard
+git push origin :linklog
+git push origin :migrator
+git push origin :refactor_with_tests
+git push origin :rubygemcli
+git push origin :site
+git push origin :site-2.1
+</code></pre>
+
+<p>These commands will remove all the extra branches from your fork.</p>
+
+<h4 id="toc_9">2. Export wordpress posts</h4>
+
+<p>Do this once for each blog you are converting.</p>
+
+<p>This step is pretty simple. Just go to wordpress blog admin -&gt; Tools -&gt; Export, and you are golden.</p>
+
+<p>However, make sure you run <code>xmllint</code> on the exported XML and fix any issue you see. However, watch out for any malformed HTML inside the CDATA section. Not exactly sure how to catch that but just remember exitwp requies parsing of the HTML to convert into markdown.</p>
+
+<h4 id="toc_10">3. Convert using Exitwp</h4>
+
+<p>You only need to do this step once.</p>
+
+<p><code>git clone https://github.com/thomasf/exitwp</code></p>
+
+<p><a href="https://github.com/thomasf/exitwp">Exitwp</a> is</p>
+
+<blockquote>
+<p>a tool for making migration from one or more wordpress blogs to the jekyll blog engine as easy as possible.</p>
+
+<p>By default it will try to convert as much information as possible from wordpress but can also be told to filter the amount of data it converts.</p>
+</blockquote>
+
+<p>There are some dependencies, so make sure you read through the README.rst before moving forward.</p>
+
+<p>Exitwp works by first parsing the <strong>WHOLE</strong> exported wordpress xml, then write out all the markdown files. The problem with that is if you have a very large site (<a href="http://dataaware.net">Dataaware</a> has over 12K entries, and <a href="http://cloudaware.net">Cloudaware</a> has over 25K posts), it will take a ton of memory. Not to mention you have no feedback on what&rsquo;s going on until the end.</p>
+
+<p>I had one blog post that had some malformed HTML inside the CDATA section, and that somehow caused the parser to spin forever (still not sure what the deal is). I let exitwp run over night not knowing what&rsquo;s going on, but finally I updated exitwp to write out jekyll files one at a time instead of all at the end. I also outputed the blog title so I know which blog is getting stuck.</p>
+
+<p>The following diff (sorry not patch format but that was too long) shows the differences.</p>
+
+<pre><code>95,96d94
+&lt;     header = parse_header()
+&lt;
+164,165d161
+&lt;             write_jekyll({'header': header, 'items': export_items}, target_format)
+&lt;             export_items = []
+366a362
+&gt;     write_jekyll(data, target_format)
+</code></pre>
+
+<p>In any case, exitwp is an awesome, and required, tool for migrating from wordpress to octopress. Learn to love it.</p>
+
+<p>Put the final XML, from step #2, into wordpress-xml directory under exitwp, and you can run <code>python exitwp.py</code> to convert it.</p>
+
+<p>One of the blogs above mentioned that you may need to fix up the image tags manually, but I didn&rsquo;t check the result as I didn&rsquo;t have many images in my blogs.</p>
+
+<p>After exitwp finishes, you can copy the build/jekyll/<name>/_posts to the source directory under octopress.</p>
+
+<p><code>cp -r build/jekyll/cloudfeed/_posts ../cloudfeed/source/_posts</code></p>
+
+<h4 id="toc_11">4. Set up the Octopress Theme</h4>
+
+<p>You need to do this for each blog you are migrating.</p>
+
+<p>There are a list of themes on <a href="http://opthemes.com">Opthemes</a> you can download for Octopress. Most of them are pretty simple. The ones I used are <a href="https://github.com/elisehein/Pageturner">Pageturner</a> and <a href="https://github.com/shashankmehta/greyshade">Greyshade</a> with minor modifications.</p>
+
+<p>One caveat to remember, after you <code>git clone</code> the theme into <code>.themes</code> directory, is you need to remove the .git directory for that theme, or else you won&rsquo;t be able to save a copy to your own repo. So <code>rm -rf .themes/&lt;theme_name&gt;/.git</code>.</p>
+
+<p>Another caveat to remember is some of the themes have missing files, most likely they expect the Octopress classis theme to be installed. For example, there&rsquo;s a bunch of files missing from Greyshade if you haven&rsquo;t previously installed classic. So the best way to install the theme is</p>
+
+<pre><code>rake install
+rake &quot;install[greyshade]&quot;
+</code></pre>
+
+<p>Personally I don&rsquo;t really like it as it adds unncessary files to the source and sass directories, so I just copied the necessary files over to the new theme. You may not want to go through that level of pain.</p>
+
+<h4 id="toc_12">5. Generate the Static Site</h4>
+
+<p>You need to do this for each blog you are migrating, and each time you update the site.</p>
+
+<p><code>rake generate</code></p>
+
+<p>This command will generate the site for you. It is an easy step but could take forever. For <a href="http://dataaware.net">Dataaware</a> I have over 12K posts. It takes <strong>1 hour</strong> to generate the site on my Macbook Air (1.8 GHz i5, 4GB memory, SSD). For <a href="http://cloudfeed.net">Cloudfeed</a> with 5700+ posts, it takes 20-25 minutes. For <a href="http://cloudaware.net">Cloudaware</a> with over 25K posts, I would expect the generation process to take well over 2 hours.</p>
+
+<p>Hopefully at some point jekyll can do incremental generation coz this really sucks (yes it&rsquo;s a technical word.)</p>
+
+<h4 id="toc_13">6. Preview the Site</h4>
+
+<p>To preview the site before publishing, you can run <code>rake preview</code>. It will start a web server on port 4000, so you can go to &ldquo;<a href="http://localhost:4000&quot;">http://localhost:4000&quot;</a> to see what your site looks like before publishing. It&rsquo;s great for reviewing new posts.</p>
+
+<h4 id="toc_14">7. Prepare for Publishing</h4>
+
+<p>If you are publishing to github, you need to run the following command to setup the github repo. Read the <a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a> page very carefully and follow the instructions there.</p>
+
+<p>One thing to note is that octopress will do a git pull on the repo at the beginning of the deploy process. Most of the time this isn&rsquo;t a problem because the git repo in the _deploy directory aren&rsquo;t tracking any remotes. However if you had checked out the branch (probably because you are trying to fix some git push issues), AND you have a very large site, the git pull will take a long time to finish.</p>
+
+<p>In any case, run the following command <code>rake setup_github_pages</code> to set the git repo to publish to.</p>
+
+<h4 id="toc_15">8. Publish the Site</h4>
+
+<p><code>rake deploy</code></p>
+
+<p>Octopress will copy all the files to the _deploy directory and push the site to the repo you setup in step #7.</p>
+
+<p>The problem is sometimes you will run into git merge problems and octopress will complain</p>
+
+<pre><code>## Pushing generated \_deploy website
+To ssh://git@github.com/zhenjl/trustpath.news.web
+! [rejected]        gh-pages -&gt; gh-pages (non-fast-forward)
+error: failed to push some refs to 'ssh://git@github.com/zhenjl/trustpath.news.web'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
+hint: before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+</code></pre>
+
+<p>To fix this, I had to</p>
+
+<pre><code>cd _deploy
+git pull origin gh-pages
+git commit -a -m &quot;merging&quot;
+</code></pre>
+
+<p>This will at least get git to settle down. Then I do a <code>rake deploy</code> again which will overwite all the files and finally it will push successfully.</p>
+
+<p>You can also combine this and step #5 (generate) using <code>rake gen_deploy</code>.</p>
+
+<h4 id="toc_16">9. Commit your source</h4>
+
+<p>By now you have reviewed your spanking new website and are probably pretty happy you have gotten this far. But don&rsquo;t forget the last thing which is to save your site&rsquo;s source.</p>
+
+<p>In step #1 you had setup the remote origin for this octopress clone. You should now add all the files you have created and commit them to github.</p>
+
+<pre><code>git add .
+git commit -a -m &quot;first commit after conversion&quot;
+git push origin master
+</code></pre>
+
+<p>Oh one last thing, if you use vim, be sure to add these to .gitignore.</p>
+
+<pre><code>*.swp
+*.un~
+</code></pre>
+
+<hr />
+
+<p>So finally after all this we have a working site. I can tell immediately that pages are served up much faster (sorry no data/numbers). I am sure it has to do with both 1) the site is all static pages, and 2) it&rsquo;s served by github rather than the little VPS.</p>
+
+<p>I am not quite ready to delete all the wordpress setups yet as the Octopress site generation takes hours. I will have to see if this painful step will become a deal breaker. Will keep you all posted on that.</p>
+
+<hr />
+
+<p><a href="https://news.ycombinator.com/item?id=6236080">Comments</a></p>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+      
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>

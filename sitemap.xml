@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://zhen.org/</loc>
+    <lastmod>2013-12-12T23:33:22-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://zhen.org/blog/graceful-shutdown-of-go-net-dot-listeners/</loc>
+    <lastmod>2013-12-12T23:33:22-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://zhen.org/blog/ring-buffer-variable-length-low-latency-disruptor-style/</loc>
+    <lastmod>2013-11-30T23:20:22-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</loc>
+    <lastmod>2013-11-14T19:40:22-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://zhen.org/blog/improving-cityhash-performance-by-go-profiling/</loc>
+    <lastmod>2013-11-10T15:04:22-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://zhen.org/blog/benchmarking-integer-compression-in-go/</loc>
+    <lastmod>2013-10-11T22:39:22-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://zhen.org/blog/bitmap-compression-using-ewah-in-go/</loc>
+    <lastmod>2013-09-15T23:08:22-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</loc>
+    <lastmod>2013-09-04T00:23:22-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://zhen.org/blog/go-skiplist/</loc>
+    <lastmod>2013-09-02T13:09:22-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://zhen.org/blog/testing-msgpack-and-bson/</loc>
+    <lastmod>2013-08-28T14:20:22-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://zhen.org/blog/migrating-40000-posts-from-wordpress-to-octopress/</loc>
+    <lastmod>2013-08-18T21:22:22-08:00</lastmod>
+  </url>
+  
+</urlset>

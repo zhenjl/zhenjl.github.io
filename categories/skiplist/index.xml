@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Skiplist on Zen 3.1 </title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://zhen.org/categories/skiplist/index.xml/</link>
+    <language>en-us</language>
+    <author>Jian Zhen</author>
+    <copyright>Jian Zhen</copyright>
+    <updated>Mon, 02 Sep 2013 13:09:22 -0800</updated>
+    
+    <item>
+      <title>Go Skiplist</title>
+      <link>http://zhen.org/blog/go-skiplist/</link>
+      <pubDate>Mon, 02 Sep 2013 13:09:22 -0800</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/go-skiplist/</guid>
+      <description>
+
+&lt;p&gt;Most of my nights and weekends in the past week have been immersed in my &lt;a href=&#34;https://github.com/reducedb/skiplist&#34;&gt;new skiplist library&lt;/a&gt;, even sacrificing some family time (yikes, not good!). It&amp;rsquo;s one of those projects I picked up in order to learn &lt;a href=&#34;http://golang.org&#34;&gt;Go&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Wikipedia defines a skip list as&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A skip list is a data structure for storing a sorted list of items using a hierarchy of linked lists that connect increasingly sparse subsequences of the items. These auxiliary lists allow item lookup with efficiency comparable to balanced binary search trees (that is, with number of probes proportional to log n instead of n).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;You can imagine using a skiplist data structure whenver you want to use a binary search tree.&lt;/p&gt;
+
+&lt;p&gt;This skiplist implementation also uses search fingers, based on William Pugh&amp;rsquo;s work, &lt;a href=&#34;http://drum.lib.umd.edu/bitstream/1903/544/2/CS-TR-2286.1.pdf&#34;&gt;A Skiplist Cookbook&lt;/a&gt;. So the efficiency is O(log k) where k is the distance between the last searched/updated item and the current one.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_0&#34;&gt;Performance&lt;/h3&gt;
+
+&lt;p&gt;{% gist e8779545c102c69aae10 %}&lt;/p&gt;
+
+&lt;p&gt;These numbers are from my Macbook Air 10.8.4 1.8GHz Intel Core i5 4GB 1600MHz DDR3.&lt;/p&gt;
+
+&lt;p&gt;Notice the fastest time is BenchmarkInsertTimeDescending. This is because the keys for that test is generated using time.Now().UnixNano(), which is always ascending. And because the sort order of the skiplist is descending, so the new item is ALWAYS inserted at the front of the list. This happens to have the best case of O(1).&lt;/p&gt;
+
+&lt;p&gt;The next best time is BenchmarkInsertTimeAscending. This is still pretty good, but because the sort order is ascending, so the new items are ALWAYS inserted at the end. This required the skiplist to walk all the levels so it took a bit longer.&lt;/p&gt;
+
+&lt;p&gt;The other benchmarks should have the average O(log k) efficiency.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;Example (Int)&lt;/h3&gt;
+
+&lt;p&gt;You can see additional examples in the &lt;a href=&#34;https://github.com/reducedb/skiplist/blob/master/skiplist_test.go&#34;&gt;test file&lt;/a&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Creating a new skiplist, using the built-in Less Than function as the comparator.
+// There are also two other built in comparators: BuiltinGreaterThan, BuiltinEqual
+list := New(skiplist.BuiltinLessThan)
+
+// Inserting key, value pairs into the skiplist. The skiplist is sorted by key,
+// using the comparator function to determine order
+list.Insert(1,1)
+list.Insert(1,2)
+list.Insert(2,1)
+list.Insert(2,2)
+list.Insert(2,3)
+list.Insert(2,4)
+list.Insert(2,5)
+list.Insert(1,3)
+list.Insert(1,4)
+list.Insert(1,5)
+
+// Selecting items that have the key == 1. Select returns a Skiplist.Iterator
+rIter, err := list.Select(1)
+
+// Iterate through the list of items. Keys and Values are turned as interface{}, so you
+// need to type assert them to your type
+for rIter.Next() {
+	fmt.Println(rIter.Key().(int), rIter.Value().(int))
+}
+
+// Delete the items that match key. An iterator is returned with the list of deleted items.
+rIter, err = list.Delete(1)
+
+// You can also SelectRange or DeleteRange
+rIter, err = list.SelectRange(1, 2)
+
+rIter, err = list.DeleteRange(1, 2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;toc_2&#34;&gt;Bultin Comparators&lt;/h3&gt;
+
+&lt;p&gt;There are three built-in comparator functions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;BuiltinLessThan: if you want to sort the skiplist in ascending order&lt;/li&gt;
+&lt;li&gt;BuiltinGreaterThan: if you want to sort the skiplist in descending order&lt;/li&gt;
+&lt;li&gt;BuiltinEqual: just to compare&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Currently these built-in comparator functions work for all built-in Go types, including:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;string&lt;/li&gt;
+&lt;li&gt;uint64, uint32, uint16, uint8, uint&lt;/li&gt;
+&lt;li&gt;int64, int32, int16, int8, int&lt;/li&gt;
+&lt;li&gt;float32, float64&lt;/li&gt;
+&lt;li&gt;unitptr&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6317109&#34;&gt;discussion/comments&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

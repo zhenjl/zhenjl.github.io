@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Json on Zen 3.1 </title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://zhen.org/categories/json/index.xml/</link>
+    <language>en-us</language>
+    <author>Jian Zhen</author>
+    <copyright>Jian Zhen</copyright>
+    <updated>Wed, 28 Aug 2013 14:20:22 -0800</updated>
+    
+    <item>
+      <title>Testing MsgPack and BSON</title>
+      <link>http://zhen.org/blog/testing-msgpack-and-bson/</link>
+      <pubDate>Wed, 28 Aug 2013 14:20:22 -0800</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/testing-msgpack-and-bson/</guid>
+      <description>&lt;p&gt;In one of the projects I am working on we are trying to select a message encoding scheme. The use case is pretty simple. We have a server that accepts data records from different clients, and our goal is support 100K messages per second per node. Our selection criteria are pretty simple as well:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Compactness: how compact is the post-encoding byte array&lt;/li&gt;
+&lt;li&gt;Performance: how fast is marshalling and unmarshalling of data&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Out of the various encoding schemes out there, including &lt;a href=&#34;http://bsonspec.org&#34;&gt;BSON&lt;/a&gt;, &lt;a href=&#34;http://msgpack.org&#34;&gt;MessagePack&lt;/a&gt;, ProtoBuf, Thrift, etc etc, we decided to test BSON and MessagePack due to their closeness to JSON (we use JSON format quite a bit internally).&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s a very short and simple &lt;a href=&#34;http://golang.org&#34;&gt;Go&lt;/a&gt; program we wrote to test the performance. The libraries I am using are &lt;a href=&#34;http://github.com/ugorji/go/codec&#34;&gt;Go codec&lt;/a&gt; and &lt;a href=&#34;http://labix.org/gobson&#34;&gt;Go BSON library&lt;/a&gt;. (I am sure one can argue that the library used affects the result, which I would agree. However, these are the best libraries for Go AFAICT.)&lt;/p&gt;
+
+&lt;p&gt;The results are as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;For marshalling, BSON is about 15-20% slower than MsgPack.&lt;/li&gt;
+&lt;li&gt;For Unmarshalling, BSON is 300% slower than MsgPack.&lt;/li&gt;
+&lt;li&gt;Size-wise, BSON is about 20% more than MsgPack.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So looks like msgpack is the way to go!&lt;/p&gt;
+
+&lt;p&gt;Special thanks(!) to realrocker in #go-nuts and &lt;a href=&#34;https://github.com/ugorji&#34;&gt;Ugorji&lt;/a&gt; for their help in cleaning up my code and helping me figure out my problems.&lt;/p&gt;
+
+&lt;p&gt;Some notes about the codec library:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;According to Ugorji, decoding without schema in the codec library uses largest type for decoding, i.e. int64, uint64, float64. So if you don&amp;rsquo;t have a schema, the result will not pass reflect.DeepEqual test unless you initially type convert to those types. This is documented &lt;a href=&#34;https://github.com/ugorji/go/commit/7d844bb938783105c48aa9f4a34663f7d4190c32&#34;&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Ugorji also quickly fixed a bug where &amp;ldquo;codec should be able to decode into a byte slice from both msgpack str/raw format or msgpack bin format (new in finalized spec).&amp;rdquo; AWESOME response time!&lt;/li&gt;
+&lt;li&gt;To get string support (encode/decode strings), make sure RawToString is set to true (see below)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6293642&#34;&gt;discussion&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;{% gist 6371433 %}&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

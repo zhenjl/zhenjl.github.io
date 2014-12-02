@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Go Skiplist &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org/blog">Posts</a></li>
+      
+    </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2014 Jian Zhen. All rights reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Go Skiplist</h1>
+  <span class="post-date">Mon, Sep 2, 2013</span>
+      
+
+<p>Most of my nights and weekends in the past week have been immersed in my <a href="https://github.com/reducedb/skiplist">new skiplist library</a>, even sacrificing some family time (yikes, not good!). It&rsquo;s one of those projects I picked up in order to learn <a href="http://golang.org">Go</a>.</p>
+
+<p>Wikipedia defines a skip list as</p>
+
+<blockquote>
+<p>A skip list is a data structure for storing a sorted list of items using a hierarchy of linked lists that connect increasingly sparse subsequences of the items. These auxiliary lists allow item lookup with efficiency comparable to balanced binary search trees (that is, with number of probes proportional to log n instead of n).</p>
+</blockquote>
+
+<p>You can imagine using a skiplist data structure whenver you want to use a binary search tree.</p>
+
+<p>This skiplist implementation also uses search fingers, based on William Pugh&rsquo;s work, <a href="http://drum.lib.umd.edu/bitstream/1903/544/2/CS-TR-2286.1.pdf">A Skiplist Cookbook</a>. So the efficiency is O(log k) where k is the distance between the last searched/updated item and the current one.</p>
+
+<h3 id="toc_0">Performance</h3>
+
+<p>{% gist e8779545c102c69aae10 %}</p>
+
+<p>These numbers are from my Macbook Air 10.8.4 1.8GHz Intel Core i5 4GB 1600MHz DDR3.</p>
+
+<p>Notice the fastest time is BenchmarkInsertTimeDescending. This is because the keys for that test is generated using time.Now().UnixNano(), which is always ascending. And because the sort order of the skiplist is descending, so the new item is ALWAYS inserted at the front of the list. This happens to have the best case of O(1).</p>
+
+<p>The next best time is BenchmarkInsertTimeAscending. This is still pretty good, but because the sort order is ascending, so the new items are ALWAYS inserted at the end. This required the skiplist to walk all the levels so it took a bit longer.</p>
+
+<p>The other benchmarks should have the average O(log k) efficiency.</p>
+
+<h3 id="toc_1">Example (Int)</h3>
+
+<p>You can see additional examples in the <a href="https://github.com/reducedb/skiplist/blob/master/skiplist_test.go">test file</a>.</p>
+
+<pre><code>// Creating a new skiplist, using the built-in Less Than function as the comparator.
+// There are also two other built in comparators: BuiltinGreaterThan, BuiltinEqual
+list := New(skiplist.BuiltinLessThan)
+
+// Inserting key, value pairs into the skiplist. The skiplist is sorted by key,
+// using the comparator function to determine order
+list.Insert(1,1)
+list.Insert(1,2)
+list.Insert(2,1)
+list.Insert(2,2)
+list.Insert(2,3)
+list.Insert(2,4)
+list.Insert(2,5)
+list.Insert(1,3)
+list.Insert(1,4)
+list.Insert(1,5)
+
+// Selecting items that have the key == 1. Select returns a Skiplist.Iterator
+rIter, err := list.Select(1)
+
+// Iterate through the list of items. Keys and Values are turned as interface{}, so you
+// need to type assert them to your type
+for rIter.Next() {
+	fmt.Println(rIter.Key().(int), rIter.Value().(int))
+}
+
+// Delete the items that match key. An iterator is returned with the list of deleted items.
+rIter, err = list.Delete(1)
+
+// You can also SelectRange or DeleteRange
+rIter, err = list.SelectRange(1, 2)
+
+rIter, err = list.DeleteRange(1, 2)
+</code></pre>
+
+<h3 id="toc_2">Bultin Comparators</h3>
+
+<p>There are three built-in comparator functions:</p>
+
+<ul>
+<li>BuiltinLessThan: if you want to sort the skiplist in ascending order</li>
+<li>BuiltinGreaterThan: if you want to sort the skiplist in descending order</li>
+<li>BuiltinEqual: just to compare</li>
+</ul>
+
+<p>Currently these built-in comparator functions work for all built-in Go types, including:</p>
+
+<ul>
+<li>string</li>
+<li>uint64, uint32, uint16, uint8, uint</li>
+<li>int64, int32, int16, int8, int</li>
+<li>float32, float64</li>
+<li>unitptr</li>
+</ul>
+
+<p><a href="https://news.ycombinator.com/item?id=6317109">discussion/comments</a></p>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+      
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>

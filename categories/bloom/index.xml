@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Bloom on Zen 3.1 </title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://zhen.org/categories/bloom/index.xml/</link>
+    <language>en-us</language>
+    <author>Jian Zhen</author>
+    <copyright>Jian Zhen</copyright>
+    <updated>Wed, 04 Sep 2013 00:23:22 -0800</updated>
+    
+    <item>
+      <title>Benchmarking Bloom Filters and Hash Functions in Go</title>
+      <link>http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</link>
+      <pubDate>Wed, 04 Sep 2013 00:23:22 -0800</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6329616&#34;&gt;discussion/comments&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Update: @bradfitz &lt;a href=&#34;https://news.ycombinator.com/item?id=6329616&#34;&gt;commented&lt;/a&gt; that allocating a new slice during each add/check is probably not good for performance. And he is in fact correct. After removing the allocation for each add/check and doing a single slice make during New(), the performance increased by ~27%!! Here&amp;rsquo;s the gist containing the new ns/op results.&lt;/p&gt;
+
+&lt;p&gt;{% gist 6515577 %}&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Another week, another &amp;ldquo;Go Learn&amp;rdquo; project. This time, in project #4, I implemented a &lt;a href=&#34;https://github.com/reducedb/bloom&#34;&gt;Go package&lt;/a&gt; with several bloom filters and &lt;a href=&#34;https://gist.github.com/zhenjl/6433634&#34;&gt;benchmarked&lt;/a&gt; them with various hash functions. (For previous projects, see &lt;a href=&#34;http://zhen.org/blog/go-skiplist/&#34;&gt;#3&lt;/a&gt;, &lt;a href=&#34;http://zhen.org/blog/testing-msgpack-and-bson/&#34;&gt;#2&lt;/a&gt;, &lt;a href=&#34;https://github.com/reducedb/cityhash&#34;&gt;#1&lt;/a&gt;.)&lt;/p&gt;
+
+&lt;p&gt;The goal of this project, for me at least, is to implement a pure Go package that doesn&amp;rsquo;t rely on wrappers to other langagues. There&amp;rsquo;s already &lt;a href=&#34;https://github.com/search?l=Go&amp;amp;q=bloom&amp;amp;ref=cmdform&amp;amp;type=Repositories&#34;&gt;quite a few&lt;/a&gt; bloom filters implemented in Go. But hey, in the name of learning, why not implement another one!&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_0&#34;&gt;Bloom Filters&lt;/h3&gt;
+
+&lt;p&gt;Wikipedia says,&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A Bloom filter, conceived by Burton Howard Bloom in 1970 is a space-efficient probabilistic data structure that is used to test whether an element is a member of a set. False positive matches are possible, but false negatives are not; i.e. a query returns either &amp;ldquo;inside set (may be wrong)&amp;rdquo; or &amp;ldquo;definitely not in set&amp;rdquo;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In my little project, I implemented the following three variants:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Standard - This is the classic bloom filter as described on &lt;a href=&#34;http://en.wikipedia.org/wiki/Bloom_filter&#34;&gt;Wikipedia&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Partitioned - This is a variant described by &lt;a href=&#34;http://www.ieee-infocom.org/2004/Papers/45_3.PDF&#34;&gt;these&lt;/a&gt; &lt;a href=&#34;http://gsd.di.uminho.pt/members/cbm/ps/dbloom.pdf&#34;&gt;papers&lt;/a&gt;. Basically instead of having a single big bit array, partitioned bloom filter breaks it into &lt;em&gt;k&lt;/em&gt; partitions (or slices) s.t. each partition is &lt;em&gt;m/k&lt;/em&gt; size, where &lt;em&gt;m&lt;/em&gt; is the total number of bits, and &lt;em&gt;k&lt;/em&gt; is the number of hashes. Then each hash function is assigned to a single partition.&lt;/li&gt;
+&lt;li&gt;Scalable - This is yet another variant described by &lt;a href=&#34;http://gsd.di.uminho.pt/members/cbm/ps/dbloom.pdf&#34;&gt;here&lt;/a&gt;). The idea is that the standard bloom filter requires that you know &lt;em&gt;m&lt;/em&gt;, or the size of the filter a priori. This is not possible for use cases where data continue to come in without bound. So the Scalable bloom filter utilizes multiple bloom filters, each with incresing k, but decreasing &lt;em&gt;P&lt;/em&gt; where &lt;em&gt;P&lt;/em&gt; is the desired error probability. This bloom filter also introduces &lt;em&gt;r&lt;/em&gt;, which is the error tightening ratio, and it&amp;rsquo;s 0 &amp;lt; r &amp;lt; 1.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are a ton more variants for bloom filters. You can raed all about them in &lt;a href=&#34;https://www.google.com/url?sa=t&amp;amp;rct=j&amp;amp;q=&amp;amp;esrc=s&amp;amp;source=web&amp;amp;cd=5&amp;amp;cad=rja&amp;amp;ved=0CE4QFjAE&amp;amp;url=http%3A%2F%2Fwww.tribler.org%2Ftrac%2Fraw-attachment%2Fwiki%2FJelleRoozenburg%2Fresearch_assignment_jroozenburg_20051108.pdf&amp;amp;ei=JHInUt6oO6GTiQK-44DYDg&amp;amp;usg=AFQjCNG057WVJ2m2QYPuqWzCZ0Vn4JnOug&amp;amp;sig2=NVlad7xGO4S_hFpMU9apGA&amp;amp;bvm=bv.51773540,d.cGE&#34;&gt;this paper&lt;/a&gt; and &lt;a href=&#34;http://www.dca.fee.unicamp.br/~chesteve/pubs/bloom-filter-ieee-survey-preprint.pdf&#34;&gt;this paper&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;Hash Functions&lt;/h3&gt;
+
+&lt;p&gt;To add an element, bloom filters hashes the element using &lt;em&gt;k&lt;/em&gt; hashing functions, identifying &lt;em&gt;k&lt;/em&gt; positions in the bit array, and setting those bits to 1. To check for an element, you essentially do the same thing (hash the element with &lt;em&gt;k&lt;/em&gt; hash functions) and then check to see if all the bits at those positions are set. If all set, then most likely the element is available. If any of them are not set, then the element is definitely not avaiable. So bloom filters can have false positives, but not false negatives.&lt;/p&gt;
+
+&lt;p&gt;However, actually running &lt;em&gt;k&lt;/em&gt; hash functions is quite expensive. So &lt;a href=&#34;http://www.eecs.harvard.edu/~kirsch/pubs/bbbf/rsa.pdf&#34;&gt;Kirsch and Mitzenmacher&lt;/a&gt; determined that by using a single hash function, but using the formula, &lt;em&gt;gi(x) = h1(x) + i * h2(x)&lt;/em&gt;, to calculate &lt;em&gt;k&lt;/em&gt; hash values, the performance is actually similar. So this is what I used here.&lt;/p&gt;
+
+&lt;p&gt;For the values &lt;em&gt;h1&lt;/em&gt; and &lt;em&gt;h2&lt;/em&gt;, we used the first 4 bytes returned from each hash function for &lt;em&gt;h1&lt;/em&gt;, and second 4 bytes for &lt;em&gt;h2&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;The following hash functions are used for this little experiement:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;FNV-64 - There&amp;rsquo;s a built-in Go package for this. So that&amp;rsquo;s what I used.&lt;/li&gt;
+&lt;li&gt;CRC-64 - Again, using the built-in Go package.&lt;/li&gt;
+&lt;li&gt;Murmur3-64 - There&amp;rsquo;s no built-in package so I used &lt;a href=&#34;https://github.com/spaolacci/murmur3&#34;&gt;this one&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;CityHash-64 - Again, no built-in so I am using the one &lt;a href=&#34;https://github.com/reducedb/cityhash&#34;&gt;I implemented&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;MD5 - Using the built-in Go implementation.&lt;/li&gt;
+&lt;li&gt;SHA1 - Using the built-in Go implementation.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As a side note, MD5 and SHA1 return 128 bit hash values. Since we only use the first 64 bits, we throw away the last 64 bits.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_2&#34;&gt;Test Setup&lt;/h3&gt;
+
+&lt;p&gt;The machine that ran these tests is a Macbook Air 10.8.4 1.8GHz Intel Core i5 4GB 1600MHz DDR3.&lt;/p&gt;
+
+&lt;p&gt;For the false positive test, I added all the words in /usr/share/dict/web2 (on my Mac) into each of the bloom filters. To check for false positives, I check for all the words in /usr/share/dict/web2a in each of the bloom filters. The two files should have completely different set of words (AFAICT).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  235886 /usr/share/dict/web2
+   76205 /usr/share/dict/web2a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For each bloom filter, I ran tests using the following combinations:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;for i in element_count[236886, 200000, 100000, 50000]
+    for j in hash_functions[fnv64, crc64, murmur3-64, cityhash-64, md5, sha1]
+        run test with hash_functions[j] and element_count[i]
+    end
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Element count in this is the initial size I set for the bloom filter. The bit array size, &lt;em&gt;m&lt;/em&gt;, and number of hash values, &lt;em&gt;k&lt;/em&gt;, are then calculated from there. I also set &lt;em&gt;P&lt;/em&gt; (error probability) to 0.001 (0.1%) and &lt;em&gt;p&lt;/em&gt; (fill ratio, or how full should the bit array be) to 0.5. The idea for the element count is to see how the bloom filters will perform when it has a high fill ratio.&lt;/p&gt;
+
+&lt;p&gt;For the scalable bloom filter test, I also needed to add another dimension since it uses either standard or partitioned bloom filter internally. So&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;for i in element_count[236886, 200000, 100000, 50000]
+    for j in hash_functions[fnv64, crc64, murmur3-64, cityhash-64, md5, sha1]
+        for k in bloom_filter[standard, partitioned]
+            run test with hash_functions[j] and element_count[i] and bloom_filter[k]
+        end
+    end
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For the performance test, I added all the words in web2 into the bloom filters. I continue to loop through the file until b.N (Go benchmark framework) is met. So some of the words will be re-added, which should not skew our test results since the operations are the same.&lt;/p&gt;
+
+&lt;p&gt;You can see the tests in the &lt;a href=&#34;https://github.com/reducedb/bloom&#34;&gt;github repo&lt;/a&gt;. Just look for all the _test.go files.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_3&#34;&gt;Test Results&lt;/h3&gt;
+
+&lt;p&gt;The following is a summary of the test results. You can also feel free to look at all the &lt;a href=&#34;https://gist.github.com/zhenjl/6433634&#34;&gt;gory details&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Note: FR = Fill Ratio, FP = False Positive&lt;/p&gt;
+
+&lt;p&gt;For the spreadsheet embedded below, here are some observations&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The MD5 Go implementation I used maybe broken, or I am not using it correctly, or MD5 is just bad. You will see that the fill ration is VERY low, 1-6%. So the false positive rate is very high (89+%).&lt;/li&gt;
+&lt;li&gt;The CityHash Go implementation seems very slow. Could just be my implementation (anyone want to venture some optimization?). But functionally it&amp;rsquo;s correct.&lt;/li&gt;
+&lt;li&gt;Both standard and partitioned bloom filters use the same number of bits and there&amp;rsquo;s not a huge difference in fill ratio and false positive rate. (Ignoring the MD5 anomaly.)&lt;/li&gt;
+&lt;li&gt;Predictably, as fill ratio goes up, so does the false positive rate for both standard and partitioned bloom filters.&lt;/li&gt;
+&lt;li&gt;Scalable bloom filter uses more bits as it contines to add new base bloom filters when the estimated fill ratio reaches &lt;em&gt;P&lt;/em&gt; which is set to 0.5 (50%).&lt;/li&gt;
+&lt;li&gt;Probably not surprisingly, Scalable bloom filter maintains a fairly low false positive rate.&lt;/li&gt;
+&lt;li&gt;However, you will also notice that the Scalable FP increases as the total number of base filters increase. This suggests that I may want to try a lower &lt;em&gt;r&lt;/em&gt; (error tightening ratio). Currently I use 0.9, but maybe 0.8 is more appropriate.&lt;/li&gt;
+&lt;li&gt;Overall it seems FNV is probably good enough for most scenarios.&lt;/li&gt;
+&lt;li&gt;Also Scalable+Standard might be a good choice for anyone doing stream data processing.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;iframe width=&#39;800&#39; height=&#39;600&#39; frameborder=&#39;0&#39; src=&#39;https://docs.google.com/spreadsheet/pub?key=0ApDLtJuUH-1rdEEwZ3JwaVVTZGxBX1g1NkthSFVVTXc&amp;single=true&amp;gid=0&amp;output=html&amp;widget=true&#39;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;This chart shows the performance (ns/op) for adding elements to the bloom filters. Overall the performance is very similar for the different bloom filter implementations.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://docs.google.com/spreadsheet/oimg?key=0ApDLtJuUH-1rdEEwZ3JwaVVTZGxBX1g1NkthSFVVTXc&amp;oid=1&amp;zx=jbizsaoepc5x&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_4&#34;&gt;Feedback&lt;/h3&gt;
+
+&lt;p&gt;Feel free to send me any feedback via &lt;a href=&#34;https://github.com/reducedb/bloom/issues&#34;&gt;github issues&lt;/a&gt; or on &lt;a href=&#34;https://news.ycombinator.com/item?id=6329616&#34;&gt;Hacker News&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_5&#34;&gt;References&lt;/h3&gt;
+
+&lt;p&gt;During this process I referenced and leveraged some of these other projects, so thank you all!&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Referenced
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/willf/bloom&#34;&gt;willf/bloom&lt;/a&gt; - Go package implementing Bloom filters&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/bitly/dablooms&#34;&gt;bitly/dablooms&lt;/a&gt; - scaling, counting, bloom filter library&lt;/li&gt;
+&lt;li&gt;There&amp;rsquo;s also a bunch of papers, some of which I linked above.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Leveraged
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/willf/bitset&#34;&gt;willf/bitset&lt;/a&gt; - Go package implementing bitsets&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/spaolacci/murmur3&#34;&gt;spaolacci/murmur3&lt;/a&gt; - Native MurmurHash3 Go implementation&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6329616&#34;&gt;discussion/comments&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

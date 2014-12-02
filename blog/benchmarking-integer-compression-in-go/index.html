@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Benchmarking Integer Compression in Go &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org/blog">Posts</a></li>
+      
+    </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2014 Jian Zhen. All rights reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Benchmarking Integer Compression in Go</h1>
+  <span class="post-date">Fri, Oct 11, 2013</span>
+      
+
+<p><a href="https://news.ycombinator.com/item?id=6537688">comments/feedback</a></p>
+
+<blockquote>
+<p>Updated post: <a href="http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/">Go vs Java: Decoding Billions of Integers Per Second</a></p>
+</blockquote>
+
+<h3 id="toc_0">tl;dr</h3>
+
+<ul>
+<li><a href="https://github.com/reducedb/encoding">Source code</a></li>
+<li>Let me start by saying that I am not that happy with the performance numbers I got. It probably has more to do with my familiarity and expertise with Go than anything else. But still&hellip;</li>
+<li>Having said that, I am pleasantly surprised how much faster some of the integer compression algorithms are compare to standard compression algorithms such as gzip, LZW and even snappy.</li>
+<li>There&rsquo;s no one size fits all solution. There&rsquo;s always tradeoffs between compression ratio and compression/decompression speed. So depending on the type of integer data and how fast you want to encode/decode, you will need to choose the right solution.</li>
+<li>Gzip does probably the best job in compression ratio but worst in terms of encoding/decoding performance.</li>
+<li>Delta BP32 (IntegratedBinaryPacking in JavaFastPFOR) performs the best (ratio, encoding/decoding speed) for sorted integer arrays such as timestamps.</li>
+<li>I would love it if someone can run these tests on a faster machine and send me the results. I would be happy to put them into the spreadsheet.</li>
+</ul>
+
+<h3 id="toc_1">Go Learn Project #6 - Integer Compression</h3>
+
+<p>It&rsquo;s been 4 weeks since my last post and I have been BUSY! My day job has been busier than ever (in a good way) and has taken over many of my nights and weekends. However, I&rsquo;ve not forgotten the &ldquo;Go Learn&rdquo; project and continued to tinker with Go as I find time.</p>
+
+<p>For &ldquo;Go Learn&rdquo; project #6, I decided to port <a href="https://github.com/lemire/JavaFastPFOR">JavaFastPFOR</a> over to Go. The JavaFastPFOR repo actually is a collection of integer encoding/decoding algorithms. However, the more interesting ones are the ones created by Daniel Lemire, including FastPFOR, BP32, BP128, etc. To borrow from the repo&rsquo;s readme:</p>
+
+<blockquote>
+<p>[JavaFastPFOR] is a library to compress and uncompress arrays of integers very fast. The assumption is that most (but not all) values in your array use less than 32 bits. These sort of arrays often come up when using differential coding in databases and information retrieval (e.g., in inverted indexes or column stores).</p>
+
+<p>Some CODECs (&ldquo;integrated codecs&rdquo;) assume that the integers are in sorted orders. Most others do not.</p>
+</blockquote>
+
+<h3 id="toc_2">Thank You, Daniel Lemire</h3>
+
+<p>As you may have noticed, this is the second Daniel Lemire project that I&rsquo;ve ported over. The previous one is <a href="http://zhen.org/blog/bitmap-compression-using-ewah-in-go/">Bitmap Compression using EWAH in Go</a>.</p>
+
+<p><a href="http://lemire.me/">Danile Lemire</a> is a computer science professor at TELUQ (Université du Québec) where he teaches primarily online. He specializes in Databases, Data Warehousing and OLAP, Recommender Systems and Collaborative Filtering, and Information Retrieval.</p>
+
+<p>I won&rsquo;t elaborate on how knowledgeable he is here because you can easily tell by reading his papers and blogs. I do want to mention how Daniel has been extremely helpful on my porting effort. He&rsquo;s provided tremendous guidance and support, and went even as far as providing me access to one of his machines for running performance tests.</p>
+
+<p>So thank you Daniel!</p>
+
+<h4 id="toc_3">Decoding Billions of Integers per Second Through Vectorization</h4>
+
+<p>This project is inspired by Danile&rsquo;s blog post, <a href="http://lemire.me/blog/archives/2012/09/12/fast-integer-compression-decoding-billions-of-integers-per-second/">Fast integer compression: decoding billions of integers per second</a>, and <a href="http://arxiv.org/abs/1209.2137">paper</a>. As the paper states:</p>
+
+<blockquote>
+<p>In many important applications—such as search engines and relational database systems—data is stored in the form of arrays of integers. Encoding and, most importantly, decoding of these arrays consumes considerable CPU time. Therefore, substantial effort has been made to reduce costs associated with compression and decompression</p>
+</blockquote>
+
+<p>As part of this research, Daniel also made his code available in <a href="https://github.com/lemire/fastpfor">C++</a> and <a href="https://github.com/lemire/JavaFastPFOR">Java</a>. The Go port is based on JavaFastPFOR.</p>
+
+<p>However, because Go has no access to the SSE instruction sets (well, not without getting into C or assembly), I was not able to port over the SIMD versions of the algorithms.</p>
+
+<h3 id="toc_4">The Port</h3>
+
+<p>The Go port is available on <a href="https://github.com/reducedb/encoding">github</a>. In this version, I&rsquo;ve proted over six algorithms, including</p>
+
+<ul>
+<li>FastPFOR</li>
+<li>BP32 (BinaryPacking in JavaFastPFOR)</li>
+<li>Delta BP32 (IntegratedBinaryPacking in JavaFastPFOR)</li>
+<li>ZigZag BP32 (BP32 with Delta encoding using <a href="https://developers.google.com/protocol-buffers/docs/encoding#types">ZigZag</a> encoding method.)</li>
+<li>VariableBytes</li>
+<li>Delta VariableBytes (Integrated VariableBytes in JavaFastPFOR)</li>
+</ul>
+
+<p>I won&rsquo;t go into details of how each of these algorithms work. If you are interested, I strongly encourage you to go read Daniel&rsquo;s paper.</p>
+
+<h3 id="toc_5">The Benchmarks</h3>
+
+<p>To benchmark these algorithms, I&rsquo;ve created 5 sets of data.</p>
+
+<ul>
+<li><a href="https://github.com/lemire/JavaFastPFOR/blob/master/src/main/java/me/lemire/integercompression/synth/ClusteredDataGenerator.java">Clustered</a> - This is a generated list of random and sorted integers based on the clustered model.</li>
+<li><a href="https://github.com/lemire/JavaFastPFOR/blob/master/src/main/java/me/lemire/integercompression/synth/UniformDataGenerator.java">Uniform</a> - This will generate a &ldquo;uniform&rdquo; list of sorted integers.</li>
+<li><a href="https://github.com/reducedb/encoding/tree/master/samples">Timestamps</a> - This is a list of timestamps in sorted order, extracted from another data set that&rsquo;s mainly network monitoring data. The timestamps are epoch time (seconds since 1970). It has long runs of the same timestamp because the dataset contains many entries per second.</li>
+<li>IP Addresses - This is a data set that contains a 32-bit integer representation of IPv4 addresses. This data set is NOT sorted.
+
+<ul>
+<li>In the real-world, one probably wouldn&rsquo;t compress IP addresses like that. One would probably use dictionary encoding for the IPs, then encode the dictionary keys.</li>
+<li>The dictionary keys will likely be much smaller numbers, which means it will compress fairly well.</li>
+</ul></li>
+<li>Latencies - This list of integers represent latencies on the network. It is also unsorted.</li>
+</ul>
+
+<p>Timestamps, IP addresses, and Latencies are essentially 3 columns from another dataset.</p>
+
+<p>Along with benchmarking the integer encoding algorithms, I also benchmarked the Go implementations of Gzip, LZW and Snappy. Both Gzip and LZW are part of the Go standard library. Snappy is a <a href="https://code.google.com/p/snappy-go/">separate project</a> implemented by the Go developers.</p>
+
+<h3 id="toc_6">The Results</h3>
+
+<p>All benchmarks are performed on a machine with Intel&reg; Xeon&reg; CPU E5-2609 0 @ 2.40GHz.</p>
+
+<h4 id="toc_7">Compression Ratio (Lower is Better)</h4>
+
+<p><img src="/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Compression-Ratio.png" alt="Compression Ratio" />
+</p>
+
+<p>Compression ratio is measured in bits/integer. Before compression, the integers we are compressing are all 32-bit integers. This chart shows us how many bits are used for each integer after compression.</p>
+
+<p>There are a few things you can observe from this chart:</p>
+
+<ul>
+<li>Sorted integer lists ALWAYS perform better (ratio and speed) than unsorted integer lists.</li>
+<li>Sometimes the compressed size is LARGER than the uncompressed size. This is because some of these algorithms use extra space to store encoding meta information.</li>
+<li>Gzip, in general, has the best compression ratio.</li>
+<li>Delta BP32 performs the best for sorted lists, but really has problems with unsorted lists.</li>
+</ul>
+
+<h4 id="toc_8">Compression Speed (Higher is Better)</h4>
+
+<p><img src="/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Compression-Speed.png" alt="Compression Speed" />
+</p>
+
+<p>Compression speed is measured in millions of integers per second (MiS). Note that:</p>
+
+<ul>
+<li>Delta BP32 by far has the best compression speed across different data sets.</li>
+<li>BP32 does a fairly decent job compressing as well, but its compression ratio is fairly poor.</li>
+<li>Gzip and LZW perfom the most poorly.</li>
+</ul>
+
+<h4 id="toc_9">Decompression Speed</h4>
+
+<p><img src="/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Decompression-Speed.png" alt="Decompression Ratio" />
+</p>
+
+<p>Decompression speed is measured in millions of integers per second (MiS). Note that:</p>
+
+<ul>
+<li>Again, Delta BP32 does the best across different data sets, and gzip/LZW did the poorest.</li>
+<li>BP32 decoded extremely fast for sorted timestamps that have large runs of the same timestamps.</li>
+<li>FastPFOR seems to perform the most consistently for integer compression algorithms. (For compression as well.)</li>
+</ul>
+
+<h3 id="toc_10">The Conclusions</h3>
+
+<ul>
+<li>For encoding sorted numbers, Delta BP32 has the best combination of compression ratio, and encoding/decoding speed.</li>
+<li>For encoding unsorted numbers, Snappy seems like a good alternative.</li>
+<li>For long term storage, it might be worth considering gzip. It provides the best compression ratio for data that may not be accessed for a long while.</li>
+</ul>
+
+<h3 id="toc_11">The Raw Result</h3>
+
+<p>The following is a Google spreadsheet that contains the raw result set.</p>
+
+<iframe width='800' height='500' frameborder='0' src='https://docs.google.com/spreadsheet/pub?key=0ApDLtJuUH-1rdEwzMkJBNVQzWkxkOExTLThIbGlCSkE&output=html&widget=true'></iframe>
+
+<p><a href="https://news.ycombinator.com/item?id=6537688">comments/feedback</a></p>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+      
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>

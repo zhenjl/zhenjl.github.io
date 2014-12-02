@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Testing MsgPack and BSON &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org/blog">Posts</a></li>
+      
+    </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2014 Jian Zhen. All rights reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Testing MsgPack and BSON</h1>
+  <span class="post-date">Wed, Aug 28, 2013</span>
+      <p>In one of the projects I am working on we are trying to select a message encoding scheme. The use case is pretty simple. We have a server that accepts data records from different clients, and our goal is support 100K messages per second per node. Our selection criteria are pretty simple as well:</p>
+
+<ul>
+<li>Compactness: how compact is the post-encoding byte array</li>
+<li>Performance: how fast is marshalling and unmarshalling of data</li>
+</ul>
+
+<p>Out of the various encoding schemes out there, including <a href="http://bsonspec.org">BSON</a>, <a href="http://msgpack.org">MessagePack</a>, ProtoBuf, Thrift, etc etc, we decided to test BSON and MessagePack due to their closeness to JSON (we use JSON format quite a bit internally).</p>
+
+<p>Here&rsquo;s a very short and simple <a href="http://golang.org">Go</a> program we wrote to test the performance. The libraries I am using are <a href="http://github.com/ugorji/go/codec">Go codec</a> and <a href="http://labix.org/gobson">Go BSON library</a>. (I am sure one can argue that the library used affects the result, which I would agree. However, these are the best libraries for Go AFAICT.)</p>
+
+<p>The results are as follows:</p>
+
+<ul>
+<li>For marshalling, BSON is about 15-20% slower than MsgPack.</li>
+<li>For Unmarshalling, BSON is 300% slower than MsgPack.</li>
+<li>Size-wise, BSON is about 20% more than MsgPack.</li>
+</ul>
+
+<p>So looks like msgpack is the way to go!</p>
+
+<p>Special thanks(!) to realrocker in #go-nuts and <a href="https://github.com/ugorji">Ugorji</a> for their help in cleaning up my code and helping me figure out my problems.</p>
+
+<p>Some notes about the codec library:</p>
+
+<ul>
+<li>According to Ugorji, decoding without schema in the codec library uses largest type for decoding, i.e. int64, uint64, float64. So if you don&rsquo;t have a schema, the result will not pass reflect.DeepEqual test unless you initially type convert to those types. This is documented <a href="https://github.com/ugorji/go/commit/7d844bb938783105c48aa9f4a34663f7d4190c32">here</a></li>
+<li>Ugorji also quickly fixed a bug where &ldquo;codec should be able to decode into a byte slice from both msgpack str/raw format or msgpack bin format (new in finalized spec).&rdquo; AWESOME response time!</li>
+<li>To get string support (encode/decode strings), make sure RawToString is set to true (see below)</li>
+</ul>
+
+<p><a href="https://news.ycombinator.com/item?id=6293642">discussion</a></p>
+
+<p>{% gist 6371433 %}</p>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+      
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>
