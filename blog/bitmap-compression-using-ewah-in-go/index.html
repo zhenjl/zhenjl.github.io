@@ -47,7 +47,7 @@
 
 
     <ul class="sidebar-nav">
-      <li><a href="http://zhen.org/blog">Posts</a></li>
+      <li><a href="http://zhen.org/blog">Archive</a></li>
       
     </ul>
       <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
@@ -251,8 +251,8 @@
 (function() {
     
     
-    
-      
+    if (window.location.hostname == "localhost")
+        return;
 
     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
     var disqus_shortname = 'zen30';

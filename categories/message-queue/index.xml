@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Message-Queue on Zen 3.1 </title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://zhen.org/categories/message-queue/index.xml/</link>
+    <language>en-us</language>
+    <author>Jian Zhen</author>
+    <copyright>Jian Zhen</copyright>
+    <updated>Tue, 02 Dec 2014 22:44:07 PST</updated>
+    
+    <item>
+      <title>SurgeMQ: A MQTT Message Queue That Achieves 400,000 MPS</title>
+      <link>http://zhen.org/blog/surgemq-a-mqtt-message-queue-that-achieves-400k-mps/</link>
+      <pubDate>Tue, 02 Dec 2014 22:44:07 PST</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/surgemq-a-mqtt-message-queue-that-achieves-400k-mps/</guid>
+      <description>
+
+&lt;h3 id=&#34;toc_0&#34;&gt;tl;dr&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt; aims to provide a MQTT broker and client library that&amp;rsquo;s fully compliant with &lt;a href=&#34;http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html&#34;&gt;MQTT spec 3.1.1&lt;/a&gt;. In addition, it tries to be backward compatible with 3.1.&lt;/li&gt;
+&lt;li&gt;SurgeMQ is under active development and should be considered unstable. Some of the key MQTT requirements, such as retained messages, still need to be added. Also, documentation doesn&amp;rsquo;t really exist yet and need to be added.&lt;/li&gt;
+&lt;li&gt;Having said that, SurgeMQ is able to achieve &lt;strong&gt;400,000&lt;/strong&gt; messages per second in a single publisher and single producer environment, beating all the brokered message queues tested in Tyler Treat&amp;rsquo;s detailed &lt;a href=&#34;http://www.bravenewgeek.com/dissecting-message-queues/&#34;&gt;Dissecting Message Queues
+&lt;/a&gt; post.&lt;/li&gt;
+&lt;li&gt;In addition, respectable benchmark numbers are achieved using full mesh, fan-in and fan-out configurations.&lt;/li&gt;
+&lt;li&gt;In developing SurgeMQ, we improved the performance 15-20X by keeping it simple and serial (KISS), reducing garbage collector pressure, reducing memory copy, and eliminating anything that could potentially introduce latency.&lt;/li&gt;
+&lt;li&gt;There are still some areas that can be improved and I look forward to hearing any suggestions you may have.&lt;/li&gt;
+&lt;li&gt;I cannot say this enough: &lt;strong&gt;benchmark, profile, optimize, rinse, repeat&lt;/strong&gt;. Go has made testing, benchmarking, and profiling extremely simple. You owe it to yourself to optimize your code using these tools.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;Go Learn Project #8 - Message Queue&lt;/h3&gt;
+
+&lt;p&gt;It&amp;rsquo;s now been over a year since my last post! Family and work have occupied pretty much all of my time so spare time to learn Go was hard to come by.&lt;/p&gt;
+
+&lt;p&gt;However, I was able to squeeze in an implementation of a &lt;a href=&#34;https://github.com/surge/mqtt&#34;&gt;MQTT encoder/decoder&lt;/a&gt; library in July. The implementation is now outdated and is no longer maintained, but it allowed me to learn about the &lt;a href=&#34;http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html&#34;&gt;MQTT protocol&lt;/a&gt; and got me thinking about potentially implmenting a broker.&lt;/p&gt;
+
+&lt;p&gt;Now months later, I am finally able spend a few weekends and nights to develop &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt;, a (soon to be) full MQTT 3.1.1 compliant message broker.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_2&#34;&gt;Message Queues&lt;/h4&gt;
+
+&lt;p&gt;According to &lt;a href=&#34;http://en.wikipedia.org/wiki/Message_queue&#34;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Message queues provide an asynchronous communications protocol, meaning that the sender and receiver of the message do not need to interact with the message queue at the same time. Messages placed onto the queue are stored until the recipient retrieves them. Message queues have implicit or explicit limits on the size of data that may be transmitted in a single message and the number of messages that may remain outstanding on the queue.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Tyler Treat of &lt;a href=&#34;http://www.bravenewgeek.com&#34;&gt;Brave New Geek&lt;/a&gt; also wrote a good series of &lt;a href=&#34;http://www.bravenewgeek.com/tag/message-queues/&#34;&gt;message queue blog posts&lt;/a&gt; that went over several of the key MQ implementations. One specific post, &lt;a href=&#34;http://www.bravenewgeek.com/dissecting-message-queues/&#34;&gt;Dissecting Message Queues&lt;/a&gt;, is especially interesting because it benchmarks some of the major message queue implmentations out there, both brokered and brokerless.&lt;/p&gt;
+
+&lt;p&gt;In that post, Tyler found that borkerless queues had the highest throughput, achieving millions of MPS sent and received. Brokered message queue performances ranged from 12,000 MPS (&lt;a href=&#34;nsq.io&#34;&gt;NSQ&lt;/a&gt;) to 195,000 MPS (&lt;a href=&#34;nats.io&#34;&gt;Gnatsd&lt;/a&gt;). While the post showed that the Gnatsd latency to be around 300+ microseconds, in reality it&amp;rsquo;s probably more like the NSQ in terms of latency due to the sender sleeps whenever Gnatsd is 10+ messages behind. Regardless, hats off to Tyler. Great job!&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_3&#34;&gt;MQTT&lt;/h4&gt;
+
+&lt;p&gt;I got interested in MQTT because &amp;ldquo;&lt;a href=&#34;http://mqtt.org&#34;&gt;MQTT&lt;/a&gt; is a machine-to-machine (M2M)/&amp;ldquo;Internet of Things&amp;rdquo; connectivity protocol. It was designed as an extremely lightweight publish/subscribe messaging transport.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;According to the &lt;a href=&#34;http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html&#34;&gt;MQTT spec&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;MQTT is a Client Server publish/subscribe messaging transport protocol. It is light weight, open, simple, and designed so as to be easy to implement. These characteristics make it ideal for use in many situations, including constrained environments such as for communication in Machine to Machine (M2M) and Internet of Things (IoT) contexts where a small code footprint is required and/or network bandwidth is at a premium.&lt;/p&gt;
+
+&lt;p&gt;The protocol runs over TCP/IP, or over other network protocols that provide ordered, lossless, bi-directional connections. Its features include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Use of the publish/subscribe message pattern which provides one-to-many message distribution and decoupling of applications.&lt;/li&gt;
+&lt;li&gt;A messaging transport that is agnostic to the content of the payload.&lt;/li&gt;
+&lt;li&gt;Three qualities of service for message delivery:
+
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;At most once&amp;rdquo;, where messages are delivered according to the best efforts of the operating environment. Message loss can occur. This level could be used, for example, with ambient sensor data where it does not matter if an individual reading is lost as the next one will be published soon after.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;At least once&amp;rdquo;, where messages are assured to arrive but duplicates can occur.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Exactly once&amp;rdquo;, where message are assured to arrive exactly once. This level could be used, for example, with billing systems where duplicate or lost messages could lead to incorrect charges being applied.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;A small transport overhead and protocol exchanges minimized to reduce network traffic.&lt;/li&gt;
+&lt;li&gt;A mechanism to notify interested parties when an abnormal disconnection occurs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;There&amp;rsquo;s some very large implementation of MQTT such as &lt;a href=&#34;https://www.facebook.com/notes/facebook-engineering/building-facebook-messenger/10150259350998920&#34;&gt;Facebook Messenger&lt;/a&gt;. There&amp;rsquo;s also an active Eclipse project, &lt;a href=&#34;https://eclipse.org/paho/&#34;&gt;Paho&lt;/a&gt;, that provides scalable open-source client implementations for many different languages, including C/C++, Java, Python, JavaScript, C# .Net and Go.&lt;/p&gt;
+
+&lt;p&gt;Given the popularity, I decided to implement a MQTT broker in order to learn about message queues.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_4&#34;&gt;Architecture&lt;/h3&gt;
+
+&lt;p&gt;My first architeA message queue broker has seve&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/images/surgemq-a-mqtt-message-queue-that-achieves-400k-mps/smqfailedarch.png&#34;&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_5&#34;&gt;Buffered Network IO&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;race conditions
+
+&lt;ul&gt;
+&lt;li&gt;sync.cond lock and unlock&lt;/li&gt;
+&lt;li&gt;multiple writers&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;toc_6&#34;&gt;Acknowledgement Queue&lt;/h4&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
