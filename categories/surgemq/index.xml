@@ -7,28 +7,43 @@
     <language>en-us</language>
     <author>Jian Zhen</author>
     <copyright>Jian Zhen</copyright>
-    <updated>Tue, 02 Dec 2014 22:44:07 PST</updated>
+    <updated>Thu, 04 Dec 2014 22:44:07 PST</updated>
     
     <item>
-      <title>SurgeMQ: A MQTT Message Queue That Achieves 400,000 MPS</title>
-      <link>http://zhen.org/blog/surgemq-a-mqtt-message-queue-that-achieves-400k-mps/</link>
-      <pubDate>Tue, 02 Dec 2014 22:44:07 PST</pubDate>
+      <title>SurgeMQ: MQTT Message Queue @ 750,000 MPS</title>
+      <link>http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/</link>
+      <pubDate>Thu, 04 Dec 2014 22:44:07 PST</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://zhen.org/blog/surgemq-a-mqtt-message-queue-that-achieves-400k-mps/</guid>
+      <guid>http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/</guid>
       <description>
 
 &lt;h3 id=&#34;toc_0&#34;&gt;tl;dr&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt; aims to provide a MQTT broker and client library that&amp;rsquo;s fully compliant with &lt;a href=&#34;http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html&#34;&gt;MQTT spec 3.1.1&lt;/a&gt;. In addition, it tries to be backward compatible with 3.1.&lt;/li&gt;
-&lt;li&gt;SurgeMQ is under active development and should be considered unstable. Some of the key MQTT requirements, such as retained messages, still need to be added. Also, documentation doesn&amp;rsquo;t really exist yet and need to be added.&lt;/li&gt;
-&lt;li&gt;Having said that, SurgeMQ is able to achieve &lt;strong&gt;400,000&lt;/strong&gt; messages per second in a single publisher and single producer environment, beating all the brokered message queues tested in Tyler Treat&amp;rsquo;s detailed &lt;a href=&#34;http://www.bravenewgeek.com/dissecting-message-queues/&#34;&gt;Dissecting Message Queues
-&lt;/a&gt; post.&lt;/li&gt;
-&lt;li&gt;In addition, respectable benchmark numbers are achieved using full mesh, fan-in and fan-out configurations.&lt;/li&gt;
-&lt;li&gt;In developing SurgeMQ, we improved the performance 15-20X by keeping it simple and serial (KISS), reducing garbage collector pressure, reducing memory copy, and eliminating anything that could potentially introduce latency.&lt;/li&gt;
-&lt;li&gt;There are still some areas that can be improved and I look forward to hearing any suggestions you may have.&lt;/li&gt;
+&lt;li&gt;SurgeMQ is under active development and should be considered unstable. Some of the key MQTT requirements, such as retained messages, still need to be added. The eventual goal is to pass the &lt;a href=&#34;https://eclipse.org/paho/clients/testing/&#34;&gt;MQTT Conformance/Interoperability Testing&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Having said that, running all publishers, subscribers and broker on a single 4-core (2.8Ghz i7) MacBook Pro, SurgeMQ is able to achieve
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;over 400,000&lt;/strong&gt; MPS in a 1:1 single publisher and single producer configuration&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;over 450,000&lt;/strong&gt; MPS in a 20:1 fan-in configuration&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;over 750,000&lt;/strong&gt; MPS in a 1:20 fan-out configuration&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;over 700,000&lt;/strong&gt; MPS in a full mesh configuration with 20 clients&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;In developing SurgeMQ, I improved the performance 15-20X by keeping it simple and serial (KISS), reducing garbage collector pressure, reducing memory copy, and eliminating anything that could potentially introduce latency.&lt;/li&gt;
+&lt;li&gt;There are still many areas that can be improved and I look forward to hearing any suggestions you may have.&lt;/li&gt;
 &lt;li&gt;I cannot say this enough: &lt;strong&gt;benchmark, profile, optimize, rinse, repeat&lt;/strong&gt;. Go has made testing, benchmarking, and profiling extremely simple. You owe it to yourself to optimize your code using these tools.&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Lesson 1: Don&amp;rsquo;t be clever. Keep It Simple and Serial (KISS).&lt;/p&gt;
+
+&lt;p&gt;Lesson 2: Reduce or remove memory copying.&lt;/p&gt;
+
+&lt;p&gt;Lesson 3: Race conditions can happen even if you think you followed all the right steps.&lt;/p&gt;
+
+&lt;p&gt;Lesson 4: Use the race detector!&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;h3 id=&#34;toc_1&#34;&gt;Go Learn Project #8 - Message Queue&lt;/h3&gt;
 
@@ -36,7 +51,7 @@
 
 &lt;p&gt;However, I was able to squeeze in an implementation of a &lt;a href=&#34;https://github.com/surge/mqtt&#34;&gt;MQTT encoder/decoder&lt;/a&gt; library in July. The implementation is now outdated and is no longer maintained, but it allowed me to learn about the &lt;a href=&#34;http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html&#34;&gt;MQTT protocol&lt;/a&gt; and got me thinking about potentially implmenting a broker.&lt;/p&gt;
 
-&lt;p&gt;Now months later, I am finally able spend a few weekends and nights to develop &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt;, a (soon to be) full MQTT 3.1.1 compliant message broker.&lt;/p&gt;
+&lt;p&gt;Now months later, I am finally able spend a few weekends and nights developing &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt;, a (soon to be) full MQTT 3.1.1 compliant message broker.&lt;/p&gt;
 
 &lt;h4 id=&#34;toc_2&#34;&gt;Message Queues&lt;/h4&gt;
 
@@ -46,9 +61,9 @@
 &lt;p&gt;Message queues provide an asynchronous communications protocol, meaning that the sender and receiver of the message do not need to interact with the message queue at the same time. Messages placed onto the queue are stored until the recipient retrieves them. Message queues have implicit or explicit limits on the size of data that may be transmitted in a single message and the number of messages that may remain outstanding on the queue.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Tyler Treat of &lt;a href=&#34;http://www.bravenewgeek.com&#34;&gt;Brave New Geek&lt;/a&gt; also wrote a good series of &lt;a href=&#34;http://www.bravenewgeek.com/tag/message-queues/&#34;&gt;message queue blog posts&lt;/a&gt; that went over several of the key MQ implementations. One specific post, &lt;a href=&#34;http://www.bravenewgeek.com/dissecting-message-queues/&#34;&gt;Dissecting Message Queues&lt;/a&gt;, is especially interesting because it benchmarks some of the major message queue implmentations out there, both brokered and brokerless.&lt;/p&gt;
+&lt;p&gt;Tyler Treat of &lt;a href=&#34;http://www.bravenewgeek.com&#34;&gt;Brave New Geek&lt;/a&gt; also wrote a &lt;a href=&#34;http://www.bravenewgeek.com/tag/message-queues/&#34;&gt;good series on message queues&lt;/a&gt; that went over several of the key MQ implementations. One specific post, &lt;a href=&#34;http://www.bravenewgeek.com/dissecting-message-queues/&#34;&gt;Dissecting Message Queues&lt;/a&gt;, is especially interesting because it benchmarks some of the major message queue implmentations out there, both brokered and brokerless.&lt;/p&gt;
 
-&lt;p&gt;In that post, Tyler found that borkerless queues had the highest throughput, achieving millions of MPS sent and received. Brokered message queue performances ranged from 12,000 MPS (&lt;a href=&#34;nsq.io&#34;&gt;NSQ&lt;/a&gt;) to 195,000 MPS (&lt;a href=&#34;nats.io&#34;&gt;Gnatsd&lt;/a&gt;). While the post showed that the Gnatsd latency to be around 300+ microseconds, in reality it&amp;rsquo;s probably more like the NSQ in terms of latency due to the sender sleeps whenever Gnatsd is 10+ messages behind. Regardless, hats off to Tyler. Great job!&lt;/p&gt;
+&lt;p&gt;In that post, Tyler found that borkerless queues had the highest throughput, achieving millions of MPS sent and received. Brokered message queue performances ranged from 12,000 MPS (&lt;a href=&#34;nsq.io&#34;&gt;NSQ&lt;/a&gt;) to 195,000 MPS (&lt;a href=&#34;nats.io&#34;&gt;Gnatsd&lt;/a&gt;). While the post showed that the Gnatsd latency to be around 300+ microseconds, in reality it&amp;rsquo;s probably more like the NSQ in terms of latency due to the sender sleeping whenever Gnatsd is 10+ messages behind. Regardless, hats off to Tyler. Great job!&lt;/p&gt;
 
 &lt;h4 id=&#34;toc_3&#34;&gt;MQTT&lt;/h4&gt;
 
@@ -82,22 +97,224 @@
 
 &lt;h3 id=&#34;toc_4&#34;&gt;Architecture&lt;/h3&gt;
 
-&lt;p&gt;My first architeA message queue broker has seve&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/images/surgemq-mqtt-message-queue-750k-mps/smqfailedarch.png&#34;&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/surgemq-a-mqtt-message-queue-that-achieves-400k-mps/smqfailedarch.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The above image showed a couple of the architecture approaches I attempted. In them, R is the receiver, which reads from net.Conn, P is the processor, which processes the messages and determines what to do or where to send them, and S is the sender, which sends any messages out to net.Conn. Each R, P, and S are their own goroutines.&lt;/p&gt;
+
+&lt;p&gt;I started the project wanting to be clever, and wanted to dynamically scale up/down a shared pool of processors as the number of messages increase/decrease. As I thought through it, it just got more and more complicated with the logic and coordination. At the end, before I even wrote much of the code, I scraped the idea.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Lesson 1: Don&amp;rsquo;t be clever. Keep It Simple and Serial (KISS).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The second architecture approach I took is much simpler and probably much more idiomatic Go.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Each connection has their own complete set of R, P and S, instead of sharing P across multiple connections.&lt;/li&gt;
+&lt;li&gt;Each R, P and S are their own goroutines.&lt;/li&gt;
+&lt;li&gt;Between R and P, and P and S are channels that carry MQTT messages.&lt;/li&gt;
+&lt;li&gt;R was using bufio.Reader to read from net.Conn, and S was using bufio.Writer to write to net.Conn.&lt;/li&gt;
+&lt;li&gt;sync.Pool was used to help reduce the amount of memory allocation required, thus reducing GC pressure&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This approach worked and I was able to write &lt;a href=&#34;https://github.com/surge/mqtt/commit/1eeba02bb5b7f624fc82a0ca975444944c1ec662&#34;&gt;enough code&lt;/a&gt; to test it. However, the performance was hideoous. In a 1:1 (single publisher and single subscriber) configuration, it was doing about 22,000-25,000 MPS.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ go test -vv=3 -logtostderr -run=LotsOf -cpu=2 -v
+=== RUN TestServiceLotsOfPublish0Messages-2
+1000000 messages, 44297366818 ns, 44297.366818 ns/msg, 22574 msgs/sec
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After profiling and looking at the &lt;a href=&#34;/images/surgemq-mqtt-message-queue-750k-mps/2ndfailcpuprof.svg&#34;&gt;CPU profile&lt;/a&gt;, I realized there are a lot of memory copying (io.Copy and io.CopyN), as well as there are still quite a bit GC activities (scanblock). On the memory copying front, there&amp;rsquo;s copying from net.Conn into bufio, then more copying from bufio to the MQTT messages internal buffer, then more copying from MQTT message internal buffers to the outgoing bufio, then to the net.Conn. So lots and lots of memory copying, not a good thing.&lt;/p&gt;
 
 &lt;h4 id=&#34;toc_5&#34;&gt;Buffered Network IO&lt;/h4&gt;
 
-&lt;ul&gt;
-&lt;li&gt;race conditions
+&lt;p&gt;The buffered network IO is a good approach, however, there are two things I wished I had:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;bufio shifts bytes around by copying. For example, whenever it needs to fill the buffer, it copies all the remaining bytes to the front of the buffer, then fill the rest. That&amp;rsquo;s a lot of copying!&lt;/li&gt;
+&lt;li&gt;I needed something I can access the bytes directly so I can remove majority of the memory copying.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;At this point I decided to try a new technique I learned while doing Go Learn Project #7 - &lt;a href=&#34;/blog/ring-buffer-variable-length-low-latency-disruptor-style/&#34;&gt;Ring Buffer&lt;/a&gt;. The basic idea is that instead of using bufio to read and write to net.Conn, I will implement my own version of that.&lt;/p&gt;
+
+&lt;p&gt;The ring buffer will implement the interfaces ReadFrom(), WriteTo(), Read() and Write().&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;sync.cond lock and unlock&lt;/li&gt;
-&lt;li&gt;multiple writers&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;The receiver will essentially copy data directly from net.Conn into the ring buffer (technially the ring buffer will ReadFrom() net.Conn and put the read bytes into the internal buffer).&lt;/li&gt;
+&lt;li&gt;The processor can &amp;ldquo;peek&amp;rdquo; a byte slice (no copying) from the ring buffer, process it, and then commit the bytes once processing is done.&lt;/li&gt;
+&lt;li&gt;If the message needs to be send to other subscribers, the bytes will then be copied into the subscriber&amp;rsquo;s outgoing buffer.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&#34;toc_6&#34;&gt;Acknowledgement Queue&lt;/h4&gt;
+&lt;p&gt;While this is not &amp;ldquo;zero-copy&amp;rdquo;, it seems good enough.&lt;/p&gt;
+
+&lt;p&gt;I started by implementing a lock-less ring buffer, and it worked quite well. But as mentioned in the ring buffer article, you really shouldn&amp;rsquo;t use it unless there&amp;rsquo;s plenty of CPU cores lying around. And also calling runtime.Gosched() thousands of times is really not healthy for the Go scheduler.&lt;/p&gt;
+
+&lt;p&gt;So keeping Lesson 1 in mind, I modified the ring buffer to use two sync.Cond (reader sync.Cond and writer sync.Cond) to block (cond.Wait()) when there&amp;rsquo;s not enough bytes to read or when there&amp;rsquo;s not enough space to write. And then unblock (cond.Broadcast()) when bytes are either read from it, or written to it.&lt;/p&gt;
+
+&lt;p&gt;This is a single producer/single consumer ring buffer and is not designed for multiples of anything. The original thought was that since each connection has their own set of R, P and S, there shouldn&amp;rsquo;t really be a need for multiple writers or readers. It turns out I was wrong, at least on the writer front. We will explain this a bit later.&lt;/p&gt;
+
+&lt;p&gt;At the end, this turned out to be the winning combination. I was able to achieve 20X performance increase with this approach after some additional tweaking. Specifically, I tested several buffer block size (the amount of data to read from and write to net.Conn) including 1024, 2048, 4096 and 8192 bytes. The highest performing one is 8192 bytes.&lt;/p&gt;
+
+&lt;p&gt;I also experiemented with different buffer sizes, including 256KB, 512KB and 1024KB. 256KB turned out to be sufficient in that it&amp;rsquo;s the smallest buffer size that doesn&amp;rsquo;t reduce performance by alot, nor higher numbers will help inprove performance.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Lesson 2: Reduce or remove memory copying.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;toc_6&#34;&gt;Final Architecture&lt;/h4&gt;
+
+&lt;p&gt;This the final architecture I ended up with and it&amp;rsquo;s working very well. The cost of each client connection are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;3 goroutines: R (receiver), P (processor) and S (sender)&lt;/li&gt;
+&lt;li&gt;2 ring buffers of 256K each&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There&amp;rsquo;s very few memory copy operations going on, nor is there much memory allocation. So a good outcome overall.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/images/surgemq-mqtt-message-queue-750k-mps/finalarch.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_7&#34;&gt;Race Conditions&lt;/h3&gt;
+
+&lt;p&gt;With the ring bufer implementation, I was able to achieve 400,000 MPS with a 1:1 configuration. This worked well until I started doing multiple publishers and subscribers. The first problem I ran into was the Processor hanging. &lt;code&gt;go test -race&lt;/code&gt; also didn&amp;rsquo;t show anything that could help me.&lt;/p&gt;
+
+&lt;p&gt;After running tests over and over again, with more and more glog.Debugf() statements, I tracked the problem to the Processor. It was waiting for space in the ring buffer to write the outgoing messages. I know that&amp;rsquo;s not possible as I am blasting messages out to net.Conn as fast as I can, so there&amp;rsquo;s no way that write space is not available.&lt;/p&gt;
+
+&lt;p&gt;After running even more tests, and with even more glog.Debugf() statements, I finally determined the problem to be the way I was using sync.Cond. (I wish I saved the debug output..sigh) In the following code block, I was waiting for the consumer position (cpos) to pass the point in which there will be enough data for writing (wrap).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;		this.pcond.L.Lock()
+		for cpos = this.cseq.get(); wrap &amp;gt; cpos; cpos = this.cseq.get() {
+			this.pcond.Wait()
+		}
+		this.pcond.L.Unlock()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The steps are really quite simple:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;I lock the producer sync.Conn&lt;/li&gt;
+&lt;li&gt;I get the consumer position, compare it to wrap (position that I need cpos to pass to indicate there&amp;rsquo;s enough write space)&lt;/li&gt;
+&lt;li&gt;If there&amp;rsquo;s not enough space, I wait, otherwise I move on&lt;/li&gt;
+&lt;li&gt;I unlock the producer sync.Conn&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Then in the Sender goroutine, I read data from the ring buffer, write to net.Conn, update the consumer position, and call &lt;code&gt;pcond.Broadcast()&lt;/code&gt; to unblock the above &lt;code&gt;pcond.Wait()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;		this.cseq.set(cpos + int64(n))
+		this.pcond.Broadcast()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;According to the &lt;a href=&#34;http://golang.org/pkg/sync/#Cond.Broadcast&#34;&gt;Go doc&lt;/a&gt;,&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Broadcast wakes all goroutines waiting on c.&lt;/p&gt;
+
+&lt;p&gt;It is allowed but not required for the caller to hold c.L during the call.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So what I have above should work perfectly fine. Except it doesn&amp;rsquo;t. What happens is that I ran into a situation where &lt;code&gt;pcond.Broadcast()&lt;/code&gt; was called after the &lt;code&gt;wrap &amp;gt; cpos&lt;/code&gt; check, but before &lt;code&gt;pcond.Wait()&lt;/code&gt;. In these cases, the &lt;code&gt;wrap &amp;gt; cpos&lt;/code&gt; returned true, which means we need to go wait. But before &lt;code&gt;pcond.Wait()&lt;/code&gt; was called, the Sender goroutine has updated cpos, and called &lt;code&gt;pcond.Broadcast()&lt;/code&gt;. So when &lt;code&gt;pcond.Wait()&lt;/code&gt; is called, there&amp;rsquo;s nothing to wake it up, and thus it hangs forever.&lt;/p&gt;
+
+&lt;p&gt;On the Sender side, because there&amp;rsquo;s no more data to read, it is also just waiting for more data. So both the Sender and Processor are now hung.&lt;/p&gt;
+
+&lt;p&gt;After I finally figured out the root cause, I realized that, unlike what the go doc suggested, the caller should really hold c.L during the call to Broadcast(). So I modified the code to the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;		this.cseq.set(cpos + int64(n))
+		this.pcond.L.Lock()
+		this.pcond.Broadcast()
+		this.pcond.L.Unlock()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;What this does is that it ensures I can never call &lt;code&gt;pcond.Broadcast()&lt;/code&gt; after &lt;code&gt;pcond.L.Lock()&lt;/code&gt; (in the Processor goroutine) is called but &lt;code&gt;pcond.Wait()&lt;/code&gt; is not called. When &lt;code&gt;pcond.Wait()&lt;/code&gt; is called, it actually calls &lt;code&gt;pcond.L.Unlock()&lt;/code&gt; internally so it will allow &lt;code&gt;pcond.L.Lock()&lt;/code&gt; in the Sender goroutine to be called.&lt;/p&gt;
+
+&lt;p&gt;In any case, we are finally on our way to working with multiple clients.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Lesson 3: Race conditions can happen even if you think you followed all the right steps.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;toc_8&#34;&gt;But Wait, There&amp;rsquo;s More (Race Conditions)&lt;/h4&gt;
+
+&lt;p&gt;As I increase the number of publishers and subscribers, all the sudden I was getting errors about receiving RESERVED messages, and this happens intermittenly, and only when I blast enough messages. Sometimes I have to run the tests many times to catch this from happening.&lt;/p&gt;
+
+&lt;p&gt;It turns out that while I was thinking I only had 1 Publisher per client connection that&amp;rsquo;s writing to the outgoing buffer, I, in fact, had many. This happens when a client is sent a message to a topic that it subscribes to. In this case, the Processor of the publishing client calls the subscriber client&amp;rsquo;s Publish() method, and writes the message to the outgoing ring buffer. At the same time, other publishing clients can be publishing other messages to the subscriber client. When this happens, they could overwrite eachother&amp;rsquo;s message because the ring buffer is NOT designed for multiple writers.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;go test -race&lt;/code&gt; should technically find this race condition (I think). But given that this condition only happens intermittenly and sometimes it only happens when there&amp;rsquo;s a large volume of messages, the race detector was taking too long and I was too impatient.&lt;/p&gt;
+
+&lt;p&gt;Regardless, after identifying the root cause, I added a Mutex to serialize the writes. At some point I may come back and rewrite it without the lock. But for now it&amp;rsquo;s good enough.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Lesson 4: Use the race detector!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;toc_9&#34;&gt;Performance Benchmarks&lt;/h3&gt;
+
+&lt;p&gt;These performance numbers are calculated as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;sent messages MPS = total messages sent / total elapsed time between 1st and last message sent for all senders&lt;/li&gt;
+&lt;li&gt;received messages MPS = total messages received / total elapsed time between 1st and last message received for all receivers&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;toc_10&#34;&gt;Environment&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;$ go version
+go version go1.3.3 darwin/amd64
+
+---
+
+Macbook Pro Late 2013
+2.8 GHz Intel Core i7
+16 GB 1600 MHz DDR3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;toc_11&#34;&gt;Server&lt;/h4&gt;
+
+&lt;p&gt;To start the server,&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cd benchmark
+$ GOMAXPROCS=2 go test -run=TestServer -vv=2 -logtostderr
+server/ListenAndServe: server is ready...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;toc_12&#34;&gt;1:1&lt;/h4&gt;
+
+&lt;p&gt;To run the single publisher and single subscriber test case:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ GOMAXPROCS=2 go test -run=TestFan -vv=2 -logtostderr -senders 1 -receivers 1
+Total Sent 1000000 messages in 2434523153 ns, 2434 ns/msg, 410758 msgs/sec
+Total Received 1000000 messages in 2434523153 ns, 2434 ns/msg, 410758 msgs/sec
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;toc_13&#34;&gt;Fan-In&lt;/h4&gt;
+
+&lt;p&gt;To run the Fan-In test with 20 senders and 1 receiver:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ GOMAXPROCS=2 go test -run=TestFan -vv=2 -logtostderr -senders 20 -receivers 1
+Total Sent 1035436 messages in 2212609304 ns, 2136 ns/msg, 467970 msgs/sec
+Total Received 1000022 messages in 2212609304 ns, 2212 ns/msg, 451965 msgs/sec
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;toc_14&#34;&gt;Fan-Out&lt;/h4&gt;
+
+&lt;p&gt;To run the Fan-Out test with 1 sender and 20 receivers:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ GOMAXPROCS=2 go test -run=TestFan -vv=2 -logtostderr -senders 1 -receivers 20
+Total Sent 1000000 messages in 10715317340 ns, 10715 ns/msg, 93324 msgs/sec
+Total Received 8180723 messages in 10715317340 ns, 1309 ns/msg, 763460 msgs/sec
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;toc_15&#34;&gt;Mesh&lt;/h4&gt;
+
+&lt;p&gt;To run a full mesh test where every client is subscribed to the same topic, thus every message sent w/ the right topic will go to ALL of the other clients:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ GOMAXPROCS=2 go test -run=TestMesh -vv=2 -logtostderr -senders 20 -messages 100000
+Total Sent 2000000 messages in 51385336097 ns, 25692 ns/msg, 38921 msgs/sec
+Total Received 40000000 messages in 51420975243 ns, 1285 ns/msg, 777892 msgs/sec
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;toc_16&#34;&gt;Next Steps&lt;/h3&gt;
+
+&lt;p&gt;There&amp;rsquo;s a lot more to do with SurgeMQ. Given the limited time I have, I expect it will take me a while to get to full compliant with the MQTT spec. But that will be my focus, now that performance is out of the way, as I get time.&lt;/p&gt;
 </description>
     </item>
     
