@@ -7,7 +7,201 @@
     <language>en-us</language>
     <author>Jian Zhen</author>
     <copyright>Jian Zhen</copyright>
-    <updated>Thu, 04 Dec 2014 22:44:07 PST</updated>
+    <updated>Wed, 24 Dec 2014 19:20:40 PST</updated>
+    
+    <item>
+      <title>SurgeMQ: High Performance MQTT Server and Client Libraries in Go</title>
+      <link>http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</link>
+      <pubDate>Wed, 24 Dec 2014 19:20:40 PST</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</guid>
+      <description>
+
+&lt;p&gt;&lt;strong&gt;Happy Holidays!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This is more of an announcement post as SurgeMQ is now compatibility-tested with some of the popular MQTT clients out there, and it&amp;rsquo;s reaching &lt;em&gt;playable&lt;/em&gt; state.&lt;/p&gt;
+
+&lt;p&gt;For completeness sake, please bear with some of the duplicate content in this post. The &lt;a href=&#34;//blog/surgemq-mqtt-message-queue-750k-mps/&#34;&gt;last post&lt;/a&gt; made front page of &lt;a href=&#34;https://news.ycombinator.com/item?id=8708921&#34;&gt;Hacker News&lt;/a&gt; and generated some great comments and discussions.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;SurgeMQ is a high performance MQTT broker and client library that aims to be fully compliant with MQTT 3.1 and 3.1.1 specs. The primary package that&amp;rsquo;s of interest is package &lt;a href=&#34;http://godoc.org/github.com/surge/surgemq/service&#34;&gt;service&lt;/a&gt;. It provides the MQTT Server and Client services in a library form.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;SurgeMQ is currently under active development and should be considered unstable until further notice.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_0&#34;&gt;MQTT&lt;/h3&gt;
+
+&lt;p&gt;According to the &lt;a href=&#34;http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html&#34;&gt;MQTT spec&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;MQTT is a Client Server publish/subscribe messaging transport protocol. It is light weight, open, simple, and designed so as to be easy to implement. These characteristics make it ideal for use in many situations, including constrained environments such as for communication in Machine to Machine (M2M) and Internet of Things (IoT) contexts where a small code footprint is required and/or network bandwidth is at a premium.&lt;/p&gt;
+
+&lt;p&gt;The protocol runs over TCP/IP, or over other network protocols that provide ordered, lossless, bi-directional connections. Its features include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Use of the publish/subscribe message pattern which provides one-to-many message distribution and decoupling of applications.&lt;/li&gt;
+&lt;li&gt;A messaging transport that is agnostic to the content of the payload.&lt;/li&gt;
+&lt;li&gt;Three qualities of service for message delivery:
+
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;At most once&amp;rdquo;, where messages are delivered according to the best efforts of the operating environment. Message loss can occur. This level could be used, for example, with ambient sensor data where it does not matter if an individual reading is lost as the next one will be published soon after.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;At least once&amp;rdquo;, where messages are assured to arrive but duplicates can occur.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Exactly once&amp;rdquo;, where message are assured to arrive exactly once. This level could be used, for example, with billing systems where duplicate or lost messages could lead to incorrect charges being applied.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;A small transport overhead and protocol exchanges minimized to reduce network traffic.&lt;/li&gt;
+&lt;li&gt;A mechanism to notify interested parties when an abnormal disconnection occurs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;There&amp;rsquo;s some very large implementation of MQTT such as &lt;a href=&#34;https://www.facebook.com/notes/facebook-engineering/building-facebook-messenger/10150259350998920&#34;&gt;Facebook Messenger&lt;/a&gt;. There&amp;rsquo;s also an active Eclipse project, &lt;a href=&#34;https://eclipse.org/paho/&#34;&gt;Paho&lt;/a&gt;, that provides scalable open-source client implementations for many different languages, including C/C++, Java, Python, JavaScript, C# .Net and Go.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;Features, Limitations, and Future&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Supports QOS 0, 1 and 2 messages&lt;/li&gt;
+&lt;li&gt;Supports will messages&lt;/li&gt;
+&lt;li&gt;Supports retained messages (add/remove)&lt;/li&gt;
+&lt;li&gt;Pretty much everything in the spec except for the list below&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Limitations&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;All features supported are in memory only. Once the server restarts everything is cleared.
+
+&lt;ul&gt;
+&lt;li&gt;However, all the components are written to be pluggable so one can write plugins based on the Go interfaces defined.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Message redelivery on reconnect is not currently supported.&lt;/li&gt;
+&lt;li&gt;Message offline queueing on disconnect is not supported. Though this is also not a specific requirement for MQTT.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Future&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Message re-delivery (DUP)&lt;/li&gt;
+&lt;li&gt;$SYS topics&lt;/li&gt;
+&lt;li&gt;Server bridge&lt;/li&gt;
+&lt;li&gt;Ack timeout/retry&lt;/li&gt;
+&lt;li&gt;Session persistence&lt;/li&gt;
+&lt;li&gt;Better authentication modules&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;toc_2&#34;&gt;Performance&lt;/h3&gt;
+
+&lt;p&gt;Current performance benchmark of SurgeMQ, running all publishers, subscribers and broker on a single 4-core (2.8Ghz i7) MacBook Pro, is able to achieve:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;over &lt;strong&gt;400,000 MPS&lt;/strong&gt; in a 1:1 single publisher and single producer configuration&lt;/li&gt;
+&lt;li&gt;over &lt;strong&gt;450,000 MPS&lt;/strong&gt; in a 20:1 fan-in configuration&lt;/li&gt;
+&lt;li&gt;over &lt;strong&gt;750,000 MPS&lt;/strong&gt; in a 1:20 fan-out configuration&lt;/li&gt;
+&lt;li&gt;over &lt;strong&gt;700,000 MPS&lt;/strong&gt; in a full mesh configuration with 20 clients&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;toc_3&#34;&gt;Compatibility&lt;/h3&gt;
+
+&lt;p&gt;In addition, SurgeMQ has been tested with the following client libraries and it &lt;em&gt;seems&lt;/em&gt; to work:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;libmosquitto 1.3.5 (in C).&lt;/em&gt; Tested with the bundled test programs msgsps_pub and msgsps_sub&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Paho MQTT Conformance/Interoperability Testing Suite (in Python).&lt;/em&gt; Tested with all 10 test cases, 3 did not pass. They are
+
+&lt;ol&gt;
+&lt;li&gt;&amp;ldquo;offline messages queueing test&amp;rdquo; which is not supported by SurgeMQ&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;redelivery on reconnect test&amp;rdquo; which is not yet implemented by SurgeMQ&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;run subscribe failure test&amp;rdquo; which is not a valid test&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Paho Go Client Library (in Go).&lt;/em&gt; Tested with one of the tests in the library, in fact, that tests is now part of the tests for SurgeMQ.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Paho C Client library (in C).&lt;/em&gt; Tested with most of the test cases and failed the same ones as the conformance test because the features are not yet implemented. Actually I think there&amp;rsquo;s a bug in the test suite as it calls the PUBLISH handler function for non-PUBLISH messages.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;toc_4&#34;&gt;Documentation&lt;/h3&gt;
+
+&lt;p&gt;Documentation is available at &lt;a href=&#34;http://godoc.org/github.com/surge/surgemq&#34;&gt;godoc&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;More information regarding the design of the SurgeMQ is available at &lt;a href=&#34;http://surgemq.com&#34;&gt;zen 3.1&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_5&#34;&gt;License&lt;/h3&gt;
+
+&lt;p&gt;Copyright &amp;copy; 2014 Dataence, LLC. All rights reserved.&lt;/p&gt;
+
+&lt;p&gt;Licensed under the Apache License, Version 2.0 (the &amp;ldquo;License&amp;rdquo;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.apache.org/licenses/LICENSE-2.0&#34;&gt;http://www.apache.org/licenses/LICENSE-2.0&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &amp;ldquo;AS IS&amp;rdquo; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_6&#34;&gt;Examples&lt;/h3&gt;
+
+&lt;h4 id=&#34;toc_7&#34;&gt;Server Example&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;// Create a new server
+svr := &amp;amp;service.Server{
+    KeepAlive:        300,               // seconds
+    ConnectTimeout:   2,                 // seconds
+    SessionsProvider: &amp;quot;mem&amp;quot;,             // keeps sessions in memory
+    Authenticator:    &amp;quot;mockSuccess&amp;quot;,     // always succeed
+    TopicsProvider:   &amp;quot;mem&amp;quot;,             // keeps topic subscriptions in memory
+}
+
+// Listen and serve connections at localhost:1883
+svr.ListenAndServe(&amp;quot;tcp://:1883&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;toc_8&#34;&gt;Client Example&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;// Instantiates a new Client
+c := &amp;amp;Client{}
+
+// Creates a new MQTT CONNECT message and sets the proper parameters
+msg := message.NewConnectMessage()
+msg.SetWillQos(1)
+msg.SetVersion(4)
+msg.SetCleanSession(true)
+msg.SetClientId([]byte(&amp;quot;surgemq&amp;quot;))
+msg.SetKeepAlive(10)
+msg.SetWillTopic([]byte(&amp;quot;will&amp;quot;))
+msg.SetWillMessage([]byte(&amp;quot;send me home&amp;quot;))
+msg.SetUsername([]byte(&amp;quot;surgemq&amp;quot;))
+msg.SetPassword([]byte(&amp;quot;verysecret&amp;quot;))
+
+// Connects to the remote server at 127.0.0.1 port 1883
+c.Connect(&amp;quot;tcp://127.0.0.1:1883&amp;quot;, msg)
+
+// Creates a new SUBSCRIBE message to subscribe to topic &amp;quot;abc&amp;quot;
+submsg := message.NewSubscribeMessage()
+submsg.AddTopic([]byte(&amp;quot;abc&amp;quot;), 0)
+
+// Subscribes to the topic by sending the message. The first nil in the function
+// call is a OnCompleteFunc that should handle the SUBACK message from the server.
+// Nil means we are ignoring the SUBACK messages. The second nil should be a
+// OnPublishFunc that handles any messages send to the client because of this
+// subscription. Nil means we are ignoring any PUBLISH messages for this topic.
+c.Subscribe(submsg, nil, nil)
+
+// Creates a new PUBLISH message with the appropriate contents for publishing
+pubmsg := message.NewPublishMessage()
+pubmsg.SetPacketId(pktid)
+pubmsg.SetTopic([]byte(&amp;quot;abc&amp;quot;))
+pubmsg.SetPayload(make([]byte, 1024))
+pubmsg.SetQoS(qos)
+
+// Publishes to the server by sending the message
+c.Publish(pubmsg, nil)
+
+// Disconnects from the server
+c.Disconnect()
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>SurgeMQ: MQTT Message Queue @ 750,000 MPS</title>

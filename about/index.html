@@ -7,63 +7,94 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <title>about &middot; </title>
+  <title> About &middot; Zen 3.1 </title>
 
   
   <link rel="stylesheet" href="http://localhost:1313/css/poole.css">
+  <link rel="stylesheet" href="http://localhost:1313/css/syntax.css">
   <link rel="stylesheet" href="http://localhost:1313/css/hyde.css">
-  <link rel="stylesheet" href="http://localhost:1313/css/poole-overrides.css">
-  <link rel="stylesheet" href="http://localhost:1313/css/hyde-overrides.css">
-  <link rel="stylesheet" href="http://localhost:1313/css/hyde-x.css">
-  
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link href="/favicon.png" rel="icon">
+  <link rel="shortcut icon" href="/favicon.ico">
 
   
-  <link href="" rel="alternate" type="application/rss+xml" title="my new hugo site &middot; " />
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
 
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-681691-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </head>
 <body>
+
 <div class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      
-      <h1></h1>
-      
+      <h1 class="brand"><a href="http://localhost:1313">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
     </div>
 
-    <ul class="sidebar-nav">
-      <li class="sidebar-nav-item"><a href="http://localhost:1313/">Blog</a></li>
-      
-    </ul>
+
 
     <ul class="sidebar-nav">
+      <li><a href="http://localhost:1313/blog">Archive</a></li>
       
-      
-      
-      
+        <li><a href="http://localhost:1313/about/">About </a></li>
       
     </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
 
-    <p>Copyright &copy; 2014 <a href="http://localhost:1313/license">License</a><br/>
-       Powered by <a href="http://hugo.spf13.com">Hugo</a> and <a href="https://github.com/zyro/hyde-x">Hyde-X</a></p>
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2014 Jian Zhen. All rights reserved.</p>
+    
   </div>
 </div>
 
-<div class="content container">
-  <div class="post">
-    <h1>about</h1>
-    <p>test</p>
+    <div class="content container">
+<div class="post">
+  <h1>About</h1>
+  <span class="post-date">Sun, Dec 7, 2014</span>
+      
 
-  </div>
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
 </div>
 
-
-</body>
+  <script>document.write('<script src="http://'
+        + (location.host || 'localhost').split(':')[0]
+		+ ':1313/livereload.js?mindelay=10"></'
+        + 'script>')</script></body>
 </html>
