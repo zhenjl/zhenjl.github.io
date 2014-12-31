@@ -70,6 +70,53 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/">
+        PingMQ: A SurgeMQ-based ICMP Monitoring Tool
+      </a>
+    </h1>
+
+    <span class="post-date">Thu, Dec 25, 2014</span>
+
+    <p><a href="https://github.com/surge/surgemq/tree/master/cmd/pingmq">pingmq</a> is developed to demonstrate the different use cases one can use SurgeMQ. In this simplified use case, a network administrator can setup server uptime monitoring system by periodically sending ICMP ECHO_REQUEST to all the IPs in their network, and send the results to SurgeMQ.</p>
+
+<p>Then multiple clients can subscribe to results based on their different needs. For example, a client maybe only interested in any failed ping attempts, as that would indicate a host might be down. After a certain number of failures the client may then raise some type of flag to indicate host down.</p>
+
+<p>There are three benefits of using SurgeMQ for this use case.</p>
+
+<ul>
+<li>First, with all the different monitoring tools out there that wants to know if hosts are up or down, they can all now subscribe to a single source of information. They no longer need to write their own uptime tools.</li>
+<li>Second, assuming there are 5 monitoring tools on the network that wants to ping each and every host, the small packets are going to congest the network. The company can save 80% on their uptime monitoring bandwidth by having a single tool that pings the hosts, and have the rest subscribe to the results.</li>
+<li>Third/last, the company can enhance their security posture by placing tighter restrictions on their firewalls if there&rsquo;s only a single host that can send ICMP ECHO_REQUESTS to all other hosts.</li>
+</ul>
+
+<p>The following commands will run pingmq as a server, pinging the 8.8.8.0/28 CIDR block, and publishing the results to /ping/success/{ip} and /ping/failure/{ip} topics every 30 seconds. <code>sudo</code> is needed because we are using RAW sockets and that requires root privilege.</p>
+
+<pre><code>$ go build
+$ sudo ./pingmq server -p 8.8.8.0/28 -i 30
+</code></pre>
+
+<p>The following command will run pingmq as a client, subscribing to /ping/failure/+ topic and receiving any failed ping attempts.</p>
+
+<pre><code>$ ./pingmq client -t /ping/failure/+
+8.8.8.6: Request timed out for seq 1
+</code></pre>
+
+<p>The following command will run pingmq as a client, subscribing to /ping/failure/+ topic and receiving any failed ping attempts.</p>
+
+<pre><code>$ ./pingmq client -t /ping/success/+
+8 bytes from 8.8.8.8: seq=1 ttl=56 tos=32 time=21.753711ms
+</code></pre>
+
+<p>One can also subscribe to a specific IP by using the following command.</p>
+
+<pre><code>$ ./pingmq client -t /ping/+/8.8.8.8
+8 bytes from 8.8.8.8: seq=1 ttl=56 tos=32 time=21.753711ms
+</code></pre>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/">
         SurgeMQ: High Performance MQTT Server and Client Libraries in Go
       </a>
@@ -588,6 +635,8 @@ Total Received 40000000 messages in 51420975243 ns, 1285 ns/msg, 777892 msgs/sec
   <h1 class="post-title">Archive</h1>
   <ul class="posts">
       
+      <li><span><a href="http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/">PingMQ: A SurgeMQ-based ICMP Monitoring Tool</a> - <time class="pull-right post-list">Thu, Dec 25, 2014</h4></time></span></li>
+      
       <li><span><a href="http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/">SurgeMQ: High Performance MQTT Server and Client Libraries in Go</a> - <time class="pull-right post-list">Wed, Dec 24, 2014</h4></time></span></li>
       
       <li><span><a href="http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/">SurgeMQ: MQTT Message Queue @ 750,000 MPS</a> - <time class="pull-right post-list">Thu, Dec 4, 2014</h4></time></span></li>
@@ -605,8 +654,6 @@ Total Received 40000000 messages in 51420975243 ns, 1285 ns/msg, 777892 msgs/sec
       <li><span><a href="http://zhen.org/blog/bitmap-compression-using-ewah-in-go/">Bitmap Compression using EWAH in Go</a> - <time class="pull-right post-list">Sun, Sep 15, 2013</h4></time></span></li>
       
       <li><span><a href="http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/">Benchmarking Bloom Filters and Hash Functions in Go</a> - <time class="pull-right post-list">Wed, Sep 4, 2013</h4></time></span></li>
-      
-      <li><span><a href="http://zhen.org/blog/go-skiplist/">Go Skiplist</a> - <time class="pull-right post-list">Mon, Sep 2, 2013</h4></time></span></li>
       
   </ul>
 </div>
