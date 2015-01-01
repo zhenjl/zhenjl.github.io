@@ -68,7 +68,9 @@
 <div class="post">
   <h1>PingMQ: A SurgeMQ-based ICMP Monitoring Tool</h1>
   <span class="post-date">Thu, Dec 25, 2014</span>
-      <p><a href="https://github.com/surge/surgemq/tree/master/cmd/pingmq">pingmq</a> is developed to demonstrate the different use cases one can use <a href="//surgemq.com">SurgeMQ</a>, a high performance MQTT server and client library. In this simplified use case, a network administrator can setup server uptime monitoring system by periodically sending ICMP ECHO_REQUEST to all the IPs in their network, and send the results to SurgeMQ.</p>
+      
+
+<p><a href="https://github.com/surge/surgemq/tree/master/cmd/pingmq">pingmq</a> is developed to demonstrate the different use cases one can use <a href="//surgemq.com">SurgeMQ</a>, a high performance MQTT server and client library. In this simplified use case, a network administrator can setup server uptime monitoring system by periodically sending ICMP ECHO_REQUEST to all the IPs in their network, and send the results to SurgeMQ.</p>
 
 <p>Then multiple clients can subscribe to results based on their different needs. For example, a client maybe only interested in any failed ping attempts, as that would indicate a host might be down. After a certain number of failures the client may then raise some type of flag to indicate host down.</p>
 
@@ -103,6 +105,43 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 <pre><code>$ ./pingmq client -t /ping/+/8.8.8.8
 8 bytes from 8.8.8.8: seq=1 ttl=56 tos=32 time=21.753711ms
 </code></pre>
+
+<h3 id="toc_0">IP Addresses</h3>
+
+<p>To list IPs you like to use with <code>pingmq</code>, you can use the following formats:</p>
+
+<pre><code>10.1.1.1      -&gt; 10.1.1.1
+10.1.1.1,2    -&gt; 10.1.1.1, 10.1.1.2
+10.1.1,2.1    -&gt; 10.1.1.1, 10.1.2.1
+10.1.1,2.1,2  -&gt; 10.1.1.1, 10.1.1.2 10.1.2.1, 10.1.2.2
+10.1.1.1-2    -&gt; 10.1.1.1, 10.1.1.2
+10.1.1.-2     -&gt; 10.1.1.0, 10.1.1.1, 10.1.1.2
+10.1.1.1-10   -&gt; 10.1.1.1, 10.1.1.2 ... 10.1.1.10
+10.1.1.1-     -&gt; 10.1.1.1 ... 10.1.1.254, 10.1.1.255
+10.1.1-3.1    -&gt; 10.1.1.1, 10.1.2.1, 10.1.3.1
+10.1-3.1-3.1  -&gt; 10.1.1.1, 10.1.2.1, 10.1.3.1, 10.2.1.1, 10.2.2.1, 10.2.3.1, 10.3.1.1, 10.3.2.1, 10.3.3.1
+10.1.1        -&gt; 10.1.1.0, 10.1.1.1 ... 10.1.1.254, 10.1.1.255
+10.1.1-2      -&gt; 10.1.1.0, 10.1.1.1 ... 10.1.1.255, 10.1.2.0, 10.1.2.1 ... 10.1.2.255
+10.1-2        -&gt; 10.1.0.0, 10.1.0,1 ... 10.2.255.254, 10..2.255.255
+10            -&gt; 10.0.0.0 ... 10.255.255.255
+10.1.1.2,3,4  -&gt; 10.1.1.1, 10.1.1.2, 10.1.1.3, 10.1.1.4
+10.1.1,2      -&gt; 10.1.1.0, 10.1.1.1 ... 10.1.1.255, 10.1.2.0, 10.1.2.1 ... 10.1.2.255
+10.1.1/28     -&gt; 10.1.1.0 ... 10.1.1.255
+10.1.1.0/28   -&gt; 10.1.1.0 ... 10.1.1.15
+10.1.1.0/30   -&gt; 10.1.1.0, 10.1.1.1, 10.1.1.2, 10.1.1.3
+10.1.1.128/25 -&gt; 10.1.1.128 ... 10.1.1.255
+</code></pre>
+
+<h3 id="toc_1">Topic Format</h3>
+
+<p>TO subscribe to the <code>pingmq</code> results, you can use the following formats:</p>
+
+<ul>
+<li><code>/ping/#</code> will subscribe to both success and failed pings for all IP addresses</li>
+<li><code>ping/success/+</code> will subscribe to success pings for all IP addresses</li>
+<li><code>ping/failure/+</code> will subscribe to failed pings for all IP addresses</li>
+<li><code>ping/+/8.8.8.8</code> will subscribe to both success and failed pings for all IP 8.8.8.8</li>
+</ul>
 
 
       <div id="disqus_thread"></div>
