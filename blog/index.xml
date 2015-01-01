@@ -53,7 +53,35 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 8 bytes from 8.8.8.8: seq=1 ttl=56 tos=32 time=21.753711ms
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;IP Addresses&lt;/h3&gt;
+&lt;h3 id=&#34;toc_0&#34;&gt;Commands&lt;/h3&gt;
+
+&lt;p&gt;There are two builtin commands for &lt;code&gt;pingmq&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;pingmq server&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Usage:
+  pingmq server [flags]
+
+ Available Flags:
+  -h, --help=false: help for server
+  -i, --interval=60: ping interval in seconds
+  -p, --ping=[]: Comma separated list of IPv4 addresses to ping
+  -q, --quiet=false: print out ping results
+  -u, --uri=&amp;quot;tcp://:5836&amp;quot;: URI to run the server on
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;pingmq client&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Usage:
+  pingmq client [flags]
+
+ Available Flags:
+  -h, --help=false: help for client
+  -s, --server=&amp;quot;tcp://127.0.0.1:5836&amp;quot;: PingMQ server to connect to
+  -t, --topic=[]: Comma separated list of topics to subscribe to
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;IP Addresses&lt;/h3&gt;
 
 &lt;p&gt;To list IPs you like to use with &lt;code&gt;pingmq&lt;/code&gt;, you can use the following formats:&lt;/p&gt;
 
@@ -79,7 +107,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 10.1.1.128/25 -&amp;gt; 10.1.1.128 ... 10.1.1.255
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Topic Format&lt;/h3&gt;
+&lt;h3 id=&#34;toc_2&#34;&gt;Topic Format&lt;/h3&gt;
 
 &lt;p&gt;TO subscribe to the &lt;code&gt;pingmq&lt;/code&gt; results, you can use the following formats:&lt;/p&gt;
 
@@ -89,6 +117,17 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 &lt;li&gt;&lt;code&gt;ping/failure/+&lt;/code&gt; will subscribe to failed pings for all IP addresses&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;ping/+/8.8.8.8&lt;/code&gt; will subscribe to both success and failed pings for all IP 8.8.8.8&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;h3 id=&#34;toc_3&#34;&gt;Building&lt;/h3&gt;
+
+&lt;p&gt;To build &lt;code&gt;pingmq&lt;/code&gt;, you need to have installed &lt;a href=&#34;http://golang.org&#34;&gt;Go 1.3.3 or 1.4&lt;/a&gt;. Then run the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# go get github.com/surge/surgemq
+# cd surgemq/examples/pingmq
+# go build
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After that, you should see the &lt;code&gt;pingmq&lt;/code&gt; command in the pingmq directory.&lt;/p&gt;
 </description>
     </item>
     
