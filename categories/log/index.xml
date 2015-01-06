@@ -69,7 +69,11 @@ bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA lo
   Parsed 234815 messages in 2.51 secs, ~ 93614.09 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;License&lt;/h3&gt;
+&lt;h3 id=&#34;toc_2&#34;&gt;Documentation&lt;/h3&gt;
+
+&lt;p&gt;Documentation is available at godoc: &lt;a href=&#34;http://godoc.org/github.com/surge/sequence&#34;&gt;package&lt;/a&gt;, &lt;a href=&#34;http://godoc.org/github.com/surge/sequence/cmd/sequence&#34;&gt;command&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_3&#34;&gt;License&lt;/h3&gt;
 
 &lt;p&gt;Copyright &amp;copy; 2014 Dataence, LLC. All rights reserved.&lt;/p&gt;
 
@@ -85,11 +89,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;Roadmap / Futures&lt;/h3&gt;
+&lt;h3 id=&#34;toc_4&#34;&gt;Roadmap / Futures&lt;/h3&gt;
 
 &lt;p&gt;There are some pattern files developed for ASA, Sudo and SSH in the &lt;code&gt;patterns&lt;/code&gt; directory. The goal is to continue to develop a set of patterns for the various log messages, and along the way add additional features to the parser that can help make it even easier to parse log messages. So currently there&amp;rsquo;s not a set roadmap.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_4&#34;&gt;Concepts&lt;/h2&gt;
+&lt;h2 id=&#34;toc_5&#34;&gt;Concepts&lt;/h2&gt;
 
 &lt;p&gt;The following concepts are part of the package:&lt;/p&gt;
 
@@ -110,7 +114,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
 &lt;li&gt;&lt;p&gt;A &lt;em&gt;Parser&lt;/em&gt; is a tree-based parsing engine for log messages. It builds a parsing tree based on pattern sequence supplied, and for each message sequence, returns the matching pattern sequence. Each of the message tokens will be marked with the semantic field types.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;toc_5&#34;&gt;Sequence Command&lt;/h2&gt;
+&lt;h2 id=&#34;toc_6&#34;&gt;Sequence Command&lt;/h2&gt;
 
 &lt;p&gt;The typical workflow of using sequence is to first analyze all of the log messages to determine the unique patterns. This could easily reduce millions of log messages down to maybe 30-50 formats.&lt;/p&gt;
 
@@ -129,7 +133,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
      help [command]            Help about any command
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;Scan&lt;/h3&gt;
+&lt;h3 id=&#34;toc_7&#34;&gt;Scan&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence scan [flags]
@@ -167,7 +171,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
   #  22: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;ustream&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_7&#34;&gt;Analyze&lt;/h3&gt;
+&lt;h3 id=&#34;toc_8&#34;&gt;Analyze&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence analyze [flags]
@@ -210,7 +214,7 @@ because some of the patterns were combined.&lt;/p&gt;
   # Jan 15 19:39:26 jlz sshd[7778]: pam_unix(sshd:session): session opened for user jlz by (uid=0)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_8&#34;&gt;Parse&lt;/h3&gt;
+&lt;h3 id=&#34;toc_9&#34;&gt;Parse&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence parse [flags]
@@ -261,7 +265,7 @@ To get a more realistic performance number, see the benchmark section below.&lt;
   #  24: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;)&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_9&#34;&gt;Benchmark&lt;/h3&gt;
+&lt;h3 id=&#34;toc_10&#34;&gt;Benchmark&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence bench [flags]

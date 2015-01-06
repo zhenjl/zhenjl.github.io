@@ -131,7 +131,11 @@ bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA lo
   Parsed 234815 messages in 2.51 secs, ~ 93614.09 msgs/sec
 </code></pre>
 
-<h3 id="toc_2">License</h3>
+<h3 id="toc_2">Documentation</h3>
+
+<p>Documentation is available at godoc: <a href="http://godoc.org/github.com/surge/sequence">package</a>, <a href="http://godoc.org/github.com/surge/sequence/cmd/sequence">command</a>.</p>
+
+<h3 id="toc_3">License</h3>
 
 <p>Copyright &copy; 2014 Dataence, LLC. All rights reserved.</p>
 
@@ -147,11 +151,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
 
-<h3 id="toc_3">Roadmap / Futures</h3>
+<h3 id="toc_4">Roadmap / Futures</h3>
 
 <p>There are some pattern files developed for ASA, Sudo and SSH in the <code>patterns</code> directory. The goal is to continue to develop a set of patterns for the various log messages, and along the way add additional features to the parser that can help make it even easier to parse log messages. So currently there&rsquo;s not a set roadmap.</p>
 
-<h2 id="toc_4">Concepts</h2>
+<h2 id="toc_5">Concepts</h2>
 
 <p>The following concepts are part of the package:</p>
 
@@ -172,7 +176,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&ldquo;
 <li><p>A <em>Parser</em> is a tree-based parsing engine for log messages. It builds a parsing tree based on pattern sequence supplied, and for each message sequence, returns the matching pattern sequence. Each of the message tokens will be marked with the semantic field types.</p></li>
 </ul>
 
-<h2 id="toc_5">Sequence Command</h2>
+<h2 id="toc_6">Sequence Command</h2>
 
 <p>The typical workflow of using sequence is to first analyze all of the log messages to determine the unique patterns. This could easily reduce millions of log messages down to maybe 30-50 formats.</p>
 
@@ -191,7 +195,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&ldquo;
      help [command]            Help about any command
 </code></pre>
 
-<h3 id="toc_6">Scan</h3>
+<h3 id="toc_7">Scan</h3>
 
 <pre><code>  Usage:
     sequence scan [flags]
@@ -229,7 +233,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&ldquo;
   #  22: { Field=&quot;%funknown%&quot;, Type=&quot;%literal%&quot;, Value=&quot;ustream&quot; }
 </code></pre>
 
-<h3 id="toc_7">Analyze</h3>
+<h3 id="toc_8">Analyze</h3>
 
 <pre><code>  Usage:
     sequence analyze [flags]
@@ -272,7 +276,7 @@ because some of the patterns were combined.</p>
   # Jan 15 19:39:26 jlz sshd[7778]: pam_unix(sshd:session): session opened for user jlz by (uid=0)
 </code></pre>
 
-<h3 id="toc_8">Parse</h3>
+<h3 id="toc_9">Parse</h3>
 
 <pre><code>  Usage:
     sequence parse [flags]
@@ -323,7 +327,7 @@ To get a more realistic performance number, see the benchmark section below.</p>
   #  24: { Field=&quot;%funknown%&quot;, Type=&quot;%literal%&quot;, Value=&quot;)&quot; }
 </code></pre>
 
-<h3 id="toc_9">Benchmark</h3>
+<h3 id="toc_10">Benchmark</h3>
 
 <pre><code>  Usage:
     sequence bench [flags]
