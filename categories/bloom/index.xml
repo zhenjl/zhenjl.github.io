@@ -3,7 +3,7 @@
   <channel>
       <title>Bloom on Zen 3.1 </title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://localhost:1313/categories/bloom/index.xml/</link>
+    <link>http://zhen.org/categories/bloom/index.xml/</link>
     <language>en-us</language>
     <author>Jian Zhen</author>
     <copyright>Jian Zhen</copyright>
@@ -11,10 +11,10 @@
     
     <item>
       <title>Benchmarking Bloom Filters and Hash Functions in Go</title>
-      <link>http://localhost:1313/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</link>
+      <link>http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</link>
       <pubDate>Wed, 04 Sep 2013 00:23:22 -0800</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://localhost:1313/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</guid>
+      <guid>http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6329616&#34;&gt;discussion/comments&lt;/a&gt;&lt;/p&gt;

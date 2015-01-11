@@ -3,7 +3,7 @@
   <channel>
       <title>Bitmap on Zen 3.1 </title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://localhost:1313/categories/bitmap/index.xml/</link>
+    <link>http://zhen.org/categories/bitmap/index.xml/</link>
     <language>en-us</language>
     <author>Jian Zhen</author>
     <copyright>Jian Zhen</copyright>
@@ -11,10 +11,10 @@
     
     <item>
       <title>Bitmap Compression using EWAH in Go</title>
-      <link>http://localhost:1313/blog/bitmap-compression-using-ewah-in-go/</link>
+      <link>http://zhen.org/blog/bitmap-compression-using-ewah-in-go/</link>
       <pubDate>Sun, 15 Sep 2013 23:08:22 -0800</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://localhost:1313/blog/bitmap-compression-using-ewah-in-go/</guid>
+      <guid>http://zhen.org/blog/bitmap-compression-using-ewah-in-go/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6392197&#34;&gt;comments/suggestions&lt;/a&gt;&lt;/p&gt;
