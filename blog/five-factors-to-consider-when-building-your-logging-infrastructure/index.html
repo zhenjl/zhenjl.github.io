@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Five Factors to Consider When Building Your Logging Infrastructure &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-681691-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org/blog">Archive</a></li>
+      
+    </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Five Factors to Consider When Building Your Logging Infrastructure</h1>
+  <span class="post-date">Fri, Nov 19, 2004</span>
+      
+
+<p>Whether you are building your own home-grown logging infrastructure (which of course I do not recommend ;)) or evaluating a log management solution, there are at least five factors you should consider.</p>
+
+<h3 id="toc_0">1. Log Retention</h3>
+
+<p>The log retention period obviously depends on your requirements. If you are building out the infrastructure for troubleshooting and short term reporting, you may only need to keep 1-2 months of logs. But if you are doing it so you can be in compliance with SOX or HIPAA regulations, you will need to keep AT LEAST 6 months for the auditors.</p>
+
+<p>As a rule of thumb, if your requirement is regulatory compliance, make the retention period 12 months to be safe. If you can afford it or the product can support it, go even longer.</p>
+
+<p>Obviously how long your retention period is also depend on the volume of logs you receive as well as the product/tool&rsquo;s ability to manage the log storage. If you are building your own, be sure to take into consideration of building a log rotation process. For example, if your retention period is 12 months. Your process should remove the old logs or put them on tape. If you are evaluating a product, be sure the product has the capability of rotating/purging old logs for you. Don&rsquo;t spend $200K and then have to write your own scripts.</p>
+
+<h3 id="toc_1">2. Log Volume</h3>
+
+<p>Log volume is probably one of the most critical factors in building your infrastructure. It has direct impacts on your retention policy, report/search performance, aggregation performance and correlation performance.</p>
+
+<p>Vendors talk about log volumes in many ways but it all comes down to the number of log message per second you receive. With that number in hand, you can calculate how much storage space you will need. For example, if your log message rate is 2000/second, assuming 200 bytes per message (which is fairly normal), we have</p>
+
+<p>2000 * 3600 * 24 = 172.8 million messages / day
+172.8M * 200 bytes =~ 33GB / day * 30 days = ~100GB / month</p>
+
+<p>That&rsquo;s quite a bit of data. This exercise brings up a few things you should be aware of.</p>
+
+<p>First, you need a product or develop a solution that can handle the message rate that your environment generates. In this example, get something that can handle at least 3000 messages per second: 2000 for your requirement, another 30% for growth and possible spikes. If you are evaluating a product, test it to make sure it doesn&rsquo;t drop any of your logs due to performance issues of the software/appliance.</p>
+
+<p>Second, you need something that will compress the log archives. With 100GB/month, your storage requirement will go through the roof!! Even gzip will give you atleast 10:1 compression on the logs.</p>
+
+<p>Third, note how I used a 200 byte per message? Well, if you parse it and put it in a database, the storage requirement per message will increase. For example, ArcSight uses a 2KB/message for their calculations. That basically takes the 1 month retention storage requirement to over 1TB! Ask your vendors or do your own calculation on what the <strong>REAL</strong> storage requirement is. Make sure the product you are looking at has enough storage space for your retention policy.</p>
+
+<p>Last but not least, your log volume really impacts the performance of the product you choose. Some of the products, as the volume grow in the database, will have problem running reports for a long period of time. If you need to run a report for over a month or two, sometimes it may take hours for a single report. It&rsquo;s difficult to test this during a evaluation period, but many of the implementations fail because of this.</p>
+
+<h3 id="toc_2">3. Log Sources</h3>
+
+<p>What are all the devices, servers and applications that will be logging? If you are developing your own solution, there may be a lot of work for you to do in order to parse the various log messages. The good thing is you will only need to parse the specific logs you need and not everything.</p>
+
+<p>There are many different logging methods (file, database, syslog, proprietary) and formats (single-line, multi-line, XML, database records).</p>
+
+<p>Most vendors will show you a list of all the logs their product will support. Some vendors will support 100&rsquo;s of log sources across many different categories, such as firewalls, routers, switches, IDSes, web servers, mail servers, access control software, operating systems, etc etc etc.</p>
+
+<p>Make sure the product you are looking at supports all your log sources. If not, make sure that there&rsquo;s a way for you to develop new parsers for it. Most of the time it will just be some regular expression for parsing logs.</p>
+
+<p>Make sure the product will support some of the native logging methods and formats. For example, Check Point logs can be retrieved via the LEA protocol and Cisco IDS via RDEP. Windows event logs are just a pain in the butt if your central log retriever is a non-windows platform.</p>
+
+<p>Some products will accept <strong>ANY</strong> log even if it doesn&rsquo;t parse them. That will allow you to archive the logs and do some rudimentary search and alerts on them, but not do detailed reports.</p>
+
+<p>However, some products will hardcode the parsers in their code and no way for you to create any new parsing intelligence. Beware of what you are getting into if that&rsquo;s the product you are looking at.</p>
+
+<h3 id="toc_3">4. Log Analysis</h3>
+
+<p>Ok, so this is a huge area. Log analysis includes everything from reports, correlation, anomaly detection, and trend analysis. It again depends on your requirements. However, your solution or product should have some of the basic functions such as threshold and rule-based alerts via email or SNMP.</p>
+
+<p>Most vendors will provide pre-defined reports that covers the Top N reports across most of the log sources they support. The pre-defined reports are basically the intelligence of the products. Without them, the product is basically useless and you will need to spend a lot of time configuring it instead of using it.</p>
+
+<p>Log analysis can cover many different areas, including security incidents detection, virus infected machines discovery, device/application up/down, usage analysis and capacity planning. Most of the SIM products basically focus on just security incidents detection. If your requirement is not just security, make sure the products can handle it.</p>
+
+<p>Report and correlation performance is a critical factor. If reports takes hours, it&rsquo;d be somewhat useless when you need a quick ad-hoc report to figure out which IPs are DOSing you. Build your infrastructure w/ at least 30% more performance than you need. That way you have some room to grow and also allow you to do quick reports when you are receiving a spike of logs.</p>
+
+<h3 id="toc_4">5. Network Topology</h3>
+
+<p>Your network topology impacts how you should architect your logging infrastructure. If you have a fairly distributed topology, e.g. many remote locations, you will want to design a solution or look for a product that have a distributed architecture, that can retrieve/receive logs in a distributed manner and forward logs back to a central location for analysis and archival.</p>
+
+<p>If you just have a single central location (I can&rsquo;t imagine anyone having that kind of infrastructure these days), you can probably get away with a product that can&rsquo;t be architected in a distributed manner.</p>
+
+<p>Ok, so here comes the downside of distributed architecture. Price! Any additional component you add will cost you. Be sure to check w/ the vendors to see how much it will REALLY cost. Also, some of the smaller devices vendors provide for remote locations can handle a lower message rate, make sure the ones you choose for each location can meet the requirement and have some room to grow.</p>
+
+<hr />
+
+<p>I hope this helps you in understanding what&rsquo;s needed to build your logging infrastructure. Please let me know if you have any questions or comments.</p>
+
+<p>P.S. I would love to see a review of log management products w/ these 5 factors in mind and actually score the products for each factor.</p>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Defining Infrastructure-as-a-Service (IaaS) &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-681691-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org/blog">Archive</a></li>
+      
+    </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Defining Infrastructure-as-a-Service (IaaS)</h1>
+  <span class="post-date">Tue, Jun 3, 2008</span>
+      <p>As described in <a href="http://onsaas.net/blog/defining-saas-paas-iaas-cloud-computing-etc">a previous post</a>, the infrastructure layer of the whole setup is about space, pipe, firewalls, VPNs, routers, switches, physical server and storage. In order to maintain such infrastructure, a company must employ a whole team of network, security and storage engineers. Even with hosting providers such as Savvis and Rackspace providing professional services, the amount of work companies must do in order to setup and maintain this type of infrastructure is still tremendous. To scale this infrastructure, the companies must monitor the usage and acquire new servers as needed. In addition, space and pipe are usually the biggest cost factor when it comes to hosting. That&rsquo;s why the dotCom hosting providers such as Exodus were such high flying companies during the boom days.</p>
+
+<p>The announcements of Amazon&rsquo;s S3 and EC2 service in 2006 changed this whole game. Instead of provisioning for all the stuff that&rsquo;s required before a single OS is installed, companies now have an option of simply provisioning for resources in the EC2 cloud and use S3 as storage. This also eliminates the need to staff teams of network, security and storage engineers. Amazon, in fact, is providing &ldquo;infrastructure as a service.&rdquo;</p>
+
+<p>&ldquo;Infrastructure-as-a-Service&rdquo; or IaaS is essentially new fancy marketing term for &ldquo;<a href="http://en.wikipedia.org/wiki/Utility_computing">utility computing</a>&rdquo;, which, according to <a href="http://blog.gardeviance.org/2008/03/saas-utility-and-clouds.html">Simon Wardley</a>, is &ldquo;the packaging of computing resources, such as computation and storage, as a metered service similar to a physical public utility, This system has the advantage of a low or no initial cost to acquire hardware; instead, computational resources are essentially rented&rdquo;.</p>
+
+<p>So to summarize:</p>
+
+<blockquote>
+<p>Infrastructure-as-a-service is about replacing critical data center resources such as space, pipe, firewalls, VPNs, routers, switches, physical servers and storage with scalable and highly-available resources in the cloud. It is about having a data-center-in-the-cloud.</p>
+</blockquote>
+
+<p>So what are the characteristics of an infrastructure service? In my opinion, the following list are must-have requirements:</p>
+
+<ul>
+<li><strong>On-Demand</strong> Must be able to rapidly provision or de-provision resources as necessary. One of the main advantage of having the data center in the cloud is that you don&rsquo;t have to go provision your own servers, storage and bandwidth. You should be able to simply request more as you need them, and remove them as you are done. The IaaS provider should simply charge you for what you have used and nothing more. Remember, one of the keyword here is &ldquo;<strong>rapid</strong>&rdquo;.</li>
+<li><strong>Scalable</strong> Must be able to scale infinitely if necessary. Ok, maybe not infinitely but the service should be scalable enough that you can quickly add tens or hundreds of servers as needed.</li>
+<li><strong>Self-Sustaining or Self-Healing</strong> Must be able to self-sustain without end-user intervention. Some folks call this self-healing and that&rsquo;s fine too. The point is that there should be enough redundancy and high-availability features built into the service that a physical servers going down must not affect the virtual servers running on that infrastructure.</li>
+<li><strong>Multi-Tenant</strong> Must be able to share this same infrastructure with multiple end customers.</li>
+<li><strong>Customer Segregation</strong> Must be able to segregate the data by end customers. Security and privacy is one of the major obstacle for companies in adopting cloud services, so it is critical that proper security measures are put in place to segregate customer data. Some of the definitions also listed &ldquo;Virtualization&rdquo; as one of the requirements for IaaS or cloud computing. To me, that&rsquo;s not really a requirement per se. It is a technical solution to the problem of data or customer segregation.</li>
+</ul>
+
+<p>The poster child of IaaS is undoubtedly Amazon. Their EC2 and S3 service have more or less defined the pricing and service in this market. Some of the posts listed <a href="http://onsaas.net/blog/defining-saas-paas-iaas-cloud-computing-etc">here</a> have listed other vendors such as EngineYard and Joyent. However, I consider these vendors to be more Platform-as-a-Service providers, rather than IaaS, as they provide the OS and the whole application stack, rather than just space, pipe, storage and servers.</p>
+
+<p>Remember from the above illustration, once you have all the data center infrastructure, you still need to install the OS and application server stack, etc. So what IaaS does not help you with is the ongoing maintenance of the operating system, the stack and your application. So you still have to deal with patches, securing your OS, etc. These areas are where Platform-as-a-Service (PaaS) providers can add value.</p>
+
+<p>We will discuss PaaS in the next post.</p>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>

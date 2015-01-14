@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> The Rise of Cloud Platforms and Why the OS Doesn&#39;t Matter &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-681691-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org/blog">Archive</a></li>
+      
+    </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>The Rise of Cloud Platforms and Why the OS Doesn&#39;t Matter</h1>
+  <span class="post-date">Fri, Aug 29, 2008</span>
+      <p>Platform-as-a-Service (PaaS) is one of the buzzwords that&rsquo;s mentioned often in the cloud computing space. I&rsquo;ve written a <a href="http://onsaas.net/2008/06/03/defining-saas-paas-iaas-etc/">blog post</a> describing IaaS, PaaS and SaaS. In short, PaaS is a platform for delivering applications, similar to a pre-built system with hardware, OS and application stack all built in. In the PaaS case, this system is hosted. All you have to do is &ldquo;upload&rdquo; the application code and it should take care of the executing and scaling of it.</p>
+
+<p><a href="http://zhen.org/zen20/wp-content/uploads/2008/06/iaas-paas-saas.png"><img src="http://zhen.org/zen20/wp-content/uploads/2008/06/iaas-paas-saas.png" alt="" />
+</a></p>
+
+<p>A quick survey of the land (by no means comprehensive, I am also including ONLY application platforms, not service-specific platforms such as DabbleDB) shows that there&rsquo;s a plethora of PaaS players out there, each with their own target audience. Some provide more of a raw execution platform, some provide a full suite of tools for creating applications online. Unfortunately, most of these vendor approaches will lock you into their proprietary platform. If you ever want to move to another platform, you have to rewrite at least a portion of code using the new vendor&rsquo;s API. Phil Wainewright has written about this in his blog post &ldquo;<a href="http://blogs.zdnet.com/SAAS/?p=472">A plethora of PaaS options</a>.&rdquo;</p>
+
+<p>Company
+Application Type</p>
+
+<p>Bungee Labs
+Web applications</p>
+
+<p>Coghead
+Web applications</p>
+
+<p>Google App Engine
+Python web applications</p>
+
+<p>LongJump
+Business applications</p>
+
+<p>NetSuite NS-BOS
+Business applications</p>
+
+<p>Ning
+Social networking applications</p>
+
+<p>Joyent
+Web applications</p>
+
+<p>Mosso
+Web applications</p>
+
+<p>Rollbase
+Business applications</p>
+
+<p>Salesforce Force.com
+Business applications</p>
+
+<p>In one of the <a href="http://www.cloudcamp.com/">CloudCamp SF</a> sessions in July, one of the guys from Microsoft asked whether the OS matters in cloud computing. My answer to that was it depends on the type of application. If it’s a web centric application that has a web front end, uses a database for storage, and doesn’t use any of the low level file IO, then really there’s no need to know what the OS is. In that case, the OS doesn’t matter.</p>
+
+<p>All these vendors have targeted applications that are delivered over the web, and almost all of the vendors listed above try to abstract the OS from the developers so that they don&rsquo;t have to worry about the underlying infrastructure. As Mosso&rsquo;s slogan claims, &ldquo;Code, load and go.&rdquo;</p>
+
+<p>Even though cloud computing is still in its infancy; however, as it matures, cloud providers will move upmarket to provide additional business value to customers. We will see a rise of cloud application platforms appear on the horizon. Specifically, we will see more domain-specific cloud platforms for different verticals or application types. For example, I can imagine there are developers working on a MMORPG cloud platform (maybe it&rsquo;s here already if you consider Metaplace to be that) that will provide execution and management (of virtual goods, zones, accounts) for MMO developers; or a data analytics cloud platform that provides all the basic OLAP functions.</p>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>

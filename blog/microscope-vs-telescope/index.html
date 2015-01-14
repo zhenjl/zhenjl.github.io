@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Microscope vs. Telescope &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-681691-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org/blog">Archive</a></li>
+      
+    </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Microscope vs. Telescope</h1>
+  <span class="post-date">Sat, Nov 6, 2004</span>
+      <p>Any good log analysis software should be able to provide two different views: microscopic and telescopic.</p>
+
+<p>Under a <strong>microscope</strong>, the user should be able to see all the nitty-gritty details of an event or incident. An event under a microscope should show details of the fields that makes up that event. For example, if you are looking at a network connection of a firewall event under the microscope, the view should give you the source host, destination host, source port, destination port, and any other information that came with the connection.</p>
+
+<p>If you are looking at an incident under a microscope, the view should show you all the events that made up the incident. The events can come from different devices, such as firewall, IDS, routers, switches, or applications such as web/application servers, databases, or operating systems such as Windows or Linux. From that view, you can examine each event under a microscopic view as well.</p>
+
+<p>Under a <strong>telescope</strong>, the user should be provided a high level view of the infrastructure. It may be that the highest level view is a world map of your infrastructure. From there, you can drill down to each site, then each machine, each application, each incident, each event.</p>
+
+<p>Another type of telescopic view may be a graph, e.g. a line graph showing the connection count of a device over a day/week/month period. From this telescopic view, if one sees something abnormal, such as a spike in connection count, one can select that time period and drill down to find out what makes up the spike. For example, the following graph is a graph of connections of a device over a year.</p>
+
+<p><img src="http://www.trustpath.com/logmatters/wp-content/fw_conns.png" alt="Firewall Connection Graph" />
+</p>
+
+<p>Yet another type of telescopic view may be a attack pattern graph showing all the alerts you have received from the various IDS sensors. You can then select a specific attack to drill down to view all the events that made up the attack. The following example shows a list of hosts attacking a single one. The number shows the number of attacks and the color shows the standard deviation.</p>
+
+<p><img src="http://www.trustpath.com/logmatters/wp-content/attack_pattern.jpg" alt="Attack Pattern Graph" />
+</p>
+
+<p>The ability to transition from a telescopic view to a microscopic view is extremely important to any log analysis software. Imagine being able to select a portion of the &ldquo;Firewall Connection Graph&rdquo; and drill down to the events or click on the &ldquo;Attack Pattern Graph&rdquo; and bring up the attacks from a specific host.</p>
+
+<p>As you are evaluating various tools and products for your environment,</p>
+
+<ul>
+<li><p>Ask the vendor to see if they provide that capability</p></li>
+
+<li><p>Use to the software to see how easy it is to drill down</p></li>
+
+<li><p>Compare the products and tools to see if they give you the same results</p></li>
+</ul>
+
+<p>Think Microscope == Details and Telescope == Trends, Graphs, Charts, Summaries.</p>
+
+<p>Side Note: I borrowed the terms <strong>Microscope</strong> and <strong>Telescope</strong> from <a href="http://www.guykawasaki.com">Guy Kawasaki</a>&rsquo;s new book. I started reading <a href="http://www.guykawasaki.com/books/">The Art of the Start</a> couple of nights ago and found it to be one of the best <strong>practical</strong> books for entrepreneurs. You can find favorable reviews of the book almost everywhere. Just <a href="http://www.google.com">Google It</a>.</p>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>

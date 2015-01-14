@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> IT Problem Management Process &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-681691-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org/blog">Archive</a></li>
+      
+    </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>IT Problem Management Process</h1>
+  <span class="post-date">Wed, Jun 22, 2005</span>
+      
+
+<p>These are scary figures that are sure to keep all CIOs, IT directors and managers up at night. According to the report, The Cost of Enterprise Downtime, North America 2004, conducted by Infonectics Research, network downtime is costing companies 3.6 percent of annual revenue. After studying over 80 large corporations, Infonectics Research found that companies experience an average of 501 hours of network downtime per year. This adds up to millions of dollars of lost productivity and revenue.</p>
+
+<p>Each year, millions of dollars are invested in various technologies to attempt to solve IT infrastructure problems faster so companies can reduce downtime. However, these companies are no closer to the Holy Grail of automated root-cause analysis and problem resolution.</p>
+
+<p>In order to understand why thats the case, it is necessary to understand the process of IT problem management. There are generally five steps in the problem management process: detection, identification, determination, resolution, and reflection.</p>
+
+<h3 id="toc_0">Detection</h3>
+
+<p>The ability to detect whats happening in your infrastructure is a crucial first step in managing problems. Is your router or switch down? Is your web server or email server down? Is your network connection degraded? Is someone intruding your network or servers? Has someone transferred intellectual property out of your network?</p>
+
+<p>Most of the technologies we have seen in the past five to ten years have been designed to solve the problem of detection. Network Management Systems (NMS) such as IBM Tivoli, HP OpenView, CA Unicenter and many others were first designed to monitor the enterprise infrastructure by polling network devices and servers periodically. When the polling fails for a predetermined number of times, a problem is detected and an alert is sent to the administrators. In the security world, network and host intrusion detection systems (IDS) have been developed to identify problems on the network and servers.</p>
+
+<p>All the technologies, however, are designed for detection but cannot tell you where the actual cause of the problem might be nor can it tell you what caused the problem to occur.</p>
+
+<h3 id="toc_1">Identification</h3>
+
+<p>Given that most of the technologies only perform detection, IT administrators must spent a lot of their time in identifying where the problem has actually occurred. These IT administrators utilize the most basic network tools such as ping and traceroute, rely on domain knowledge of their own network to perform process of elimination, or analyzing network traffic using sniffers to help determine the actual location of the problem.</p>
+
+<p>To accelerate the process, some companies have developed technologies in the attempt to identify where the problem actually occurred. One such example is EMC Smarts. Smarts starts by mapping out an infrastructure using various automated tools as well as human knowledge. The mapping will identify, for example, which switch ports are connected via the same cable or what servers are behind the same router or switch. Once the mapping is complete, Smarts will utilize its proprietary Codebook Correlation Technology, SNMP traps and log messages from routers/switches/servers to identify where the fault or problem may have occurred.</p>
+
+<h3 id="toc_2">Determination</h3>
+
+<p>Even though some of these newer technologies may help IT administrators identify where the problem might be, they are still very limited in determining the actual root cause. Why did my web server go down? Was it due to memory corruption? Was it due to a security exploit? Was it due to misconfiguration? Why is my network so slow? Is it because of a router or switch interface mismatch? Is it because someone is transferring a movie over the wire?</p>
+
+<p>There is no doubt that problem determination is the most difficult stage of the problem management process. As any experienced IT administrators will confirm, majority of the troubleshooting time are in determining exactly whats causing the problem to happen.</p>
+
+<p>However, even today, IT administrators must manually perform root-cause or forensic analysis by digging through mountains of log files or analyzing seas of traffic packets. No technologies have been developed to help IT administrators to automate the determination process.</p>
+
+<h3 id="toc_3">Resolution</h3>
+
+<p>Once the problem has been identified and root cause has been determined, IT administrators can most of the time fix the problem quickly, e.g., fix the interface mismatch or restart the web server. There are obviously some problems that require long-term resolution such as fixing the memory corruption of applications or upgrading the network bandwidth due to increase in number of users.</p>
+
+<p>Some companies have also developed technologies that jump from problem identification to resolution, skipping the determination stage. These automated resolutions can range from simply blocking an offending IP by modifying router, switch or firewall configurations to executing a program or script to perform much more complex instructions.</p>
+
+<p>This type of technology can be extremely dangerous as mistakes can lead to the network or infrastructure to become unavailable. Intruders may also be able to exploit these automated resolution mechanisms to perform Denial-of-Service attacks against the IT infrastructure.</p>
+
+<h3 id="toc_4">Reflection</h3>
+
+<p>Reflection, or post mortem is probably one of the most important stages in this whole process. The idea of reflection is that IT administrators should take time to</p>
+
+<ul>
+<li>Document the process of detection, identification, determination and resolution</li>
+<li>Determine how to prevent same problems from happening in the future</li>
+<li>Identify and resolve other similar problems</li>
+<li>Review the whole process to see how it can be improved</li>
+</ul>
+
+<p>It is no wonder that enterprises are losing millions of dollars due to infrastructure downtime. As we can see, most of the current technologies are designed to help with the detection stage of the problem management process; few technologies have been developed to help IT administrators to identify where the problem has occurred; but no technologies have been developed to automate the process of determining the root-cause.</p>
+
+<p>Root-cause and forensic analysis are very difficult problems to solve. Hopefully in the near future we will see new technologies in this area to make IT administrators life easier.</p>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>

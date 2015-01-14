@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Three Cloud Resource Consumption Models &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-681691-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org/blog">Archive</a></li>
+      
+    </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Three Cloud Resource Consumption Models</h1>
+  <span class="post-date">Sun, May 10, 2009</span>
+      <p>For the Infrastructure-as-a-Service market, there appears to be three models of consumption today:</p>
+
+<ol>
+<li>Allocation-based</li>
+<li>Usage-based</li>
+<li>Resource pool-based</li>
+</ol>
+
+<p>First it&rsquo;s allocation-based consumption. Example would be EC2 where you allocate a VM with a certain amount of CPU/memory and you pay for that allocation. No need for a lot of explanations here since this is the model that most people are familiar with.</p>
+
+<p>The second model is a usage-based consumption. This model does not require any allocation or resource pool and the cloud would simply allow you to use resources as needed. For example, your application may only use 300 MHz of CPU and 200MB of memory during normal operations and that&rsquo;s all you pay for. If the application spikes to 1 GHz of CPU and 3 GB of memory for a period of time, you pay for that also. This model is a lot more unpredictable but could potentially be a lot cheaper than the previous two. <a href="http://theenterprisecloud.com/">Terremark&rsquo;s Enterprise Cloud</a> allows you to burst into this model once you have used up your resource pool. This model is much more of a true utility model since you pay for what you <strong>use</strong>. As far as I know no service provider is offering ONLY this model.</p>
+
+<p>The third model is a resource pool model, which is a combination of the previous two model. In this case, a resource pool, say 5 GHz of CPU and 10GB of memory, is allocated, and you can spin up as many VMs as you like to consume that pool of resource. This model is a combination model because it&rsquo;s still based on allocation but still gives you the advantage of granular metering. The advantage of this model is that you have much better control over the resource pool and if you know your applications well (e.g., the amount of CPU/memory they consume), this will be much more cost effective. <a href="http://theenterprisecloud.com/">Terremark&rsquo;s Enterprise Cloud</a> is based on this model.</p>
+
+<p>Both second and third require very granular and accurate resource utilization monitoring. An important factor to consider for all these models is &ldquo;burst capacity.&rdquo; That is, if your VM needs additional capacity, can you &ldquo;burst&rdquo; or do you need to allocate a new VM and move your workload to the new VM? Which model you should choose depends heavily on how well you know your applications&rsquo; resource utilization pattern. If you know your applications well and can predict the usage pattern, then a resource pool model or true utility model might be better. If you want predictability and fixed pricing, then either the allocation model or the resource pool model will suffice. If you know you will be running many VMs and know your application usage patterns well, then a resource pool model may be best.</p>
+
+<p>One thing to note here is that all these are consumption models and not cost or billing models. The service provider may charge you per hour or per month based on your allocation or resource pool. There may also be minimum resource level commitment. The service provider may bill you weekly, monthly or quarterly. It&rsquo;s important to understand the differences of consumption, cost and billing models.</p>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>

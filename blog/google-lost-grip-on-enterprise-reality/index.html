@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Google Lost Grip on Enterprise Reality &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-681691-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org/blog">Archive</a></li>
+      
+    </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Google Lost Grip on Enterprise Reality</h1>
+  <span class="post-date">Wed, May 13, 2009</span>
+      
+
+<p>A couple weeks ago Rajen Sheth, Senior Product Manager for Google Apps, wrote an interesting blog post titled &ldquo;<a href="http://googleenterprise.blogspot.com/2009/04/what-we-talk-about-when-we-talk-about.html">What we talk about when we talk about cloud computing</a>.&rdquo; This week, Network World wrote an piece on &ldquo;<a href="http://www.networkworld.com/news/2009/051209-google-vmware-clouds.html?hpg1=bn">Google, VMware argue over private clouds</a>,&rdquo; essentially comparing the Google blog and an upcoming blog piece from Dan Chu, VMware&rsquo;s VP of Emerging Markets. In this blog I want to share some of my thoughts on this topic.</p>
+
+<p>[ Full disclosure: I work for VMware and Dan&rsquo;s my boss. However, this is my personal blog and the opinions expressed in this blog are my views and do not necessarily reflect the views and opinions of VMware. ]</p>
+
+<h3 id="toc_0">Enterprise IT</h3>
+
+<p>First of all, Google has lost grip on the reality of enterprise computing. Or maybe Google never really got it since it never truly was an enterprise IT provider. Remember, in 2008, Google got 97% of its revenues from web advertising. Even though Google does probably run one of the biggest enterprise IT shops in the world (their own,) the applications they use and maintain are vastly different than 90% of the enterprise IT shops out there.</p>
+
+<p>Secondly, enterprise IT teams will never run EVERYTHING in the clouds, and that goes for Google&rsquo;s cloud offerings (GAE, GMail, etc) as well as any other external cloud. There are plenty of applications and data that have very strict regulations that will prevent them from ever going to external clouds. At May 7th&rsquo;s <a href="http://churchillclub.org/eventDetail.jsp?EVT_ID=817">Churchill Club CIO Agenda event</a>, Karenann Terrell, Corporate VP &amp; CIO of Baxter, talked specifically about some of the applications that are under HIPAA regulation and cannot move to external clouds. Some of the comments on the Google post also pointed to the same issue.</p>
+
+<p>Thirdly, for many of the applications that enterprise IT want to move into the cloud, they will not want to rewrite them to fit Google&rsquo;s cloud requirements. Enterprise IT teams have invest many person-years in selecting the best application components (frameworks, message bus, etc), developing and testing their applications. They want to move these applications into the cloud with as few changes as possible, preferably with no changes at all. In this case, I am not even talking about ISV applications like Exchange and SharePoint. I am talking about custom built corporate applications that enterprise IT teams built for their LOBs.</p>
+
+<p>Last but not least, with respect to the section about Google can innovate faster, enterprise IT teams would much prefer to innovate on their own terms instead of Google dictating innovation. When was the last time someone or some organization can influence Google in their product direction?</p>
+
+<h3 id="toc_1">Enterprise Workloads</h3>
+
+<p>Google&rsquo;s cloud offerings (GAE, GMail, etc) are definitely good for some enterprise workloads, assuming they are not mission critical and do not contain any sensitive data. If businesses depend on the applications or the data contain sensitive information such as credit card or PII, Google&rsquo;s likely not the best option. Let&rsquo;s look at some common enterprise use cases that Google cannot support with the &ldquo;supercomputer.&rdquo;</p>
+
+<ol>
+<li>Applications such as SAP, Oracle Financials, and Microsoft Exchange are business-critical core IT applications that many IT shops are consider virtualizing and moving into the cloud. These are applications that Google cannot handle.</li>
+<li>Enterprise IT teams have strict guidelines on what application frameworks and components they will support in production environments. So developers must develop an application using enterprise-proven and enterprise-approved software components. Google&rsquo;s &ldquo;supercomputer&rdquo; does not provide any type of options for enterprises to be able to use their own components such as their own message bus or database.</li>
+<li>To extend the previous example a bit, enterprise IT teams would love to be able to develop and test applications in the cloud and eventually run in their own production environment. Again, given the strict guidelines to software components, Google will not be able to handle this.</li>
+<li>An interesting scenario is that many companies want to have their DR site in the cloud so they can reduce DR costs. Again, nothing Google can do about this.</li>
+<li>Many enterprises are interested in the ability to overflow additional capacity requirements to the clouds operated by service providers. For example, a company might be expecting to run a huge marketing campaign and need extra capacity. What they don&rsquo;t want to do is buy new servers and software and only run them for the campaign period. In this case, moving some of the workload into the cloud makes perfect sense. Again, nothing Google can do about this.</li>
+</ol>
+
+<h3 id="toc_2">Enterprise Requirements</h3>
+
+<p>Notwithstanding the fact that Google cannot handle most of the enterprise workload, Google also cannot support some of the key enterprise requirements.</p>
+
+<ul>
+<li>Manageability - Google does not provide enterprise IT teams much in the way of manageability. You get to drop your code into Google and that&rsquo;s about all you can do.</li>
+<li>Security and Compliance - Please read my <a href="http://www.zhen.org/zen20/2009/05/03/security-and-compliance-in-the-age-of-clouds/">previous blog on this topic</a></li>
+<li>Interoperability - What you write for GAE is pretty much locked in. You will need to at least rewrite portions of the application in order to work outside of GAE.</li>
+<li>Integration - GAE can only execute calls from an HTTP request and (pls correct me if I am wrong) can only integrate with other web/cloud services via HTTP requests. This definitely limits the type of applications that can be developed.</li>
+</ul>
+
+<h3 id="toc_3">Summary</h3>
+
+<p>Google&rsquo;s cloud offerings have their places and they obviously work very well for Google in many cases. For example, GAE is great when you need to develop a brand new web-based application that doesn&rsquo;t require enterprise-class features. Gmail and Google Apps are awesome as well (I use both) but they just can&rsquo;t replace the enterprise products at this time.</p>
+
+<p>It&rsquo;s great that Google can claim hardware and software infrastructures as their true differentiators. I have no doubt that they probably have the most efficient infrastructure. It&rsquo;s just that for majority of the enterprise workloads and requirements, Google is just not a good fit. Enterprise IT wants to have their own private cloud that potentially can span both internal cloud built by the IT teams and external clouds hosted by service providers.</p>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>

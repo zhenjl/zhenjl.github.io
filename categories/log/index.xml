@@ -3,301 +3,732 @@
   <channel>
       <title>Log on Zen 3.1 </title>
       <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://localhost:1313/categories/log/index.xml/</link>
+    <link>http://zhen.org/categories/log/index.xml/</link>
     <language>en-us</language>
     <author>Jian Zhen</author>
     <copyright>Jian Zhen</copyright>
-    <updated>Mon, 05 Jan 2015 22:40:20 PST</updated>
+    <updated>Thu, 05 Jan 2006 09:02:21 &#43;0000</updated>
     
     <item>
-      <title>Sequence: A High Performance Sequential Semantic Log Analyzer and Parser</title>
-      <link>http://localhost:1313/blog/sequence-high-performance-sequential-semantic-log-analyzer-parser/</link>
-      <pubDate>Mon, 05 Jan 2015 22:40:20 PST</pubDate>
+      <title>Retrieving logs incrementally</title>
+      <link>http://zhen.org/blog/retrieving-incremental-logs/</link>
+      <pubDate>Thu, 05 Jan 2006 09:02:21 &#43;0000</pubDate>
       <author>Jian Zhen</author>
-      <guid>http://localhost:1313/blog/sequence-high-performance-sequential-semantic-log-analyzer-parser/</guid>
+      <guid>http://zhen.org/blog/retrieving-incremental-logs/</guid>
       <description>
 
-&lt;p&gt;&lt;a href=&#34;https://github.com/surge/sequence&#34;&gt;&lt;code&gt;sequence&lt;/code&gt;&lt;/a&gt; is a &lt;em&gt;high performance sequential semantic log message analyzer and parser&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Going through one of my sleepless nights again. So I figure I post a question here and see if I get any response.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;ve always wondered what is the best way to incrementally upload logs from files that gets updated all the time. For example, application A writes to a log file. It continues to write to that file until the log file gest rotated, either through some external mechanism or the application itself.&lt;/p&gt;
+
+&lt;p&gt;There are several options here, obviously.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_0&#34;&gt;Batch Retrieval&lt;/h3&gt;
+
+&lt;p&gt;First, the simplest thing to do is wait until the log file is closed and rotated, then upload the file to a central log server. Or the central log server comes and collect the log file using SCP/SFTP/HTTP/HTTPS/FTP. The problem with this approach is that the file may only get rotated every hour, day or week. This is not a feasible solution if there&amp;rsquo;s real-time analysis requirements. For example, you wouldn&amp;rsquo;t want to find some malicious sudo commands were executed a week later.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;Tail + Logger&lt;/h3&gt;
+
+&lt;p&gt;The second approach is to tail the file and convert it to syslog using something like logger. This approach works somewhat. However, there are also several issues. One is that the tail command may exit for whatever reason. When that happens, you will stop sending logs. The obvious thing to do is to wrap tail in some script that will catch the exit and restart it. However, you may lose some logs during the process (probably unlikely unless lots of logs are being written.) In addition, converting to UDP syslog always has that slight chance of UDP packets being lost on a busy network.&lt;/p&gt;
+
+&lt;p&gt;Another problem with converting to syslog is that it won&amp;rsquo;t work with log files that have headers. For example, W3C formatted files have a header that tells the any log parser what fields are included in the file. Without that, it would be pretty difficult to parse the logs.&lt;/p&gt;
+
+&lt;p&gt;Be sure to use the &lt;strong&gt;-F&lt;/strong&gt; option with tail in case files get rotated or modified by hand by some user.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_2&#34;&gt;Continuous Curl&lt;/h3&gt;
+
+&lt;p&gt;The third approach I thought of is to use &lt;a href=&#34;http://curl.haxx.se&#34;&gt;curl&lt;/a&gt; to upload the files to the central server periodically. However, I don&amp;rsquo;t want to upload the whole file every time, otherwise I will get a ton of duplicate data. So I wrote a small wrapper in perl, &lt;a href=&#34;http://www.zhen.org/misc/ccurl.txt&#34;&gt;ccurl&lt;/a&gt; (continuous curl), to remember the last position uploaded, and upload only the new logs next time. Basically the script does the following:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;When supplied a file, it will look for the last uploaded position. If never uploaded before, 0; otherwise the last uploaded position.&lt;/li&gt;
+&lt;li&gt;Run curl to upload the file starting at the last uploaded position. (my curl command uploads to a LogLogic appliance, but you can change it to upload to anything that accepts HTTP uploads.)&lt;/li&gt;
+&lt;li&gt;Update the position file with the latest uploaded position&lt;/li&gt;
+&lt;li&gt;Script exits&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The idea is that someone will put this in a cron job and upload every few minutes. However, there are two huge problems with this script as quoted in the script.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;        # if $size &amp;lt; $pos, that means the file has been rotated
+        # however, there are two problems here
+        # 1. $size could have increased so fast that the next time 
+        #    the file is looked at, that it has increased passed
+        #    $pos. this means we will miss all the logs before pos
+        # 2. if the file is rotated, that means there&#39;s a possibility
+        #    that we have lost some logs from the previous file,
+        #    like from $pos to the end of the file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;$size is the size of the actual log file, $pos is the file position of the last upload.&lt;/p&gt;
+
+&lt;p&gt;I am relying simply on the file name, which is totaly not fail proof. I added simple logic in there to detect when a file might have been rotated.&lt;/p&gt;
+
+&lt;p&gt;I think I will change the script a bit later to have it use inode numbers to detect whether the file I am looking at is the same as before. This should work if the file is being APPENDED to ONLY. If someone decides to open it for writing, then the inode number will change. And that would totally screw me up.&lt;/p&gt;
+
+&lt;p&gt;[Disclaimer: this script is by no means production quality. Use/test at your own risk.]&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_3&#34;&gt;Tail + Curl&lt;/h3&gt;
+
+&lt;p&gt;The last idea I have is to do a combination of #2 and #3. Basically I will write a script to wrap around &lt;strong&gt;tail -F&lt;/strong&gt;, read the data for a while, upload the data to the central server using curl, and repeat.&lt;/p&gt;
+
+&lt;p&gt;This may turn out to be a better way than the first three. It gives me TCP and the wrapper can be maded to work with log files with headers.&lt;/p&gt;
+
+&lt;p&gt;Hum&amp;hellip;stay tuned&amp;hellip;I&amp;rsquo;ll upload my script here when I get around to it. Or someone else may have done it already and can point me to the right direction. :)&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>War on Intellectual Property Leakage</title>
+      <link>http://zhen.org/blog/war-on-intellectual-property-leakage/</link>
+      <pubDate>Tue, 28 Dec 2004 23:00:54 &#43;0000</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/war-on-intellectual-property-leakage/</guid>
+      <description>
+
+&lt;p&gt;Approximately sixty to eighty percent of your company&amp;rsquo;s asset is defined as Intellectual Properties, or IP.&lt;/p&gt;
+
+&lt;p&gt;IP includes everything from patents, trademarks, brands, trade secrets, designs, architectures, copyrights, algorithms, software code, hardware schematics, inventions, business processes, and many other intangible assets. These are properties that may or may not have no physical presence. They exist mostly in the digital world or people&amp;rsquo;s minds.&lt;/p&gt;
+
+&lt;p&gt;A study by PricewaterhouseCoopers, the U.S. Chamber of Commerce, and the American Society for Industrial Security International estimated that American companies lost up to $59 billion in intellectual property and proprietary information between July 2000 and June 2001. The largest average dollar value of loss per incident occurred in research and development ($404,000), followed by financial data ($356,000).&lt;/p&gt;
+
+&lt;p&gt;Probably not surprising to information security professionals, most of the IP leakage incidents involve insiders. Insiders are generally considered &amp;ldquo;trusted&amp;rdquo; users who have access to the internal network, whether they are connected on the internal LAN or through VPNs. The insiders can be current and former employees, contractors or business partners.&lt;/p&gt;
+
+&lt;p&gt;Any one of these employees, contractors or business partners could be dissatisfied for whatever reason and decide to send a few design specs to the competitors. Once the secret is out, it is extremely difficult to contain it. The cost of IP litigation, if you choose to go that route, can cost from several hundred thousand dollars to several million dollars. This amount doesn&amp;rsquo;t even include the cost due to loss of reputation, brand, speed to market and other factors.&lt;/p&gt;
+
+&lt;p&gt;So how does a company go about securing their intellectual properties and make sure access to the IPs are tracked?&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_0&#34;&gt;Enterprise Content Management&lt;/h3&gt;
+
+&lt;p&gt;The first class of companies who attacked this problem is the Enterprise Content Management (ECM) vendors such as FileNet, Documentum, Interwoven, Open Text, Stellent and Vignette. These vendors generally provide centralized document management capabilities that allow users to&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;It is &lt;em&gt;sequential&lt;/em&gt; because it goes through a log message sequentially and does not use regular expressions.&lt;/li&gt;
-&lt;li&gt;It is &lt;em&gt;semantic&lt;/em&gt; because it tries to extract meaningful information out of the log messages and give them semantic indicators, e.g., src IPv4 or dst IPv4.&lt;/li&gt;
-&lt;li&gt;It is an &lt;em&gt;analyzer&lt;/em&gt; because analyzes a large corpus of text-based log messages and try to determine the unique patterns that would represent all of them.&lt;/li&gt;
-&lt;li&gt;It is a &lt;em&gt;parser&lt;/em&gt; because it will take a message and parses out the meaningful parts.&lt;/li&gt;
-&lt;li&gt;It is &lt;em&gt;high performance&lt;/em&gt; because it can parse 100K+ messages per second without the need to separate parsing rules by log source type.&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Organize and classify electronic documents&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Search documents using keywords&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Share documents with other users&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Check-in and check-out documents for edit&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Version control for all documents&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Audit all access to documents&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;strong&gt;&lt;code&gt;sequence&lt;/code&gt; is currently under active development and should be considered unstable until further notice.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The main solution to the IP leakage problem by these vendors is all access to electronic documents are recorded and reported. These products will help manage and track documents when it&amp;rsquo;s stored centrally on the server. They can track who has accessed which file at what time. How many times files are accessed and how often people access these files.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;Motivation&lt;/h3&gt;
+&lt;p&gt;Some of the more sophisticated products can also tell you the access behavior by individual users. For example, if a user who doesn&amp;rsquo;t normally access a certain section of the repository all the sudden starts to download all the files in that section, something suspicious may be going on and should be alerted.&lt;/p&gt;
 
-&lt;p&gt;Log messages are notoriusly difficult to parse because they all have different formats. Industries (see Splunk, ArcSight, Tibco LogLogic, Sumo Logic, Logentries, Loggly, LogRhythm, etc etc etc) have been built to solve the problems of parsing, understanding and analyzing log messages.&lt;/p&gt;
+&lt;p&gt;But what happens when the file has been downloaded to the user&amp;rsquo;s desktop? Once that happens, these products can no longer protect or track the documents. What happens if the user emails the file via Yahoo Mail or Gmail? What happens if the user uploads the file to another server using FTP or HTTP? What happens if the user copies it to an USB drive or prints it out?&lt;/p&gt;
 
-&lt;p&gt;Let&amp;rsquo;s say you have a bunch of log files you like to parse. The first problem you will typically run into is you have no way of telling how many DIFFERENT types of messages there are, so you have no idea how much work there will be to develop rules to parse all the messages. Not only that, you have hundreds of thousands, if not  millions of messages, in front of you, and you have no idea what messages are worth parsing, and what&amp;rsquo;s not.&lt;/p&gt;
+&lt;h3 id=&#34;toc_1&#34;&gt;IP Leakage Detection&lt;/h3&gt;
 
-&lt;p&gt;The typical workflow is develop a set of regular expressions and keeps testing against the logs until some magical moment where all the logs you want parsed are parsed. Ask anyone who does this for a living and they will tell you this process is long, frustrating and error-prone.&lt;/p&gt;
+&lt;p&gt;A whole new class of companies, including Vericept, Vidius, and Vontu, has been founded to detect IP leakage on the network. These companies&amp;rsquo; products are designed to detected IP leakage by monitoring all the exit points in which information can leave the corporate network.&lt;/p&gt;
 
-&lt;p&gt;Even after you have developed a set of regular expressions that match the original set of messages, if new messages come in, you will have to determine which of the new messages need to be parsed. And if you develop a new set of regular expressions to parse those new messages, you still have no idea if the regular expressions will conflict with the ones you wrote before. If you write your regex parsers too liberally, it can easily parse the wrong messages.&lt;/p&gt;
-
-&lt;p&gt;After all that, you will end up finding out the regex parsers are quite slow. It can typically parse several thousands messages per second. Given enough CPU resources on a large enough machine, regex parsers can probably parse tens of thousands of messages per second. Even to achieve this type of performance, you will likely need to limit the number of regular expressions the parser has. The more regex rules, the slower the parser will go.&lt;/p&gt;
-
-&lt;p&gt;To work around this performance issue, companies have tried to separate the regex rules for different log message types into different parsers. For example, they will have a parser for Cisco ASA logs, a parser for sshd logs, a parser for Apache logs, etc etc. And then they will require the users to tell them which parser to use (usually by indicating the log source type of the originating IP address or host.)&lt;/p&gt;
-
-&lt;p&gt;Sequence is developed to make analyzing and parsing log messages a lot easier and faster.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_1&#34;&gt;Performance&lt;/h3&gt;
-
-&lt;p&gt;The following performance benchmarks are run on a single 4-core (2.8Ghz i7) MacBook Pro. The first file is a
-bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA log file, averaging 180 bytes per message.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  $ go version
-  go version go1.4 darwin/amd64
-
-  $ ./sequence bench -p ../../patterns/sshd.txt -i ../../data/sshd.all
-  Parsed 212897 messages in 2.65 secs, ~ 80449.93 msgs/sec
-
-  $ ./sequence bench -p ../../patterns/asa.txt -i ../../data/allasa.log
-  Parsed 234815 messages in 4.42 secs, ~ 53081.36 msgs/sec
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Performance can be improved by adding more cores:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  GOMAXPROCS=2 ./sequence bench -p ../../patterns/sshd.txt -i ../../data/sshd.all -w 2
-  Parsed 212897 messages in 1.52 secs, ~ 140139.27 msgs/sec
-
-  $ GOMAXPROCS=2 ./sequence bench -p ../../patterns/asa.txt -i ../../data/allasa.log -w 2
-  Parsed 234815 messages in 2.51 secs, ~ 93614.09 msgs/sec
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;toc_2&#34;&gt;Documentation&lt;/h3&gt;
-
-&lt;p&gt;Documentation is available at godoc: &lt;a href=&#34;http://godoc.org/github.com/surge/sequence&#34;&gt;package&lt;/a&gt;, &lt;a href=&#34;http://godoc.org/github.com/surge/sequence/cmd/sequence&#34;&gt;command&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_3&#34;&gt;License&lt;/h3&gt;
-
-&lt;p&gt;Copyright &amp;copy; 2014 Dataence, LLC. All rights reserved.&lt;/p&gt;
-
-&lt;p&gt;Licensed under the Apache License, Version 2.0 (the &amp;ldquo;License&amp;rdquo;);
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.apache.org/licenses/LICENSE-2.0&#34;&gt;http://www.apache.org/licenses/LICENSE-2.0&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an &amp;ldquo;AS IS&amp;rdquo; BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_4&#34;&gt;Roadmap / Futures&lt;/h3&gt;
-
-&lt;p&gt;There are some pattern files developed for ASA, Sudo and SSH in the &lt;code&gt;patterns&lt;/code&gt; directory. The goal is to continue to develop a set of patterns for the various log messages, and along the way add additional features to the parser that can help make it even easier to parse log messages. So currently there&amp;rsquo;s not a set roadmap.&lt;/p&gt;
-
-&lt;h2 id=&#34;toc_5&#34;&gt;Concepts&lt;/h2&gt;
-
-&lt;p&gt;The following concepts are part of the package:&lt;/p&gt;
+&lt;p&gt;In general, when users intentionally or unintentionally leak intellectual properties, they will probably&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;A &lt;em&gt;Token&lt;/em&gt; is a piece of information extracted from the original log message. It is a struct that contains fields for &lt;em&gt;TokenType&lt;/em&gt;, &lt;em&gt;FieldType&lt;/em&gt;, &lt;em&gt;Value&lt;/em&gt;, and indicators of whether it&amp;rsquo;s a key or value in the key=value pair.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;E-mail the documents as attachments&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;A &lt;em&gt;TokenType&lt;/em&gt; indicates whether the token is a literal string (one that does not change), a variable string (one that could have different values), an IPv4 or IPv6 address, a MAC address, an integer, a floating point number, or a timestamp.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Upload the documents to another server via FTP or HTTP&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;A &lt;em&gt;FieldType&lt;/em&gt; indicates the semantic meaning of the token. For example, a token could be a source IP address (%srcipv4%), or a user (%srcuser% or %dstuser%), an action (%action%) or a status (%status%).&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;A &lt;em&gt;Sequence&lt;/em&gt; is a list of Tokens. It is returned by the &lt;em&gt;Scanner&lt;/em&gt;, the &lt;em&gt;Analyzer&lt;/em&gt;, and the &lt;em&gt;Parser&lt;/em&gt;.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;A &lt;em&gt;Scanner&lt;/em&gt; is a sequential lexical analyzer that breaks a log message into a sequence of tokens. It is sequential because it goes through log message sequentially tokentizing each part of the message, without the use of regular expressions. The scanner currently recognizes time stamps, IPv4 addresses, URLs, MAC addresses,
-integers and floating point numbers. It also recgonizes key=value or key=&amp;ldquo;value&amp;rdquo; or key=&amp;lsquo;value&amp;rsquo; or key=&lt;value&gt; pairs.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;A &lt;em&gt;Analyzer&lt;/em&gt; builds an analysis tree that represents all the Sequences from messages. It can be used to determine all of the unique patterns for a large body of messages.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;A &lt;em&gt;Parser&lt;/em&gt; is a tree-based parsing engine for log messages. It builds a parsing tree based on pattern sequence supplied, and for each message sequence, returns the matching pattern sequence. Each of the message tokens will be marked with the semantic field types.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;IM another user&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;toc_6&#34;&gt;Sequence Command&lt;/h2&gt;
+&lt;p&gt;All unencrypted traffic on the network can be sniffed out by package sniffers and have the content be examined. This is essentially what some of the products are doing. Most of the products in this category are basically re-purposing technologies from the IDS and content filtering world. These products will captures the contents from either the network or email stream; examine the content by either performing a keyword or regular expression search; and alert the administrators if any matches occur.&lt;/p&gt;
 
-&lt;p&gt;The typical workflow of using sequence is to first analyze all of the log messages to determine the unique patterns. This could easily reduce millions of log messages down to maybe 30-50 formats.&lt;/p&gt;
+&lt;p&gt;The detection mechanisms in these products are not unlike signature-based IDS. They also suffer the same high false positive rate problems as the IDS products. You will also need to spend quite a bit of time tuning and maintaining the products in order for it to accurately detect IP leakage.&lt;/p&gt;
 
-&lt;p&gt;Then the analyst can look through these formats and annotate the patterns with the semantic meanings. Once that&amp;rsquo;s done, the analyst can run the parser with these annotated rules and outcome the parsed tokens.&lt;/p&gt;
+&lt;p&gt;However, some vendors, such as Vericept, claims to have additional technology that performs statistical or linguistic analysis on the content and are able to detect leakage much more accurately and efficiently.&lt;/p&gt;
 
-&lt;p&gt;The &lt;code&gt;sequence&lt;/code&gt; command is developed to demonstrate the use of this package. You can find it in the cmd/sequence directory.&lt;/p&gt;
+&lt;h3 id=&#34;toc_2&#34;&gt;IP Leakage Control&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;   Usage:
-     sequence [command]
+&lt;p&gt;One major problem that the network-based detection products cannot solve is sneakerware leakage. Sneakerware leakage includes scenarios where the user copies the file onto removable media such as CDs, USB drives and floppies, or the user prints the documents out. The user can then carry these removable medias or printouts with them and no one will notice.&lt;/p&gt;
 
-   Available Commands:
-     scan                      scan will tokenize a log file or message and output a list of tokens
-     analyze                   analyze will analyze a log file and output a list of patterns that will match all the log messages
-     parse                     parse will parse a log file and output a list of parsed tokens for each of the log messages
-     bench                     benchmark the parsing of a log file, no output is provided
-     help [command]            Help about any command
+&lt;p&gt;Another class of companies, including Verdasys, Liquid Machine, Authentica, and AegisDRM, are attacking the IP leakage problem a different perspective. They have designed agents that run on users&amp;rsquo; desktops and track all user actions including opening and printing files, copying files to removable media, and sending files across the network. These products allow users to define Acceptable Use Policies, monitors all actions performed, and prevent or alert when a violation occurs. This class of companies is generally categorized as Digital Rights Management vendors.&lt;/p&gt;
+
+&lt;p&gt;In general, however, these products cannot detect whether a document contains confidential information. Administrators or users must explicitly mark documents as either confidential and should be protected, or not confidential. Administrators can also set up policies to globally disallow copying to removable medias, or file sharing via P2P networks.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_3&#34;&gt;The Future&lt;/h3&gt;
+
+&lt;p&gt;What&amp;rsquo;s in the future in fighting against IP leakage?&lt;/p&gt;
+
+&lt;p&gt;As storage and security solutions are merging, as evidenced by the Symantec and Veritas marriage, we can expect comprehensive solutions that will integrate all of the above components. We can expect products that&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Have centralized enterprise contents management capabilities&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Have components that can monitor network exit points and match the outbound content with the central repository&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Have agents that can monitor user activities&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These three components will talk to each other to more accurately detect and prevent intellectual property leakage.&lt;/p&gt;
+
+&lt;p&gt;We will also probably see many of the pure play vendors in these three areas (ECM, DRM, IP Leakage Detection) be bought up by some of the bigger vendors such as Symantec and EMC/Documentum.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>What&#39;s In A Log: Part 1</title>
+      <link>http://zhen.org/blog/anatomy-of-logs-part-1/</link>
+      <pubDate>Wed, 15 Dec 2004 04:54:28 &#43;0000</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/anatomy-of-logs-part-1/</guid>
+      <description>
+
+&lt;p&gt;Much ink has been spilled all over the web and in print writing about log management and analysis. Google returned over 640,000 hits for the search &amp;lsquo;&lt;a href=&#34;http://www.google.com/search?hl=en&amp;amp;lr=&amp;amp;c2coff=1&amp;amp;q=%22log+management%22+OR+%22log+analysis%22&amp;amp;btnG=Search&#34;&gt;&amp;ldquo;log management&amp;rdquo; OR &amp;ldquo;log analysis&amp;rdquo;&lt;/a&gt;&amp;rsquo;.&lt;/p&gt;
+
+&lt;p&gt;A whole technology segment has been created just for this purpose. IDC and Gartner both predicted that the log management space will be over $500M the next couple of years.&lt;/p&gt;
+
+&lt;p&gt;Many Global 2000 corporations have started log management projects, mostly driven by regulatory or standards compliance. Public companies have to be SOX compliant. Healthcare companies have to be HIPAA compliant. Financial companies have to be FFIEC or Basel II compliant. Government agencies have a whole list of federal and state regulations and standards they have to compliant with.&lt;/p&gt;
+
+&lt;p&gt;Yet many people are still wondering why they should look at logs.&lt;/p&gt;
+
+&lt;p&gt;What are logs? What&amp;rsquo;s in them? What makes them so important to the world of IT performance, availability, troubleshooting, security and regulatory compliance?&lt;/p&gt;
+
+&lt;p&gt;To best understand how logs affect all areas of IT management, it is necessary for us to dissect the logs and see what information they provide.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_0&#34;&gt;What&amp;rsquo;s in a log&lt;/h3&gt;
+
+&lt;p&gt;Firewalls probably generate the most logs amongst all devices. A busy PIX firewall, with debug logging turned on, can generate 2,000 to 3,000 messages per second (MPS).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;%PIX-6-302013: Built inbound TCP connection 543127891 for 
+outside:192.168.11.250/41612 (192.168.11.250/41612) to 
+inside:10.1.241.2/80 (10.1.241.2/80)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_7&#34;&gt;Scan&lt;/h3&gt;
+&lt;p&gt;This is a fairly typical log message from a PIX firewall. Most administrator will probably ignore these logs as there are a ton of them. However, let&amp;rsquo;s look closely to see what information we can find.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  Usage:
-    sequence scan [flags]
+&lt;h4 id=&#34;toc_1&#34;&gt;%PIX&lt;/h4&gt;
 
-   Available Flags:
-    -h, --help=false: help for scan
-    -m, --msg=&amp;quot;&amp;quot;: message to tokenize
+&lt;p&gt;This first 4 characters immediately tells us that the log message is a PIX message. With this information, if you are writing a parser for multiple log types, you can throw this over to the PIX parser and go on to the next message. You can also use this to classify or categorize your logs based on device type.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_2&#34;&gt;-6-&lt;/h4&gt;
+
+&lt;p&gt;The dashes are just delimiters so we will ignore them for now.&lt;/p&gt;
+
+&lt;p&gt;The number &amp;ldquo;6&amp;rdquo; is interesting for us because it tells us the severity level of the message. 6 in this case means Informational. Other levels are 0 (Emergency), 1 (Alert), 2 (Critical), 3 (Error), 4 (Warning), 5 (Notification) and 7 (Debug).&lt;/p&gt;
+
+&lt;p&gt;These 7 severity levels are fairly standard in the syslog world. Almost all devices and applications logging via syslog will follow these severity levels.&lt;/p&gt;
+
+&lt;p&gt;In any case, Informational messages are usually harmless in that they don&amp;rsquo;t require our immediate attention. However, &lt;strong&gt;excessive&lt;/strong&gt; of informational messages may indicate something suspicious and will need drilling down.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_3&#34;&gt;302013:&lt;/h4&gt;
+
+&lt;p&gt;This number represents the message ID of the PIX message. It gives us an idea what information we will find in the remainder of the message, as well as the format of the message.&lt;/p&gt;
+
+&lt;p&gt;The message ID is extremely useful in a distribution report. A distribution report shows us the count of each message time over a specific period of time. Tracking that information over time, we can discover things that we cannot see by looking at individual messages.&lt;/p&gt;
+
+&lt;p&gt;For example, if we track the daily distribution count of the message types over a course of a month, we may see that our average wednesday count for message type 302013 is around 5 million. If one wednesday we saw a count of 6 million, we might suspect that something anomalous is going on. The 1 million messages averages out to be about 11 per second, which is probably not high enough to trigger any alerts on its own.&lt;/p&gt;
+
+&lt;p&gt;If we didn&amp;rsquo;t track the distribution report over a longer period, we would probably have missed the 1 million message increase as well.&lt;/p&gt;
+
+&lt;p&gt;We will ignore the colon as it doesn&amp;rsquo;t represent anything important.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_4&#34;&gt;Built&lt;/h4&gt;
+
+&lt;p&gt;This is probably one of the most important words of the whole message as it tells us the action that the firewall took.&lt;/p&gt;
+
+&lt;p&gt;The word &amp;ldquo;Built&amp;rdquo; tells us that the connection has been accepted based on the security policy and the PIX firewall is going to create a tunnel (figuratively) from the outside world to the inside of the firewall.&lt;/p&gt;
+
+&lt;p&gt;Other firewalls may use the words &amp;ldquo;accept&amp;rdquo; or &amp;ldquo;allow&amp;rdquo; to represent the same information.&lt;/p&gt;
+
+&lt;p&gt;Most log management products will normalize this into &amp;ldquo;accept.&amp;rdquo; By doing so, we can run reports across many different firewall types and identify trends and anomalies.&lt;/p&gt;
+
+&lt;p&gt;It is also important in the compliance world to track all access by users and machines. For example, the SOX regulation requires that all access to financial systems be logged and reviewed. In this case, successful connections should be reviewed periodically to see whether users accessing the financial systems are authorized.&lt;/p&gt;
+
+&lt;p&gt;Because majority of our logs probably contain this type of information, it&amp;rsquo;s generally a bad idea to use it in a real-time correlation rule. It will overwhelm your correlation engine in no time. However, thresholds can be set using this, probably along with the source or destination information (see below).&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_5&#34;&gt;inbound&lt;/h4&gt;
+
+&lt;p&gt;In this PIX message, the words &amp;ldquo;inbound&amp;rdquo; and &amp;ldquo;outbound&amp;rdquo; may appear here. &amp;ldquo;Inbound&amp;rdquo; tells us that the original connection was initiated from outside of the firewall. Vice versa, &amp;ldquo;outbound&amp;rdquo; means that the original connection was initiated from inside of the firewall.&lt;/p&gt;
+
+&lt;p&gt;This word is significant for several reasons.&lt;/p&gt;
+
+&lt;p&gt;First of all, if we see the word &amp;ldquo;inbound&amp;rdquo; in a message, but the connection is initiated from the inside, or &amp;ldquo;outbound&amp;rdquo; connection initiated from the outside, then immediately we know something weird is going on. It could mean that there&amp;rsquo;s a mis-configuration, or a bug in the PIX software :). It&amp;rsquo;s worth an investigation nonetheless.&lt;/p&gt;
+
+&lt;p&gt;Secondly, if we run a firewall that normally doesn&amp;rsquo;t allow &amp;ldquo;inbound&amp;rdquo; connections, and all the sudden we are seeing them in our logs, we would want to drill down and investigate what&amp;rsquo;s happening. Some administrator may have accidentally opened the firewall to the inside for some reason. Whatever it may be, two questions should be answered. First, why did the administrator open up the firewall? And second, why did she leave it open? We may also want to setup alerts based on this scenario.&lt;/p&gt;
+
+&lt;p&gt;Last but not least, we can run a distribution report as we did with the message ID and track it over time. Any sudden increase (or even decrease) in the count may be worth checking into.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_6&#34;&gt;TCP&lt;/h4&gt;
+
+&lt;p&gt;TCP stands for Transmission Control Protocol. It is used by many internet services such as HTTP, SMTP, FTP, SSH, etc. By itself, the word &amp;ldquo;TCP&amp;rdquo; isn&amp;rsquo;t all that interesting. However, the protocol and the destination port together determines the service that the connection is for. For example&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;shell           514/tcp
+syslog          514/udp
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Example&lt;/p&gt;
+&lt;p&gt;As we can see, the port number for these two services are the same, 514. However, the &amp;ldquo;shell&amp;rdquo; service uses TCP and &amp;ldquo;syslog&amp;rdquo; uses UDP. Without the protocol, we would have not been able to determine the service.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  $ ./sequence scan -m &amp;quot;jan 14 10:15:56 testserver sudo:    gonner : tty=pts/3 ; pwd=/home/gonner ; user=root ; command=/bin/su - ustream&amp;quot;
-  #   0: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%ts%&amp;quot;, Value=&amp;quot;jan 14 10:15:56&amp;quot; }
-  #   1: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;testserver&amp;quot; }
-  #   2: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;sudo&amp;quot; }
-  #   3: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;:&amp;quot; }
-  #   4: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;gonner&amp;quot; }
-  #   5: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;:&amp;quot; }
-  #   6: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;tty&amp;quot; }
-  #   7: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;=&amp;quot; }
-  #   8: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%string%&amp;quot;, Value=&amp;quot;pts/3&amp;quot; }
-  #   9: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;;&amp;quot; }
-  #  10: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;pwd&amp;quot; }
-  #  11: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;=&amp;quot; }
-  #  12: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%string%&amp;quot;, Value=&amp;quot;/home/gonner&amp;quot; }
-  #  13: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;;&amp;quot; }
-  #  14: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;user&amp;quot; }
-  #  15: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;=&amp;quot; }
-  #  16: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%string%&amp;quot;, Value=&amp;quot;root&amp;quot; }
-  #  17: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;;&amp;quot; }
-  #  18: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;command&amp;quot; }
-  #  19: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;=&amp;quot; }
-  #  20: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%string%&amp;quot;, Value=&amp;quot;/bin/su&amp;quot; }
-  #  21: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;-&amp;quot; }
-  #  22: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;ustream&amp;quot; }
+&lt;p&gt;Most log management systems don&amp;rsquo;t have reports defined for the common protocols such as TCP or UDP. It might, however, be interesting to track the uncommon ones, if you run anything weird.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_7&#34;&gt;connection 543127891 for&lt;/h4&gt;
+
+&lt;p&gt;We will skip the words &amp;ldquo;connection&amp;rdquo; and &amp;ldquo;for&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;The number, 543127891, is a unique number that represents this specific session inside the PIX&amp;rsquo;s connection table. It is used to track information such as duration and bytes transferred for this connection. These information will become available in another message (ID 302014), once the connection is closed.&lt;/p&gt;
+
+&lt;p&gt;Information such as duration and bytes transferred can be extremely valuable for performance and utilization tracking. We will go over these in more details in Part 2 of Anatomy of Logs.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_8&#34;&gt;outside:&lt;/h4&gt;
+
+&lt;p&gt;We will skip the colon.&lt;/p&gt;
+
+&lt;p&gt;The word &amp;ldquo;outside&amp;rdquo; represents the source interface of the PIX firewall. It is the interface where the connection is originally initiated. Other firewalls may use the word &amp;ldquo;zone&amp;rdquo; to describe this.&lt;/p&gt;
+
+&lt;p&gt;Having this information allows us to quickly map the network from the logs. For example, we can easily identify all the IPs that are &amp;ldquo;outside&amp;rdquo; of the firewall vs &amp;ldquo;inside&amp;rdquo; of the firewall. If we identified IPs that have appeared both &amp;ldquo;outside&amp;rdquo; and &amp;ldquo;inside&amp;rdquo;, it may be a cause for concern: there maybe a backdoor out of your network. We have seen this happen many times on bridged networks. It is probably one of the weirdest scenarios in network troubleshooting as it leaves you scratching your head trying to figure out where/what the backdoor is.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_9&#34;&gt;192.168.11.&lt;sup&gt;250&lt;/sup&gt;&amp;frasl;&lt;sub&gt;41612&lt;/sub&gt; (192.168.11.&lt;sup&gt;250&lt;/sup&gt;&amp;frasl;&lt;sub&gt;41612&lt;/sub&gt;)&lt;/h4&gt;
+
+&lt;p&gt;This whole section here shows the source IP address and port of the connection. In this case, the source IP is 192.168.11.250 and the source port is 41612. There are two parts to this section. The first are the &amp;ldquo;real&amp;rdquo; IP and port, before any translation is done. The second part, inside the parenthesis, are the mapped IP and port, after the network address translation is applied.&lt;/p&gt;
+
+&lt;p&gt;For firewalls with no NAT, these two should be exactly the same. For &amp;ldquo;inbound&amp;rdquo; connections from the outside, these two are probably the same as well. However, if you, for whatever wacky reason, decide to NAT incoming traffic, then these will be different. (Ok, so maybe not wacky, I have seen people who have a second layer of firewall, something about defense-in-depth or some wacky idea like that ;), that will only accept connections from a single source IP. So in this case, NAT might be used.)&lt;/p&gt;
+
+&lt;p&gt;The source port is generally not significant; however, in specific scenarios, it may indicate an exploit attempt. For example, &lt;a href=&#34;http://www.dshield.org/pipermail/intrusions/2003-April/007503.php&#34;&gt;BEWARE ftp clients from SOURCE PORT 1&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;In other cases, it may indicate the the source host is using network address translation. E.g. PIX firewalls&amp;rsquo; Port Address Translation uses ports to track the connections, so it&amp;rsquo;s possible that port 1 is used.&lt;/p&gt;
+
+&lt;p&gt;There&amp;rsquo;s all kinds of reports that can be generated from the source IP address. We can track&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;how often the IPs visit our site by doing a summary report over time&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;which company/domain/country visit our site by performing a reverse DNS looking (or whois) and summarizing&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;which IPs are attempting to scan our network by summarizing the destination IP/ports (see below) attempted&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;toc_10&#34;&gt;inside:&lt;/h4&gt;
+
+&lt;p&gt;This represents &amp;ldquo;inside&amp;rdquo; of the firewall, or the internal network. It is similar to the &amp;ldquo;outside&amp;rdquo; interface as described above.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_11&#34;&gt;10.1.241.&lt;sup&gt;2&lt;/sup&gt;&amp;frasl;&lt;sub&gt;80&lt;/sub&gt; (10.1.241.&lt;sup&gt;2&lt;/sup&gt;&amp;frasl;&lt;sub&gt;80&lt;/sub&gt;)&lt;/h4&gt;
+
+&lt;p&gt;This section describes the destination IP and port of the connection. The first part shows the original, or untranslated, IP and port. The second shows the translated, or mapped, IP and port. For networks that use NAT, these two parts will be different.&lt;/p&gt;
+
+&lt;p&gt;The IP address, 10.1.241.2, shows the destination of the connection.&lt;/p&gt;
+
+&lt;p&gt;The destination port, 80, unlike the source port, is very significant. Together with the protocol (see above), the port will tell us exactly what service is being requested. In this case, port 80 of protocol TCP is HTTP, which means this connection is requesting a web server connection.&lt;/p&gt;
+
+&lt;p&gt;Just like the source IP, many reports can be generated for the destination IP and ports. For example,&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;what are the most accessed servers&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;what are the most requested services&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;what are the most denied servers and/or services&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;what&amp;rsquo;s the distribution of servers and services over time&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As before, seeing a distribution over time will tell us whether we are getting more traffic and whether we should consider upgrading our servers to handle the additional load. Trend analysis is very important for most IT shops.&lt;/p&gt;
+
+&lt;p&gt;One of the more interesting reports to see is &amp;ldquo;what are the LEAST requested services or servers?&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;When hackers install a backdoor on your system, they don&amp;rsquo;t normally make a lot of noises by connecting to it a thousand times. They try to hide their tracks by connecting at odd hours and very infrequently. So seeing the least requested service may actually tell you if there&amp;rsquo;s any backdoor activities.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_12&#34;&gt;What about the time&lt;/h3&gt;
+
+&lt;p&gt;At this point you are probably wondering, &amp;ldquo;where does it tell me when this log was generated?!&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, most logs generated by devices do not include the time. The devices depend on the log management server to include the time when the log is received. So most of the time when you see the time stamp in front of a log, it&amp;rsquo;s the server&amp;rsquo;s time, not the device time.&lt;/p&gt;
+
+&lt;p&gt;In some cases, such as the PIX, the device will allow you to send the time as well. In that case, you will see something like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Apr 30 2004 08:23:36: %PIX-6-302013: Built inbound TCP connection 543127891 for 
+outside:192.168.11.250/41612 (192.168.11.250/41612) to 
+inside:10.1.241.2/80 (10.1.241.2/80)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_8&#34;&gt;Analyze&lt;/h3&gt;
+&lt;hr /&gt;
 
-&lt;pre&gt;&lt;code&gt;  Usage:
-    sequence analyze [flags]
+&lt;p&gt;As you can see, there&amp;rsquo;s a wealth of information in just a single log message. Next time, we will take a look at the corresponding Teardown message in PIX.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Log Management Requirements for MSPs</title>
+      <link>http://zhen.org/blog/log-management-requirements-for-msps/</link>
+      <pubDate>Mon, 29 Nov 2004 02:44:45 &#43;0000</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/log-management-requirements-for-msps/</guid>
+      <description>
 
-   Available Flags:
-    -h, --help=false: help for analyze
-    -i, --infile=&amp;quot;&amp;quot;: input file, required
-    -o, --outfile=&amp;quot;&amp;quot;: output file, if empty, to stdout
-    -d, --patdir=&amp;quot;&amp;quot;: pattern directory,, all files in directory will be used, optional
-    -p, --patfile=&amp;quot;&amp;quot;: initial pattern file, optional
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I spent five years at one of the largest MSSPs as an architect and development manager. We had a couple thousand firewall, VPN, NIDS and HIDS devices that we manage for various hosting and managed service customers. We needed to aggregate all the logs generated by these devices and be able to provide reports and analysis for our customers.&lt;/p&gt;
 
-&lt;p&gt;The following command analyzes a set of sshd log messages, and output the
-patterns to the sshd.pat file. In this example, &lt;code&gt;sequence&lt;/code&gt; analyzed over 200K
-messages and found 45 unique patterns. Notice we are not supplying an existing
-pattern file, so it treats all the patters as new.&lt;/p&gt;
+&lt;p&gt;We spent quite a bit of time looking at various COTS products and services, including &lt;a href=&#34;http://www.arcsight.com&#34;&gt;ArcSight&lt;/a&gt;, &lt;a href=&#34;http://www.intellitactics.com&#34;&gt;Intellitactics&lt;/a&gt;, &lt;a href=&#34;http://www.netforensics.com&#34;&gt;netForensics&lt;/a&gt;, and others. However, none met our requirements.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  $ ./sequence analyze -i ../../data/sshd.all  -o sshd.pat
-  Analyzed 212897 messages, found 45 unique patterns, 45 are new.
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;At the end, we built our own solution using open source tools such as MySQL, GD::Graph, RRD Tool, Cricket, etc.&lt;/p&gt;
 
-&lt;p&gt;And the output file has entries such as:&lt;/p&gt;
+&lt;p&gt;Below are the top ten requirements that any MSP should consider when building their log management solution.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  %ts% %string% sshd [ %integer% ] : %string% ( sshd : %string% ) : session %string% for user %string% by ( uid = %integer% )
-  # Jan 15 19:39:26 jlz sshd[7778]: pam_unix(sshd:session): session opened for user jlz by (uid=0)
-&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;toc_0&#34;&gt;1. Segregation of Logs by Customer&lt;/h3&gt;
 
-&lt;p&gt;In the following command, we added an existing pattern file to the mix, which has
-a set of existing rules. Notice now there are only 35 unique patterns, and we were
-able to parse all of the log messages (no new patterns). There are fewer patterns
-because some of the patterns were combined.&lt;/p&gt;
+&lt;p&gt;As an MSSP, one of the biggest concern we had was the segregation of logs for the many customers we had. We didn&amp;rsquo;t want any of the customer data to be mixed in the same files or database tables as other customers. This requirement drove many of the design decisions we made during the building of the support infrastructure.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  $ ./sequence analyze -d ../../patterns -i ../../data/sshd.all  -o sshd.pat
-  Analyzed 212897 messages, found 35 unique patterns, 0 are new.
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Imagine two competitors had their firewalls managed by the MSP and their data were mixed in the same files, what happens if the data of one competitor were shown to the other because of a bug in the software that&amp;rsquo;s used to filter logs?&lt;/p&gt;
 
-&lt;p&gt;The same log message we saw above now has an entry like the following:&lt;/p&gt;
+&lt;h3 id=&#34;toc_1&#34;&gt;2. Raw Log Retention Is Required&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;  %createtime% %apphost% %appname% [ %sessionid% ] : %string% ( sshd : %string% ) : %object% %action% for user %dstuser% by ( uid = %integer% )
-  # Jan 15 19:39:26 jlz sshd[7778]: pam_unix(sshd:session): session opened for user jlz by (uid=0)
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;One of the requirements we had was that we needed to provide the raw logs to our customers so that they can do their own analysis. We can do all the necessary analysis on our side, but sometimes the customers may want other information from the logs that we don&amp;rsquo;t. Also, customers sometime have information that are proprietary and they can use that information to correlate with the logs.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_9&#34;&gt;Parse&lt;/h3&gt;
+&lt;p&gt;Remember, MSPs built everything based on scale of economy and sometimes it&amp;rsquo;s difficult to customize the solution for individual customers. Obviously if the customer wanted to pay for professional services, there&amp;rsquo;s customization we can do. But not every customer wants to or have the budget to do that.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  Usage:
-    sequence parse [flags]
+&lt;h3 id=&#34;toc_2&#34;&gt;3. Reporting is #1&lt;/h3&gt;
 
-   Available Flags:
-    -h, --help=false: help for parse
-    -i, --infile=&amp;quot;&amp;quot;: input file, required
-    -o, --outfile=&amp;quot;&amp;quot;: output file, if empty, to stdout
-    -d, --patdir=&amp;quot;&amp;quot;: pattern directory,, all files in directory will be used
-    -p, --patfile=&amp;quot;&amp;quot;: initial pattern file, required
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Customers wanted to reports on their security infrastructure. They wanted to see how much traffic (bytes, connections, etc) the firewalls are passing so they can properly plan for the future. They wanted to see how often users are VPN&amp;rsquo;ing into the infrastructure so they can identify any mis-use. They want to see trend reports to show how their infrastructure is holding up. They wanted to see correlated reports of the various devices (firewalls, VPN, IDS, etc) to see if there are any anomalies.&lt;/p&gt;
 
-&lt;p&gt;The following command parses a file based on existing rules. Note that the
-performance number (9570.20 msgs/sec) is mostly due to reading/writing to disk.
-To get a more realistic performance number, see the benchmark section below.&lt;/p&gt;
+&lt;p&gt;Our #1 priority was to provide all these reports and more to our customers.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  $ ./sequence parse -d ../../patterns -i ../../data/sshd.all  -o parsed.sshd
-  Parsed 212897 messages in 22.25 secs, ~ 9570.20 msgs/sec
-&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;toc_3&#34;&gt;4. Then Comes Real-Time Analysis/Alerting&lt;/h3&gt;
 
-&lt;p&gt;This is an entry from the output file:&lt;/p&gt;
+&lt;p&gt;Alerting is another important feature that our customers wanted. They wanted to know when something really bad is happening to their infrastructure. They don&amp;rsquo;t want to get alerted every time some script kiddie scans their network, but they do want to know if their network all the sudden has a huge increase in traffic and continues to increase for a long period of time. They want to know when an unauthorized connection is made to their production database. They want to know when a successful attack has been happened.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;  Jan 15 19:39:26 jlz sshd[7778]: pam_unix(sshd:session): session opened for user jlz by (uid=0)
-  #   0: { Field=&amp;quot;%createtime%&amp;quot;, Type=&amp;quot;%ts%&amp;quot;, Value=&amp;quot;jan 15 19:39:26&amp;quot; }
-  #   1: { Field=&amp;quot;%apphost%&amp;quot;, Type=&amp;quot;%string%&amp;quot;, Value=&amp;quot;jlz&amp;quot; }
-  #   2: { Field=&amp;quot;%appname%&amp;quot;, Type=&amp;quot;%string%&amp;quot;, Value=&amp;quot;sshd&amp;quot; }
-  #   3: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;[&amp;quot; }
-  #   4: { Field=&amp;quot;%sessionid%&amp;quot;, Type=&amp;quot;%integer%&amp;quot;, Value=&amp;quot;7778&amp;quot; }
-  #   5: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;]&amp;quot; }
-  #   6: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;:&amp;quot; }
-  #   7: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%string%&amp;quot;, Value=&amp;quot;pam_unix&amp;quot; }
-  #   8: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;(&amp;quot; }
-  #   9: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;sshd&amp;quot; }
-  #  10: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;:&amp;quot; }
-  #  11: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%string%&amp;quot;, Value=&amp;quot;session&amp;quot; }
-  #  12: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;)&amp;quot; }
-  #  13: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;:&amp;quot; }
-  #  14: { Field=&amp;quot;%object%&amp;quot;, Type=&amp;quot;%string%&amp;quot;, Value=&amp;quot;session&amp;quot; }
-  #  15: { Field=&amp;quot;%action%&amp;quot;, Type=&amp;quot;%string%&amp;quot;, Value=&amp;quot;opened&amp;quot; }
-  #  16: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;for&amp;quot; }
-  #  17: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;user&amp;quot; }
-  #  18: { Field=&amp;quot;%dstuser%&amp;quot;, Type=&amp;quot;%string%&amp;quot;, Value=&amp;quot;jlz&amp;quot; }
-  #  19: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;by&amp;quot; }
-  #  20: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;(&amp;quot; }
-  #  21: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;uid&amp;quot; }
-  #  22: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;=&amp;quot; }
-  #  23: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%integer%&amp;quot;, Value=&amp;quot;0&amp;quot; }
-  #  24: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;)&amp;quot; }
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, the MSPs are the first to receive these alerts and will filter the alerts based on the internal knowledge and SLA. Then the MSP will pass the alerts onto the customer if they are determined to be real.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_10&#34;&gt;Benchmark&lt;/h3&gt;
+&lt;h3 id=&#34;toc_4&#34;&gt;5. Support All My Log Sources&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;  Usage:
-    sequence bench [flags]
+&lt;p&gt;Most MSPs support an array of devices and applications as part of their service. For examples, most MSPs will support firewalls such as PIX, Netscreen, Check Point or IP Tables, Network IDSes such as ISS or Cisco, Host-based IDS such as ISS, Okena, or Trip Wire. Some MSPs will support SSL accelerators or proxies, vulnerability scanning tools, servers, and many other applications.&lt;/p&gt;
 
-   Available Flags:
-    -c, --cpuprofile=&amp;quot;&amp;quot;: CPU profile filename
-    -h, --help=false: help for bench
-    -i, --infile=&amp;quot;&amp;quot;: input file, required
-    -d, --patdir=&amp;quot;&amp;quot;: pattern directory,, all files in directory will be used
-    -p, --patfile=&amp;quot;&amp;quot;: pattern file, required
-    -w, --workers=1: number of parsing workers
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;At Cable &amp;amp; Wireless, we had firewalls, Network or Host based IDSes, scanning tools and authentication services. We needed a solution that will support all these different devices or applications. Most of the logs are sent via syslog except for Check Point firewall, Cisco IDS and Nessus scanning results. The Check Point logs were aggregated at the Provider-1 boxes and they need to be off loaded using LEA. The Cisco IDS alerts need to be retrieved via RDEP. The Nessus scan results were XML files and they needed to be parsed.&lt;/p&gt;
 
-&lt;p&gt;The following command will benchmark the parsing of two files. First file is a
-bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA
-log file, averaging 180 bytes per message.&lt;/p&gt;
+&lt;h3 id=&#34;toc_5&#34;&gt;6. Web-based GUI Only&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;  $ ./sequence bench -p ../../patterns/sshd.txt -i ../../data/sshd.all
-  Parsed 212897 messages in 2.65 secs, ~ 80449.93 msgs/sec
+&lt;p&gt;We needed a web-based GUI so that the customers can access reports, alerts, raw logs and device policies. It&amp;rsquo;s difficult to support any GUI that requires installation on the customer&amp;rsquo;s desktop. Non-web applications will eventually have conflicts with other applications and will require support from the MSP. That model is not scalable.&lt;/p&gt;
 
-  $ ./sequence bench -p ../../patterns/asa.txt -i ../../data/allasa.log
-  Parsed 234815 messages in 4.42 secs, ~ 53081.36 msgs/sec
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We also needed to embed this interface in our own web based interface. It is much easier to embed another web interface than an application. It is also much easier to skin a web interface as we wanted to have our corporate color scheme and logos there.&lt;/p&gt;
 
-&lt;p&gt;Performance can be improved by adding more cores:&lt;/p&gt;
+&lt;h3 id=&#34;toc_6&#34;&gt;7. Distributed Collection Points&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;  GOMAXPROCS=2 ./sequence bench -p ../../patterns/sshd.txt -i ../../data/sshd.all -w 2
-  Parsed 212897 messages in 1.52 secs, ~ 140139.27 msgs/sec
+&lt;p&gt;Cable &amp;amp; Wireless had over 40 data centers all over the world. Most MSPs probably have distributed environments as well. The devices that we managed were spread all over the data centers. They can be in UK or NY or SF or even HK or Japan. We needed a solution that can collect logs in all these different locations. We needed to be able to collect logs close to the log source so that the chance of dropped logs is minimized. We also wanted to keep the cost of these remote collectors relatively low comparing to the central archive.&lt;/p&gt;
 
-  $ GOMAXPROCS=2 ./sequence bench -p ../../patterns/asa.txt -i ../../data/allasa.log -w 2
-  Parsed 234815 messages in 2.51 secs, ~ 93614.09 msgs/sec
-&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;toc_7&#34;&gt;8. Secure Connections All The Way&lt;/h3&gt;
+
+&lt;p&gt;As a security organization, everything we did that can be secured must be secured. Unfortunately we cannot secure protocols such as syslog from a PIX, but we must support SSL for the web interface, Cisco RDEP, Check Point LEA, and encryption between remote collectors and the central storage. We also needed to secure the connection between the database and other components if they are in different networks.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_8&#34;&gt;9. No Agents Whatsoever&lt;/h3&gt;
+
+&lt;p&gt;Due to the risk (performance, application conflicts, etc) of installing additional software (custom agents) on servers, we needed a solution that doesn&amp;rsquo;t require agents. This requirement is generally not a problem for most devices since they send logs via syslog. However, it&amp;rsquo;s a big issue for Windows based operating systems. There are several methods that one can collect Windows events, as I have written &lt;a href=&#34;http://www.trustpath.com/logmatters/index.php?p=9&#34;&gt;previously&lt;/a&gt;. However, all these methods have their problems such as requirements of agents or performance issues or none-real-time logging. Since we didn&amp;rsquo;t manage many Windows devices, this was not our major concern.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_9&#34;&gt;10. Open API for Integration&lt;/h3&gt;
+
+&lt;p&gt;Another requirement was that we needed to run reports or search logs via scripts or web applications. We ran many background processes that sent out reports to customers or create custom reports based on some other condition. All these needed to be automated due to the need for scale of economy. This required that the solution to provide some type of open API that can be used within other programs.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_10&#34;&gt;11. Granular Permission Model&lt;/h3&gt;
+
+&lt;p&gt;Since we needed to provide alerts, reports and raw logs to customers, we need to make sure customers have access to ONLY their own information. It was critical that customers don&amp;rsquo;t see other customers&amp;rsquo; data. We needed the solution to have a granular permission model that can determine which devices belong to which customer, which reports the customers/users can see, which log files can be viewed by customers, etc.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;These are some of the requirements for an MSP. I hope this will help you evaluate and build your own log management infrastructure.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Five Factors to Consider When Building Your Logging Infrastructure</title>
+      <link>http://zhen.org/blog/five-factors-to-consider-when-building-your-logging-infrastructure/</link>
+      <pubDate>Fri, 19 Nov 2004 09:39:12 &#43;0000</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/five-factors-to-consider-when-building-your-logging-infrastructure/</guid>
+      <description>
+
+&lt;p&gt;Whether you are building your own home-grown logging infrastructure (which of course I do not recommend ;)) or evaluating a log management solution, there are at least five factors you should consider.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_0&#34;&gt;1. Log Retention&lt;/h3&gt;
+
+&lt;p&gt;The log retention period obviously depends on your requirements. If you are building out the infrastructure for troubleshooting and short term reporting, you may only need to keep 1-2 months of logs. But if you are doing it so you can be in compliance with SOX or HIPAA regulations, you will need to keep AT LEAST 6 months for the auditors.&lt;/p&gt;
+
+&lt;p&gt;As a rule of thumb, if your requirement is regulatory compliance, make the retention period 12 months to be safe. If you can afford it or the product can support it, go even longer.&lt;/p&gt;
+
+&lt;p&gt;Obviously how long your retention period is also depend on the volume of logs you receive as well as the product/tool&amp;rsquo;s ability to manage the log storage. If you are building your own, be sure to take into consideration of building a log rotation process. For example, if your retention period is 12 months. Your process should remove the old logs or put them on tape. If you are evaluating a product, be sure the product has the capability of rotating/purging old logs for you. Don&amp;rsquo;t spend $200K and then have to write your own scripts.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;2. Log Volume&lt;/h3&gt;
+
+&lt;p&gt;Log volume is probably one of the most critical factors in building your infrastructure. It has direct impacts on your retention policy, report/search performance, aggregation performance and correlation performance.&lt;/p&gt;
+
+&lt;p&gt;Vendors talk about log volumes in many ways but it all comes down to the number of log message per second you receive. With that number in hand, you can calculate how much storage space you will need. For example, if your log message rate is 2000/second, assuming 200 bytes per message (which is fairly normal), we have&lt;/p&gt;
+
+&lt;p&gt;2000 * 3600 * 24 = 172.8 million messages / day
+172.8M * 200 bytes =~ 33GB / day * 30 days = ~100GB / month&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s quite a bit of data. This exercise brings up a few things you should be aware of.&lt;/p&gt;
+
+&lt;p&gt;First, you need a product or develop a solution that can handle the message rate that your environment generates. In this example, get something that can handle at least 3000 messages per second: 2000 for your requirement, another 30% for growth and possible spikes. If you are evaluating a product, test it to make sure it doesn&amp;rsquo;t drop any of your logs due to performance issues of the software/appliance.&lt;/p&gt;
+
+&lt;p&gt;Second, you need something that will compress the log archives. With 100GB/month, your storage requirement will go through the roof!! Even gzip will give you atleast 10:1 compression on the logs.&lt;/p&gt;
+
+&lt;p&gt;Third, note how I used a 200 byte per message? Well, if you parse it and put it in a database, the storage requirement per message will increase. For example, ArcSight uses a 2KB/message for their calculations. That basically takes the 1 month retention storage requirement to over 1TB! Ask your vendors or do your own calculation on what the &lt;strong&gt;REAL&lt;/strong&gt; storage requirement is. Make sure the product you are looking at has enough storage space for your retention policy.&lt;/p&gt;
+
+&lt;p&gt;Last but not least, your log volume really impacts the performance of the product you choose. Some of the products, as the volume grow in the database, will have problem running reports for a long period of time. If you need to run a report for over a month or two, sometimes it may take hours for a single report. It&amp;rsquo;s difficult to test this during a evaluation period, but many of the implementations fail because of this.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_2&#34;&gt;3. Log Sources&lt;/h3&gt;
+
+&lt;p&gt;What are all the devices, servers and applications that will be logging? If you are developing your own solution, there may be a lot of work for you to do in order to parse the various log messages. The good thing is you will only need to parse the specific logs you need and not everything.&lt;/p&gt;
+
+&lt;p&gt;There are many different logging methods (file, database, syslog, proprietary) and formats (single-line, multi-line, XML, database records).&lt;/p&gt;
+
+&lt;p&gt;Most vendors will show you a list of all the logs their product will support. Some vendors will support 100&amp;rsquo;s of log sources across many different categories, such as firewalls, routers, switches, IDSes, web servers, mail servers, access control software, operating systems, etc etc etc.&lt;/p&gt;
+
+&lt;p&gt;Make sure the product you are looking at supports all your log sources. If not, make sure that there&amp;rsquo;s a way for you to develop new parsers for it. Most of the time it will just be some regular expression for parsing logs.&lt;/p&gt;
+
+&lt;p&gt;Make sure the product will support some of the native logging methods and formats. For example, Check Point logs can be retrieved via the LEA protocol and Cisco IDS via RDEP. Windows event logs are just a pain in the butt if your central log retriever is a non-windows platform.&lt;/p&gt;
+
+&lt;p&gt;Some products will accept &lt;strong&gt;ANY&lt;/strong&gt; log even if it doesn&amp;rsquo;t parse them. That will allow you to archive the logs and do some rudimentary search and alerts on them, but not do detailed reports.&lt;/p&gt;
+
+&lt;p&gt;However, some products will hardcode the parsers in their code and no way for you to create any new parsing intelligence. Beware of what you are getting into if that&amp;rsquo;s the product you are looking at.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_3&#34;&gt;4. Log Analysis&lt;/h3&gt;
+
+&lt;p&gt;Ok, so this is a huge area. Log analysis includes everything from reports, correlation, anomaly detection, and trend analysis. It again depends on your requirements. However, your solution or product should have some of the basic functions such as threshold and rule-based alerts via email or SNMP.&lt;/p&gt;
+
+&lt;p&gt;Most vendors will provide pre-defined reports that covers the Top N reports across most of the log sources they support. The pre-defined reports are basically the intelligence of the products. Without them, the product is basically useless and you will need to spend a lot of time configuring it instead of using it.&lt;/p&gt;
+
+&lt;p&gt;Log analysis can cover many different areas, including security incidents detection, virus infected machines discovery, device/application up/down, usage analysis and capacity planning. Most of the SIM products basically focus on just security incidents detection. If your requirement is not just security, make sure the products can handle it.&lt;/p&gt;
+
+&lt;p&gt;Report and correlation performance is a critical factor. If reports takes hours, it&amp;rsquo;d be somewhat useless when you need a quick ad-hoc report to figure out which IPs are DOSing you. Build your infrastructure w/ at least 30% more performance than you need. That way you have some room to grow and also allow you to do quick reports when you are receiving a spike of logs.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_4&#34;&gt;5. Network Topology&lt;/h3&gt;
+
+&lt;p&gt;Your network topology impacts how you should architect your logging infrastructure. If you have a fairly distributed topology, e.g. many remote locations, you will want to design a solution or look for a product that have a distributed architecture, that can retrieve/receive logs in a distributed manner and forward logs back to a central location for analysis and archival.&lt;/p&gt;
+
+&lt;p&gt;If you just have a single central location (I can&amp;rsquo;t imagine anyone having that kind of infrastructure these days), you can probably get away with a product that can&amp;rsquo;t be architected in a distributed manner.&lt;/p&gt;
+
+&lt;p&gt;Ok, so here comes the downside of distributed architecture. Price! Any additional component you add will cost you. Be sure to check w/ the vendors to see how much it will REALLY cost. Also, some of the smaller devices vendors provide for remote locations can handle a lower message rate, make sure the ones you choose for each location can meet the requirement and have some room to grow.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;I hope this helps you in understanding what&amp;rsquo;s needed to build your logging infrastructure. Please let me know if you have any questions or comments.&lt;/p&gt;
+
+&lt;p&gt;P.S. I would love to see a review of log management products w/ these 5 factors in mind and actually score the products for each factor.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Regex-less Parsing of Messages</title>
+      <link>http://zhen.org/blog/regex-less-parsing-of-messages/</link>
+      <pubDate>Fri, 19 Nov 2004 09:39:12 &#43;0000</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/regex-less-parsing-of-messages/</guid>
+      <description>
+
+&lt;p&gt;A very &lt;a href=&#34;http://lists.shmoo.com/pipermail/loganalysis/2005-December/date.html&#34;&gt;interesting and useful discussion&lt;/a&gt; took place the last week on the &lt;a href=&#34;http://lists.shmoo.com/pipermail/loganalysis/&#34;&gt;LogAnalysis mailing list&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.chuvakin.org/&#34;&gt;Anton Chuvakin&lt;/a&gt; started the thread by &lt;a href=&#34;http://lists.shmoo.com/pipermail/loganalysis/2005-December/002906.html&#34;&gt;asking&lt;/a&gt; other than parsing the individual messages (that could potentially have thousands of different formats), what other methods can be used in analyzing logs?&lt;/p&gt;
+
+&lt;p&gt;Some suggestions out of this discussion are listed here.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_0&#34;&gt;Clustering&lt;/h3&gt;
+
+&lt;p&gt;Anton listed this as an option using tools such as &lt;a href=&#34;http://www.estpak.ee/~risto/slct/&#34;&gt;slct&lt;/a&gt;. Another effort that I am aware of that&amp;rsquo;s using this approach is &lt;a href=&#34;http://www.securimine.com/&#34;&gt;Securimine for Snort (SFS) from Securimine&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Securimine is founded by Ophir Rachman, who also founded &lt;a href=&#34;http://www.mcafee.com/us/products/mcafee/host_ips/category.htm&#34;&gt;Entercept Security Technologies&lt;/a&gt; (later on acquired by McAfee).&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;Brute-force Parsing&lt;/h3&gt;
+
+&lt;p&gt;This method basically tries to guess some of the data structures inside a log message, such as IP address, hostname, username, password, action, etc etc.&lt;/p&gt;
+
+&lt;p&gt;Being able to correctly guess what data is a message without first knowing the message format is a tough problem. It relies on the parser knowing the exact structure of some of the data.&lt;/p&gt;
+
+&lt;p&gt;However, it can still be used to assist in parsing unknown messages. You can also apply some simple logics to classify the messages. Such as, if you see keywords such as from or to and IP addresses, that may be a firewall message.&lt;/p&gt;
+
+&lt;p&gt;Obviously this is not a fool-proof way, but given the alternative (not doing anything with the message at all!), it is a viable solution.&lt;/p&gt;
+
+&lt;p&gt;(One may ask the question of, is it better to not do anything so the users won&amp;rsquo;t be misled? or is it better to attempt in guessing and possibly give the wrong information? what do you think?)&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_2&#34;&gt;Bayes/Markov/Expert Systems/Neural Nets/Genetic Algorithms&lt;/h3&gt;
+
+&lt;p&gt;Several of the statisitical type of analysis were mentioned here.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Expert system  - a collection of empirical data and decision algorithms compiled by developers&lt;/li&gt;
+&lt;li&gt;Hidden Markov models - since they are used in natural language and speech processing they might be applicable to log entries (they are after all some type of  &amp;ldquo;natural speech&amp;rdquo;).&lt;/li&gt;
+&lt;li&gt;Neural nets - Once built, the neural net would be trained by experienced teachers (log analysis gurus).&lt;/li&gt;
+&lt;li&gt;Genetic algorithms - The trick would be to 1. define the right requirements (for example, determine the least number of message types without discarding significant data) and 2. define the genetic codes for the solution organisms. Maybe GAs are a bit far fetched but I wouldn&amp;rsquo;t exclude them.&lt;/li&gt;
+&lt;li&gt;Bayes - Bayesian classifiers have been extremely popular and successful in spam filtering. The success of baysian in spam filtering is partly due to the simplicity of classifying emails into ham and spam. In the log world, it is much tougher to tell from good to bad. Also, lots of not-bad messages may also indicate something bad. So it is tough to say how one can apply this type of technology to log analysis.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Obviously I am no mathematician nor do I claim to understand the nitty-gritty details of statistical analysis, so I can&amp;rsquo;t comment much on the technical merit of these methods. But love to hear from anyone who have more knowledge.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_3&#34;&gt;Indexing&lt;/h3&gt;
+
+&lt;p&gt;One of the newer methods of analyzing logs is indexing and providing Google like search capabilities for all logs. This is something &lt;a href=&#34;http://www.loglogic.com&#34;&gt;LogLogic&lt;/a&gt; and &lt;a href=&#34;http://www.splunk.com&#34;&gt;Splunk&lt;/a&gt; are doing.&lt;/p&gt;
+
+&lt;p&gt;The basic idea is that instead of parsing the messages by understanding every single format, use the full-text indexing approaches to break the messages into tokens, then allow users to use boolean search expressions to search the logs.&lt;/p&gt;
+
+&lt;p&gt;This method is great when it comes to troubleshooting and forensic analysis. If complemented with the understanding of the log formats, it can be as powerful as other methods.&lt;/p&gt;
+
+&lt;p&gt;I wrote an article on &lt;a href=&#34;http://www.computerworld.com/developmenttopics/development/webservices/story/0,10801,105905,00.html&#34;&gt;Searching for Root Cause&lt;/a&gt; a while back on the benefit of using Google-like indexed search on logs.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_4&#34;&gt;Tokenizing&lt;/h3&gt;
+
+&lt;p&gt;This is the way most log analyzers are using today. This method generally require writing regular expressions or similar methods to parse the individual pieces of information out of the log messages.&lt;/p&gt;
+
+&lt;p&gt;Rainer Gerhards has a great summary in his paper &lt;a href=&#34;http://www.monitorware.com/en/workinprogress/nature-of-syslog-data.php&#34;&gt;On the Nature of Syslog Data&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_5&#34;&gt;Various standards&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://msdn.microsoft.com/library/default.asp?url=/library/en-us/wes/wes/about_the_windows_event_log.asp&#34;&gt;About Windows Event Log&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www-128.ibm.com/developerworks/autonomic/library/ac-cbe1/&#34;&gt;IBM&amp;rsquo;s Common Base Event XML format&lt;/a&gt; - This is a VERY complicated XML based format that tries to cover everything. I see two huge problem with this type of format. First, it hugely expands the storage requirement given that raw log storage is required. Second, it could make parsing that much slower given the size of a single log (multiple KBs instead of hundres of bytes). It&amp;rsquo;s been morphed into the &lt;a href=&#34;http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=wsdm&#34;&gt;OASIS standard WSDM Management Using Web
+Services v1.0 (WSDM-MUWS)&lt;/a&gt; .&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.faqs.org/rfcs/rfc3881.html&#34;&gt;RFC 3881 - Security Audit and Access Accountability Message XML Data Definitions for Healthcare Applications&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;WELF&lt;/p&gt;
+
+&lt;p&gt;W3C&lt;/p&gt;
+
+&lt;p&gt;IDMEF - Intrusion Detection Message Exchange Format&lt;/p&gt;
+
+&lt;p&gt;IDIOM - Intrusion Detection Interaction and Operations Messages (Cisco message format)&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Microscope vs. Telescope</title>
+      <link>http://zhen.org/blog/microscope-vs-telescope/</link>
+      <pubDate>Sat, 06 Nov 2004 17:47:32 &#43;0000</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/microscope-vs-telescope/</guid>
+      <description>&lt;p&gt;Any good log analysis software should be able to provide two different views: microscopic and telescopic.&lt;/p&gt;
+
+&lt;p&gt;Under a &lt;strong&gt;microscope&lt;/strong&gt;, the user should be able to see all the nitty-gritty details of an event or incident. An event under a microscope should show details of the fields that makes up that event. For example, if you are looking at a network connection of a firewall event under the microscope, the view should give you the source host, destination host, source port, destination port, and any other information that came with the connection.&lt;/p&gt;
+
+&lt;p&gt;If you are looking at an incident under a microscope, the view should show you all the events that made up the incident. The events can come from different devices, such as firewall, IDS, routers, switches, or applications such as web/application servers, databases, or operating systems such as Windows or Linux. From that view, you can examine each event under a microscopic view as well.&lt;/p&gt;
+
+&lt;p&gt;Under a &lt;strong&gt;telescope&lt;/strong&gt;, the user should be provided a high level view of the infrastructure. It may be that the highest level view is a world map of your infrastructure. From there, you can drill down to each site, then each machine, each application, each incident, each event.&lt;/p&gt;
+
+&lt;p&gt;Another type of telescopic view may be a graph, e.g. a line graph showing the connection count of a device over a day/week/month period. From this telescopic view, if one sees something abnormal, such as a spike in connection count, one can select that time period and drill down to find out what makes up the spike. For example, the following graph is a graph of connections of a device over a year.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://www.trustpath.com/logmatters/wp-content/fw_conns.png&#34; alt=&#34;Firewall Connection Graph&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Yet another type of telescopic view may be a attack pattern graph showing all the alerts you have received from the various IDS sensors. You can then select a specific attack to drill down to view all the events that made up the attack. The following example shows a list of hosts attacking a single one. The number shows the number of attacks and the color shows the standard deviation.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://www.trustpath.com/logmatters/wp-content/attack_pattern.jpg&#34; alt=&#34;Attack Pattern Graph&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;The ability to transition from a telescopic view to a microscopic view is extremely important to any log analysis software. Imagine being able to select a portion of the &amp;ldquo;Firewall Connection Graph&amp;rdquo; and drill down to the events or click on the &amp;ldquo;Attack Pattern Graph&amp;rdquo; and bring up the attacks from a specific host.&lt;/p&gt;
+
+&lt;p&gt;As you are evaluating various tools and products for your environment,&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Ask the vendor to see if they provide that capability&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Use to the software to see how easy it is to drill down&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Compare the products and tools to see if they give you the same results&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Think Microscope == Details and Telescope == Trends, Graphs, Charts, Summaries.&lt;/p&gt;
+
+&lt;p&gt;Side Note: I borrowed the terms &lt;strong&gt;Microscope&lt;/strong&gt; and &lt;strong&gt;Telescope&lt;/strong&gt; from &lt;a href=&#34;http://www.guykawasaki.com&#34;&gt;Guy Kawasaki&lt;/a&gt;&amp;rsquo;s new book. I started reading &lt;a href=&#34;http://www.guykawasaki.com/books/&#34;&gt;The Art of the Start&lt;/a&gt; couple of nights ago and found it to be one of the best &lt;strong&gt;practical&lt;/strong&gt; books for entrepreneurs. You can find favorable reviews of the book almost everywhere. Just &lt;a href=&#34;http://www.google.com&#34;&gt;Google It&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Five Business Mistakes of Log Analysis</title>
+      <link>http://zhen.org/blog/five-business-mistakes-of-log-analysis/</link>
+      <pubDate>Thu, 04 Nov 2004 03:06:54 &#43;0000</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/five-business-mistakes-of-log-analysis/</guid>
+      <description>
+
+&lt;p&gt;Aside from the technical or operational mistakes mentioned in this &lt;a href=&#34;http://www.computerworld.com/securitytopics/security/story/0,10801,96587,00.html?SKC=security-96587&#34;&gt;article&lt;/a&gt;, there are also business mistakes that organizations can make in their implementation of the log analysis infrastructure/product.&lt;/p&gt;
+
+&lt;p&gt;Below are five common mistakes that are commonly seen in organizations.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_0&#34;&gt;1. Lack of clear understanding of the values&lt;/h3&gt;
+
+&lt;p&gt;Return on Investment (ROI) is usually a metric organizations use to justify any capital investments. Most SIM vendors have one, and they usually use it to help the buyers in the organizations to justify the investment to the upper management. Most ROI are centered around four different areas: revenue, cost, asset and risk.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, most of the metrics around SIM products are &amp;ldquo;fuzzy&amp;rdquo; metrics, i.e., was the increase in revenue or reduction in cost really caused by the implementation of the SIM products? There might be many factors, but the implementation of the SIM product most likely helped. Was the risk really reduced due to the implementation? Maybe, maybe not.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Revenue ROI&lt;/strong&gt; is probably the easiest to understand. How much more money did we make after the implementation?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Cost ROI&lt;/strong&gt; can have many factors, including labor, productivity, COGS, depreciation, training cost, waste and many others.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Asset ROI&lt;/strong&gt; can include inventory, DPO, DSO, property plant and equipment, and others.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Risk ROI&lt;/strong&gt; can include lawsuits, regulations and fines, and other catastrophic events.&lt;/p&gt;
+
+&lt;p&gt;Calculating the exact value of a SIM product is almost impossible. This makes measuring and evaluating the success of a SIM solution very difficult.&lt;/p&gt;
+
+&lt;p&gt;When calculating the ROI, be sure to have a clear understanding of the TCO (Total Cost of Ownership, and how many TLAs can we throw out?). Some solutions will require professional services while others don&amp;rsquo;t. Some solutions will require you to get the hardware while others come as an appliance. Without a concrete TCO, the ROI figures are meaningless.&lt;/p&gt;
+
+&lt;p&gt;Understanding the various ROI metrics, knowing that these are fuzzy metrics, and clearly defining what the organization expects from a successful implementation will help shape the clear understanding of the values.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;2. Lack of clear understanding of the users&lt;/h3&gt;
+
+&lt;p&gt;Who are the main users of the solution you are implementing? Are they business users or technical users? Are they power users or casual users?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Business users&lt;/strong&gt; are usually users from marketing, finance, and other non-technical groups in the organization. They are usually managers, directors and upper management. These users want to see summaries, dash boards, charts, graphs, and other reports that gives them a high level view and the ability to spot trends.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Technical users&lt;/strong&gt; are usually users from IT, security and other operations groups. These are the users who want to see all the nitty-gritty details. They want to drill down and diagnose/troubleshoot problems. They perform the root cause analysis when the **** hits the fan. Some of the operational users will also want to see dash boards so that they can see things at a glance.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Power users&lt;/strong&gt; are the people who wants to create their own reports. They are used to sophisticated interfaces and want the flexbility over (over-)simplicity. There users generally use the system 3 or 4 times a week or even every day and they can be anywhere in the organization, including marketing and finance.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Casual users&lt;/strong&gt; generally use the system once a week or every other week. They may not even log into the system and prefer to receive the reports via email. These users wants to run pre-built reports and they have a specific set of reports they want to see. They don&amp;rsquo;t have the knowledge or time to build their own reports.&lt;/p&gt;
+
+&lt;p&gt;Knowing who your users are directly affect the solution you choose. If your users are mostly business users, you may want to choose a solution that&amp;rsquo;s easy to use and provide the necessary views for these users. If most of your users are technical users, you will want a solution that provides the users the flexibilities that they need. Giving a technical users&amp;rsquo; interface to the business users will intimidate them and turn them off.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_2&#34;&gt;3. Lack of clear understanding of the requirements&lt;/h3&gt;
+
+&lt;p&gt;Simply stating that &amp;ldquo;we need to analyze our firewall and web server logs&amp;rdquo; is not a requirement.  Having a SIM vendor come in to pitch, then draft the requirements based on the conversations is also the wrong way to go. These are just lazy ways of trying to get out of identifying the real requirements. There&amp;rsquo;s no other way to detail out the requirements other than talking to the potential users.&lt;/p&gt;
+
+&lt;p&gt;Are your requirements based on regulations? security attacks? operational problems? If so, which regulation? What type of security attacks? internal or external? DoS attacks? What are the operational problems? Performance or capacity optimization? Trend analysis?&lt;/p&gt;
+
+&lt;p&gt;Are your requirements centered around log retention? real-time alerts? long term analysis? If so, how long is the retention requirement? How &amp;ldquo;real time&amp;rdquo; do the alerts need to be? How far back do you need to perform analysis?&lt;/p&gt;
+
+&lt;p&gt;Do you have requirements on which logs need to be kept? OS logs? Network logs? Application logs? What type of reports the users need to see? High level or detailed reports?&lt;/p&gt;
+
+&lt;p&gt;Does your organization have requirements on the platforms? Windows? Linux? Java? No Java? Integration with corporate (authentication/authorization/web/database/storage) infrastructure?&lt;/p&gt;
+
+&lt;p&gt;What&amp;rsquo;s your requirement on performance? scalability? extensibility? manageability? usability? security? How much logs are you receiving (per second, retention period)? What&amp;rsquo;s your network architecture (VERY distributed or centralized)? How many people are going to maintain this solution (1 admin with MANY OTHER responsibilities or you have spare resources)?&lt;/p&gt;
+
+&lt;p&gt;What are the criticality and/or priority of your requirements?&lt;/p&gt;
+
+&lt;p&gt;Before evaluating any solutions, all these questions should be answered in details. Knowing your requirements will help you find the best product to fit your needs. Try not to choose a product or create unreasonable requirements because of brand loyalty (we only work with vendor X) or FOE (Friends of Executives).&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_3&#34;&gt;4. Lack of clear understanding of the options&lt;/h3&gt;
+
+&lt;p&gt;With all the talks these days about security information or event management and log analysis, it&amp;rsquo;s easy for organizations to jump on the bandwagon and decide that they must have a SIM product in order to meet the requirements.&lt;/p&gt;
+
+&lt;p&gt;There are at least 3 options out there: &lt;strong&gt;commercial, open source and home-grown solutions&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Before you jump to a commercial solution, you should evaluate your resources and skills within your own organization and see if you can/should go open source.&lt;/p&gt;
+
+&lt;p&gt;There are many factors when considering the commercial, open source or home-grown options. They include&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Resource&lt;/strong&gt;. Do you have the head count that can support the option you choose? Commercial solutions may relieve your engineers from having to write and maintain code. When there&amp;rsquo;s a problem, you can throw it over to the vendor and demand a resolution. Open source solutions is a middle ground between commercial and home-grown solutions. But when there&amp;rsquo;s a problem, you have to either wait for a patch from the maintainers of the software or roll your own patch. Home-grown solutions will probably require the most from your engineers. You will have to write and maintain and enhance your solution.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Skill set&lt;/strong&gt;. Do your engineers have the necessary skills to maintain an open source solution or develop a home-grown solution? This really goes back to your requirements. If your requirement is mainly retention and not analysis, you may be able to do that in house or get a open source solution. But if you are looking for deep correlation analysis, sophisticated graphing and charting, and pre-built log parsers and reports, you may want to check out a commercial solution.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Time&lt;/strong&gt;. Even if you have the resources and skills within your organization, can you spare the time? Building a solution that meets your requirements is not a small undertaking. It will require dedicated resources and A LOT of time, time your organization probably can&amp;rsquo;t spare. Can you spend hours or days in diagnosing your home-grown solution?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Budget&lt;/strong&gt;. What is your budget for implementing this solution? Commercial solutions are not cheap. They can range anywhere from $25k to $750k, depending on your requirements. Your budget may vary based on the executive sponsor, the scale (departmental or corporate-wide), the urgency (SOX compliant by 2005), the risk (your organization lost 200k credit card #&amp;rsquo;s to a hacker last month), and other factors. If you have a small or no budget, you may need to go the open source or home-grown route (but know that these routes will have high costs as well).&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Knowing your requirements will allow you to find the right option to meet your requirements.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_4&#34;&gt;5. Lack of clear understanding of the products&lt;/h3&gt;
+
+&lt;p&gt;Many of the log analysis solutions out there are strong in some areas and weak in others. For example, some of the solutions provide better real-time analysis, whereas others are better at historical analysis. Some solutions are better at integrating the MANY log sources (network, system, application) whereas others provide better reports. Some solutions come in an appliance form factor, others are packaged software. Some solutions are targeted towards business users whereas others are targeted towards power users. Some solutions have much better visualizations while others have none.&lt;/p&gt;
+
+&lt;p&gt;Many vendors will tell you that they are strong in all areas. That&amp;rsquo;s a &lt;strong&gt;LIE&lt;/strong&gt;! If they tell you that, run away as fast as you can (or kick them out as fast as you can).&lt;/p&gt;
+
+&lt;p&gt;As the vendors about your requirements. Ask them to rate how well their solution meets your requirement. Ask to see a demo. Ask for an evaluation (on site or hosted by the vendor). Ask them how their solution compare to their competitors. Ask them to share their product roadmap (when you are seriously considering the product.) Ask about the support structure.&lt;/p&gt;
+
+&lt;p&gt;Do &lt;strong&gt;not&lt;/strong&gt; ever buy a solution without actually using it. There&amp;rsquo;s no way to tell how usable the product is or whether it meets your requirements by looking at power point slides.&lt;/p&gt;
+
+&lt;p&gt;Try to be open minded. Most of the solutions you will see are still fairly new to the market. They will have holes and problems. They will not meet all your requirements 100%. This is why it is necessary to prioritize your requirements. It maybe that you need both real-time and historical analysis, but one of those may not be as critical as the other. In that case, if a vendor doesn&amp;rsquo;t meet the less critical requirement but has a strong roadmap, it might be fine.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;These are common mistakes organizations make when they are considering a log analysis solution. Spending some time up front will help you avoid these and allow you to implement a solution that meets your &lt;strong&gt;real&lt;/strong&gt; requirements.&lt;/p&gt;
 </description>
     </item>
     

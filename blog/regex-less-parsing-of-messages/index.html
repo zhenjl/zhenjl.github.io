@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Regex-less Parsing of Messages &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-681691-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org/blog">Archive</a></li>
+      
+    </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Regex-less Parsing of Messages</h1>
+  <span class="post-date">Fri, Nov 19, 2004</span>
+      
+
+<p>A very <a href="http://lists.shmoo.com/pipermail/loganalysis/2005-December/date.html">interesting and useful discussion</a> took place the last week on the <a href="http://lists.shmoo.com/pipermail/loganalysis/">LogAnalysis mailing list</a>.</p>
+
+<p><a href="http://www.chuvakin.org/">Anton Chuvakin</a> started the thread by <a href="http://lists.shmoo.com/pipermail/loganalysis/2005-December/002906.html">asking</a> other than parsing the individual messages (that could potentially have thousands of different formats), what other methods can be used in analyzing logs?</p>
+
+<p>Some suggestions out of this discussion are listed here.</p>
+
+<h3 id="toc_0">Clustering</h3>
+
+<p>Anton listed this as an option using tools such as <a href="http://www.estpak.ee/~risto/slct/">slct</a>. Another effort that I am aware of that&rsquo;s using this approach is <a href="http://www.securimine.com/">Securimine for Snort (SFS) from Securimine</a>.</p>
+
+<p>Securimine is founded by Ophir Rachman, who also founded <a href="http://www.mcafee.com/us/products/mcafee/host_ips/category.htm">Entercept Security Technologies</a> (later on acquired by McAfee).</p>
+
+<h3 id="toc_1">Brute-force Parsing</h3>
+
+<p>This method basically tries to guess some of the data structures inside a log message, such as IP address, hostname, username, password, action, etc etc.</p>
+
+<p>Being able to correctly guess what data is a message without first knowing the message format is a tough problem. It relies on the parser knowing the exact structure of some of the data.</p>
+
+<p>However, it can still be used to assist in parsing unknown messages. You can also apply some simple logics to classify the messages. Such as, if you see keywords such as from or to and IP addresses, that may be a firewall message.</p>
+
+<p>Obviously this is not a fool-proof way, but given the alternative (not doing anything with the message at all!), it is a viable solution.</p>
+
+<p>(One may ask the question of, is it better to not do anything so the users won&rsquo;t be misled? or is it better to attempt in guessing and possibly give the wrong information? what do you think?)</p>
+
+<h3 id="toc_2">Bayes/Markov/Expert Systems/Neural Nets/Genetic Algorithms</h3>
+
+<p>Several of the statisitical type of analysis were mentioned here.</p>
+
+<ol>
+<li>Expert system  - a collection of empirical data and decision algorithms compiled by developers</li>
+<li>Hidden Markov models - since they are used in natural language and speech processing they might be applicable to log entries (they are after all some type of  &ldquo;natural speech&rdquo;).</li>
+<li>Neural nets - Once built, the neural net would be trained by experienced teachers (log analysis gurus).</li>
+<li>Genetic algorithms - The trick would be to 1. define the right requirements (for example, determine the least number of message types without discarding significant data) and 2. define the genetic codes for the solution organisms. Maybe GAs are a bit far fetched but I wouldn&rsquo;t exclude them.</li>
+<li>Bayes - Bayesian classifiers have been extremely popular and successful in spam filtering. The success of baysian in spam filtering is partly due to the simplicity of classifying emails into ham and spam. In the log world, it is much tougher to tell from good to bad. Also, lots of not-bad messages may also indicate something bad. So it is tough to say how one can apply this type of technology to log analysis.</li>
+</ol>
+
+<p>Obviously I am no mathematician nor do I claim to understand the nitty-gritty details of statistical analysis, so I can&rsquo;t comment much on the technical merit of these methods. But love to hear from anyone who have more knowledge.</p>
+
+<h3 id="toc_3">Indexing</h3>
+
+<p>One of the newer methods of analyzing logs is indexing and providing Google like search capabilities for all logs. This is something <a href="http://www.loglogic.com">LogLogic</a> and <a href="http://www.splunk.com">Splunk</a> are doing.</p>
+
+<p>The basic idea is that instead of parsing the messages by understanding every single format, use the full-text indexing approaches to break the messages into tokens, then allow users to use boolean search expressions to search the logs.</p>
+
+<p>This method is great when it comes to troubleshooting and forensic analysis. If complemented with the understanding of the log formats, it can be as powerful as other methods.</p>
+
+<p>I wrote an article on <a href="http://www.computerworld.com/developmenttopics/development/webservices/story/0,10801,105905,00.html">Searching for Root Cause</a> a while back on the benefit of using Google-like indexed search on logs.</p>
+
+<h3 id="toc_4">Tokenizing</h3>
+
+<p>This is the way most log analyzers are using today. This method generally require writing regular expressions or similar methods to parse the individual pieces of information out of the log messages.</p>
+
+<p>Rainer Gerhards has a great summary in his paper <a href="http://www.monitorware.com/en/workinprogress/nature-of-syslog-data.php">On the Nature of Syslog Data</a>.</p>
+
+<h3 id="toc_5">Various standards</h3>
+
+<p><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/wes/wes/about_the_windows_event_log.asp">About Windows Event Log</a></p>
+
+<p><a href="http://www-128.ibm.com/developerworks/autonomic/library/ac-cbe1/">IBM&rsquo;s Common Base Event XML format</a> - This is a VERY complicated XML based format that tries to cover everything. I see two huge problem with this type of format. First, it hugely expands the storage requirement given that raw log storage is required. Second, it could make parsing that much slower given the size of a single log (multiple KBs instead of hundres of bytes). It&rsquo;s been morphed into the <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=wsdm">OASIS standard WSDM Management Using Web
+Services v1.0 (WSDM-MUWS)</a> .</p>
+
+<p><a href="http://www.faqs.org/rfcs/rfc3881.html">RFC 3881 - Security Audit and Access Accountability Message XML Data Definitions for Healthcare Applications</a></p>
+
+<p>WELF</p>
+
+<p>W3C</p>
+
+<p>IDMEF - Intrusion Detection Message Exchange Format</p>
+
+<p>IDIOM - Intrusion Detection Interaction and Operations Messages (Cisco message format)</p>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>
