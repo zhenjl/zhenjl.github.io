@@ -7,7 +7,183 @@
     <language>en-us</language>
     <author>Jian Zhen</author>
     <copyright>Jian Zhen</copyright>
-    <updated>Thu, 25 Dec 2014 00:00:33 PST</updated>
+    <updated>Tue, 13 Jan 2015 13:30:00 PST</updated>
+    
+    <item>
+      <title>Go From a Non-Programmer&#39;s Perspective</title>
+      <link>http://zhen.org/blog/golang-from-a-non-programmers-perspective/</link>
+      <pubDate>Tue, 13 Jan 2015 13:30:00 PST</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/golang-from-a-non-programmers-perspective/</guid>
+      <description>
+
+&lt;p&gt;&lt;em&gt;Warning: Long Post. Over 3900 words according to &lt;code&gt;wc&lt;/code&gt;. So read at your own risk. :)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://golang.org/&#34;&gt;Go&lt;/a&gt; is a fairly recent programming language &lt;a href=&#34;http://golang.org/doc/faq#history&#34;&gt;created&lt;/a&gt; by Robert Griesemer, Rob Pike and Ken Thompson of Google. It has risen in popularity over the the past few years, especially since Go 1.0 was released.&lt;/p&gt;
+
+&lt;p&gt;There are a ton of posts out there that talks about the pros and cons of Go, and why one would use it or not. In addition, there&amp;rsquo;s a bunch of posts out there written by different developers coming from different perspectives, such as Python, Ruby, Node, Rust, etc, etc. Recently I even read a couple of Chinese blog posts on why Go is popular in China, and why some of the Chinese developers have abandoned Go, which are quite interesting as well.&lt;/p&gt;
+
+&lt;p&gt;This post is my perspective of Go, how I picked it up, and what I think of it after using it for a while. It is not a post about why Go is better or worse than other languages.&lt;/p&gt;
+
+&lt;p&gt;In short, I like Go. It&amp;rsquo;s the first programming language I&amp;rsquo;ve used in recent years that I can actually build some interesting projects, e.g., &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt;, in my limited spare time.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;My Background&lt;/h2&gt;
+
+&lt;p&gt;I am not a programmer/developer. Not full-time, not part-time, not moonlight. I tell my colleagues and teams that &amp;ldquo;I am not technical.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;But I do have a technical background. I have a MSCS degree from way back when, and have spent the first 6-7 years of my career performing security audits and penetration tests, and building one of the world&amp;rsquo;s largest managed security services (at least at the time).&lt;/p&gt;
+
+&lt;p&gt;My programming langauge progression, when I was technical, has been BASIC (high school), Pascal and C (college), Perl, PHP, Java, and Javascript (during my technical career). I can&amp;rsquo;t claim to be an &amp;ldquo;expert&amp;rdquo; in any of these languages, but I consider myself quite proficient in each at the time I was using them.&lt;/p&gt;
+
+&lt;p&gt;I was also reasonably network and system savvy, in the sense that I can get myself in and around the Solaris and Linux (UN*X) systems pretty well, and understand the networking stack sufficiently. I consider myself fairly proficient with the various system commands and tools.&lt;/p&gt;
+
+&lt;p&gt;For the past 12 years, however, I have not been a developer, nor a systems guy, nor a networking guy. Instead, I have been running product management for various startups and large companies in the security and infrastructure space.&lt;/p&gt;
+
+&lt;p&gt;Since the career change, I&amp;rsquo;ve not done any meaningful code development. I&amp;rsquo;ve written a script here and there, but nothing that I would consider to be &amp;ldquo;software.&amp;rdquo; However, I&amp;rsquo;ve managed engineering teams as part of my resonsibility, in addition to product management, to produce large scale software.&lt;/p&gt;
+
+&lt;p&gt;In the past 12 years, my most used IDE is called Microsoft Office. So, in short, I am probably semi-technical, and know just enough to be dangerous.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;My History with Go&lt;/h3&gt;
+
+&lt;p&gt;In &lt;sup&gt;2011&lt;/sup&gt;&amp;frasl;&lt;sub&gt;2012&lt;/sub&gt;, I had the responsibility of building a brand new engineering team (I was already running product management) at VMware to embark on a new strategic initiative. The nature of the product/service is not important now. However, at the time, because the team is brand new, we had some leeway in choosing a language for the project. VMware at the time was heavily Java, and specifically Spring given the &lt;a href=&#34;http://www.vmware.com/company/news/releases/springsource&#34;&gt;2009 acquisition of SpringSource&lt;/a&gt;. While the new team had mostly Java experience, there was desire to choose something less bloated, and something that had good support for the emerging patterns of distributed software.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_2&#34;&gt;First Touch&lt;/h4&gt;
+
+&lt;p&gt;Some of the team members had experience with Scala, so that became an obvious option. I did some research on the web, and found some discussions of Go. At the time, Go hasn&amp;rsquo;t reached 1.0 yet, but there was already a buzz around it. I looked on Amazon, and found &lt;a href=&#34;http://www.amazon.com/gp/product/B0083RVAJW/ref=docs-os-doi_0&#34;&gt;The Way to Go&lt;/a&gt;, which was probably the only Go book around at the time. For $3 on the Kindle, it was well worth it. However, due to the nascent nature of Go (pre 1.0), it was not a comfortable choice so I didn&amp;rsquo;t put that as an option. But this was my &lt;strong&gt;first touch of Go and it felt relatively painless&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;At the end, the team chose Scala because of existing experience, and that in theory, people with Java experience should move fairly easily to Scala. We were the first team in VMware to use Scala and we were pretty excited about it.&lt;/p&gt;
+
+&lt;p&gt;However, to this date, I am still not sure we made the right decision to move to Scala (not that it&amp;rsquo;s wrong either.) The learning curve I believe was higher than we originally anticipated. Many of the developers wrote Java code w/ Scala syntax. And hiring also became an issue. Basically every new developer that came onboard must be sent to Typesafe for training. It was simply not easy for most developers who came from a non-functional mindset to jump into a totally functional mindset. Lastly, the knowledge differences of new Scala developers and experienced ones made it more difficult for them to collaborate.&lt;/p&gt;
+
+&lt;p&gt;I also tried to read up Scala and at least understand the concept. I even tried to take the online course on Coursera offered by Martin Odersky. However, I just could not get my non-functional mind to wrap around the functional Scala. And since I really didn&amp;rsquo;t need to code (nor the developers want me to), I gave up on learning Scala.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_3&#34;&gt;Second Touch&lt;/h4&gt;
+
+&lt;p&gt;In any case, fast forward 2 years to Q3 of 2013. I had since left VMware and joined my current company, &lt;a href=&#34;http://jolata.com&#34;&gt;Jolata&lt;/a&gt;, to build a big data network analytics solutions for mobile carriers and high-frequency trading financial services firms. We are a small startup that&amp;rsquo;s trying to do a ton of things. So even though I run products, I have to get my hands dirty often.&lt;/p&gt;
+
+&lt;p&gt;One of the things we had to do as a company is to build a repeatable demo environment. The goal is to have a prebuilt vagrant VM that we can run on our Macs, and we can demonstrate our product without connecting to the network. The requirement was that we had an interesting set of data in the database so we can walk through different scenarios.&lt;/p&gt;
+
+&lt;p&gt;The data set we needed was network flow data. And to make the UI look realistic, interesting and non-blocky, we wanted to generate noisy data so the UI looks like it&amp;rsquo;s monitoring a real network. Because all of the developers are focused on feature development, I took on the task of building out the data set.&lt;/p&gt;
+
+&lt;p&gt;By now, Go has released v1.1 and on its way to 1.2. It was then I started seriously considering Go as a candidate for this project. To build a tool that can generate the data set, we needed two libraries. The first is a &lt;a href=&#34;http://en.wikipedia.org/wiki/Perlin_noise&#34;&gt;Perlin Noise&lt;/a&gt; generator, and the second is &lt;a href=&#34;https://code.google.com/p/cityhash/&#34;&gt;Google&amp;rsquo;s Cityhash&lt;/a&gt;. Neither of these were available in Go (or not that I remember). I thought this would be a great opportunity to test out Go. The end results were my Go Learn Projects &lt;a href=&#34;https://github.com/dataence/perlinnoise&#34;&gt;#0 Perlin&lt;/a&gt;, and &lt;a href=&#34;https://github.com/dataence/cityhash&#34;&gt;#1 Cityhash&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Both of these projects were relatively simple since I didn&amp;rsquo;t have to spend a lot of time figuring out HOW to write them. Perlin Noise has well-established C libraries and algorithms, and Cityhash was written in C so it was easy to translate to Go. However, these projects gave me a good feel of how Go works.&lt;/p&gt;
+
+&lt;p&gt;In the end, I wrote the data generator in Go (private repo) and got the first taste of goroutines. Again, &lt;strong&gt;this second touch with Go was also relatively painless&lt;/strong&gt;. The only confusion I had at the time was the Go source tree structure. Trying to understand $GOROOT, $GOPATH and other Go environment variables were all new to me. This was also the first time in 10 years that I really spent time writing a piece of software, so I just considered the confusion as my inexperience.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_4&#34;&gt;Third Touch and Beyond&lt;/h4&gt;
+
+&lt;p&gt;Today, I no longer code at work as we have more developers now. Also, the Jolata product is mostly C/C++, Java and Node, so Go is also no longer in the mix. However, After getting a taste of Go in the first couple of Go projects, I&amp;rsquo;ve since spent a tremendous amount of my limited personal spare time working with it.&lt;/p&gt;
+
+&lt;p&gt;I have since written various libraries for &lt;a href=&#34;https://github.com/dataence/bitmap&#34;&gt;bitmap compression&lt;/a&gt;, &lt;a href=&#34;https://github.com/dataence/encoding&#34;&gt;integer compression&lt;/a&gt;, &lt;a href=&#34;https://github.com/dataence/bloom&#34;&gt;bloom filters&lt;/a&gt;, &lt;a href=&#34;https://github.com/dataence/skiplist&#34;&gt;skiplist&lt;/a&gt;, and &lt;a href=&#34;https://github.com/dataence&#34;&gt;many others&lt;/a&gt;. And I have &lt;a href=&#34;http://zhen.org/blog/&#34;&gt;blogged my journey&lt;/a&gt; along the way as I learn. With these projects, I&amp;rsquo;ve learned how to use the Go toolchain, how to write idiomatic Go, how to write tests with Go, and more importantly, how to optimize Go.&lt;/p&gt;
+
+&lt;p&gt;Interestingly, one of my most popular posts is &lt;a href=&#34;http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/&#34;&gt;Go vs Java: Decoding Billions of Integers Per Second&lt;/a&gt;. This tells me that a lot of Java developers are potentially looking to adopt Go.&lt;/p&gt;
+
+&lt;p&gt;All these have allowed me to learn Go enough to build a real project, &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt;. It is by far my most popular project and one that I expect to continue developing.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_5&#34;&gt;My Views on Go&lt;/h2&gt;
+
+&lt;p&gt;Go is not just a langauge, it also has a very active community around it. The views are based on my observation over the past 1.5 years of using Go. My Go environment is primary Sublime Text 3 with GoSublime plugin.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_6&#34;&gt;As a Language&amp;hellip;&lt;/h3&gt;
+
+&lt;p&gt;I am not a language theorist, nor do I claim to be a language expert. In fact, prior to actually using Go, I&amp;rsquo;ve barely heard of generics, communicating sequential processes, and other &amp;ldquo;cool&amp;rdquo; and &amp;ldquo;advanced&amp;rdquo; concepts. I&amp;rsquo;ve heard of all the new cool programming languages such as Clojure and Rust, but have never looked at any of the code. So my view of Go is basically one of a developer n00b.&lt;/p&gt;
+
+&lt;p&gt;In a way, I consider that to be an advantage coming in to a new programming language, in that I have no preconceived notion of how things &amp;ldquo;SHOULD&amp;rdquo; be. I can learn the language and use the constructs as they were intended, and not have to question WHY it was designed that way because it&amp;rsquo;s different than what I know.&lt;/p&gt;
+
+&lt;p&gt;Others may consider this to be a huge disadvantage, since I don&amp;rsquo;t know any better. There maybe constructs in other languages that would make my work a lot easier, or make my code a lot simpler.&lt;/p&gt;
+
+&lt;p&gt;However, as long as the language doesn&amp;rsquo;t slow me down, then I feel it&amp;rsquo;s serving my needs.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_7&#34;&gt;Go is Simple&lt;/h4&gt;
+
+&lt;p&gt;As a language for a new deverloper, Go was very easy to pick up. Go&amp;rsquo;s design is fairly simple and minimalistic. You can sit down and read through the &lt;a href=&#34;https://golang.org/ref/spec&#34;&gt;Language Specification&lt;/a&gt; fairly quickly in an idle afternoon. I actually didn&amp;rsquo;t find the language reference until later. My first touch of Go was by scanning through the book &lt;em&gt;The Way To Go&lt;/em&gt;. Regardless, there&amp;rsquo;s not a lot to the language so it&amp;rsquo;s relatively easy for someone like myself to pick up the basics. (Btw, I&amp;rsquo;ve also never gone through the &lt;a href=&#34;https://tour.golang.org/&#34;&gt;Go Tour&lt;/a&gt;. I know it&amp;rsquo;s highly recommended to all new Go developers. I just never did it.)&lt;/p&gt;
+
+&lt;p&gt;There are more advanced concepts in Go, such as interface, channel, and goroutine. Channel in general is a fairly straightforward concept. Most new programmers should be able to understand that quickly. You write stuff in, you read stuff out. It&amp;rsquo;s that simple. From there, you can slowly expand on the concept as you &lt;em&gt;go&lt;/em&gt; along by adding buffered channels, or ranging over channels, or checking if the read is ok, or using quit channels.&lt;/p&gt;
+
+&lt;p&gt;For anyone coming from a language with threads, goroutine is not a difficult concept to understand. It&amp;rsquo;s basically a light-weight thread that can be executed concurrently. You can run any function as a goroutine.&lt;/p&gt;
+
+&lt;p&gt;The more difficult concept is interface. That&amp;rsquo;s because it&amp;rsquo;s a fairly new concept that doesn&amp;rsquo;t really exist in other languages. Once you understand what interfaces are, it&amp;rsquo;s fairly easy to start using them. However, designing your own interfaces is a different story.&lt;/p&gt;
+
+&lt;p&gt;The one thing I&amp;rsquo;ve seen most developers complain about Go is the lack of generics. Egon made a nice &lt;a href=&#34;https://docs.google.com/document/d/1vrAy9gMpMoS3uaVphB32uVXX4pi-HnNjkMEgyAHX4N4&#34;&gt;Summary of Go Generics Discussions&lt;/a&gt; that you can read through. For me personally, I don&amp;rsquo;t know any better. I have never used generics and I haven&amp;rsquo;t found a situation where I strongly require it.&lt;/p&gt;
+
+&lt;p&gt;As a language a team, the simplicity of Go is &lt;em&gt;HUGE&lt;/em&gt;. It allows develoeprs to quickly come up to speed and be productive in the shortest period of time. And in this case, time is literally money.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_8&#34;&gt;Go is Opinionated&lt;/h4&gt;
+
+&lt;p&gt;Go is opinionated in many ways. For example, probably one of the most frustrating thing about Go is how to structure the code directory. Unlike other languages where you can just create a directory and get started, Go wants you to put things in $GOPATH. It took a few readings of &lt;a href=&#34;https://golang.org/doc/code.html&#34;&gt;How to Write Go Code&lt;/a&gt; for me to grasp what&amp;rsquo;s going on, and it took even longer for me to really get the hang of code organization, and how Go imports packages (e.g., &lt;code&gt;go get&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;If I go back and look at my first internal project, I would probably cry because it&amp;rsquo;s all organized in a non-idiomatic way. However, once I got the hang of how Go expects things to be organized, it no longer was a obstacle for me. &lt;strong&gt;Instead of fighting the way things should be organized in Go, I learned to &lt;em&gt;go&lt;/em&gt; with the flow.&lt;/strong&gt; At the end of the day, the $GOPATH organizational structure actually helps me track the different packages I import.&lt;/p&gt;
+
+&lt;p&gt;Another way Go is opinionated is code formatting. Go, and Go developers, expect that all Go programs are formatted with &lt;a href=&#34;http://blog.golang.org/go-fmt-your-code&#34;&gt;&lt;code&gt;go fmt&lt;/code&gt;&lt;/a&gt;. A lot of developers hate it and some even listed it as a top reason for leaving Go. However, this is one of those things that you just have to learn to &lt;em&gt;go&lt;/em&gt; with the flow. Personally I love it.&lt;/p&gt;
+
+&lt;p&gt;And as a team language it will save a ton of argument time. Again, time is money for a new team. When my new VMware team got started, we probably spent a good 30 person-hours debating code formatting. That&amp;rsquo;s $2700 at a $180K fully-burdened rate. And that&amp;rsquo;s not counting all the issues we will run into later trying to reformat code that&amp;rsquo;s not properly formatted.&lt;/p&gt;
+
+&lt;p&gt;Go is also very opininated in terms of variable use and package import. If a variable is declared but not used, the Go compiler will complain. If a package is imported but not used, the Go compiler will complain. Personally, I like the compiler complaining about the unused variables. It keeps the code clean, and reduce the chance of unexpected bugs. I am less concerned about unused packages but have also learned to live with the compiler complains. I use &lt;a href=&#34;https://github.com/bradfitz/goimports&#34;&gt;goimports&lt;/a&gt; in Sublime Text 3 to effectively and quickly take care of the import statements. In fact, in 99% of the cases I don&amp;rsquo;t even need to type in the import statements myself.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_9&#34;&gt;Go is Safe&lt;/h4&gt;
+
+&lt;p&gt;Go is safe for a couple of reasons. For a new developer, Go does not make it easy for you to be lazy. For example, Go is a statically typed language, which means every variable must explicitly have a type associated with it. The Go compiler does infer types under certain situations, but regardless, there&amp;rsquo;s a type for every variable. This may feel uncomfortable for developers coming from dynamic languages, but the benefit definitely outweighs the cost. I&amp;rsquo;ve experience first hand, as a product person waiting for bugs to be fixed, how long it takes to troubleshoot problems in Node. Having static types gives you a feeling of &amp;ldquo;correctness&amp;rdquo; after you have written the code.&lt;/p&gt;
+
+&lt;p&gt;Another example of Go not allowing you to be lazy is that Go&amp;rsquo;s error handling is through the return of &lt;code&gt;error&lt;/code&gt; from functions. There has been a ton of discussions and debates on the merit of &lt;code&gt;error&lt;/code&gt; vs exception handling so I won&amp;rsquo;t go through it here. However, for a new programmer, it really requires your explicit attention to handle the errors. And I consider that to be a good thing as you know what to expect at each step of the program.&lt;/p&gt;
+
+&lt;p&gt;Making things explicit and making it harder for developers to be lazy are a couple of the reasons that make Go safe.&lt;/p&gt;
+
+&lt;p&gt;Another reason is that &lt;a href=&#34;http://golang.org/doc/faq#garbage_collection&#34;&gt;Go has a garbage collector&lt;/a&gt;. This makes it different from C/C++ as it no longer require developers to perform memory management. The difficulty in memory management is the single biggest source of memory leaks in C/C++ programs. Having a GC removes that burden from developers and makes the overall program much safer. Having said that, there&amp;rsquo;s much improvement to be made to the GC given its nascent state. And, as I learned over the past 1.5 years, to write high performance programs in Go today, developers need to make serious efforts to reduce GC pressure.&lt;/p&gt;
+
+&lt;p&gt;Again, as a team langauge, the safety aspect is very important. The team will likely end up spending much less time dealing with memory bugs and focus more on feature development.&lt;/p&gt;
+
+&lt;h4 id=&#34;toc_10&#34;&gt;Go is Powerful&lt;/h4&gt;
+
+&lt;p&gt;What makes Go powerful are its simplicity, its high performance, and advanced concepts such as channels, goroutines, interfaces, type composition, etc. We have discussed all of these in previous sections.&lt;/p&gt;
+
+&lt;p&gt;In addition to all that, one of the killer feature of Go is that all Go programs are statically compiled into a single binary. There&amp;rsquo;s no shared libraries to worry about. There&amp;rsquo;s no jar files to worry about. There&amp;rsquo;s no packages to bundle. It&amp;rsquo;s just a single binary. And that&amp;rsquo;s an extremely powerful feature from the deployment and maintenance perspectives. To deploy a Go program, you just need to copy a single Go binary over. To update it, copy a single Go binary over.&lt;/p&gt;
+
+&lt;p&gt;In contrast, to deploy a Node.js application, you may end up downloading hundreds of little packages at deployment time. And you have to worry about whether all these packages are compatible. The Node community has obviously developed a lot of good tools to manage dependencies and version control. But still, every time I see a Node app get deployed on a new machine, and have to download literally hundreds of little packages, I die a little inside.&lt;/p&gt;
+
+&lt;p&gt;Also, if you deploy C/C++ programs and depend on shared libraries, now you have to worry about OS and shared library version compatibility issues.&lt;/p&gt;
+
+&lt;p&gt;Another powerful feature of Go is that you can mix C and assembly code with Go code in a single program. I haven&amp;rsquo;t used this extensively, but in my attempt to &lt;a href=&#34;http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/&#34;&gt;optimize&lt;/a&gt; the &lt;a href=&#34;https://github.com/dataence/encoding&#34;&gt;integer compression&lt;/a&gt; library, I added different C and assembly snippets to try to squeeze the last ounce of performance out of Go. It was fairly easy and straightforward to do.&lt;/p&gt;
+
+&lt;p&gt;One last thing, Go has a very large and complete standard library. It enables developers to do most, if not all, of their work quickly and efficiently. As the language matures and the community grows, there will be more and more 3rd party open source libraries one can leverage.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_11&#34;&gt;As a Community&lt;/h3&gt;
+
+&lt;p&gt;Today, Go has a very active community behind it. Specifically, the information sources I&amp;rsquo;ve followed and gotten help from include &lt;a href=&#34;https://botbot.me/freenode/go-nuts/&#34;&gt;#go-nuts IRC&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/search?q=golang&amp;amp;sort=new&amp;amp;restrict_sr=on&amp;amp;t=all&#34;&gt;golang subreddit&lt;/a&gt;, and obviously the &lt;a href=&#34;https://groups.google.com/forum/#!forum/golang-nuts&#34;&gt;golang-nuts mailing list&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I spent quite a bit of time in IRC when I first started. I&amp;rsquo;ve gotten help from quite a few people such as dsal, tv42, and others, and I am grateful for that. I am spending less time there now because of the limited time I have (remember, my day job is not development. :)&lt;/p&gt;
+
+&lt;p&gt;There&amp;rsquo;s been some sentiments in the developer community that Go developers (gophers) are Google worshippers, don&amp;rsquo;t accept any feedbacks on language changes, harsh to new comers who come from different languages,  difficult to ask questions because the sample code is not on play.golang.org, etc etc.&lt;/p&gt;
+
+&lt;p&gt;To be clear, I&amp;rsquo;ve never really spent much time with the different language communites, even when I was technical. So I have nothing else to compare to. So I can only speak from a human interaction level.&lt;/p&gt;
+
+&lt;p&gt;I can see it from both perspectives. For example, developers coming from different language backgrounds sometimes have experience with a different way of doing things. When they want to perfrom the same tasks in Go, they ask the question by saying here&amp;rsquo;s how I solved this problem in language X, how do I translate that to Go?&lt;/p&gt;
+
+&lt;p&gt;In some cases I&amp;rsquo;ve definitely seen people responding by saying that&amp;rsquo;s not how Go works and you are doing it wrong. That type of response can quickly create negative sentiment and kill the conversation.&lt;/p&gt;
+
+&lt;p&gt;Another type of response I&amp;rsquo;ve seen is some developers telling the original poster (OP) that they are not asking questions the right way, and then promptly sending the OP a link to some web page on how to properly ask questions. Again, I can see how the OP can have a negative view on the matter.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;ve expereinced some of this myself. When I implemented a &lt;a href=&#34;https://github.com/dataence/bloom&#34;&gt;Bloom Filter&lt;/a&gt; package last year, I did a bunch of performance tests and wrote a &lt;a href=&#34;http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/&#34;&gt;blog post&lt;/a&gt; about the it. As a newbie learning Go, I felt like I accomplished something and I was pretty happy with it. I posted the link to reddit, and the first comment I got was&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Downvoted because I dislike this pattern of learning a new language and then immediately publishing performance data about it, before you know how to write idiomatic or performant code in it.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Ouch!!&lt;/strong&gt; As a new Go developer, this is not the response I expected. In the end though, the commenter also pointed out something that helped me improve the performance of the implementation. (It was also then I realized how important it is to reduce the number of allocation in order to reduce the Go GC pressure.)&lt;/p&gt;
+
+&lt;p&gt;I can understand why some developers would feel annoyed about benchmarks from people who have no idea on what they are doing. Regardless, being nice is not a bad thing. Saying things like &amp;ldquo;WTF is wrong with you&amp;rdquo; (not related to the bloom filter post) will only push new developers away.&lt;/p&gt;
+
+&lt;p&gt;I quickly got over the sting because I am just too old to care about what others think I should or should not do. I continued my learning process by writing and optimizing Go packages, and posting the results in my blog. In fact, the &lt;a href=&#34;http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/&#34;&gt;Go vs Java: Decoding Billions of Integers Per Second&lt;/a&gt; post has many of the optimization techniques I tried to increase the performance of Go programs.&lt;/p&gt;
+
+&lt;p&gt;Overall though, I felt I&amp;rsquo;ve learned a ton from the Go community. People have generally been helpful and are willing to offer solutions to problems. I have nothing to compare to, but I feel that the positives of the Go community far outweighs any negatives.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_12&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;In conclusion, it has been a tremendous 1.5 years of working with Go, and seeing Go grow both as a language and as a community has been very rewarding.&lt;/p&gt;
+
+&lt;p&gt;My focus now, in my limited spare personal time, is to continue the development of &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt;, which is a high performance MQTT broker and client library that aims to be fully compliant with MQTT 3.1 and 3.1.1 specs.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>PingMQ: A SurgeMQ-based ICMP Monitoring Tool</title>
