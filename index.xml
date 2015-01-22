@@ -7,7 +7,233 @@
     <language>en-us</language>
     <author>Jian Zhen</author>
     <copyright>Jian Zhen</copyright>
-    <updated>Tue, 13 Jan 2015 13:30:00 PST</updated>
+    <updated>Wed, 21 Jan 2015 20:48:44 PST</updated>
+    
+    <item>
+      <title>Generating Porter2 FSM For Fun and Performance in Go</title>
+      <link>http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/</link>
+      <pubDate>Wed, 21 Jan 2015 20:48:44 PST</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;http://godoc.org/github.com/surgebase/porter2&#34;&gt;&lt;img src=&#34;http://godoc.org/github.com/surgebase/porter2?status.svg&#34; alt=&#34;GoDoc&#34; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;tl;dr&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;This post describes the &lt;a href=&#34;https://github.com/surgebase/porter2&#34;&gt;Porter2&lt;/a&gt; package I implemented. It is written in Go (#golang).&lt;/li&gt;
+&lt;li&gt;By using a &lt;a href=&#34;http://en.wikipedia.org/wiki/Finite-state_machine&#34;&gt;finite-state-machine&lt;/a&gt; approach to &lt;a href=&#34;http://snowball.tartarus.org/algorithms/english/stemmer.html&#34;&gt;Porter2&lt;/a&gt; &lt;a href=&#34;http://en.wikipedia.org/wiki/Stemming&#34;&gt;stemming&lt;/a&gt;, I was able to achieve 660% better performance compare to other Go implementations.&lt;/li&gt;
+&lt;li&gt;FSM-based approach is great for known/fixed data set, but obviously not workable if the data set changes at runtime.&lt;/li&gt;
+&lt;li&gt;Hand-coding FSM is a PITA!!! &lt;a href=&#34;https://github.com/surgebase/porter2/tree/master/cmd/suffixfsm&#34;&gt;Automate&lt;/a&gt; if possible.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;In a personal project I am working on, I had the need to perform word stemming in two scenarios. First, I need to perform stemming for all the string literals in a LARGE corpus and then determine if the words are in a fixed set of literals. Second, I need to perform stemming for a subset of words in real-time, as messages stream in.&lt;/p&gt;
+
+&lt;p&gt;In the first case, performance is important but not critical; in the second case, performance is a huge factor.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_2&#34;&gt;Stemming&lt;/h3&gt;
+
+&lt;p&gt;To start, according to &lt;a href=&#34;http://en.wikipedia.org/wiki/Stemming&#34;&gt;wikipedia&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Stemming is the term used in linguistic morphology and information retrieval to describe the process for reducing inflected (or sometimes derived) words to their word stem, base or root form—generally a written word form.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;As a quick example, the words &lt;em&gt;fail&lt;/em&gt;, &lt;em&gt;failed&lt;/em&gt;, and &lt;em&gt;failing&lt;/em&gt; all mean something has &lt;em&gt;failed&lt;/em&gt;. By stemming these three words, I will get a single form which is &lt;em&gt;fail&lt;/em&gt;. I can then just use &lt;em&gt;fail&lt;/em&gt; going forward instead of having to compare all three forms all the time.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&#34;http://tartarus.org/martin/PorterStemmer/def.txt&#34;&gt;Porter&lt;/a&gt; stemming algorithm is by far the most commonly used stemmer and also considered to be one of the most gentle stemmers. The Porter stemming algorithm (or ‘Porter stemmer’) works by removing the commoner morphological and inflexional endings from words in English. Its main use is as part of a term normalisation process that is usually done when setting up Information Retrieval systems. (&lt;a href=&#34;http://tartarus.org/martin/PorterStemmer/&#34;&gt;ref&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://snowball.tartarus.org/algorithms/english/stemmer.html&#34;&gt;Porter2&lt;/a&gt; is universally considered to be an enhancement over the original Porter algorithm. Porter2 has an improved set of rules and it&amp;rsquo;s widely used as well.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_3&#34;&gt;Implementation&lt;/h2&gt;
+
+&lt;p&gt;This package, &lt;a href=&#34;https://github.com/surgebase/porter2&#34;&gt;Porter2&lt;/a&gt;, implements the Porter2 stemmer. It is written completely using finite state machines to perform suffix comparison, rather than the usual string-based or tree-based approaches. As a result, it is 660% faster compare to string comparison-based approach written in the same (Go) language.&lt;/p&gt;
+
+&lt;p&gt;This implementation has been successfully validated with the dataset from &lt;a href=&#34;http://snowball.tartarus.org/algorithms/english/&#34;&gt;http://snowball.tartarus.org/algorithms/english/&lt;/a&gt;, so it should be in a usable state. If you encounter any issues, please feel free to &lt;a href=&#34;https://github.com/surgebase/porter2/issues&#34;&gt;open an issue&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Usage is fairly simple:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import &amp;quot;github.com/surgebase/porter2&amp;quot;
+
+fmt.Println(porter2.Stem(&amp;quot;seaweed&amp;quot;)) // should get seawe
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;toc_4&#34;&gt;Performance&lt;/h3&gt;
+
+&lt;p&gt;This implementation by far has the highest performance of the various Go-based implementations, AFAICT. I tested a few of the implementations and the results are below.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Implementation&lt;/th&gt;
+&lt;th&gt;Time&lt;/th&gt;
+&lt;th&gt;Algorithm&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/surgebase/porter2&#34;&gt;surgebase&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;319.009358ms&lt;/td&gt;
+&lt;td&gt;Porter2&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/dchest/stemmer&#34;&gt;dchest&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;2.106912401s&lt;/td&gt;
+&lt;td&gt;Porter2&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/kljensen/snowball&#34;&gt;kljensen&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;5.725917198s&lt;/td&gt;
+&lt;td&gt;Porter2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;To run the test again, you can run &lt;a href=&#34;https://github.com/surgebase/porter2/tree/master/cmd/compare&#34;&gt;compare.go&lt;/a&gt; (&lt;code&gt;go run compare.go&lt;/code&gt;).&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_5&#34;&gt;State Machines&lt;/h3&gt;
+
+&lt;p&gt;Most of the implementations, like the ones in the table above, rely completely on suffix string comparison. Basically there&amp;rsquo;s a list of suffixes, and the code will loop through the list to see if there&amp;rsquo;s a match. Given most of the time you are looking for the longest match, so you order the list so the longest is the first one. So if you are luckly, the match will be early on the list. But regardless that&amp;rsquo;s a huge performance hit.&lt;/p&gt;
+
+&lt;p&gt;This implementation is based completely on finite state machines to perform suffix comparison. You compare each chacter of the string starting at the last character going backwards. The state machines will determine what the longest suffix is.&lt;/p&gt;
+
+&lt;p&gt;As an example, let&amp;rsquo;s look at the 3 suffixes from step0 of the porte2 algorithm. The goal, and it&amp;rsquo;s the same for all the other steps, it&amp;rsquo;s to find the longest matching suffix.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&#39;
+&#39;s
+&#39;s&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you were to build a non-space-optimized &lt;a href=&#34;http://en.wikipedia.org/wiki/Suffix_tree&#34;&gt;suffix tree&lt;/a&gt;, you would get this, where R is the root of the tree, and any node with * is designated as a final state:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;        R
+       / \
+      &#39;*  s
+     /     \
+    s       &#39;*
+   /
+  &#39;*
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is a fairly easy tree to build, and we actually did that in the FSM generator we will talk about later. However, to build a working suffix tree in Go, we would need to use a &lt;code&gt;map[rune]*node&lt;/code&gt; structure at each of the nodes. And then search the map for each rune we encounter.&lt;/p&gt;
+
+&lt;p&gt;To test the performance of using a switch statement vs using a map, I wrote a &lt;a href=&#34;https://github.com/surgebase/porter2/tree/master/cmd/switchvsmap&#34;&gt;quick test&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;switch: 4.956523ms
+   map: 10.016601ms
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The test basically runs a switch statement and a map each for 1,000,000 times. So it seems like using a switch statement is faster than a map. Though I think the compiler basically builds a map for all the switch case statements.  (Maybe we should call this post &lt;em&gt;Microbenchmarking for fun and performance&lt;/em&gt;?)&lt;/p&gt;
+
+&lt;p&gt;In any case, let&amp;rsquo;s go with the switch approach. We basically need to unroll the suffix tree into a finite state machine.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;        R0
+       / \
+      &#39;1* s2
+     /     \
+    s3      &#39;4*
+   /
+  &#39;5*
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To do that, we need to assign a state number to each of the nodes in the suffix tree, and output each of the states and the transitions based on the rune encountered. The tree above is the same as the one before, but now has a state number assigned to each node.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_6&#34;&gt;Generator&lt;/h3&gt;
+
+&lt;p&gt;I actually started building all the porter2 FSMs manually with a completely different approach than what I am describing here. I won&amp;rsquo;t go into details here but needless to say, it was disastrous. Not only was hand coding state machines extremely error-prone, the approach I was taking also had a lot of potential for bugs. It took me MANY HOURS to hand build those FSMs but at the end, I was happy to abandon all of them for the approach I am taking now.&lt;/p&gt;
+
+&lt;p&gt;To reduce errors and make updating the FSM easier, I wrote a quick tool called &lt;a href=&#34;https://github.com/surgebase/porter2/tree/master/cmd/suffixfsm&#34;&gt;suffixfsm&lt;/a&gt; to generate the FSMs. The tool basically takes a list of suffixes, creates a suffix tree as described above, and unrolls the tree into a set of states using the &lt;code&gt;switch&lt;/code&gt; statement.&lt;/p&gt;
+
+&lt;p&gt;It took me just a couple hours to write and debug the tool, and I was well on my way to fixing other bugs!&lt;/p&gt;
+
+&lt;p&gt;For example, running the command &lt;code&gt;go run suffixfsm.go step0.txt&lt;/code&gt; generated the following code. This is a complete function for step0 of the porter2 algorithm. The only thing missing is what to do with each of the final states, which are in the last &lt;code&gt;switch&lt;/code&gt; statement.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var (
+		l int = len(rs) // string length
+		m int			// suffix length
+		s int			// state
+		f int			// end state of longgest suffix
+		r rune			// current rune
+	)
+
+loop:
+	for i := 0; i &amp;lt; l; i++ {
+		r = rs[l-i-1]
+
+		switch s {
+		case 0:
+			switch r {
+			case &#39;\&#39;&#39;:
+				s = 1
+				m = 1
+				f = 1
+				// &#39; - final
+			case &#39;s&#39;:
+				s = 2
+			default:
+				break loop
+			}
+		case 1:
+			switch r {
+			case &#39;s&#39;:
+				s = 4
+			default:
+				break loop
+			}
+		case 2:
+			switch r {
+			case &#39;\&#39;&#39;:
+				s = 3
+				m = 2
+				f = 3
+				// &#39;s - final
+			default:
+				break loop
+			}
+		case 4:
+			switch r {
+			case &#39;\&#39;&#39;:
+				s = 5
+				m = 3
+				f = 5
+				// &#39;s&#39; - final
+			default:
+				break loop
+			}
+		default:
+			break loop
+		}
+	}
+
+	switch f {
+	case 1:
+		// &#39; - final
+
+	case 3:
+		// &#39;s - final
+
+	case 5:
+		// &#39;s&#39; - final
+
+	}
+
+	return rs
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;toc_7&#34;&gt;Finally&lt;/h2&gt;
+
+&lt;p&gt;This is a technique that can probably be applied to any fixed data set. The performance may vary based on the size of the state machine so test it with both maps and FSM to see what works best.&lt;/p&gt;
+
+&lt;p&gt;Happy Go&amp;rsquo;ing!&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Go: From a Non-Programmer&#39;s Perspective</title>
@@ -2385,241 +2611,6 @@ git push origin master
 &lt;hr /&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6236080&#34;&gt;Comments&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>The Thousand Faces of Cloud Computing</title>
-      <link>http://zhen.org/blog/the-thousand-faces-of-cloud-computing/</link>
-      <pubDate>Fri, 15 May 2009 22:43:27 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
-      <guid>http://zhen.org/blog/the-thousand-faces-of-cloud-computing/</guid>
-      <description>
-
-&lt;p&gt;It&amp;rsquo;s amazing that people are still &lt;a href=&#34;http://bit.ly/19RyZx&#34;&gt;arguing&lt;/a&gt; over what cloud computing is and what is a cloud. I am certainly not immune to such &lt;a href=&#34;http://groups.google.com/group/cloudsecurityalliance/browse_thread/thread/e2f9836c28c30589&#34;&gt;naive arguments&lt;/a&gt;. Claims such as &amp;ldquo;EC2 is NOT a cloud&amp;rdquo; just makes my head spin and wonder what the heck people are thinking. But if I taking a step back and try to understand why people are so passionate about this subject, I start to realize why there are so many definitions for Cloud Computing and why people continue to passionately argue over these definitions.&lt;/p&gt;
-
-&lt;p&gt;The short of it is that cloud means different things to different people. The Cloud has different characteristics to people coming from service provider backgrounds than people from a developer background; it has different meanings to people who care more about architectures than people who are more business-oriented; and it certainly .. to people who are building the clouds than the consumers of the cloud.&lt;/p&gt;
-
-&lt;p&gt;So instead of creating a single definition for Cloud Computing, let&amp;rsquo;s look at it from&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Two perspectives&lt;/li&gt;
-&lt;li&gt;Five architecture characteristics&lt;/li&gt;
-&lt;li&gt;Three delivery models&lt;/li&gt;
-&lt;li&gt;Three deployment models&lt;/li&gt;
-&lt;li&gt;Three consumption models&lt;/li&gt;
-&lt;li&gt;Two pricing models&lt;/li&gt;
-&lt;li&gt;Six types of users&lt;/li&gt;
-&lt;li&gt;Four business benefits&lt;/li&gt;
-&lt;li&gt;Five characteristics&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;toc_0&#34;&gt;Two Perspectives&lt;/h3&gt;
-
-&lt;p&gt;There are passionate discussions on the definition of Cloud and Cloud Computing. If we summarize the arguments, we can see that there are really two camps of people: those who looks at Cloud as an architecture and those who looks at Cloud as a business model. In many cases they agree on many of the characteristics but there&amp;rsquo;s usually one topic that really heats up the discussion and that is whether pricing and billing should be a defining characteristic of the Cloud.&lt;/p&gt;
-
-&lt;p&gt;The Cloud Architecture camp usually argues that how the Cloud is priced and billed should not be a defining characteristic of the Cloud since that&amp;rsquo;s a business decision. And they are absolutely right about that.&lt;/p&gt;
-
-&lt;p&gt;The Cloud Business camp also passionately argues that how the Cloud is priced must be a defining characteristic, otherwise how else can the user be billed? And they are absolutely right about that as well.&lt;/p&gt;
-
-&lt;p&gt;At the end of the day it&amp;rsquo;s about perspectives. Here are the characteristics again and where I think they fall:&lt;/p&gt;
-
-&lt;p&gt;CharacteristicArchitectureBusiness&lt;/p&gt;
-
-&lt;p&gt;Infrastructure Abstraction
-✓&lt;/p&gt;
-
-&lt;p&gt;Resource Pooling
-✓&lt;/p&gt;
-
-&lt;p&gt;Ubiquitous Network Access
-✓&lt;/p&gt;
-
-&lt;p&gt;On-Demand Self-Service
-✓&lt;/p&gt;
-
-&lt;p&gt;Elasticity
-✓&lt;/p&gt;
-
-&lt;p&gt;Pricing Model
-✓&lt;/p&gt;
-
-&lt;p&gt;Consumption Model
-✓&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_1&#34;&gt;Five Architecture Characteristics&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Infrastructure Abstraction&lt;/li&gt;
-&lt;li&gt;Resource Pooling&lt;/li&gt;
-&lt;li&gt;Ubiquitous Network Access&lt;/li&gt;
-&lt;li&gt;On-Demand Self-Service&lt;/li&gt;
-&lt;li&gt;Elasticity&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I am going to refer you to the write ups in &lt;a href=&#34;http://www.cloudsecurityalliance.org/guidance/csaguide.pdf&#34;&gt;Guidance for Critical Areas of Focus in Cloud Computing&lt;/a&gt; from &lt;a href=&#34;http://www.cloudsecurityalliance.org/&#34;&gt;Cloud Security Alliance&lt;/a&gt;, as well as the &lt;a href=&#34;http://www.elasticvapor.com/2009/05/us-federal-government-defines-cloud.html&#34;&gt;Draft NIST Working Definition of Cloud Computing&lt;/a&gt;. These folks have done an awesome job of writing these up so I won&amp;rsquo;t elaborate here. Notice that these five are architecture characteristics so I didn&amp;rsquo;t include the utility-based pricing characteristics here.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_2&#34;&gt;Three Delivery Models&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Software as a Service&lt;/li&gt;
-&lt;li&gt;Platform as a Service&lt;/li&gt;
-&lt;li&gt;Infrastructure as a Service&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Again, I am going to refer you to the write ups in &lt;a href=&#34;http://www.cloudsecurityalliance.org/guidance/csaguide.pdf&#34;&gt;Guidance for Critical Areas of Focus in Cloud Computing&lt;/a&gt; from &lt;a href=&#34;http://www.cloudsecurityalliance.org/&#34;&gt;Cloud Security Alliance&lt;/a&gt;, as well as the &lt;a href=&#34;http://www.elasticvapor.com/2009/05/us-federal-government-defines-cloud.html&#34;&gt;Draft NIST Working Definition of Cloud Computing&lt;/a&gt;. This is generally referred to as the SPI model.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_3&#34;&gt;Three Deploy Models&lt;/h3&gt;
-
-&lt;p&gt;I found that the distinction of &lt;em&gt;public, private, managed, community and hybrid&lt;/em&gt; clouds in both the NIST and CSA documents somewhat difficult to comprehend. I don&amp;rsquo;t mean that they don&amp;rsquo;t make sense but you really have to think through them before you can understand them. In most cases, the follow three seem to be easier to understand.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Internal Cloud - An internal cloud lives within the 4 walls of the enterprises (like their data center.) It&amp;rsquo;s fully built, operated, controlled and managed by the enterprises themselves. It has all five of the architecture characteristics of a Cloud. It may or may not have the pricing model required for external clouds since some enterprises may not care about chargebacks.&lt;/li&gt;
-&lt;li&gt;External Cloud - An external cloud lives outside of the enterprises and it&amp;rsquo;s usually built and operated by service providers but the resources maybe controlled and managed by the customers. The external cloud can either be shared (multi-tenant) or dedicated (single-tenant). It has all five of the architecture characteristics of a Cloud. The service provider will usually dictate the consumption and pricing models of the external clouds.&lt;/li&gt;
-&lt;li&gt;Private Cloud - A private cloud is a combination of internal and external clouds. In most cases enterprises have more than one cloud just like they have some infrastructures inside the 4 walls and some outside. Even though there&amp;rsquo;s both internal and external clouds, enterprises will want to control and manage all of the resources that belong to them, potentially through a single pane of glass. The cloud resoures are &lt;strong&gt;&lt;em&gt;private&lt;/em&gt;&lt;/strong&gt; to the customers, thus the name private cloud.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;toc_4&#34;&gt;Three Consumption Models&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Allocation-based&lt;/li&gt;
-&lt;li&gt;Resource pool-based&lt;/li&gt;
-&lt;li&gt;Usage-based&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I&amp;rsquo;ve &lt;a href=&#34;http://www.zhen.org/zen20/2009/05/09/three-cloud-resource-consumption-models/&#34;&gt;previously written&lt;/a&gt; about the consumption models so please use that as reference.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_5&#34;&gt;Two Pricing Models&lt;/h3&gt;
-
-&lt;p&gt;One of the interesting debates out there is whether Clouds must have utility-based pricing, that is, consumers are only billed for what they used/allocated. I&amp;rsquo;ve generally seen the following two pricing models from service providers who have cloud offerings.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Utility-based - This is the pay-per-use model that most people associate with cloud infrastructures. Amazon and Google App Engine are based on these models.&lt;/li&gt;
-&lt;li&gt;Subscription-based - Most people tend to forget the subscription model is very popular in the cloud as well. For example, Salesforce is based on a per-user-per-month charge, so is Google Apps Premium Edition (per-user-per-year.) In fact, most of the cloud applications (SaaS) are based on this model. In addition, we are seeing some of the traditional service providers who are launching clouds also offer this pricing model as well.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;toc_6&#34;&gt;Six Types of Users&lt;/h3&gt;
-
-&lt;p&gt;We will take a look at it from the angle of cloud consumers and why they care about clouds. On a high level, there are probably six types of cloud users.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Enterprise IT&lt;/li&gt;
-&lt;li&gt;Independent Software Vendors (ISVs)&lt;/li&gt;
-&lt;li&gt;System Integrators (SIs)&lt;/li&gt;
-&lt;li&gt;Web Developers&lt;/li&gt;
-&lt;li&gt;Community Developers&lt;/li&gt;
-&lt;li&gt;Consumers&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;toc_7&#34;&gt;Enterprise IT&lt;/h4&gt;
-
-&lt;p&gt;Enterprise IT teams are the ones that manages and operates corporate IT infrastructures. They are responsible for delivering applications and infrastructure to support the lines of businesses (LOBs). They are the ones that care most about enterprise features such as security, manageability, reliability, availability, etc etc.&lt;/p&gt;
-
-&lt;p&gt;However, they are also the ones that are under huge pressure to innovate and accelerate the solution delivery. Gone are the days that IT can take 3 months to provision servers to support a new business application. LOBs want their solutions and they want them now!&lt;/p&gt;
-
-&lt;p&gt;Clouds are appealing to the enterprise IT teams because it provides seemingly infinite resources at their fingertip and the IT teams can provision the resources on-demand. So instead of requiring the LOBs to wait 3 months, IT teams can now do that much quicker.&lt;/p&gt;
-
-&lt;h4 id=&#34;toc_8&#34;&gt;Independent Software Vendors (ISVs)&lt;/h4&gt;
-
-&lt;p&gt;ISVs are users who develop products and solutions for enterprises. Traditionally they have delivered their products as software or hardware appliances. The ISVs will need to support multiple versions of their software as most of their customers will not likely upgrade as soon as new versions come out. They may support 2 versions back or 10 versions back, depending on the size of the customers, how much influence the customers have and the maturity of the ISVs. Government entities are notorious in their slowness in upgrade as each version will need to go through rigorous testing process. For ISVs who deliver products as software, they have to also worry about the runtime environments such as the OS, application stack, etc. There are ISVs that have hundreds of combinations they have to test for each version they release. Last but not least, some ISVs simply don&amp;rsquo;t have the resource to acquire a TON of hardware for test and development due to load/performance testing requirements or the number of environments the have to worry about.&lt;/p&gt;
-
-&lt;p&gt;Supporting existing versions and testing for hundreds of runtime environments take a huge amount of resources and limits the resource available for innovation. So clouds are appealing to the ISVs as they can now deliver their software as a service (SaaS). By going the SaaS route, the ISVs can largely eliminate the runtime environment concerns as they can have much better control of the infrastructure they use to run their SaaS. The ISVs can also have better control over how and when they upgrade their products as they generally only have one environment to upgrade, instead of potentially thousands of different environments. And with the cloud, the ISVs can provision additional resources as needed to test their products and not have to worry about paying huge capex upfront.&lt;/p&gt;
-
-&lt;h4 id=&#34;toc_9&#34;&gt;System Integrators (SIs)&lt;/h4&gt;
-
-&lt;p&gt;System integrators, such as Accenture and Cap Gemini, are almost extensions to the enterprise IT teams. Their solutions are generally developed as consulting projects. They develop and deliver solutions to clients who have engaged them to solve specific problems. The solutions they develop sometimes are large scale projects that can take months or years to deliver. For years, SIs have been creating best practices from the custom solutions they developed so they can speed up the development of delivery of other projects (but charge the same regardless. :)&lt;/p&gt;
-
-&lt;p&gt;Clouds are appealing to them because they see clouds as one way to help them accelerate the development and delivery of solutions to their clients. They clients will see quick turnaround for solutions and the SIs can easily replicate some of the solutions they developed for one client to another. It&amp;rsquo;s a win-win situation for both of them.&lt;/p&gt;
-
-&lt;h4 id=&#34;toc_10&#34;&gt;Web Developers&lt;/h4&gt;
-
-&lt;p&gt;Web developers are the early adopters of the clouds. They are the ones who are developing Web 2.0 sites such as Smugmug and others. AWS highlights many of these web developers on &lt;a href=&#34;http://aws.typepad.com/&#34;&gt;their blog&lt;/a&gt;. These web developers care about time to market and usually don&amp;rsquo;t have the expertise, desire and/or capital to provision and manage large infrastructures. They are focused on solving a specific problem and the less they have to worry about infrastructure, the better it is for them.&lt;/p&gt;
-
-&lt;p&gt;Clouds are appealing to the web developers because of these exact reasons. Clouds deliver to the web developers on-demand and elastic resources, thus removing the concern of infrastructure provisioning. The clouds allow web developers to focus on their problems.&lt;/p&gt;
-
-&lt;h4 id=&#34;toc_11&#34;&gt;Community Developers&lt;/h4&gt;
-
-&lt;p&gt;Community developers are individual and open source developers who just wants to have their own playground but don&amp;rsquo;t want to concern themselves with hardware provisioning. They are very similar to the web developers category but they are not developing a business in the cloud.&lt;/p&gt;
-
-&lt;h4 id=&#34;toc_12&#34;&gt;Consumers&lt;/h4&gt;
-
-&lt;p&gt;The consumers in general loves the clouds. Consider the number of users there are for cloud applications such as Yahoo! Mail, Gmail, Google Apps, Salesforce.com, Qualys, NetSuite and many others, then you will start to see the scale and reach of cloud applications. In many cases, consumers don&amp;rsquo;t even care whether you call these &amp;ldquo;cloud applications.&amp;rdquo; To them they care about the ease of use and access, and that they don&amp;rsquo;t have to worry about any software installation or configurations. The wide spread of cloud applications is one reason why Netbooks are so appealing these days.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_13&#34;&gt;Four Business Benefits&lt;/h3&gt;
-
-&lt;p&gt;Where the Cloud Architecture camp is focused on how to create the best architecture to handle the business needs, the Cloud Business camp is zeroed in on translating the architectural benefits into financial terms. It’s great that enterprises can have ubiquitous access and elasticity, but if it costs them 10x more in investment for a 2x return, that’s not going to fly. In this section we will look at some of the business benefits of Cloud Computing:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Reduce Cost&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Minimize Risk&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Increase Agility&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Maintain Focus&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;toc_14&#34;&gt;Reduce Cost&lt;/h4&gt;
-
-&lt;p&gt;One large enterprise has outsourced their test and development environments to an outsourcer, and paying approximately $10,000 per environment per year, regardless of whether the resources are virtual or physical. They have 3000 such environments, so they are essentially paying $30 million per year on just test and development environments. They did a user survey to find out the utilization of these environments, and all the developers responded saying that these environments are heavily utilized and there’s tight handoff from one team to another. An audit, however, revealed that overall, the environments are utilized &amp;lt; 10%, and that 70% of the environments are logged into once per year by developers.&lt;/p&gt;
-
-&lt;p&gt;Another large financial services firm said that their infrastructure is utilized less than 2% overall.&lt;/p&gt;
-
-&lt;p&gt;Enterprises can lower CAPEX by not having to procure additional hardware and software but to use cloud providers and their pay-per-use utility pricing to handle resource spikes; they can lower OPEX by abstracting the hardware differences, and providing self-service capabilities to the end users so IT don’t always have to be the middle man; and they can lower their CAPEX and OPEX by increasing utilization of these expensive resources, or reduce the amount of resources required to accomplish the same tasks.&lt;/p&gt;
-
-&lt;h4 id=&#34;toc_15&#34;&gt;Minimize Risk&lt;/h4&gt;
-
-&lt;p&gt;It still shocks me that in this age, companies are still running some of their mission critical applications on servers sitting under a IT administrator’s desk. But more often than not, when I talk to enterprises, this very scenario always comes up. IT administrators do this for different reasons. Some just don’t want to give up control; some don’t want to go through the arduous procurement process; some don’t have the time; and some simply don’t see why it’s a problem. In majority of these cases, if enterprises can provide these IT administrators the ability to quickly migrate these servers into the Cloud, they are more than willing to do so.&lt;/p&gt;
-
-&lt;p&gt;The Cloud, by design, is architected to be highly available and fault tolerant. Any one component going down should not affect the availability of applications. The Cloud is one way for enterprises to reduce risk of mission critical applications going down.&lt;/p&gt;
-
-&lt;p&gt;Another way that Cloud helps enterprises reduce risk is it can give IT more control over the resources. Imagine a large organization that allows their end users to procure their own hardware and software because IT simply doesn’t have the cycles to manage that. Soon enough there will 100 different hardware suppliers and 1000 different software suppliers. IT will have no idea how these resources are being used and what the utilization levels are. In addition, this scenario presents a huge security risk to the enterprises, as there’s no control of the procurement process.&lt;/p&gt;
-
-&lt;p&gt;The Cloud centralizing the procurement and management of hardware and software, IT can maintain control but at the same time provide users the resources they are looking for. It will be a win-win situation for both sides.&lt;/p&gt;
-
-&lt;h4 id=&#34;toc_16&#34;&gt;Increase Agility&lt;/h4&gt;
-
-&lt;p&gt;Joe Weinman, AT&amp;T;’s VP of Strategy, said that “an on-demand service provider typically charges a utility premium — a higher cost per unit time for a resource than if it were owned, financed or leased.” Joe is absolutely correct here, and the recent McKenzie report validates this as well. To determine whether Cloud Computing is the right approach, enterprises must look at other business benefits in addition to hard cost.&lt;/p&gt;
-
-&lt;p&gt;What is it worth to an enterprise when they can respond faster to business requirements and enable businesses to bring products to market quicker? For example, going from 8 weeks to 3 days to 10 minutes in provisioning of resources to run enterprise services or spinning up 500 servers in minutes to test an application.&lt;/p&gt;
-
-&lt;p&gt;The global economy is forcing companies to be global as well. One such company has 10’s of 1000’s of developers/consultants spread all over the world, all requiring quick access to test and development environments. It’s impractical for this company to build and operate data centers around the world, and it’s also not the company’s core competency and strategy to have all these data centers. One of the things they are looking to do is build a “cloud abstraction layer” on top of multiple clouds, and allow developers to request resources. Depending on the developer’s location and resource requirement, the software will automatically provision the right resources and inform the user when ready. The ability to distribute the workload onto multiple clouds gives this company the flexibility and speed to respond to business needs. How much does this worth?&lt;/p&gt;
-
-&lt;h4 id=&#34;toc_17&#34;&gt;Maintain Focus&lt;/h4&gt;
-
-&lt;p&gt;Like the company described above, most enterprises do not consider building and operating data centers as their core competency. These enterprises consider it to be more of a distraction to their core business. By utilizing the service provider clouds, the enterprises can maintain their focus and accelerate innovation on their core business.&lt;/p&gt;
-
-&lt;p&gt;The classic example here is the New York Times case study, where the developers processed 4TB of data in matter of minutes to convert scans of 15 million news stories into PDFs for online distribution. Instead of worrying about taking months to procure hardware for this one time task and spending much more money, New York Times took it to the Cloud and completed the task in less than 24 hours and with much less money.&lt;/p&gt;
-
-&lt;p&gt;The Cloud allows allow IT organizations to focus on providing the best infrastructure possible, and developers to focus on their applications instead of the infrastructure.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_18&#34;&gt;Five Characteristics&lt;/h3&gt;
-
-&lt;p&gt;In this section, I will describe somewhat of a revised set of architecture characteristics that define Cloud Computing.&lt;/p&gt;
-
-&lt;h4 id=&#34;toc_19&#34;&gt;Abstraction&lt;/h4&gt;
-
-&lt;p&gt;A key characteristic of the Cloud is to provide an abstraction layer for the lower level resources, including compute, network and storage components. Users are strongly discouraged, or disallowed, to think in terms of the physical hardware, but instead consider in terms of the resources required. The users don’t need to worry about whether the underlying hardware is from IBM, HP, Cisco, Juniper, NetApp or EMC. What’s presented to them is a homogenous set of resources. This removes the users from having to worry about the differences in hardware or software configuration. The resources may be shared amongst many different users, or dedicated to a single user; and maybe presented as a set of virtual machines or a set of APIs.&lt;/p&gt;
-
-&lt;h4 id=&#34;toc_20&#34;&gt;On-Demand&lt;/h4&gt;
-
-&lt;p&gt;The set of resources presented by the Cloud can be provision or de-provisioned as needed by the users. The term “on-demand” also conveys a notion of speed. When resources are requested, they are provisioned within minutes, not days, weeks or even months. In most enterprises today, hardware procurement is a multi-month long process that can slow down projects and frustrate employees. One large system integrator has recently trimmed the process of provisioning environments from 8 weeks to 3 days. However, to truly meet the business needs, they must go from 3 days to hours, if not minutes.&lt;/p&gt;
-
-&lt;h4 id=&#34;toc_21&#34;&gt;Elasticity&lt;/h4&gt;
-
-&lt;p&gt;Elasticity is probably the most defining characteristic for Cloud Computing. In addition to the need to provision on demand, enterprises are increasingly required to scale for anticipated or unanticipated resource requirements. For example, one top university that we recently talked had a housing application that gets HAMMERED two weeks before the start of the school year, EVERY year. Traffic dies down and there’s very little activity after the initial period. A large financial services firm has 30 servers dedicated to handling a 15-minute job every day. These are examples of anticipated resource requirements. Enterprises know when they will need the additional resources, how much resources are required and the duration of time they will need the resources for.&lt;/p&gt;
-
-&lt;p&gt;An example of unanticipated resource requirement is when the market department rolls out a huge campaign and drove 10 times the traffic to the enterprise website, and the IT department was never informed. This is a real life scenario that I am sure many of you have experienced. The question at that point is not to point fingers, but to figure out how to rapidly provision 10 times the resources to handle that traffic. Another example that we have heard from a large software vendor is their need to periodically spin up anywhere from 50 to 500 servers for software testing, and then quickly spin down when finished.&lt;/p&gt;
-
-&lt;p&gt;Elasticity, or the ability to rapidly provision and quickly scale up and down the resources, is an architecture model that affects not just infrastructure, but also the application design. In addition, given that most of these scenarios, whether anticipated or unanticipated, do not happen often, so it’s unrealistic financially for enterprises to provision enough resource to handle these spikes. The Cloud would allow enterprises to rent the additional resources in any quantity at any time.&lt;/p&gt;
-
-&lt;h4 id=&#34;toc_22&#34;&gt;Self-Service&lt;/h4&gt;
-
-&lt;p&gt;The traditional process of application owners or developer asking IT to procure and provision resources is arduous and long. Consider the software vendor scenario we described earlier where developers need to spin up 50 to 500 servers for software testing. The developers need to modify this environment often to test different configurations and application architectures, and they need to have these modifications done in real-time so they don’t miss their delivery schedule. IT organizations are not resourced to handle this type of scenarios. The best resolution would be to provide the developers a pool of resources that they can do their own configurations. The self-service model not only works for these developers, but more and more business users are asking for similar capabilities as they are asked to be more efficient.&lt;/p&gt;
-
-&lt;h4 id=&#34;toc_23&#34;&gt;Ubiquitous&lt;/h4&gt;
-
-&lt;p&gt;Ubiquitous access, or the ability to access from anywhere, using any device, is one of the great promises of the Web. This promise will become real as smart phones, netbooks and laptops become the prevalent way of access information. Ray Ozzie, Micrisoft’s Chief Software Architect, described his vision of “3 Windows in the Cloud,” where the 3 Windows included Windows on PC, Windows on mobile devices, and Windows on TVs. As you can see, one of key messages in this vision is ubiquitous access.&lt;/p&gt;
 </description>
     </item>
     

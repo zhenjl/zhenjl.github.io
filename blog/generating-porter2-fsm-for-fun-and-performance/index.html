@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Generating Porter2 FSM For Fun and Performance in Go &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-681691-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org/blog">Archive</a></li>
+      
+    </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Generating Porter2 FSM For Fun and Performance in Go</h1>
+  <span class="post-date">Wed, Jan 21, 2015</span>
+      
+
+<p><a href="http://godoc.org/github.com/surgebase/porter2"><img src="http://godoc.org/github.com/surgebase/porter2?status.svg" alt="GoDoc" />
+</a></p>
+
+<h2 id="toc_0">tl;dr</h2>
+
+<ul>
+<li>This post describes the <a href="https://github.com/surgebase/porter2">Porter2</a> package I implemented. It is written in Go (#golang).</li>
+<li>By using a <a href="http://en.wikipedia.org/wiki/Finite-state_machine">finite-state-machine</a> approach to <a href="http://snowball.tartarus.org/algorithms/english/stemmer.html">Porter2</a> <a href="http://en.wikipedia.org/wiki/Stemming">stemming</a>, I was able to achieve 660% better performance compare to other Go implementations.</li>
+<li>FSM-based approach is great for known/fixed data set, but obviously not workable if the data set changes at runtime.</li>
+<li>Hand-coding FSM is a PITA!!! <a href="https://github.com/surgebase/porter2/tree/master/cmd/suffixfsm">Automate</a> if possible.</li>
+</ul>
+
+<h2 id="toc_1">Introduction</h2>
+
+<p>In a personal project I am working on, I had the need to perform word stemming in two scenarios. First, I need to perform stemming for all the string literals in a LARGE corpus and then determine if the words are in a fixed set of literals. Second, I need to perform stemming for a subset of words in real-time, as messages stream in.</p>
+
+<p>In the first case, performance is important but not critical; in the second case, performance is a huge factor.</p>
+
+<h3 id="toc_2">Stemming</h3>
+
+<p>To start, according to <a href="http://en.wikipedia.org/wiki/Stemming">wikipedia</a>:</p>
+
+<blockquote>
+<p>Stemming is the term used in linguistic morphology and information retrieval to describe the process for reducing inflected (or sometimes derived) words to their word stem, base or root form—generally a written word form.</p>
+</blockquote>
+
+<p>As a quick example, the words <em>fail</em>, <em>failed</em>, and <em>failing</em> all mean something has <em>failed</em>. By stemming these three words, I will get a single form which is <em>fail</em>. I can then just use <em>fail</em> going forward instead of having to compare all three forms all the time.</p>
+
+<p>The <a href="http://tartarus.org/martin/PorterStemmer/def.txt">Porter</a> stemming algorithm is by far the most commonly used stemmer and also considered to be one of the most gentle stemmers. The Porter stemming algorithm (or ‘Porter stemmer’) works by removing the commoner morphological and inflexional endings from words in English. Its main use is as part of a term normalisation process that is usually done when setting up Information Retrieval systems. (<a href="http://tartarus.org/martin/PorterStemmer/">ref</a>)</p>
+
+<p><a href="http://snowball.tartarus.org/algorithms/english/stemmer.html">Porter2</a> is universally considered to be an enhancement over the original Porter algorithm. Porter2 has an improved set of rules and it&rsquo;s widely used as well.</p>
+
+<h2 id="toc_3">Implementation</h2>
+
+<p>This package, <a href="https://github.com/surgebase/porter2">Porter2</a>, implements the Porter2 stemmer. It is written completely using finite state machines to perform suffix comparison, rather than the usual string-based or tree-based approaches. As a result, it is 660% faster compare to string comparison-based approach written in the same (Go) language.</p>
+
+<p>This implementation has been successfully validated with the dataset from <a href="http://snowball.tartarus.org/algorithms/english/">http://snowball.tartarus.org/algorithms/english/</a>, so it should be in a usable state. If you encounter any issues, please feel free to <a href="https://github.com/surgebase/porter2/issues">open an issue</a>.</p>
+
+<p>Usage is fairly simple:</p>
+
+<pre><code>import &quot;github.com/surgebase/porter2&quot;
+
+fmt.Println(porter2.Stem(&quot;seaweed&quot;)) // should get seawe
+</code></pre>
+
+<h3 id="toc_4">Performance</h3>
+
+<p>This implementation by far has the highest performance of the various Go-based implementations, AFAICT. I tested a few of the implementations and the results are below.</p>
+
+<table>
+<thead>
+<tr>
+<th>Implementation</th>
+<th>Time</th>
+<th>Algorithm</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><a href="https://github.com/surgebase/porter2">surgebase</a></td>
+<td>319.009358ms</td>
+<td>Porter2</td>
+</tr>
+
+<tr>
+<td><a href="https://github.com/dchest/stemmer">dchest</a></td>
+<td>2.106912401s</td>
+<td>Porter2</td>
+</tr>
+
+<tr>
+<td><a href="https://github.com/kljensen/snowball">kljensen</a></td>
+<td>5.725917198s</td>
+<td>Porter2</td>
+</tr>
+</tbody>
+</table>
+
+<p>To run the test again, you can run <a href="https://github.com/surgebase/porter2/tree/master/cmd/compare">compare.go</a> (<code>go run compare.go</code>).</p>
+
+<h3 id="toc_5">State Machines</h3>
+
+<p>Most of the implementations, like the ones in the table above, rely completely on suffix string comparison. Basically there&rsquo;s a list of suffixes, and the code will loop through the list to see if there&rsquo;s a match. Given most of the time you are looking for the longest match, so you order the list so the longest is the first one. So if you are luckly, the match will be early on the list. But regardless that&rsquo;s a huge performance hit.</p>
+
+<p>This implementation is based completely on finite state machines to perform suffix comparison. You compare each chacter of the string starting at the last character going backwards. The state machines will determine what the longest suffix is.</p>
+
+<p>As an example, let&rsquo;s look at the 3 suffixes from step0 of the porte2 algorithm. The goal, and it&rsquo;s the same for all the other steps, it&rsquo;s to find the longest matching suffix.</p>
+
+<pre><code>'
+'s
+'s'
+</code></pre>
+
+<p>If you were to build a non-space-optimized <a href="http://en.wikipedia.org/wiki/Suffix_tree">suffix tree</a>, you would get this, where R is the root of the tree, and any node with * is designated as a final state:</p>
+
+<pre><code>        R
+       / \
+      '*  s
+     /     \
+    s       '*
+   /
+  '*
+</code></pre>
+
+<p>This is a fairly easy tree to build, and we actually did that in the FSM generator we will talk about later. However, to build a working suffix tree in Go, we would need to use a <code>map[rune]*node</code> structure at each of the nodes. And then search the map for each rune we encounter.</p>
+
+<p>To test the performance of using a switch statement vs using a map, I wrote a <a href="https://github.com/surgebase/porter2/tree/master/cmd/switchvsmap">quick test</a>:</p>
+
+<pre><code>switch: 4.956523ms
+   map: 10.016601ms
+</code></pre>
+
+<p>The test basically runs a switch statement and a map each for 1,000,000 times. So it seems like using a switch statement is faster than a map. Though I think the compiler basically builds a map for all the switch case statements.  (Maybe we should call this post <em>Microbenchmarking for fun and performance</em>?)</p>
+
+<p>In any case, let&rsquo;s go with the switch approach. We basically need to unroll the suffix tree into a finite state machine.</p>
+
+<pre><code>        R0
+       / \
+      '1* s2
+     /     \
+    s3      '4*
+   /
+  '5*
+</code></pre>
+
+<p>To do that, we need to assign a state number to each of the nodes in the suffix tree, and output each of the states and the transitions based on the rune encountered. The tree above is the same as the one before, but now has a state number assigned to each node.</p>
+
+<h3 id="toc_6">Generator</h3>
+
+<p>I actually started building all the porter2 FSMs manually with a completely different approach than what I am describing here. I won&rsquo;t go into details here but needless to say, it was disastrous. Not only was hand coding state machines extremely error-prone, the approach I was taking also had a lot of potential for bugs. It took me MANY HOURS to hand build those FSMs but at the end, I was happy to abandon all of them for the approach I am taking now.</p>
+
+<p>To reduce errors and make updating the FSM easier, I wrote a quick tool called <a href="https://github.com/surgebase/porter2/tree/master/cmd/suffixfsm">suffixfsm</a> to generate the FSMs. The tool basically takes a list of suffixes, creates a suffix tree as described above, and unrolls the tree into a set of states using the <code>switch</code> statement.</p>
+
+<p>It took me just a couple hours to write and debug the tool, and I was well on my way to fixing other bugs!</p>
+
+<p>For example, running the command <code>go run suffixfsm.go step0.txt</code> generated the following code. This is a complete function for step0 of the porter2 algorithm. The only thing missing is what to do with each of the final states, which are in the last <code>switch</code> statement.</p>
+
+<pre><code>var (
+		l int = len(rs) // string length
+		m int			// suffix length
+		s int			// state
+		f int			// end state of longgest suffix
+		r rune			// current rune
+	)
+
+loop:
+	for i := 0; i &lt; l; i++ {
+		r = rs[l-i-1]
+
+		switch s {
+		case 0:
+			switch r {
+			case '\'':
+				s = 1
+				m = 1
+				f = 1
+				// ' - final
+			case 's':
+				s = 2
+			default:
+				break loop
+			}
+		case 1:
+			switch r {
+			case 's':
+				s = 4
+			default:
+				break loop
+			}
+		case 2:
+			switch r {
+			case '\'':
+				s = 3
+				m = 2
+				f = 3
+				// 's - final
+			default:
+				break loop
+			}
+		case 4:
+			switch r {
+			case '\'':
+				s = 5
+				m = 3
+				f = 5
+				// 's' - final
+			default:
+				break loop
+			}
+		default:
+			break loop
+		}
+	}
+
+	switch f {
+	case 1:
+		// ' - final
+
+	case 3:
+		// 's - final
+
+	case 5:
+		// 's' - final
+
+	}
+
+	return rs
+</code></pre>
+
+<h2 id="toc_7">Finally</h2>
+
+<p>This is a technique that can probably be applied to any fixed data set. The performance may vary based on the size of the state machine so test it with both maps and FSM to see what works best.</p>
+
+<p>Happy Go&rsquo;ing!</p>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>

@@ -7,7 +7,233 @@
     <language>en-us</language>
     <author>Jian Zhen</author>
     <copyright>Jian Zhen</copyright>
-    <updated>Thu, 25 Dec 2014 00:00:33 PST</updated>
+    <updated>Wed, 21 Jan 2015 20:48:44 PST</updated>
+    
+    <item>
+      <title>Generating Porter2 FSM For Fun and Performance in Go</title>
+      <link>http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/</link>
+      <pubDate>Wed, 21 Jan 2015 20:48:44 PST</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;http://godoc.org/github.com/surgebase/porter2&#34;&gt;&lt;img src=&#34;http://godoc.org/github.com/surgebase/porter2?status.svg&#34; alt=&#34;GoDoc&#34; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;tl;dr&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;This post describes the &lt;a href=&#34;https://github.com/surgebase/porter2&#34;&gt;Porter2&lt;/a&gt; package I implemented. It is written in Go (#golang).&lt;/li&gt;
+&lt;li&gt;By using a &lt;a href=&#34;http://en.wikipedia.org/wiki/Finite-state_machine&#34;&gt;finite-state-machine&lt;/a&gt; approach to &lt;a href=&#34;http://snowball.tartarus.org/algorithms/english/stemmer.html&#34;&gt;Porter2&lt;/a&gt; &lt;a href=&#34;http://en.wikipedia.org/wiki/Stemming&#34;&gt;stemming&lt;/a&gt;, I was able to achieve 660% better performance compare to other Go implementations.&lt;/li&gt;
+&lt;li&gt;FSM-based approach is great for known/fixed data set, but obviously not workable if the data set changes at runtime.&lt;/li&gt;
+&lt;li&gt;Hand-coding FSM is a PITA!!! &lt;a href=&#34;https://github.com/surgebase/porter2/tree/master/cmd/suffixfsm&#34;&gt;Automate&lt;/a&gt; if possible.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;In a personal project I am working on, I had the need to perform word stemming in two scenarios. First, I need to perform stemming for all the string literals in a LARGE corpus and then determine if the words are in a fixed set of literals. Second, I need to perform stemming for a subset of words in real-time, as messages stream in.&lt;/p&gt;
+
+&lt;p&gt;In the first case, performance is important but not critical; in the second case, performance is a huge factor.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_2&#34;&gt;Stemming&lt;/h3&gt;
+
+&lt;p&gt;To start, according to &lt;a href=&#34;http://en.wikipedia.org/wiki/Stemming&#34;&gt;wikipedia&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Stemming is the term used in linguistic morphology and information retrieval to describe the process for reducing inflected (or sometimes derived) words to their word stem, base or root form—generally a written word form.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;As a quick example, the words &lt;em&gt;fail&lt;/em&gt;, &lt;em&gt;failed&lt;/em&gt;, and &lt;em&gt;failing&lt;/em&gt; all mean something has &lt;em&gt;failed&lt;/em&gt;. By stemming these three words, I will get a single form which is &lt;em&gt;fail&lt;/em&gt;. I can then just use &lt;em&gt;fail&lt;/em&gt; going forward instead of having to compare all three forms all the time.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&#34;http://tartarus.org/martin/PorterStemmer/def.txt&#34;&gt;Porter&lt;/a&gt; stemming algorithm is by far the most commonly used stemmer and also considered to be one of the most gentle stemmers. The Porter stemming algorithm (or ‘Porter stemmer’) works by removing the commoner morphological and inflexional endings from words in English. Its main use is as part of a term normalisation process that is usually done when setting up Information Retrieval systems. (&lt;a href=&#34;http://tartarus.org/martin/PorterStemmer/&#34;&gt;ref&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://snowball.tartarus.org/algorithms/english/stemmer.html&#34;&gt;Porter2&lt;/a&gt; is universally considered to be an enhancement over the original Porter algorithm. Porter2 has an improved set of rules and it&amp;rsquo;s widely used as well.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_3&#34;&gt;Implementation&lt;/h2&gt;
+
+&lt;p&gt;This package, &lt;a href=&#34;https://github.com/surgebase/porter2&#34;&gt;Porter2&lt;/a&gt;, implements the Porter2 stemmer. It is written completely using finite state machines to perform suffix comparison, rather than the usual string-based or tree-based approaches. As a result, it is 660% faster compare to string comparison-based approach written in the same (Go) language.&lt;/p&gt;
+
+&lt;p&gt;This implementation has been successfully validated with the dataset from &lt;a href=&#34;http://snowball.tartarus.org/algorithms/english/&#34;&gt;http://snowball.tartarus.org/algorithms/english/&lt;/a&gt;, so it should be in a usable state. If you encounter any issues, please feel free to &lt;a href=&#34;https://github.com/surgebase/porter2/issues&#34;&gt;open an issue&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Usage is fairly simple:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import &amp;quot;github.com/surgebase/porter2&amp;quot;
+
+fmt.Println(porter2.Stem(&amp;quot;seaweed&amp;quot;)) // should get seawe
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;toc_4&#34;&gt;Performance&lt;/h3&gt;
+
+&lt;p&gt;This implementation by far has the highest performance of the various Go-based implementations, AFAICT. I tested a few of the implementations and the results are below.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Implementation&lt;/th&gt;
+&lt;th&gt;Time&lt;/th&gt;
+&lt;th&gt;Algorithm&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/surgebase/porter2&#34;&gt;surgebase&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;319.009358ms&lt;/td&gt;
+&lt;td&gt;Porter2&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/dchest/stemmer&#34;&gt;dchest&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;2.106912401s&lt;/td&gt;
+&lt;td&gt;Porter2&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/kljensen/snowball&#34;&gt;kljensen&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;5.725917198s&lt;/td&gt;
+&lt;td&gt;Porter2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;To run the test again, you can run &lt;a href=&#34;https://github.com/surgebase/porter2/tree/master/cmd/compare&#34;&gt;compare.go&lt;/a&gt; (&lt;code&gt;go run compare.go&lt;/code&gt;).&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_5&#34;&gt;State Machines&lt;/h3&gt;
+
+&lt;p&gt;Most of the implementations, like the ones in the table above, rely completely on suffix string comparison. Basically there&amp;rsquo;s a list of suffixes, and the code will loop through the list to see if there&amp;rsquo;s a match. Given most of the time you are looking for the longest match, so you order the list so the longest is the first one. So if you are luckly, the match will be early on the list. But regardless that&amp;rsquo;s a huge performance hit.&lt;/p&gt;
+
+&lt;p&gt;This implementation is based completely on finite state machines to perform suffix comparison. You compare each chacter of the string starting at the last character going backwards. The state machines will determine what the longest suffix is.&lt;/p&gt;
+
+&lt;p&gt;As an example, let&amp;rsquo;s look at the 3 suffixes from step0 of the porte2 algorithm. The goal, and it&amp;rsquo;s the same for all the other steps, it&amp;rsquo;s to find the longest matching suffix.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&#39;
+&#39;s
+&#39;s&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you were to build a non-space-optimized &lt;a href=&#34;http://en.wikipedia.org/wiki/Suffix_tree&#34;&gt;suffix tree&lt;/a&gt;, you would get this, where R is the root of the tree, and any node with * is designated as a final state:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;        R
+       / \
+      &#39;*  s
+     /     \
+    s       &#39;*
+   /
+  &#39;*
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is a fairly easy tree to build, and we actually did that in the FSM generator we will talk about later. However, to build a working suffix tree in Go, we would need to use a &lt;code&gt;map[rune]*node&lt;/code&gt; structure at each of the nodes. And then search the map for each rune we encounter.&lt;/p&gt;
+
+&lt;p&gt;To test the performance of using a switch statement vs using a map, I wrote a &lt;a href=&#34;https://github.com/surgebase/porter2/tree/master/cmd/switchvsmap&#34;&gt;quick test&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;switch: 4.956523ms
+   map: 10.016601ms
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The test basically runs a switch statement and a map each for 1,000,000 times. So it seems like using a switch statement is faster than a map. Though I think the compiler basically builds a map for all the switch case statements.  (Maybe we should call this post &lt;em&gt;Microbenchmarking for fun and performance&lt;/em&gt;?)&lt;/p&gt;
+
+&lt;p&gt;In any case, let&amp;rsquo;s go with the switch approach. We basically need to unroll the suffix tree into a finite state machine.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;        R0
+       / \
+      &#39;1* s2
+     /     \
+    s3      &#39;4*
+   /
+  &#39;5*
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To do that, we need to assign a state number to each of the nodes in the suffix tree, and output each of the states and the transitions based on the rune encountered. The tree above is the same as the one before, but now has a state number assigned to each node.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_6&#34;&gt;Generator&lt;/h3&gt;
+
+&lt;p&gt;I actually started building all the porter2 FSMs manually with a completely different approach than what I am describing here. I won&amp;rsquo;t go into details here but needless to say, it was disastrous. Not only was hand coding state machines extremely error-prone, the approach I was taking also had a lot of potential for bugs. It took me MANY HOURS to hand build those FSMs but at the end, I was happy to abandon all of them for the approach I am taking now.&lt;/p&gt;
+
+&lt;p&gt;To reduce errors and make updating the FSM easier, I wrote a quick tool called &lt;a href=&#34;https://github.com/surgebase/porter2/tree/master/cmd/suffixfsm&#34;&gt;suffixfsm&lt;/a&gt; to generate the FSMs. The tool basically takes a list of suffixes, creates a suffix tree as described above, and unrolls the tree into a set of states using the &lt;code&gt;switch&lt;/code&gt; statement.&lt;/p&gt;
+
+&lt;p&gt;It took me just a couple hours to write and debug the tool, and I was well on my way to fixing other bugs!&lt;/p&gt;
+
+&lt;p&gt;For example, running the command &lt;code&gt;go run suffixfsm.go step0.txt&lt;/code&gt; generated the following code. This is a complete function for step0 of the porter2 algorithm. The only thing missing is what to do with each of the final states, which are in the last &lt;code&gt;switch&lt;/code&gt; statement.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var (
+		l int = len(rs) // string length
+		m int			// suffix length
+		s int			// state
+		f int			// end state of longgest suffix
+		r rune			// current rune
+	)
+
+loop:
+	for i := 0; i &amp;lt; l; i++ {
+		r = rs[l-i-1]
+
+		switch s {
+		case 0:
+			switch r {
+			case &#39;\&#39;&#39;:
+				s = 1
+				m = 1
+				f = 1
+				// &#39; - final
+			case &#39;s&#39;:
+				s = 2
+			default:
+				break loop
+			}
+		case 1:
+			switch r {
+			case &#39;s&#39;:
+				s = 4
+			default:
+				break loop
+			}
+		case 2:
+			switch r {
+			case &#39;\&#39;&#39;:
+				s = 3
+				m = 2
+				f = 3
+				// &#39;s - final
+			default:
+				break loop
+			}
+		case 4:
+			switch r {
+			case &#39;\&#39;&#39;:
+				s = 5
+				m = 3
+				f = 5
+				// &#39;s&#39; - final
+			default:
+				break loop
+			}
+		default:
+			break loop
+		}
+	}
+
+	switch f {
+	case 1:
+		// &#39; - final
+
+	case 3:
+		// &#39;s - final
+
+	case 5:
+		// &#39;s&#39; - final
+
+	}
+
+	return rs
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;toc_7&#34;&gt;Finally&lt;/h2&gt;
+
+&lt;p&gt;This is a technique that can probably be applied to any fixed data set. The performance may vary based on the size of the state machine so test it with both maps and FSM to see what works best.&lt;/p&gt;
+
+&lt;p&gt;Happy Go&amp;rsquo;ing!&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>PingMQ: A SurgeMQ-based ICMP Monitoring Tool</title>
