@@ -17,13 +17,13 @@
       <guid>http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/</guid>
       <description>
 
-&lt;h1 id=&#34;toc_0&#34;&gt;sequence&lt;/h1&gt;
-
 &lt;p&gt;&lt;a href=&#34;http://godoc.org/github.com/strace/sequence&#34;&gt;&lt;img src=&#34;http://godoc.org/github.com/strace/sequence?status.svg&#34; alt=&#34;GoDoc&#34; /&gt;
 &lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://godoc.org/github.com/strace/sequence/sequence&#34;&gt;&lt;img src=&#34;http://godoc.org/github.com/strace/sequence/sequence?status.svg&#34; alt=&#34;GoDoc&#34; /&gt;
 &lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/strace/sequence&#34;&gt;github repo&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;sequence&lt;/code&gt; is a &lt;em&gt;high performance sequential semantic log parser&lt;/em&gt;.&lt;/p&gt;
 
@@ -36,7 +36,7 @@
 
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;sequence&lt;/code&gt; is currently under active development and should be considered unstable until further notice.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Motivation&lt;/h3&gt;
+&lt;h3 id=&#34;toc_0&#34;&gt;Motivation&lt;/h3&gt;
 
 &lt;p&gt;Log messages are notoriusly difficult to parse because they all have different formats. Industries (see Splunk, ArcSight, Tibco LogLogic, Sumo Logic, Logentries, Loggly, LogRhythm, etc etc etc) have been built to solve the problems of parsing, understanding and analyzing log messages.&lt;/p&gt;
 
@@ -52,7 +52,7 @@
 
 &lt;p&gt;Sequence is developed to make analyzing and parsing log messages a lot easier and faster.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Performance&lt;/h3&gt;
+&lt;h3 id=&#34;toc_1&#34;&gt;Performance&lt;/h3&gt;
 
 &lt;p&gt;The following performance benchmarks are run on a single 4-core (2.8Ghz i7) MacBook Pro. The first file is a
 bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA log file, averaging 180 bytes per message.&lt;/p&gt;
@@ -79,11 +79,11 @@ bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA lo
   Parsed 447745 messages in 2.52 secs, ~ 177875.94 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;Documentation&lt;/h3&gt;
+&lt;h3 id=&#34;toc_2&#34;&gt;Documentation&lt;/h3&gt;
 
 &lt;p&gt;Documentation is available at godoc: &lt;a href=&#34;http://godoc.org/github.com/strace/sequence&#34;&gt;package&lt;/a&gt;, &lt;a href=&#34;http://godoc.org/github.com/strace/sequence/sequence&#34;&gt;command&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;License&lt;/h3&gt;
+&lt;h3 id=&#34;toc_3&#34;&gt;License&lt;/h3&gt;
 
 &lt;p&gt;Copyright &amp;copy; 2014 Dataence, LLC. All rights reserved.&lt;/p&gt;
 
@@ -99,11 +99,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;Roadmap / Futures&lt;/h3&gt;
+&lt;h3 id=&#34;toc_4&#34;&gt;Roadmap / Futures&lt;/h3&gt;
 
 &lt;p&gt;There are some pattern files developed for ASA, Sudo and SSH in the &lt;code&gt;patterns&lt;/code&gt; directory. The goal is to continue to develop a set of patterns for the various log messages, and along the way add additional features to the parser that can help make it even easier to parse log messages. So currently there&amp;rsquo;s not a set roadmap.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_6&#34;&gt;Concepts&lt;/h2&gt;
+&lt;h2 id=&#34;toc_5&#34;&gt;Concepts&lt;/h2&gt;
 
 &lt;p&gt;The following concepts are part of the package:&lt;/p&gt;
 
@@ -122,7 +122,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
 &lt;li&gt;&lt;p&gt;A &lt;em&gt;Parser&lt;/em&gt; is a tree-based parsing engine for log messages. It builds a parsing tree based on pattern sequence supplied, and for each message sequence, returns the matching pattern sequence. Each of the message tokens will be marked with the semantic field types.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;toc_7&#34;&gt;Sequence Command&lt;/h2&gt;
+&lt;h2 id=&#34;toc_6&#34;&gt;Sequence Command&lt;/h2&gt;
 
 &lt;p&gt;The &lt;code&gt;sequence&lt;/code&gt; command is developed to demonstrate the use of this package. You can find it in the &lt;code&gt;sequence&lt;/code&gt; directory. The &lt;code&gt;sequence&lt;/code&gt; command implements the &lt;em&gt;sequential semantic log parser&lt;/em&gt;.&lt;/p&gt;
 
@@ -136,7 +136,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
      help [command]            Help about any command
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_8&#34;&gt;Scan&lt;/h3&gt;
+&lt;h3 id=&#34;toc_7&#34;&gt;Scan&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence scan [flags]
@@ -174,7 +174,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
   #  22: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;ustream&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_9&#34;&gt;Parse&lt;/h3&gt;
+&lt;h3 id=&#34;toc_8&#34;&gt;Parse&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence parse [flags]
@@ -225,7 +225,7 @@ To get a more realistic performance number, see the benchmark section below.&lt;
   #  24: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;)&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_10&#34;&gt;Benchmark&lt;/h3&gt;
+&lt;h3 id=&#34;toc_9&#34;&gt;Benchmark&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence bench [flags]
