@@ -7,12 +7,12 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <title> Sequence: A High Performance Sequential Semantic Log Analyzer and Parser &middot; Zen 3.1 </title>
+  <title> Sequence: A High Performance Sequential Semantic Log Parser at 175,000 MPS &middot; Zen 3.1 </title>
 
   
-  <link rel="stylesheet" href="http://localhost:1313/css/poole.css">
-  <link rel="stylesheet" href="http://localhost:1313/css/syntax.css">
-  <link rel="stylesheet" href="http://localhost:1313/css/hyde.css">
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
@@ -38,7 +38,7 @@
 <div class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <h1 class="brand"><a href="http://localhost:1313">Zen 3.1</a></h1>
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
       <p class="lead">
        Product. Data. Code 
       </p>
@@ -47,7 +47,7 @@
 
 
     <ul class="sidebar-nav">
-      <li><a href="http://localhost:1313/blog">Archive</a></li>
+      <li><a href="http://zhen.org/blog">Archive</a></li>
       
     </ul>
       <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
@@ -66,23 +66,30 @@
 
     <div class="content container">
 <div class="post">
-  <h1>Sequence: A High Performance Sequential Semantic Log Analyzer and Parser</h1>
-  <span class="post-date">Mon, Jan 5, 2015</span>
+  <h1>Sequence: A High Performance Sequential Semantic Log Parser at 175,000 MPS</h1>
+  <span class="post-date">Sun, Feb 1, 2015</span>
       
 
-<p><a href="https://github.com/surge/sequence"><code>sequence</code></a> is a <em>high performance sequential semantic log message analyzer and parser</em>.</p>
+<h1 id="toc_0">sequence</h1>
+
+<p><a href="http://godoc.org/github.com/strace/sequence"><img src="http://godoc.org/github.com/strace/sequence?status.svg" alt="GoDoc" />
+</a></p>
+
+<p><a href="http://godoc.org/github.com/strace/sequence/sequence"><img src="http://godoc.org/github.com/strace/sequence/sequence?status.svg" alt="GoDoc" />
+</a></p>
+
+<p><code>sequence</code> is a <em>high performance sequential semantic log parser</em>.</p>
 
 <ul>
 <li>It is <em>sequential</em> because it goes through a log message sequentially and does not use regular expressions.</li>
 <li>It is <em>semantic</em> because it tries to extract meaningful information out of the log messages and give them semantic indicators, e.g., src IPv4 or dst IPv4.</li>
-<li>It is an <em>analyzer</em> because analyzes a large corpus of text-based log messages and try to determine the unique patterns that would represent all of them.</li>
 <li>It is a <em>parser</em> because it will take a message and parses out the meaningful parts.</li>
 <li>It is <em>high performance</em> because it can parse 100K+ messages per second without the need to separate parsing rules by log source type.</li>
 </ul>
 
 <p><strong><code>sequence</code> is currently under active development and should be considered unstable until further notice.</strong></p>
 
-<h3 id="toc_0">Motivation</h3>
+<h3 id="toc_1">Motivation</h3>
 
 <p>Log messages are notoriusly difficult to parse because they all have different formats. Industries (see Splunk, ArcSight, Tibco LogLogic, Sumo Logic, Logentries, Loggly, LogRhythm, etc etc etc) have been built to solve the problems of parsing, understanding and analyzing log messages.</p>
 
@@ -98,35 +105,38 @@
 
 <p>Sequence is developed to make analyzing and parsing log messages a lot easier and faster.</p>
 
-<h3 id="toc_1">Performance</h3>
+<h3 id="toc_2">Performance</h3>
 
 <p>The following performance benchmarks are run on a single 4-core (2.8Ghz i7) MacBook Pro. The first file is a
 bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA log file, averaging 180 bytes per message.</p>
 
-<pre><code>  $ go version
-  go version go1.4 darwin/amd64
-
-  $ ./sequence bench -p ../../patterns/sshd.txt -i ../../data/sshd.all
-  Parsed 212897 messages in 2.65 secs, ~ 80449.93 msgs/sec
+<pre><code>  $ ./sequence bench -p ../../patterns/sshd.txt -i ../../data/sshd.all
+  Parsed 212897 messages in 1.69 secs, ~ 126319.27 msgs/sec
 
   $ ./sequence bench -p ../../patterns/asa.txt -i ../../data/allasa.log
-  Parsed 234815 messages in 4.42 secs, ~ 53081.36 msgs/sec
+  Parsed 234815 messages in 2.89 secs, ~ 81323.41 msgs/sec
+
+  $ ./sequence bench -d ../patterns -i ../data/asasshsudo.log
+  Parsed 447745 messages in 4.47 secs, ~ 100159.65 msgs/sec
 </code></pre>
 
 <p>Performance can be improved by adding more cores:</p>
 
 <pre><code>  GOMAXPROCS=2 ./sequence bench -p ../../patterns/sshd.txt -i ../../data/sshd.all -w 2
-  Parsed 212897 messages in 1.52 secs, ~ 140139.27 msgs/sec
+  Parsed 212897 messages in 1.00 secs, ~ 212711.83 msgs/sec
 
   $ GOMAXPROCS=2 ./sequence bench -p ../../patterns/asa.txt -i ../../data/allasa.log -w 2
-  Parsed 234815 messages in 2.51 secs, ~ 93614.09 msgs/sec
+  Parsed 234815 messages in 1.56 secs, ~ 150769.68 msgs/sec
+
+  $ GOMAXPROCS=2 ./sequence bench -d ../patterns -i ../data/asasshsudo.log -w 2
+  Parsed 447745 messages in 2.52 secs, ~ 177875.94 msgs/sec
 </code></pre>
 
-<h3 id="toc_2">Documentation</h3>
+<h3 id="toc_3">Documentation</h3>
 
-<p>Documentation is available at godoc: <a href="http://godoc.org/github.com/surge/sequence">package</a>, <a href="http://godoc.org/github.com/surge/sequence/cmd/sequence">command</a>.</p>
+<p>Documentation is available at godoc: <a href="http://godoc.org/github.com/strace/sequence">package</a>, <a href="http://godoc.org/github.com/strace/sequence/sequence">command</a>.</p>
 
-<h3 id="toc_3">License</h3>
+<h3 id="toc_4">License</h3>
 
 <p>Copyright &copy; 2014 Dataence, LLC. All rights reserved.</p>
 
@@ -142,11 +152,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
 
-<h3 id="toc_4">Roadmap / Futures</h3>
+<h3 id="toc_5">Roadmap / Futures</h3>
 
 <p>There are some pattern files developed for ASA, Sudo and SSH in the <code>patterns</code> directory. The goal is to continue to develop a set of patterns for the various log messages, and along the way add additional features to the parser that can help make it even easier to parse log messages. So currently there&rsquo;s not a set roadmap.</p>
 
-<h2 id="toc_5">Concepts</h2>
+<h2 id="toc_6">Concepts</h2>
 
 <p>The following concepts are part of the package:</p>
 
@@ -157,36 +167,29 @@ limitations under the License.</p>
 
 <li><p>A <em>FieldType</em> indicates the semantic meaning of the token. For example, a token could be a source IP address (%srcipv4%), or a user (%srcuser% or %dstuser%), an action (%action%) or a status (%status%).</p></li>
 
-<li><p>A <em>Sequence</em> is a list of Tokens. It is returned by the <em>Scanner</em>, the <em>Analyzer</em>, and the <em>Parser</em>.</p></li>
+<li><p>A <em>Sequence</em> is a list of Tokens. It is returned by the <em>Tokenizer</em>, and the <em>Parser</em>.</p></li>
 
 <li><p>A <em>Scanner</em> is a sequential lexical analyzer that breaks a log message into a sequence of tokens. It is sequential because it goes through log message sequentially tokentizing each part of the message, without the use of regular expressions. The scanner currently recognizes time stamps, IPv4 addresses, URLs, MAC addresses,
 integers and floating point numbers. It also recgonizes key=value or key=&ldquo;value&rdquo; or key=&lsquo;value&rsquo; or key=<value> pairs.</p></li>
 
-<li><p>A <em>Analyzer</em> builds an analysis tree that represents all the Sequences from messages. It can be used to determine all of the unique patterns for a large body of messages.</p></li>
-
 <li><p>A <em>Parser</em> is a tree-based parsing engine for log messages. It builds a parsing tree based on pattern sequence supplied, and for each message sequence, returns the matching pattern sequence. Each of the message tokens will be marked with the semantic field types.</p></li>
 </ul>
 
-<h2 id="toc_6">Sequence Command</h2>
+<h2 id="toc_7">Sequence Command</h2>
 
-<p>The typical workflow of using sequence is to first analyze all of the log messages to determine the unique patterns. This could easily reduce millions of log messages down to maybe 30-50 formats.</p>
-
-<p>Then the analyst can look through these formats and annotate the patterns with the semantic meanings. Once that&rsquo;s done, the analyst can run the parser with these annotated rules and outcome the parsed tokens.</p>
-
-<p>The <code>sequence</code> command is developed to demonstrate the use of this package. You can find it in the cmd/sequence directory.</p>
+<p>The <code>sequence</code> command is developed to demonstrate the use of this package. You can find it in the <code>sequence</code> directory. The <code>sequence</code> command implements the <em>sequential semantic log parser</em>.</p>
 
 <pre><code>   Usage:
      sequence [command]
 
    Available Commands:
      scan                      scan will tokenize a log file or message and output a list of tokens
-     analyze                   analyze will analyze a log file and output a list of patterns that will match all the log messages
      parse                     parse will parse a log file and output a list of parsed tokens for each of the log messages
      bench                     benchmark the parsing of a log file, no output is provided
      help [command]            Help about any command
 </code></pre>
 
-<h3 id="toc_7">Scan</h3>
+<h3 id="toc_8">Scan</h3>
 
 <pre><code>  Usage:
     sequence scan [flags]
@@ -222,49 +225,6 @@ integers and floating point numbers. It also recgonizes key=value or key=&ldquo;
   #  20: { Field=&quot;%funknown%&quot;, Type=&quot;%string%&quot;, Value=&quot;/bin/su&quot; }
   #  21: { Field=&quot;%funknown%&quot;, Type=&quot;%literal%&quot;, Value=&quot;-&quot; }
   #  22: { Field=&quot;%funknown%&quot;, Type=&quot;%literal%&quot;, Value=&quot;ustream&quot; }
-</code></pre>
-
-<h3 id="toc_8">Analyze</h3>
-
-<pre><code>  Usage:
-    sequence analyze [flags]
-
-   Available Flags:
-    -h, --help=false: help for analyze
-    -i, --infile=&quot;&quot;: input file, required
-    -o, --outfile=&quot;&quot;: output file, if empty, to stdout
-    -d, --patdir=&quot;&quot;: pattern directory,, all files in directory will be used, optional
-    -p, --patfile=&quot;&quot;: initial pattern file, optional
-</code></pre>
-
-<p>The following command analyzes a set of sshd log messages, and output the
-patterns to the sshd.pat file. In this example, <code>sequence</code> analyzed over 200K
-messages and found 45 unique patterns. Notice we are not supplying an existing
-pattern file, so it treats all the patters as new.</p>
-
-<pre><code>  $ ./sequence analyze -i ../../data/sshd.all  -o sshd.pat
-  Analyzed 212897 messages, found 45 unique patterns, 45 are new.
-</code></pre>
-
-<p>And the output file has entries such as:</p>
-
-<pre><code>  %ts% %string% sshd [ %integer% ] : %string% ( sshd : %string% ) : session %string% for user %string% by ( uid = %integer% )
-  # Jan 15 19:39:26 jlz sshd[7778]: pam_unix(sshd:session): session opened for user jlz by (uid=0)
-</code></pre>
-
-<p>In the following command, we added an existing pattern file to the mix, which has
-a set of existing rules. Notice now there are only 35 unique patterns, and we were
-able to parse all of the log messages (no new patterns). There are fewer patterns
-because some of the patterns were combined.</p>
-
-<pre><code>  $ ./sequence analyze -d ../../patterns -i ../../data/sshd.all  -o sshd.pat
-  Analyzed 212897 messages, found 35 unique patterns, 0 are new.
-</code></pre>
-
-<p>The same log message we saw above now has an entry like the following:</p>
-
-<pre><code>  %createtime% %apphost% %appname% [ %sessionid% ] : %string% ( sshd : %string% ) : %object% %action% for user %dstuser% by ( uid = %integer% )
-  # Jan 15 19:39:26 jlz sshd[7778]: pam_unix(sshd:session): session opened for user jlz by (uid=0)
 </code></pre>
 
 <h3 id="toc_9">Parse</h3>
@@ -337,19 +297,19 @@ bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA
 log file, averaging 180 bytes per message.</p>
 
 <pre><code>  $ ./sequence bench -p ../../patterns/sshd.txt -i ../../data/sshd.all
-  Parsed 212897 messages in 2.65 secs, ~ 80449.93 msgs/sec
+  Parsed 212897 messages in 1.69 secs, ~ 126319.27 msgs/sec
 
   $ ./sequence bench -p ../../patterns/asa.txt -i ../../data/allasa.log
-  Parsed 234815 messages in 4.42 secs, ~ 53081.36 msgs/sec
+  Parsed 234815 messages in 2.89 secs, ~ 81323.41 msgs/sec
 </code></pre>
 
 <p>Performance can be improved by adding more cores:</p>
 
 <pre><code>  GOMAXPROCS=2 ./sequence bench -p ../../patterns/sshd.txt -i ../../data/sshd.all -w 2
-  Parsed 212897 messages in 1.52 secs, ~ 140139.27 msgs/sec
+  Parsed 212897 messages in 1.00 secs, ~ 212711.83 msgs/sec
 
   $ GOMAXPROCS=2 ./sequence bench -p ../../patterns/asa.txt -i ../../data/allasa.log -w 2
-  Parsed 234815 messages in 2.51 secs, ~ 93614.09 msgs/sec
+  Parsed 234815 messages in 1.56 secs, ~ 150769.68 msgs/sec
 </code></pre>
 
 
@@ -374,8 +334,5 @@ log file, averaging 180 bytes per message.</p>
 </div>
 </div>
 
-  <script>document.write('<script src="http://'
-        + (location.host || 'localhost').split(':')[0]
-		+ ':1313/livereload.js?mindelay=10"></'
-        + 'script>')</script></body>
+  </body>
 </html>
