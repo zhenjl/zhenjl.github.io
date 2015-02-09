@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Papers I Read: 2015 Week 6 &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-681691-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org/blog">Archive</a></li>
+      
+    </ul>
+      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+      
+      
+      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
+      
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Papers I Read: 2015 Week 6</h1>
+  <span class="post-date">Sun, Feb 8, 2015</span>
+      
+
+<p><a href="http://paperswelove.org/">Papers We Love</a> has been making rounds lately and a lot of people are excited about it. I also think it&rsquo;s kind of cool since I&rsquo;ve been reading a lot of research papers over the past year or so. I have been killing some trees because of that.</p>
+
+<p>My interests have been mostly around data analytics, but the specific focus areas have changed a few times. I have read papers on data structures (bloom filters, skiplist, bitmap compression, etc), security analytics, consumer behavioral analysis, loyalty analytics, and now back to security analytics. In fact, recently I started reading a few security research papers that I found on <a href="http://www.covert.io/">covert.io</a>, put together by Jason Trost.</p>
+
+<p>In any case, I thought it might be an interesting idea to share some of the papers I read/scan/skim on weekly basis. This way I can also track what I read over time.</p>
+
+<h3 id="toc_0">Random Ramblings</h3>
+
+<p>This week has been a disaster. I was the last one in the family to catch the cold, but probably lasted the longest. In fact I am still only about 50%. This whole week I have been having headaches, body aches, and haven&rsquo;t been able to concentrate. My body must be trying to catch up on sleep or something. For a couple days I actually slept for almost 12 hours a night!</p>
+
+<p>I&rsquo;ve been meaning to work on <a href="https://github.com/strace/sequence">sequence</a> and finish updating the analyzer, but really had a hard time concentrating. Any non-working hours are basically spent in bed if I could.</p>
+
+<p>So this is probably the worst week to start the &ldquo;Papers I Read&rdquo; series since I only technically read 1 paper. But I am going to cheat a little, and list the papers I read over the past couple of weeks, pretty much all in my spare time.</p>
+
+<p>This week we also saw Sony&rsquo;s accouncement that last year&rsquo;s hack cost them <a href="http://www.sony.net/SonyInfo/IR/financial/fr/150204_sony.pdf">$15 million</a> to investigate and remediate. It&rsquo;s pretty crazy if you think about it.</p>
+
+<p>Let&rsquo;s assume that they hired a bunch of high-priced consultants, say $250/hour, to help comb through the logs and clean the systems. And let&rsquo;s say <sup>2</sup>&frasl;<sub>3</sub> of the $15m is spent on these consultants. That&rsquo;s <code>$10m / $250 = 40,000 hours</code>.</p>
+
+<p>Let&rsquo;s say these consultants worked full time, non-stop, no weekends, no breaks, for 2 months since the announcement on Nov 24, 2014, that would be a team of 56 people (<code>40,000 hours / 60 days / 12 hours/day = 56</code>) working 12 hour days!</p>
+
+<p>I&rsquo;ll tell ya, these security guys are raking it in. They make money upfront by selling products/services to protect the company, then they make money in the back by selling forensic services to clean up after the hack.</p>
+
+<p>[Disclaimer: any mistake in my calculations/assumptions I blame on my drugged brain cells.]</p>
+
+<h3 id="toc_1">Papers I Read</h3>
+
+<ul>
+<li><a href="http://www.covert.io/research-papers/security/Beehive%20-%20Large-Scale%20Log%20Analysis%20for%20Detecting%20Suspicious%20Activity%20in%20Enterprise%20Networks.pdf">Beehive: Large-Scale Log Analysis for Detecting Suspicious Activity in Enterprise Networks</a></li>
+</ul>
+
+<blockquote>
+<p>We present a novel system, Beehive, that attacks the problem of automatically mining and extracting knowledge from the dirty log data produced by a wide variety of security products in a large enterprise. We improve on signature-based approaches to detecting security incidents and instead identify suspicious host behaviors that Beehive reports as potential security incidents.</p>
+</blockquote>
+
+<ul>
+<li><a href="http://minds.cs.umn.edu/publications/chapter.pdf">Data Mining for Cyber Security</a></li>
+</ul>
+
+<blockquote>
+<p>This chapter provides an overview of the Minnesota Intrusion Detection System (MINDS), which uses a suite of data mining based algorithms to address different aspects of cyber security. The various components of MINDS such as the scan detector, anomaly detector and the profiling module detect different types of attacks
+and intrusions on a computer network.</p>
+</blockquote>
+
+<ul>
+<li><a href="http://www.covert.io/research-papers/security/VAST-%20Network%20Visibility%20Across%20Space%20and%20Time.pdf">VAST: Network Visibility Across Space and Time</a></li>
+</ul>
+
+<blockquote>
+<p>Key operational networking tasks, such as troubleshooting and defending against attacks, greatly benefit from attaining views of network activity that are unified across space and time. This means that data from heterogeneous devices and systems is treated in a uniformfashion, and that analyzing past activity and detecting future instances follow the same procedures. Based on previous ideas that formulated principles for comprehensive
+network visibility [AKP+08], we present the design and architecture of Visibility Across Space and Time (VAST), an intelligent database that serves as a single vantage point into the network. The system is based on a generic event model to handle network data from disparate sources and provides a query architecture that allows operators or remote applications to extract events matching a given condition. We implemented a proof-of-principle prototype that can archive and index events from a wide range of sources. Moreover, we conducted a preliminary performance evaluation to verify that our implementation works efficient and as expected.</p>
+</blockquote>
+
+<ul>
+<li><a href="http://www.covert.io/research-papers/security/Finding%20The%20Needle-%20Suppression%20of%20False%20Alarms%20in%20Large%20Intrusion%20Detection%20Data%20Sets.pdf">Finding The Needle: Suppression of False Alarms in Large Intrusion Detection Data Sets</a></li>
+</ul>
+
+<blockquote>
+<p>Managed security service providers (MSSPs) must manage and monitor thousands of intrusion detection sensors.
+The sensors often vary by manufacturer and software version, making the problem of creating generalized tools to separate true attacks from false positives particularly difficult. Often times it is useful from an operations perspective to know if a particular sensor is acting out of character. We propose a solution to this problem using anomaly detection techniques over the set of alarms produced by the sensors. Similar to the manner in which an anomaly based sensor detects deviations from normal user or system behavior, we establish the baseline
+behavior of a sensor and detect deviations from this baseline. We show that departures from this profile by a sensor have a high probability of being artifacts of genuine attacks. We evaluate a set of time-based Markovian heuristics against a simple compression algorithm and show that we are able to detect the existence of all attacks which were manually identified by security personnel, drastically reduce the number of false positives, and identify attacks which were overlooked during manual evaluation.</p>
+</blockquote>
+
+<ul>
+<li><a href="http://user.informatik.uni-goettingen.de/~krieck/docs/2013a-aisec.pdf">A Close Look on n-Grams in Intrusion Detection: Anomaly Detection vs. Classification</a></li>
+</ul>
+
+<blockquote>
+<p>Detection methods based on n-gram models have been widely studied for the identification of attacks and malicious software. These methods usually build on one of two learning schemes: anomaly detection, where a model of normality is constructed from n-grams, or classification, where a discrimination between benign and malicious n-grams is learned. Although successful in many security domains, previous work falls short of explaining why a particular scheme is used and more importantly what renders one favorable over the other for a given type of data. In this paper we provide a close look on n-gram models for intrusion detection. We specifically study anomaly detection and classification using n-grams and develop criteria for data being used in one or the other
+scheme. Furthermore, we apply these criteria in the scope of web intrusion detection and empirically validate their effectiveness with different learning-based detection methods for client-side and service-side attacks.</p>
+</blockquote>
+
+<ul>
+<li><a href="http://blog.scalyr.com/2014/05/searching-20-gbsec-systems-engineering-before-algorithms/">Searching 20 GB/sec: Systems Engineering Before Algorithms</a></li>
+</ul>
+
+<p>Ok, this is a blog post, not a research paper, but it&rsquo;s somewhat interesting nonetheless.</p>
+
+<blockquote>
+<p>This article describes how we met that challenge using an “old school”, brute-force approach, by eliminating layers and avoiding complex data structures. There are lessons here that you can apply to your own engineering challenges.</p>
+</blockquote>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>
