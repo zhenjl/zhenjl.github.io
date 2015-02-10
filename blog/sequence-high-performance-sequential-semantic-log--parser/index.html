@@ -78,16 +78,11 @@
 
 <p><a href="https://github.com/strace/sequence">github repo</a></p>
 
-<p><code>sequence</code> is a <em>high performance sequential semantic log parser</em>.</p>
-
-<ul>
-<li>It is <em>sequential</em> because it goes through a log message sequentially and does not use regular expressions.</li>
-<li>It is <em>semantic</em> because it tries to extract meaningful information out of the log messages and give them semantic indicators, e.g., src IPv4 or dst IPv4.</li>
-<li>It is a <em>parser</em> because it will take a message and parses out the meaningful parts.</li>
-<li>It is <em>high performance</em> because it can parse 100K+ messages per second without the need to separate parsing rules by log source type.</li>
-</ul>
+<p><code>sequence</code> is a <em>high performance sequential log parser</em>. It <em>sequentially</em> goes through a log message, <em>parses</em> out the meaningful parts, without the use regular expressions. It can achieve <em>high performance</em> parsing of <strong>100,000 - 200,000 messages per second (MPS)</strong> without the need to separate parsing rules by log source type.</p>
 
 <p><strong><code>sequence</code> is currently under active development and should be considered unstable until further notice.</strong></p>
+
+<p><strong>If you have a set of logs you would like me to test out, please feel free to <a href="https://github.com/strace/sequence/issues">open an issue</a> and we can arrange a way for me to download and test your logs.</strong></p>
 
 <h3 id="toc_0">Motivation</h3>
 

@@ -100,5 +100,36 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
 </description>
     </item>
     
+    <item>
+      <title>Papers I Read: 2015 Week 6</title>
+      <link>http://zhen.org/blog/papers-i-read-2015-week-7/</link>
+      <pubDate>Sun, 08 Feb 2015 19:57:56 PST</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/papers-i-read-2015-week-7/</guid>
+      <description>
+
+&lt;h3 id=&#34;toc_0&#34;&gt;Random Ramblings&lt;/h3&gt;
+
+&lt;p&gt;Athem hack&lt;/p&gt;
+
+&lt;p&gt;Another great resource of computer science papers is Adrian Coyler&amp;rsquo;s &lt;a href=&#34;http://blog.acolyer.org/&#34;&gt;the morning paper&lt;/a&gt;. He selects and summarizes &amp;ldquo;an interesting/influential/important paper from the world of CS every weekday morning&amp;rdquo;.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;Papers I Read&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cs.put.poznan.pl/dweiss/site/publications/download/fsacomp.pdf&#34;&gt;Smaller Representation of Finite State Automata&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I read this paper when I was trying to figure out how to make the FSAs smaller for the &lt;a href=&#34;https://github.com/surge/xparse/tree/master/etld&#34;&gt;Effective TLD matcher&lt;/a&gt; I created. The FSM I generated is 212,294 lines long. That&amp;rsquo;s just absolutely crazy. This paper seems to present an interesting way of compressing them.&lt;/p&gt;
+
+&lt;p&gt;I am not exactly sure if &lt;a href=&#34;https://godoc.org/golang.org/x/net/publicsuffix&#34;&gt;PublicSuffix&lt;/a&gt; uses a similar representation but it basically represents a FSA as an array of bytes, and then walk the bytes like a binary search tree. It&amp;rsquo;s interesting for sure.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This paper is a follow-up to Jan Daciuk’s experiments on space-efficient finite state automata representation that can be used directly for traversals in main memory [4]. We investigate several techniques of reducing the memory footprint of minimal automata, mainly exploiting the fact that transition labels and transition pointer offset values are not evenly distributed and so are suitable for compression. We achieve a size gain of around 20–30% compared to the original representation given in [4]. This result is comparable to the state-of-the-art dictionary compression techniques like the LZ-trie [12] method, but remains
+memory and CPU efficient during construction.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
   </channel>
 </rss>

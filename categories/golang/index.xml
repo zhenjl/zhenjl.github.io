@@ -25,16 +25,11 @@
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/strace/sequence&#34;&gt;github repo&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;sequence&lt;/code&gt; is a &lt;em&gt;high performance sequential semantic log parser&lt;/em&gt;.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;It is &lt;em&gt;sequential&lt;/em&gt; because it goes through a log message sequentially and does not use regular expressions.&lt;/li&gt;
-&lt;li&gt;It is &lt;em&gt;semantic&lt;/em&gt; because it tries to extract meaningful information out of the log messages and give them semantic indicators, e.g., src IPv4 or dst IPv4.&lt;/li&gt;
-&lt;li&gt;It is a &lt;em&gt;parser&lt;/em&gt; because it will take a message and parses out the meaningful parts.&lt;/li&gt;
-&lt;li&gt;It is &lt;em&gt;high performance&lt;/em&gt; because it can parse 100K+ messages per second without the need to separate parsing rules by log source type.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;sequence&lt;/code&gt; is a &lt;em&gt;high performance sequential log parser&lt;/em&gt;. It &lt;em&gt;sequentially&lt;/em&gt; goes through a log message, &lt;em&gt;parses&lt;/em&gt; out the meaningful parts, without the use regular expressions. It can achieve &lt;em&gt;high performance&lt;/em&gt; parsing of &lt;strong&gt;100,000 - 200,000 messages per second (MPS)&lt;/strong&gt; without the need to separate parsing rules by log source type.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;sequence&lt;/code&gt; is currently under active development and should be considered unstable until further notice.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;If you have a set of logs you would like me to test out, please feel free to &lt;a href=&#34;https://github.com/strace/sequence/issues&#34;&gt;open an issue&lt;/a&gt; and we can arrange a way for me to download and test your logs.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;toc_0&#34;&gt;Motivation&lt;/h3&gt;
 

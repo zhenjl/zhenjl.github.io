@@ -7,7 +7,239 @@
     <language>en-us</language>
     <author>Jian Zhen</author>
     <copyright>Jian Zhen</copyright>
-    <updated>Sun, 08 Feb 2015 19:57:56 PST</updated>
+    <updated>Tue, 10 Feb 2015 06:40:20 PST</updated>
+    
+    <item>
+      <title>Sequence: Automated Analyzer for Reducing 100,000&#39;s of Log Messages to 10&#39;s of Patterns</title>
+      <link>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</link>
+      <pubDate>Tue, 10 Feb 2015 06:40:20 PST</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;http://godoc.org/github.com/strace/sequence&#34;&gt;&lt;img src=&#34;http://godoc.org/github.com/strace/sequence?status.svg&#34; alt=&#34;GoDoc&#34; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://godoc.org/github.com/strace/sequence/cmd/sequence&#34;&gt;&lt;img src=&#34;http://godoc.org/github.com/strace/sequence/cmd/sequence?status.svg&#34; alt=&#34;GoDoc&#34; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/strace/sequence&#34;&gt;github repo&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;Background&lt;/h2&gt;
+
+&lt;p&gt;This post really takes me down the memory lane. Back in 2005, while I was at LogLogic, we envisioned an automated approach to tagging, or labeling, log messages. More specifically, we wanted to automatically tag specific components within the log messages with their semantic label, such as a source IP address, or a target user.&lt;/p&gt;
+
+&lt;p&gt;At the time, much like it is still today, the message parsing process is performed manually. This means someone has to manually look at the object and decided that the object should be labeled “user” or “targetUser.” An  analyst has to go through the log data, create a regular expression that extracts the useful strings out, and then finally assigning these to a specific label. This is extremely time consuming and error-prone.&lt;/p&gt;
+
+&lt;p&gt;At that time, the vision was to provide an automated approach to universally parse and analyze ANY log data. The key phrase being “automated approach.” This means the users should only need to provide minimum guidance to the system, if any, for the platforms to be able to analyze the log data. LogLogic never did much with this, unfortunately.&lt;/p&gt;
+
+&lt;p&gt;However, the tagging concept was later on adopted by (and I know how this got into CEE :) the &lt;a href=&#34;http://cee.mitre.org/&#34;&gt;Common Event Expression, or CEE&lt;/a&gt; effort by Mitre. This idea of tags also inspired &lt;a href=&#34;http://www.liblognorm.com/&#34;&gt;liblognorm&lt;/a&gt; to develop their &lt;a href=&#34;http://www.libee.org/&#34;&gt;libee&lt;/a&gt; library and &lt;a href=&#34;http://www.liblognorm.com/news/log-classification-with-liblognorm/&#34;&gt;tagging system&lt;/a&gt;. Rsyslog&amp;rsquo;s &lt;a href=&#34;http://www.rsyslog.com/doc/mmnormalize.html&#34;&gt;mmnormalize&lt;/a&gt; module is based on liblognorm.&lt;/p&gt;
+
+&lt;p&gt;And then there&amp;rsquo;s Fedora&amp;rsquo;s &lt;a href=&#34;https://fedorahosted.org/lumberjack/&#34;&gt;Project Lumberjack&lt;/a&gt;, which &amp;ldquo;is an open-source project to update and enhance the event log architecture&amp;rdquo; and &amp;ldquo;aims to improve the creation and standardize the content of event logs by implementing the concepts and specifications proposed by the ​Common Event Expression (CEE).&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;Then finally &lt;a href=&#34;http://logstash.net/&#34;&gt;logstash&lt;/a&gt; has their &lt;a href=&#34;http://logstash.net/docs/1.4.2/filters/grok&#34;&gt;grok filter&lt;/a&gt; that basically does similar extraction of unstructured data into a structured and queryable format. However, it seems like there might be some &lt;a href=&#34;http://ghost.frodux.in/logstash-grok-speeds/&#34;&gt;performance bottlenecks&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;However, none of these efforts attempted to solve the automated tagging/labeling problem. They mostly just try to provide a parser for log messages.&lt;/p&gt;
+
+&lt;p&gt;Also, it looks like many of these efforts have all been abandoned or put in hibernation, and haven&amp;rsquo;t been updated since 2012 or 2013. liblognrom did put out &lt;a href=&#34;http://www.liblognorm.com/news/&#34;&gt;a couple of updates&lt;/a&gt; in the past couple of years. Logstash&amp;rsquo;s grok obviously is being maintained and developed with the &lt;a href=&#34;http://www.elasticsearch.com/&#34;&gt;Elasticsearch&lt;/a&gt; backing.&lt;/p&gt;
+
+&lt;p&gt;It is understandable, unfortunately. Log parsing is &lt;strong&gt;BORING&lt;/strong&gt;. I mean, who wants to sit there and stare at logs all day and try to come up with regular expressions or other types of parsing rules? LogLogic used to have a team of LogLabs analysts that did that, and I have to say I truly appreciated their effort and patience, because I cannot do that.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;The End Result&lt;/h3&gt;
+
+&lt;p&gt;So instead of writing rules all day long, I decided to create an analyzer that can help us get at least 75% of the way there. The end result is the &lt;code&gt;Analyzer&lt;/code&gt;, written in &lt;a href=&#34;http://golang.org&#34;&gt;Go&lt;/a&gt;, in the &lt;a href=&#34;https://github.com/strace/sequence&#34;&gt;sequence&lt;/a&gt; project I created. Here are some preliminary results. Below, we analyzed 2 files. The first is a file with over 200,000 sshd messages. The second is a file with a mixture of ASA, sshd, sudo and su log messages. It contains almost 450,000 messages.&lt;/p&gt;
+
+&lt;p&gt;By running the analyzer over these logs, the pure sshd log file returned 45 individual patterns, and the second returned 103 unique patterns.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ go run sequence.go analyze -i ../../data/sshd.all -o sshd.analyze
+Analyzed 212897 messages, found 45 unique patterns, 45 are new.
+
+$ go run sequence.go analyze -i ../../data/asasshsudo.log -o asasshsudo.analyze
+Analyzed 447745 messages, found 103 unique patterns, 103 are new.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And the output file has entries such as:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;%msgtime% %apphost% %appname% [ %sessionid% ] : %status% %method% for %srcuser% from %srcipv4% port %srcport% ssh2
+# Jan 15 19:39:26 irc sshd[7778]: Accepted password for jlz from 108.61.8.124 port 57630 ssh2
+
+%msgtime% %appipv4% %appname% : %action% outbound %protocol% connection %sessionid% for %string% : %srcipv4% / %srcport% ( %ipv4% / %integer% ) to %string% : %dstipv4% / %dstport% ( %ipv4% / %integer% )
+# 2012-04-05 18:46:18   172.23.0.1  %ASA-6-302013: Built outbound TCP connection 1424575 for outside:10.32.0.100/80 (10.32.0.100/80) to inside:172.23.73.72/2522 (10.32.0.1/54702)
+
+%msgtime% %apphost% %appname% : %string% : tty = %string% ; pwd = %string% ; user = %srcuser% ; command = %command% - %string%
+# Jan 15 14:09:11 irc sudo:    jlz : TTY=pts/1 ; PWD=/home/jlz ; USER=root ; COMMAND=/bin/su - irc
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As you can see, the output is not 100%, but it gets us pretty close. Once the analyst goes through and updates the rules, he/she can re-run the analyzer anytime with any file to determine if there&amp;rsquo;s new patterns. For example, below, we ran the sshd log file with an existing pattern file, and got 4 new log patterns.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ go run sequence.go analyze -i ../../data/sshd.all -p ../../patterns/sshd.txt -o sshd.analyze
+Analyzed 212897 messages, found 39 unique patterns, 4 are new.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;toc_2&#34;&gt;Parser - Quick Review&lt;/h3&gt;
+
+&lt;p&gt;I wrote about the &lt;a href=&#34;http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/&#34;&gt;sequence parser&lt;/a&gt; a couple of weeks back. It is a &lt;em&gt;high performance sequential log parser&lt;/em&gt;. It &lt;em&gt;sequentially&lt;/em&gt; goes through a log message, &lt;em&gt;parses&lt;/em&gt; out the meaningful parts, without the use regular expressions. It can achieve &lt;em&gt;high performance&lt;/em&gt; parsing of &lt;strong&gt;100,000 - 200,000 messages per second (MPS)&lt;/strong&gt; without the need to separate parsing rules by log source type. Underneath the hood, the &lt;code&gt;sequence&lt;/code&gt; parser basically constructs a tree based on the sequential rules, walks the tree to identify all the possible paths, and returns the path that has the best match (highest weight) for the message.&lt;/p&gt;
+
+&lt;p&gt;While the analyzer is about reducing a large corupus of raw log messages down to a small set of unique patterns, the parser is all about matching log messages to an existing set of patters and determining whether a specific pattern has matched. Based on the pattern, it returns a sequence of tokens that basically extracts out the important pieces of information from the logs. The analysts can then take this sequence and perform other types of analysis.&lt;/p&gt;
+
+&lt;p&gt;The approach taken by the &lt;code&gt;sequence&lt;/code&gt; parser is pretty much the same as liblognorm or other tree-based approaches.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_3&#34;&gt;Sequence Analyzer&lt;/h2&gt;
+
+&lt;p&gt;In the following section I will go through additional details of how the &lt;code&gt;sequence&lt;/code&gt; analyzer reduces 100 of 1000&amp;rsquo;s of raw log messages down to just 10&amp;rsquo;s of unique patterns, and then determining how to label the individual tokens.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_4&#34;&gt;Identifying Unique Patterns&lt;/h3&gt;
+
+&lt;p&gt;Analyzer builds an analysis tree that represents all the Sequences from messages. It can be used to determine all of the unique patterns for a large body of messages.&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s based on a single basic concept, that for multiple log messages, if tokens in the same position shares one same parent and one same child, then the tokens in that position is likely variable string, which means it&amp;rsquo;s something we can extract. For example, take a look at the following two messages:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Jan 12 06:49:42 irc sshd[7034]: Accepted password for root from 218.161.81.238 port 4228 ssh2
+Jan 12 14:44:48 jlz sshd[11084]: Accepted publickey for jlz from 76.21.0.16 port 36609 ssh2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The first token of each message is a timestamp, and the 3rd token of each message is the literal &amp;ldquo;sshd&amp;rdquo;. For the literals &amp;ldquo;irc&amp;rdquo; and &amp;ldquo;jlz&amp;rdquo;, they both share a common parent, which is a timestamp. They also both share a common child, which is &amp;ldquo;sshd&amp;rdquo;. This means token in between these, the 2nd token in each message, likely represents a variable token in this message type. In this case, &amp;ldquo;irc&amp;rdquo; and &amp;ldquo;jlz&amp;rdquo; happens to
+represent the syslog host.&lt;/p&gt;
+
+&lt;p&gt;Looking further down the message, the literals &amp;ldquo;password&amp;rdquo; and &amp;ldquo;publickey&amp;rdquo; also share a common parent, &amp;ldquo;Accepted&amp;rdquo;, and a common child, &amp;ldquo;for&amp;rdquo;. So that means the token in this position is also a variable token (of type TokenString).&lt;/p&gt;
+
+&lt;p&gt;You can find several tokens that share common parent and child in these two messages, which means each of these tokens can be extracted. And finally, we can determine that the single pattern that will match both is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;%time% %string% sshd [ %integer% ] : Accepted %string% for %string% from %ipv4% port %integer% ssh2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If later we add another message to this mix:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Jan 12 06:49:42 irc sshd[7034]: Failed password for root from 218.161.81.238 port 4228 ssh2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The Analyzer will determine that the literals &amp;ldquo;Accepted&amp;rdquo; in the 1st message, and &amp;ldquo;Failed&amp;rdquo; in the 3rd message share a common parent &amp;ldquo;:&amp;rdquo; and a common child &amp;ldquo;password&amp;rdquo;, so it will determine that the token in this position is also a variable token. After all three messages are analyzed, the final pattern that will match all three
+messages is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;%time% %string% sshd [ %integer% ] : %string% %string% for %string% from %ipv4% port %integer% ssh2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;By applying this concept, we can effectively identify all the unique patterns in a log file.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_5&#34;&gt;Determining the Correct Labels&lt;/h3&gt;
+
+&lt;p&gt;Now that we have the unique patterns, we will scan the tokens to determine which labels we should apply to them.&lt;/p&gt;
+
+&lt;p&gt;System and network logs are mostly free form text. There&amp;rsquo;s no specific patterns to any of them. So it&amp;rsquo;s really difficult to determine how to label specific parts of the log message automatically. However, over the years, after looking at so many system and network log messages, some patterns will start to emerge.&lt;/p&gt;
+
+&lt;p&gt;There&amp;rsquo;s no &amp;ldquo;machine learning&amp;rdquo; here. This section is all about codifying these human learnings. I&amp;rsquo;ve created the following 6 rules to help label tokens in the log messages. By no means are these rules perfect. They are at best just guesses on how to label. But hopefully they can get us 75% of the way there and we human can just take it the rest of the way.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;0. Parsing Email and Hostname Formats&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This is technically not a labeling step. Before we actually start the labeling process, we wanted to first parse out a couple more formats like email and host names. The message tokenizer doesn&amp;rsquo;t recognize these because they are difficult to parse and will slow down the tokenizer. These specific formats are also not needed by the parser. So because the analyzer doesn&amp;rsquo;t care about performance as much, we can do this as post-processing step.&lt;/p&gt;
+
+&lt;p&gt;To recognize the hostname, we try to match the &amp;ldquo;effective TLD&amp;rdquo; using the &lt;a href=&#34;https://github.com/surge/xparse/tree/master/etld&#34;&gt;xparse/etld&lt;/a&gt; package. It is an effective TLD matcher that returns the length of the effective domain name for the given string. It uses the data set from &lt;a href=&#34;https://www.publicsuffix.org/list/effective_tld_names.dat&#34;&gt;https://www.publicsuffix.org/list/effective_tld_names.dat&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1. Recognizing Syslog Headers&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;First we will try to see if we can regonize the syslog headers. We try to recogize both RFC5424 and RFC3164 syslog headers:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;	// RFC5424
+	// - &amp;quot;1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 ...&amp;quot;
+	// - &amp;quot;1 2003-08-24T05:14:15.000003-07:00 192.0.2.1 myproc 8710 - ...&amp;quot;
+	// - &amp;quot;1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 ...&amp;quot;
+	// RFC3164
+	// - &amp;quot;Oct 11 22:14:15 mymachine su: ...&amp;quot;
+	// - &amp;quot;Aug 24 05:34:00 CST 1987 mymachine myproc[10]: ...&amp;quot;
+	// - &amp;quot;jan 12 06:49:56 irc last message repeated 6 times&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If the sequence pattern matches any of the above sequence, then we assume the first few tokens belong to the syslog header.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2. Marking Key and Value Pairs&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The next step we perform is to mark known &amp;ldquo;keys&amp;rdquo;. There are two types of keys. First, we identify any token before the &amp;ldquo;=&amp;rdquo; as a key. For example, the message &lt;code&gt;fw=TOPSEC priv=6 recorder=kernel type=conn&lt;/code&gt; contains 4 keys: &lt;code&gt;fw&lt;/code&gt;, &lt;code&gt;priv&lt;/code&gt;, &lt;code&gt;recorder&lt;/code&gt; and &lt;code&gt;type&lt;/code&gt;. These keys should be considered string literals, and should not be extracted. However, they can be used to determine how the value part should be labeled.&lt;/p&gt;
+
+&lt;p&gt;The second types of keys are determined by keywords that often appear in front of other tokens, I call these &lt;strong&gt;prekeys&lt;/strong&gt;. For example, we know that the prekey &lt;code&gt;from&lt;/code&gt; usually appears in front of any source host or IP address, and the prekey &lt;code&gt;to&lt;/code&gt; usually appears in front of any destination host or IP address. Below are some examples of these prekeys.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;from 		= [ &amp;quot;%srchost%&amp;quot;, &amp;quot;%srcipv4%&amp;quot; ]
+port 		= [ &amp;quot;%srcport%&amp;quot;, &amp;quot;%dstport%&amp;quot; ]
+proto		= [ &amp;quot;%protocol%&amp;quot; ]
+sport		= [ &amp;quot;%srcport%&amp;quot; ]
+src 		= [ &amp;quot;%srchost%&amp;quot;, &amp;quot;%srcipv4%&amp;quot; ]
+to 			= [ &amp;quot;%dsthost%&amp;quot;, &amp;quot;%dstipv4%&amp;quot;, &amp;quot;%dstuser%&amp;quot; ]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To help identify these prekeys, I wrote a quick program that goes through many of the logs I have to help identify what keywords appears before IP address, mac addresses, and other non-literal tokens. The result is put into the &lt;a href=&#34;https://github.com/strace/sequence/blob/master/keymaps.go&#34;&gt;keymaps.go&lt;/a&gt; file. It&amp;rsquo;s not comprehensive, but it&amp;rsquo;s also not meant to be. We just need enough hints to help with labeling.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3. Labeling &amp;ldquo;Values&amp;rdquo; by Their Keys&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Once the keys are labeled, we can label the values based on the mapping described above. For key/value pairs, we try to recognize both &lt;code&gt;key=value&lt;/code&gt; or &lt;code&gt;key=&amp;quot;value&amp;quot;&lt;/code&gt; formats (or other quote characters like &amp;lsquo; or &amp;lt;).&lt;/p&gt;
+
+&lt;p&gt;For the prekeys, we try to find the value token within 2 tokens of the key token. That means sequences such as &lt;code&gt;from 192.168.1.1&lt;/code&gt; and &lt;code&gt;from ip 192.168.1.1&lt;/code&gt; will identify &lt;code&gt;192.168.1.1&lt;/code&gt; as the &lt;code&gt;%srcipv4%&lt;/code&gt; based on the above mapping, but we will miss &lt;code&gt;from ip address 192.168.1.1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;4. Identifying Known Keywords&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Within most log messages, there are certain keywords that would indicate what actions were performed, what the state/status of the action was, and what objects the actions were performed on. CEE had a list that it identified, so I copied the list and added some of my own.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;action = [
+	&amp;quot;access&amp;quot;,
+	&amp;quot;alert&amp;quot;,
+	&amp;quot;allocate&amp;quot;,
+	&amp;quot;allow&amp;quot;,
+	.
+	.
+	.
+]
+
+status = [
+	&amp;quot;accept&amp;quot;,
+	&amp;quot;error&amp;quot;,
+	&amp;quot;fail&amp;quot;,
+	&amp;quot;failure&amp;quot;,
+	&amp;quot;success&amp;quot;
+]
+
+object = [
+	&amp;quot;account&amp;quot;,
+	&amp;quot;app&amp;quot;,
+	&amp;quot;bios&amp;quot;,
+	&amp;quot;driver&amp;quot;,
+	.
+	.
+	.
+]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In our labeling process, we basically goes through and identify all the string literals that are NOT marked as keys, and perform a &lt;a href=&#34;https://github.com/surge/porter2&#34;&gt;porter2 stemming operation&lt;/a&gt; on the literal, then compare to the above list (which is also porter2 stemmed).&lt;/p&gt;
+
+&lt;p&gt;If a literal matches one of the above lists, then the corresponding label (&lt;code&gt;action&lt;/code&gt;, &lt;code&gt;status&lt;/code&gt;, &lt;code&gt;object&lt;/code&gt;, &lt;code&gt;srcuser&lt;/code&gt;, &lt;code&gt;method&lt;/code&gt;, or &lt;code&gt;protocol&lt;/code&gt;) is applied.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;5. Determining Positions of Specific Types&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In this next step, we are basically looking at the position of where some of the token types appear. Specifically, we are looking for &lt;code&gt;%time%&lt;/code&gt;, &lt;code&gt;%url%&lt;/code&gt;, &lt;code&gt;%mac%&lt;/code&gt;, &lt;code&gt;%ipv4%&lt;/code&gt;, &lt;code&gt;%host%&lt;/code&gt;, and &lt;code&gt;%email%&lt;/code&gt; tokens. Assuming the labels have not already been taken with the previous rules, the rules are as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The first %time% token is labeled as %msgtime%&lt;/li&gt;
+&lt;li&gt;The first %url% token is labeled as %object%&lt;/li&gt;
+&lt;li&gt;The first %mac% token is labeled as %srcmac% and the second is labeld as %dstmac%&lt;/li&gt;
+&lt;li&gt;The first %ipv4% token is labeled as %srcipv4% and the second is labeld as %dstipv4%&lt;/li&gt;
+&lt;li&gt;The first %host% token is labeled as %srchost% and the second is labeld as %dsthost%&lt;/li&gt;
+&lt;li&gt;The first %email% token is labeled as %srcemail% and the second is labeld as %dstemail%&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;6. Scanning for ip/port or ip:port Pairs&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Finally, after all that, we scan through the sequence again, and identify any numbers that follow an IP address, but separated by either a &amp;ldquo;/&amp;rdquo; or &amp;ldquo;:&amp;ldquo;. Then we label these numbers as either &lt;code&gt;%srcport%&lt;/code&gt; or &lt;code&gt;%dstport%&lt;/code&gt; based on how the previous IP address is labeled.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_6&#34;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;There are some limitations to the &lt;code&gt;sequence&lt;/code&gt; parser and analyzer. For example, currently &lt;code&gt;sequence&lt;/code&gt; does not handle multi-line logs. Each log message must appear as a single line. So if there&amp;rsquo;s multi-line logs, they must be first be converted into a single line. Also, &lt;code&gt;sequence&lt;/code&gt; has been only tested with a limited set of system (Linux, AIX, sudo, ssh, su, dhcp, etc etc), network (ASA, PIX, Neoteris, CheckPoint, Juniper Firewall) and infrastructure application (apache, bluecoat, etc) logs.&lt;/p&gt;
+
+&lt;p&gt;Documentation is available at godoc: &lt;a href=&#34;http://godoc.org/github.com/strace/sequence&#34;&gt;package&lt;/a&gt;, &lt;a href=&#34;http://godoc.org/github.com/strace/sequence/cmd/sequence&#34;&gt;command&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;There are some pattern files developed for ASA, Sudo and SSH in the &lt;code&gt;patterns&lt;/code&gt; directory. The goal is to continue to develop a set of patterns for the various log messages, and along the way add additional features to the parser that can help make it even easier to parse log messages.&lt;/p&gt;
+
+&lt;p&gt;If you have a set of logs you would like me to test out, please feel free to &lt;a href=&#34;https://github.com/strace/sequence/issues&#34;&gt;open an issue&lt;/a&gt; and we can arrange a way for me to download and test your logs.&lt;/p&gt;
+
+&lt;p&gt;Stay tuned for more log patterns&amp;hellip;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Papers I Read: 2015 Week 6</title>
@@ -101,6 +333,37 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
     </item>
     
     <item>
+      <title>Papers I Read: 2015 Week 6</title>
+      <link>http://zhen.org/blog/papers-i-read-2015-week-7/</link>
+      <pubDate>Sun, 08 Feb 2015 19:57:56 PST</pubDate>
+      <author>Jian Zhen</author>
+      <guid>http://zhen.org/blog/papers-i-read-2015-week-7/</guid>
+      <description>
+
+&lt;h3 id=&#34;toc_0&#34;&gt;Random Ramblings&lt;/h3&gt;
+
+&lt;p&gt;Athem hack&lt;/p&gt;
+
+&lt;p&gt;Another great resource of computer science papers is Adrian Coyler&amp;rsquo;s &lt;a href=&#34;http://blog.acolyer.org/&#34;&gt;the morning paper&lt;/a&gt;. He selects and summarizes &amp;ldquo;an interesting/influential/important paper from the world of CS every weekday morning&amp;rdquo;.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;Papers I Read&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cs.put.poznan.pl/dweiss/site/publications/download/fsacomp.pdf&#34;&gt;Smaller Representation of Finite State Automata&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I read this paper when I was trying to figure out how to make the FSAs smaller for the &lt;a href=&#34;https://github.com/surge/xparse/tree/master/etld&#34;&gt;Effective TLD matcher&lt;/a&gt; I created. The FSM I generated is 212,294 lines long. That&amp;rsquo;s just absolutely crazy. This paper seems to present an interesting way of compressing them.&lt;/p&gt;
+
+&lt;p&gt;I am not exactly sure if &lt;a href=&#34;https://godoc.org/golang.org/x/net/publicsuffix&#34;&gt;PublicSuffix&lt;/a&gt; uses a similar representation but it basically represents a FSA as an array of bytes, and then walk the bytes like a binary search tree. It&amp;rsquo;s interesting for sure.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This paper is a follow-up to Jan Daciuk’s experiments on space-efficient finite state automata representation that can be used directly for traversals in main memory [4]. We investigate several techniques of reducing the memory footprint of minimal automata, mainly exploiting the fact that transition labels and transition pointer offset values are not evenly distributed and so are suitable for compression. We achieve a size gain of around 20–30% compared to the original representation given in [4]. This result is comparable to the state-of-the-art dictionary compression techniques like the LZ-trie [12] method, but remains
+memory and CPU efficient during construction.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Sequence: A High Performance Sequential Semantic Log Parser at 175,000 MPS</title>
       <link>http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/</link>
       <pubDate>Sun, 01 Feb 2015 10:40:20 PST</pubDate>
@@ -116,16 +379,11 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/strace/sequence&#34;&gt;github repo&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;sequence&lt;/code&gt; is a &lt;em&gt;high performance sequential semantic log parser&lt;/em&gt;.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;It is &lt;em&gt;sequential&lt;/em&gt; because it goes through a log message sequentially and does not use regular expressions.&lt;/li&gt;
-&lt;li&gt;It is &lt;em&gt;semantic&lt;/em&gt; because it tries to extract meaningful information out of the log messages and give them semantic indicators, e.g., src IPv4 or dst IPv4.&lt;/li&gt;
-&lt;li&gt;It is a &lt;em&gt;parser&lt;/em&gt; because it will take a message and parses out the meaningful parts.&lt;/li&gt;
-&lt;li&gt;It is &lt;em&gt;high performance&lt;/em&gt; because it can parse 100K+ messages per second without the need to separate parsing rules by log source type.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;sequence&lt;/code&gt; is a &lt;em&gt;high performance sequential log parser&lt;/em&gt;. It &lt;em&gt;sequentially&lt;/em&gt; goes through a log message, &lt;em&gt;parses&lt;/em&gt; out the meaningful parts, without the use regular expressions. It can achieve &lt;em&gt;high performance&lt;/em&gt; parsing of &lt;strong&gt;100,000 - 200,000 messages per second (MPS)&lt;/strong&gt; without the need to separate parsing rules by log source type.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;sequence&lt;/code&gt; is currently under active development and should be considered unstable until further notice.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;If you have a set of logs you would like me to test out, please feel free to &lt;a href=&#34;https://github.com/strace/sequence/issues&#34;&gt;open an issue&lt;/a&gt; and we can arrange a way for me to download and test your logs.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;toc_0&#34;&gt;Motivation&lt;/h3&gt;
 
@@ -2393,250 +2651,6 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 &lt;iframe width=&#39;800&#39; height=&#39;500&#39; frameborder=&#39;0&#39; src=&#39;https://docs.google.com/spreadsheet/pub?key=0ApDLtJuUH-1rdHh2bzY1d0h3U042UXNkLUlzaENLMUE&amp;output=html&amp;widget=true&#39;&gt;&lt;/iframe&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6392197&#34;&gt;comments/suggestions&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Benchmarking Bloom Filters and Hash Functions in Go</title>
-      <link>http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</link>
-      <pubDate>Wed, 04 Sep 2013 00:23:22 -0800</pubDate>
-      <author>Jian Zhen</author>
-      <guid>http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</guid>
-      <description>
-
-&lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6329616&#34;&gt;discussion/comments&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Update: @bradfitz &lt;a href=&#34;https://news.ycombinator.com/item?id=6329616&#34;&gt;commented&lt;/a&gt; that allocating a new slice during each add/check is probably not good for performance. And he is in fact correct. After removing the allocation for each add/check and doing a single slice make during New(), the performance increased by ~27%!! Here&amp;rsquo;s the gist containing the new ns/op results.&lt;/p&gt;
-
-&lt;p&gt;{% gist 6515577 %}&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;Another week, another &amp;ldquo;Go Learn&amp;rdquo; project. This time, in project #4, I implemented a &lt;a href=&#34;https://github.com/reducedb/bloom&#34;&gt;Go package&lt;/a&gt; with several bloom filters and &lt;a href=&#34;https://gist.github.com/zhenjl/6433634&#34;&gt;benchmarked&lt;/a&gt; them with various hash functions. (For previous projects, see &lt;a href=&#34;http://zhen.org/blog/go-skiplist/&#34;&gt;#3&lt;/a&gt;, &lt;a href=&#34;http://zhen.org/blog/testing-msgpack-and-bson/&#34;&gt;#2&lt;/a&gt;, &lt;a href=&#34;https://github.com/reducedb/cityhash&#34;&gt;#1&lt;/a&gt;.)&lt;/p&gt;
-
-&lt;p&gt;The goal of this project, for me at least, is to implement a pure Go package that doesn&amp;rsquo;t rely on wrappers to other langagues. There&amp;rsquo;s already &lt;a href=&#34;https://github.com/search?l=Go&amp;amp;q=bloom&amp;amp;ref=cmdform&amp;amp;type=Repositories&#34;&gt;quite a few&lt;/a&gt; bloom filters implemented in Go. But hey, in the name of learning, why not implement another one!&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_0&#34;&gt;Bloom Filters&lt;/h3&gt;
-
-&lt;p&gt;Wikipedia says,&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;A Bloom filter, conceived by Burton Howard Bloom in 1970 is a space-efficient probabilistic data structure that is used to test whether an element is a member of a set. False positive matches are possible, but false negatives are not; i.e. a query returns either &amp;ldquo;inside set (may be wrong)&amp;rdquo; or &amp;ldquo;definitely not in set&amp;rdquo;.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In my little project, I implemented the following three variants:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Standard - This is the classic bloom filter as described on &lt;a href=&#34;http://en.wikipedia.org/wiki/Bloom_filter&#34;&gt;Wikipedia&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Partitioned - This is a variant described by &lt;a href=&#34;http://www.ieee-infocom.org/2004/Papers/45_3.PDF&#34;&gt;these&lt;/a&gt; &lt;a href=&#34;http://gsd.di.uminho.pt/members/cbm/ps/dbloom.pdf&#34;&gt;papers&lt;/a&gt;. Basically instead of having a single big bit array, partitioned bloom filter breaks it into &lt;em&gt;k&lt;/em&gt; partitions (or slices) s.t. each partition is &lt;em&gt;m/k&lt;/em&gt; size, where &lt;em&gt;m&lt;/em&gt; is the total number of bits, and &lt;em&gt;k&lt;/em&gt; is the number of hashes. Then each hash function is assigned to a single partition.&lt;/li&gt;
-&lt;li&gt;Scalable - This is yet another variant described by &lt;a href=&#34;http://gsd.di.uminho.pt/members/cbm/ps/dbloom.pdf&#34;&gt;here&lt;/a&gt;). The idea is that the standard bloom filter requires that you know &lt;em&gt;m&lt;/em&gt;, or the size of the filter a priori. This is not possible for use cases where data continue to come in without bound. So the Scalable bloom filter utilizes multiple bloom filters, each with incresing k, but decreasing &lt;em&gt;P&lt;/em&gt; where &lt;em&gt;P&lt;/em&gt; is the desired error probability. This bloom filter also introduces &lt;em&gt;r&lt;/em&gt;, which is the error tightening ratio, and it&amp;rsquo;s 0 &amp;lt; r &amp;lt; 1.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;There are a ton more variants for bloom filters. You can raed all about them in &lt;a href=&#34;https://www.google.com/url?sa=t&amp;amp;rct=j&amp;amp;q=&amp;amp;esrc=s&amp;amp;source=web&amp;amp;cd=5&amp;amp;cad=rja&amp;amp;ved=0CE4QFjAE&amp;amp;url=http%3A%2F%2Fwww.tribler.org%2Ftrac%2Fraw-attachment%2Fwiki%2FJelleRoozenburg%2Fresearch_assignment_jroozenburg_20051108.pdf&amp;amp;ei=JHInUt6oO6GTiQK-44DYDg&amp;amp;usg=AFQjCNG057WVJ2m2QYPuqWzCZ0Vn4JnOug&amp;amp;sig2=NVlad7xGO4S_hFpMU9apGA&amp;amp;bvm=bv.51773540,d.cGE&#34;&gt;this paper&lt;/a&gt; and &lt;a href=&#34;http://www.dca.fee.unicamp.br/~chesteve/pubs/bloom-filter-ieee-survey-preprint.pdf&#34;&gt;this paper&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_1&#34;&gt;Hash Functions&lt;/h3&gt;
-
-&lt;p&gt;To add an element, bloom filters hashes the element using &lt;em&gt;k&lt;/em&gt; hashing functions, identifying &lt;em&gt;k&lt;/em&gt; positions in the bit array, and setting those bits to 1. To check for an element, you essentially do the same thing (hash the element with &lt;em&gt;k&lt;/em&gt; hash functions) and then check to see if all the bits at those positions are set. If all set, then most likely the element is available. If any of them are not set, then the element is definitely not avaiable. So bloom filters can have false positives, but not false negatives.&lt;/p&gt;
-
-&lt;p&gt;However, actually running &lt;em&gt;k&lt;/em&gt; hash functions is quite expensive. So &lt;a href=&#34;http://www.eecs.harvard.edu/~kirsch/pubs/bbbf/rsa.pdf&#34;&gt;Kirsch and Mitzenmacher&lt;/a&gt; determined that by using a single hash function, but using the formula, &lt;em&gt;gi(x) = h1(x) + i * h2(x)&lt;/em&gt;, to calculate &lt;em&gt;k&lt;/em&gt; hash values, the performance is actually similar. So this is what I used here.&lt;/p&gt;
-
-&lt;p&gt;For the values &lt;em&gt;h1&lt;/em&gt; and &lt;em&gt;h2&lt;/em&gt;, we used the first 4 bytes returned from each hash function for &lt;em&gt;h1&lt;/em&gt;, and second 4 bytes for &lt;em&gt;h2&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;The following hash functions are used for this little experiement:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;FNV-64 - There&amp;rsquo;s a built-in Go package for this. So that&amp;rsquo;s what I used.&lt;/li&gt;
-&lt;li&gt;CRC-64 - Again, using the built-in Go package.&lt;/li&gt;
-&lt;li&gt;Murmur3-64 - There&amp;rsquo;s no built-in package so I used &lt;a href=&#34;https://github.com/spaolacci/murmur3&#34;&gt;this one&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;CityHash-64 - Again, no built-in so I am using the one &lt;a href=&#34;https://github.com/reducedb/cityhash&#34;&gt;I implemented&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;MD5 - Using the built-in Go implementation.&lt;/li&gt;
-&lt;li&gt;SHA1 - Using the built-in Go implementation.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;As a side note, MD5 and SHA1 return 128 bit hash values. Since we only use the first 64 bits, we throw away the last 64 bits.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_2&#34;&gt;Test Setup&lt;/h3&gt;
-
-&lt;p&gt;The machine that ran these tests is a Macbook Air 10.8.4 1.8GHz Intel Core i5 4GB 1600MHz DDR3.&lt;/p&gt;
-
-&lt;p&gt;For the false positive test, I added all the words in /usr/share/dict/web2 (on my Mac) into each of the bloom filters. To check for false positives, I check for all the words in /usr/share/dict/web2a in each of the bloom filters. The two files should have completely different set of words (AFAICT).&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  235886 /usr/share/dict/web2
-   76205 /usr/share/dict/web2a
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;For each bloom filter, I ran tests using the following combinations:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;for i in element_count[236886, 200000, 100000, 50000]
-    for j in hash_functions[fnv64, crc64, murmur3-64, cityhash-64, md5, sha1]
-        run test with hash_functions[j] and element_count[i]
-    end
-end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Element count in this is the initial size I set for the bloom filter. The bit array size, &lt;em&gt;m&lt;/em&gt;, and number of hash values, &lt;em&gt;k&lt;/em&gt;, are then calculated from there. I also set &lt;em&gt;P&lt;/em&gt; (error probability) to 0.001 (0.1%) and &lt;em&gt;p&lt;/em&gt; (fill ratio, or how full should the bit array be) to 0.5. The idea for the element count is to see how the bloom filters will perform when it has a high fill ratio.&lt;/p&gt;
-
-&lt;p&gt;For the scalable bloom filter test, I also needed to add another dimension since it uses either standard or partitioned bloom filter internally. So&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;for i in element_count[236886, 200000, 100000, 50000]
-    for j in hash_functions[fnv64, crc64, murmur3-64, cityhash-64, md5, sha1]
-        for k in bloom_filter[standard, partitioned]
-            run test with hash_functions[j] and element_count[i] and bloom_filter[k]
-        end
-    end
-end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;For the performance test, I added all the words in web2 into the bloom filters. I continue to loop through the file until b.N (Go benchmark framework) is met. So some of the words will be re-added, which should not skew our test results since the operations are the same.&lt;/p&gt;
-
-&lt;p&gt;You can see the tests in the &lt;a href=&#34;https://github.com/reducedb/bloom&#34;&gt;github repo&lt;/a&gt;. Just look for all the _test.go files.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_3&#34;&gt;Test Results&lt;/h3&gt;
-
-&lt;p&gt;The following is a summary of the test results. You can also feel free to look at all the &lt;a href=&#34;https://gist.github.com/zhenjl/6433634&#34;&gt;gory details&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Note: FR = Fill Ratio, FP = False Positive&lt;/p&gt;
-
-&lt;p&gt;For the spreadsheet embedded below, here are some observations&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;The MD5 Go implementation I used maybe broken, or I am not using it correctly, or MD5 is just bad. You will see that the fill ration is VERY low, 1-6%. So the false positive rate is very high (89+%).&lt;/li&gt;
-&lt;li&gt;The CityHash Go implementation seems very slow. Could just be my implementation (anyone want to venture some optimization?). But functionally it&amp;rsquo;s correct.&lt;/li&gt;
-&lt;li&gt;Both standard and partitioned bloom filters use the same number of bits and there&amp;rsquo;s not a huge difference in fill ratio and false positive rate. (Ignoring the MD5 anomaly.)&lt;/li&gt;
-&lt;li&gt;Predictably, as fill ratio goes up, so does the false positive rate for both standard and partitioned bloom filters.&lt;/li&gt;
-&lt;li&gt;Scalable bloom filter uses more bits as it contines to add new base bloom filters when the estimated fill ratio reaches &lt;em&gt;P&lt;/em&gt; which is set to 0.5 (50%).&lt;/li&gt;
-&lt;li&gt;Probably not surprisingly, Scalable bloom filter maintains a fairly low false positive rate.&lt;/li&gt;
-&lt;li&gt;However, you will also notice that the Scalable FP increases as the total number of base filters increase. This suggests that I may want to try a lower &lt;em&gt;r&lt;/em&gt; (error tightening ratio). Currently I use 0.9, but maybe 0.8 is more appropriate.&lt;/li&gt;
-&lt;li&gt;Overall it seems FNV is probably good enough for most scenarios.&lt;/li&gt;
-&lt;li&gt;Also Scalable+Standard might be a good choice for anyone doing stream data processing.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;iframe width=&#39;800&#39; height=&#39;600&#39; frameborder=&#39;0&#39; src=&#39;https://docs.google.com/spreadsheet/pub?key=0ApDLtJuUH-1rdEEwZ3JwaVVTZGxBX1g1NkthSFVVTXc&amp;single=true&amp;gid=0&amp;output=html&amp;widget=true&#39;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;This chart shows the performance (ns/op) for adding elements to the bloom filters. Overall the performance is very similar for the different bloom filter implementations.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://docs.google.com/spreadsheet/oimg?key=0ApDLtJuUH-1rdEEwZ3JwaVVTZGxBX1g1NkthSFVVTXc&amp;oid=1&amp;zx=jbizsaoepc5x&#34; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_4&#34;&gt;Feedback&lt;/h3&gt;
-
-&lt;p&gt;Feel free to send me any feedback via &lt;a href=&#34;https://github.com/reducedb/bloom/issues&#34;&gt;github issues&lt;/a&gt; or on &lt;a href=&#34;https://news.ycombinator.com/item?id=6329616&#34;&gt;Hacker News&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_5&#34;&gt;References&lt;/h3&gt;
-
-&lt;p&gt;During this process I referenced and leveraged some of these other projects, so thank you all!&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Referenced
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/willf/bloom&#34;&gt;willf/bloom&lt;/a&gt; - Go package implementing Bloom filters&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/bitly/dablooms&#34;&gt;bitly/dablooms&lt;/a&gt; - scaling, counting, bloom filter library&lt;/li&gt;
-&lt;li&gt;There&amp;rsquo;s also a bunch of papers, some of which I linked above.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Leveraged
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/willf/bitset&#34;&gt;willf/bitset&lt;/a&gt; - Go package implementing bitsets&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/spaolacci/murmur3&#34;&gt;spaolacci/murmur3&lt;/a&gt; - Native MurmurHash3 Go implementation&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6329616&#34;&gt;discussion/comments&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Go Skiplist</title>
-      <link>http://zhen.org/blog/go-skiplist/</link>
-      <pubDate>Mon, 02 Sep 2013 13:09:22 -0800</pubDate>
-      <author>Jian Zhen</author>
-      <guid>http://zhen.org/blog/go-skiplist/</guid>
-      <description>
-
-&lt;p&gt;Most of my nights and weekends in the past week have been immersed in my &lt;a href=&#34;https://github.com/reducedb/skiplist&#34;&gt;new skiplist library&lt;/a&gt;, even sacrificing some family time (yikes, not good!). It&amp;rsquo;s one of those projects I picked up in order to learn &lt;a href=&#34;http://golang.org&#34;&gt;Go&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Wikipedia defines a skip list as&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;A skip list is a data structure for storing a sorted list of items using a hierarchy of linked lists that connect increasingly sparse subsequences of the items. These auxiliary lists allow item lookup with efficiency comparable to balanced binary search trees (that is, with number of probes proportional to log n instead of n).&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;You can imagine using a skiplist data structure whenver you want to use a binary search tree.&lt;/p&gt;
-
-&lt;p&gt;This skiplist implementation also uses search fingers, based on William Pugh&amp;rsquo;s work, &lt;a href=&#34;http://drum.lib.umd.edu/bitstream/1903/544/2/CS-TR-2286.1.pdf&#34;&gt;A Skiplist Cookbook&lt;/a&gt;. So the efficiency is O(log k) where k is the distance between the last searched/updated item and the current one.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_0&#34;&gt;Performance&lt;/h3&gt;
-
-&lt;p&gt;{% gist e8779545c102c69aae10 %}&lt;/p&gt;
-
-&lt;p&gt;These numbers are from my Macbook Air 10.8.4 1.8GHz Intel Core i5 4GB 1600MHz DDR3.&lt;/p&gt;
-
-&lt;p&gt;Notice the fastest time is BenchmarkInsertTimeDescending. This is because the keys for that test is generated using time.Now().UnixNano(), which is always ascending. And because the sort order of the skiplist is descending, so the new item is ALWAYS inserted at the front of the list. This happens to have the best case of O(1).&lt;/p&gt;
-
-&lt;p&gt;The next best time is BenchmarkInsertTimeAscending. This is still pretty good, but because the sort order is ascending, so the new items are ALWAYS inserted at the end. This required the skiplist to walk all the levels so it took a bit longer.&lt;/p&gt;
-
-&lt;p&gt;The other benchmarks should have the average O(log k) efficiency.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_1&#34;&gt;Example (Int)&lt;/h3&gt;
-
-&lt;p&gt;You can see additional examples in the &lt;a href=&#34;https://github.com/reducedb/skiplist/blob/master/skiplist_test.go&#34;&gt;test file&lt;/a&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;// Creating a new skiplist, using the built-in Less Than function as the comparator.
-// There are also two other built in comparators: BuiltinGreaterThan, BuiltinEqual
-list := New(skiplist.BuiltinLessThan)
-
-// Inserting key, value pairs into the skiplist. The skiplist is sorted by key,
-// using the comparator function to determine order
-list.Insert(1,1)
-list.Insert(1,2)
-list.Insert(2,1)
-list.Insert(2,2)
-list.Insert(2,3)
-list.Insert(2,4)
-list.Insert(2,5)
-list.Insert(1,3)
-list.Insert(1,4)
-list.Insert(1,5)
-
-// Selecting items that have the key == 1. Select returns a Skiplist.Iterator
-rIter, err := list.Select(1)
-
-// Iterate through the list of items. Keys and Values are turned as interface{}, so you
-// need to type assert them to your type
-for rIter.Next() {
-	fmt.Println(rIter.Key().(int), rIter.Value().(int))
-}
-
-// Delete the items that match key. An iterator is returned with the list of deleted items.
-rIter, err = list.Delete(1)
-
-// You can also SelectRange or DeleteRange
-rIter, err = list.SelectRange(1, 2)
-
-rIter, err = list.DeleteRange(1, 2)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;toc_2&#34;&gt;Bultin Comparators&lt;/h3&gt;
-
-&lt;p&gt;There are three built-in comparator functions:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;BuiltinLessThan: if you want to sort the skiplist in ascending order&lt;/li&gt;
-&lt;li&gt;BuiltinGreaterThan: if you want to sort the skiplist in descending order&lt;/li&gt;
-&lt;li&gt;BuiltinEqual: just to compare&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Currently these built-in comparator functions work for all built-in Go types, including:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;string&lt;/li&gt;
-&lt;li&gt;uint64, uint32, uint16, uint8, uint&lt;/li&gt;
-&lt;li&gt;int64, int32, int16, int8, int&lt;/li&gt;
-&lt;li&gt;float32, float64&lt;/li&gt;
-&lt;li&gt;unitptr&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6317109&#34;&gt;discussion/comments&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

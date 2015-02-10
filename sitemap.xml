@@ -3,12 +3,22 @@
   
   <url>
     <loc>http://zhen.org/</loc>
-    <lastmod>2015-02-08T19:57:56-08:00</lastmod>
+    <lastmod>2015-02-10T06:40:20-08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</loc>
+    <lastmod>2015-02-10T06:40:20-08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://zhen.org/blog/papers-i-read-2015-week-6/</loc>
+    <lastmod>2015-02-08T19:57:56-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://zhen.org/blog/papers-i-read-2015-week-7/</loc>
     <lastmod>2015-02-08T19:57:56-08:00</lastmod>
   </url>
   
@@ -203,12 +213,12 @@
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/five-factors-to-consider-when-building-your-logging-infrastructure/</loc>
+    <loc>http://zhen.org/blog/pros-and-cons-of-mssps/</loc>
     <lastmod>2004-11-19T09:39:12+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/pros-and-cons-of-mssps/</loc>
+    <loc>http://zhen.org/blog/five-factors-to-consider-when-building-your-logging-infrastructure/</loc>
     <lastmod>2004-11-19T09:39:12+00:00</lastmod>
   </url>
   
