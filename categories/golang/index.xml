@@ -25,6 +25,10 @@
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/strace/sequence&#34;&gt;github repo&lt;/a&gt;&lt;/p&gt;
 
+&lt;p&gt;This is part 1 of the &lt;code&gt;sequence&lt;/code&gt; series. &lt;a href=&#34;http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/&#34;&gt;Part &lt;/a&gt; an automated analyzer that reduce 100,000&amp;rsquo;s of Log Messages to 10&amp;rsquo;s of Patterns.&lt;/p&gt;
+
+&lt;hr /&gt;
+
 &lt;p&gt;&lt;code&gt;sequence&lt;/code&gt; is a &lt;em&gt;high performance sequential log parser&lt;/em&gt;. It &lt;em&gt;sequentially&lt;/em&gt; goes through a log message, &lt;em&gt;parses&lt;/em&gt; out the meaningful parts, without the use regular expressions. It can achieve &lt;em&gt;high performance&lt;/em&gt; parsing of &lt;strong&gt;100,000 - 200,000 messages per second (MPS)&lt;/strong&gt; without the need to separate parsing rules by log source type.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;sequence&lt;/code&gt; is currently under active development and should be considered unstable until further notice.&lt;/strong&gt;&lt;/p&gt;
