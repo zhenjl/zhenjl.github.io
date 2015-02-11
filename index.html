@@ -316,60 +316,6 @@ object = [
   
   <div class="post">
     <h1 class="post-title">
-      <a href="http://zhen.org/blog/papers-i-read-2015-week-7/">
-        Papers I Read: 2015 Week 6
-      </a>
-    </h1>
-
-    <span class="post-date">Sun, Feb 8, 2015</span>
-
-    
-
-<h3 id="random-ramblings:10248ddcf524aa32198bc5cded1aa098">Random Ramblings</h3>
-
-<p>Athem hack</p>
-
-<p>Another great resource of computer science papers is Adrian Coyler&rsquo;s <a href="http://blog.acolyer.org/">the morning paper</a>. He selects and summarizes &ldquo;an interesting/influential/important paper from the world of CS every weekday morning&rdquo;.</p>
-
-<h3 id="papers-i-read:10248ddcf524aa32198bc5cded1aa098">Papers I Read</h3>
-
-<ul>
-<li><a href="http://www.cs.put.poznan.pl/dweiss/site/publications/download/fsacomp.pdf">Smaller Representation of Finite State Automata</a></li>
-</ul>
-
-<p>I read this paper when I was trying to figure out how to make the FSAs smaller for the <a href="https://github.com/surge/xparse/tree/master/etld">Effective TLD matcher</a> I created. The FSM I generated is 212,294 lines long. That&rsquo;s just absolutely crazy. This paper seems to present an interesting way of compressing them.</p>
-
-<p>I am not exactly sure if <a href="https://godoc.org/golang.org/x/net/publicsuffix">PublicSuffix</a> uses a similar representation but it basically represents a FSA as an array of bytes, and then walk the bytes like a binary search tree. It&rsquo;s interesting for sure.</p>
-
-<blockquote>
-<p>This paper is a follow-up to Jan Daciuk’s experiments on space-efficient finite state automata representation that can be used directly for traversals in main memory [4]. We investigate several techniques of reducing the memory footprint of minimal automata, mainly exploiting the fact that transition labels and transition pointer offset values are not evenly distributed and so are suitable for compression. We achieve a size gain of around 20–30% compared to the original representation given in [4]. This result is comparable to the state-of-the-art dictionary compression techniques like the LZ-trie [12] method, but remains
-memory and CPU efficient during construction.</p>
-</blockquote>
-
-<ul>
-<li><a href="http://arxiv.org/pdf/1409.5942v1.pdf">IP Tracing and Active Network Response</a></li>
-</ul>
-
-<blockquote>
-<p>This work presents integrated model for active security response model. The proposed model introduces Active Response Mechanism (ARM) for tracing anonymous attacks in the network back to their source. This work is motivated by the increased frequency and sophistication of denial-of-service attacks and by the difficulty in tracing packets with incorrect, or “spoofed”, source addresses. This paper presents within the proposed model two tracing approaches based on:
-• Sleepy Watermark Tracing (SWT) for unauthorized access attacks.
-• Probabilistic Packet Marking (PPM) in the network for Denial of Service
-(DoS) and Distributed Denial of Service (DDoS) attacks.</p>
-</blockquote>
-
-<ul>
-<li><a href="http://static.googleusercontent.com/media/research.google.com/en/us/pubs/archive/36356.pdf">Dapper, a Large-Scale Distributed Systems Tracing Infrastructure</a></li>
-</ul>
-
-<blockquote>
-<p>Here we introduce the design of Dapper, Google’s production distributed systems tracing infrastructure, and describe how our design goals of low overhead, application-level transparency, and ubiquitous deployment on a very large scale system were met. Dapper shares conceptual similarities with other tracing systems, particularly Magpie [3] and X-Trace [12], but certain design
-choices were made that have been key to its success in our environment, such as the use of sampling and restricting the instrumentation to a rather small number of common libraries.</p>
-</blockquote>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
       <a href="http://zhen.org/blog/papers-i-read-2015-week-6/">
         Papers I Read: 2015 Week 6
       </a>
@@ -462,6 +408,60 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
 
   </div>
   
+  <div class="post">
+    <h1 class="post-title">
+      <a href="http://zhen.org/blog/papers-i-read-2015-week-7/">
+        Papers I Read: 2015 Week 6
+      </a>
+    </h1>
+
+    <span class="post-date">Sun, Feb 8, 2015</span>
+
+    
+
+<h3 id="random-ramblings:10248ddcf524aa32198bc5cded1aa098">Random Ramblings</h3>
+
+<p>Athem hack</p>
+
+<p>Another great resource of computer science papers is Adrian Coyler&rsquo;s <a href="http://blog.acolyer.org/">the morning paper</a>. He selects and summarizes &ldquo;an interesting/influential/important paper from the world of CS every weekday morning&rdquo;.</p>
+
+<h3 id="papers-i-read:10248ddcf524aa32198bc5cded1aa098">Papers I Read</h3>
+
+<ul>
+<li><a href="http://www.cs.put.poznan.pl/dweiss/site/publications/download/fsacomp.pdf">Smaller Representation of Finite State Automata</a></li>
+</ul>
+
+<p>I read this paper when I was trying to figure out how to make the FSAs smaller for the <a href="https://github.com/surge/xparse/tree/master/etld">Effective TLD matcher</a> I created. The FSM I generated is 212,294 lines long. That&rsquo;s just absolutely crazy. This paper seems to present an interesting way of compressing them.</p>
+
+<p>I am not exactly sure if <a href="https://godoc.org/golang.org/x/net/publicsuffix">PublicSuffix</a> uses a similar representation but it basically represents a FSA as an array of bytes, and then walk the bytes like a binary search tree. It&rsquo;s interesting for sure.</p>
+
+<blockquote>
+<p>This paper is a follow-up to Jan Daciuk’s experiments on space-efficient finite state automata representation that can be used directly for traversals in main memory [4]. We investigate several techniques of reducing the memory footprint of minimal automata, mainly exploiting the fact that transition labels and transition pointer offset values are not evenly distributed and so are suitable for compression. We achieve a size gain of around 20–30% compared to the original representation given in [4]. This result is comparable to the state-of-the-art dictionary compression techniques like the LZ-trie [12] method, but remains
+memory and CPU efficient during construction.</p>
+</blockquote>
+
+<ul>
+<li><a href="http://arxiv.org/pdf/1409.5942v1.pdf">IP Tracing and Active Network Response</a></li>
+</ul>
+
+<blockquote>
+<p>This work presents integrated model for active security response model. The proposed model introduces Active Response Mechanism (ARM) for tracing anonymous attacks in the network back to their source. This work is motivated by the increased frequency and sophistication of denial-of-service attacks and by the difficulty in tracing packets with incorrect, or “spoofed”, source addresses. This paper presents within the proposed model two tracing approaches based on:
+• Sleepy Watermark Tracing (SWT) for unauthorized access attacks.
+• Probabilistic Packet Marking (PPM) in the network for Denial of Service
+(DoS) and Distributed Denial of Service (DDoS) attacks.</p>
+</blockquote>
+
+<ul>
+<li><a href="http://static.googleusercontent.com/media/research.google.com/en/us/pubs/archive/36356.pdf">Dapper, a Large-Scale Distributed Systems Tracing Infrastructure</a></li>
+</ul>
+
+<blockquote>
+<p>Here we introduce the design of Dapper, Google’s production distributed systems tracing infrastructure, and describe how our design goals of low overhead, application-level transparency, and ubiquitous deployment on a very large scale system were met. Dapper shares conceptual similarities with other tracing systems, particularly Magpie [3] and X-Trace [12], but certain design
+choices were made that have been key to its success in our environment, such as the use of sampling and restricting the instrumentation to a rather small number of common libraries.</p>
+</blockquote>
+
+  </div>
+  
 </div>
 
 <div class="posts">
@@ -470,9 +470,9 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
       
       <li><span><a href="http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/">Sequence: Automated Analyzer for Reducing 100,000&#39;s of Log Messages to 10&#39;s of Patterns</a> - <time class="pull-right post-list">Tue, Feb 10, 2015</h4></time></span></li>
       
-      <li><span><a href="http://zhen.org/blog/papers-i-read-2015-week-7/">Papers I Read: 2015 Week 6</a> - <time class="pull-right post-list">Sun, Feb 8, 2015</h4></time></span></li>
-      
       <li><span><a href="http://zhen.org/blog/papers-i-read-2015-week-6/">Papers I Read: 2015 Week 6</a> - <time class="pull-right post-list">Sun, Feb 8, 2015</h4></time></span></li>
+      
+      <li><span><a href="http://zhen.org/blog/papers-i-read-2015-week-7/">Papers I Read: 2015 Week 6</a> - <time class="pull-right post-list">Sun, Feb 8, 2015</h4></time></span></li>
       
       <li><span><a href="http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/">Sequence: A High Performance Sequential Semantic Log Parser at 175,000 MPS</a> - <time class="pull-right post-list">Sun, Feb 1, 2015</h4></time></span></li>
       
