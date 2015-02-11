@@ -22,6 +22,8 @@
   
   <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
 
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -44,22 +46,29 @@
       </p>
     </div>
 
-
-
     <ul class="sidebar-nav">
       <li><a href="http://zhen.org/blog">Archive</a></li>
+      <br/>
+      <li>Projects</li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/strace/sequence">sequence</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surgemq/surgemq">surgemq</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surge">zhenjl/others</a></li>
       
     </ul>
-      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      
-      
-      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
+
+    <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+    <a href="http://linkedin.com/in/zhenjl"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
+    
+    
+    
 
     <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
     Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
     Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
-    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    &copy; 2015 Jian Zhen. All Rights Reserved.</p>
     
   </div>
 </div>
@@ -74,7 +83,7 @@
 
 <p>Here are some of the topics that I gathered based on the sessions I attended and people I&rsquo;ve talked to.</p>
 
-<h3 id="toc_0">The definition is very cloudy!</h3>
+<h3 id="the-definition-is-very-cloudy:7701a71df8c80489da85c83e7da2bcce">The definition is very cloudy!</h3>
 
 <p>There&rsquo;s no agreement on the definition of Cloud Computing. Reuven Cohen held a very popular session on &ldquo;What is Cloud Computing?&rdquo; There were at least 40 people in the room that was supposed to hold only 20. There were a wide variant of definitions, going from Reuven&rsquo;s very open definition (internet centric software) to another person&rsquo;s very restrictive definition (cloud computing must use web services, XML, SOAP, etc).</p>
 
@@ -84,17 +93,17 @@
 
 <p>The term that&rsquo;s used most to describe cloud computing is <em>elasticity</em>: the ability to quickly provision and de-provision computing resources on demand. Almost everyone I&rsquo;ve talked to or listened to agrees to that. Some of the enterprise attendees also noted this as one of the biggest benefits of the cloud. When business units come to IT with new application requirements, IT now has a way to quickly spin up resources without having to wait weeks or months to procure equipment. The other thing that everyone agrees on is the <em>utility</em> model: the ability to pay for what you use.</p>
 
-<h3 id="toc_1">Service level agreements</h3>
+<h3 id="service-level-agreements:7701a71df8c80489da85c83e7da2bcce">Service level agreements</h3>
 
 <p>This topic was heavily discussed in the &ldquo;No Cure for Cancer: Manage the Expectations of Cloud Computing&rdquo; session. To summarize, there&rsquo;s almost no SLAs provided by the cloud providers today. Even Jeff Barr from Amazon said that AWS only provides SLA for their S3 service. I haven&rsquo;t researched the SLA issue so not sure how true that is. But if it&rsquo;s true, I think this will be one of the biggest factor, if not the biggest factor, in enterprise adoption. Can you imagine enterprises signing up cloud computing contracts without SLAs clearly defined? It&rsquo;s like going to host their business critical infrastructure in a data center that doesn&rsquo;t have clearly defined SLA.</p>
 
 <p>We all know that SLAs really doesn&rsquo;t buy you much. In most cases, enterprises get refunded for the amount of time that the network was down. No SLA will cover business loss. However, as one of the CSOs I met said, it&rsquo;s about risk transfer. As long as there&rsquo;s a defined SLA on paper, when the network/site goes down, they can go after somebody. If there&rsquo;s no SLA, it will be the CIO/CSO&rsquo;s head that&rsquo;s on the chopping block.</p>
 
-<h3 id="toc_2">Security</h3>
+<h3 id="security:7701a71df8c80489da85c83e7da2bcce">Security</h3>
 
 <p>Another topic that was discussed in Sam Charrington&rsquo;s &ldquo;How Cloud Impacts Enterprise Computing&rdquo; session is security in the cloud. When Sam asked the group what are the factors that prevent enterprise from adopting the cloud, Ben Charian from ServiceCloud empathically said &ldquo;security.&rdquo; He talked about that the clouds must be certified or audited against standards or frameworks such as PCI. I&rsquo;ve written about cloud security requirements <a href="http://onsaas.net/2008/06/10/tough-security-questions-for-saas-providers-part-1/">here</a> and <a href="http://onsaas.net/2008/06/18/tough-security-questions-for-saas-providers-part-2/">here</a> so I won&rsquo;t elaborate on this topic. Needless to say, I am in total agreement with Ben. What I didn&rsquo;t agree with Ben on is the need to rewrite these frameworks or standards specifically for the cloud. I believe many of the controls such as identity management and segregation of duties are the same in the cloud or out of the cloud.</p>
 
-<h3 id="toc_3">Other observations and interesting tidbits</h3>
+<h3 id="other-observations-and-interesting-tidbits:7701a71df8c80489da85c83e7da2bcce">Other observations and interesting tidbits</h3>
 
 <ul>
 <li>As the enterprise use more cloud resources, there will be a point where it may make sense to bring things back in house rather than continuing to use the cloud.</li>

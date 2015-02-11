@@ -22,6 +22,8 @@
   
   <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
 
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -44,22 +46,29 @@
       </p>
     </div>
 
-
-
     <ul class="sidebar-nav">
       <li><a href="http://zhen.org/blog">Archive</a></li>
+      <br/>
+      <li>Projects</li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/strace/sequence">sequence</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surgemq/surgemq">surgemq</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surge">zhenjl/others</a></li>
       
     </ul>
-      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      
-      
-      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
+
+    <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+    <a href="http://linkedin.com/in/zhenjl"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
+    
+    
+    
 
     <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
     Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
     Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
-    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    &copy; 2015 Jian Zhen. All Rights Reserved.</p>
     
   </div>
 </div>
@@ -72,7 +81,7 @@
 
 <p><a href="https://news.ycombinator.com/item?id=6392197">comments/suggestions</a></p>
 
-<h3 id="toc_0">tl;dr</h3>
+<h3 id="tl-dr:3a0c4ad8daa6401e3210f1f5461e42df">tl;dr</h3>
 
 <ul>
 <li>If you are interested in database bitmap index, then it&rsquo;s definitely worth learning more about bitmap compression.</li>
@@ -80,13 +89,13 @@
 <li>Sorry I think you should read the rest of the article. :)</li>
 </ul>
 
-<h3 id="toc_1">The Real Deal</h3>
+<h3 id="the-real-deal:3a0c4ad8daa6401e3210f1f5461e42df">The Real Deal</h3>
 
 <p>For &ldquo;Go Learn&rdquo; project #5, I&rsquo;ve decided to continue implementing bit-related data structures. This time I decided to port a bitmap (not image) compression data structure to Go. Unlike bloom filters, which had quite a few implementations, I couldn&rsquo;t really find any compressed bitmap implementations in Go. Most of them are in C/C++ or Java. (For previous projects please see previous blog posts.)</p>
 
 <p>Btw, if you have any suggestions on what project I should do next, feel free to drop me a comment.</p>
 
-<h3 id="toc_2">Bitmaps</h3>
+<h3 id="bitmaps:3a0c4ad8daa6401e3210f1f5461e42df">Bitmaps</h3>
 
 <p>Bitmap compression is often used for database <a href="http://en.wikipedia.org/wiki/Bitmap_index">bitmap indexing</a>. To quote Wikipedia again:</p>
 
@@ -100,7 +109,7 @@
 
 <p>There are quite a few approaches to bitmap compression. You will find most of the work listed in the wikipedia page. The two I found to be most interesting are <a href="http://ricerca.mat.uniroma3.it/users/colanton/docs/concise.pdf">CONCISE</a> and <a href="https://code.google.com/p/javaewah/">Enhanced Word-Aligned Hybrid (EWAH)</a>. After reading throught both papers and looking at their Java implementations, I decided to start with EWAH. There&rsquo;s no primary reason for starting with EWAH first. But Daniel Lemire&rsquo;s comment intrigued me, &ldquo;Out of the bitmap formats that I have often tested, Concise is the most concise, but JavaEWAH is often faster. So there is a trade-off.&rdquo; I wanted to see how fast the Go implementation can be so I figure I start with EWAH. I may still port CONCISE later. (Note: I am not the best Go programmer nor do I claim that my code is the most performant. This is a learning project so there will definitely be room for improvement.)</p>
 
-<h3 id="toc_3">EWAH</h3>
+<h3 id="ewah:3a0c4ad8daa6401e3210f1f5461e42df">EWAH</h3>
 
 <p>Enhanced Word-Aligned Hybrid (EWAH) is a bitmap compression algorithm created by Daniel Lemire, Owen Kaser, and Kamel Aouiche. (<a href="http://arxiv.org/pdf/0901.3751v4.pdf">paper</a>)</p>
 
@@ -133,7 +142,7 @@
 
 <p>Technically you can solve both of these problems, but the cost of doing such operations will be extremely high.</p>
 
-<h3 id="toc_4">Go Port</h3>
+<h3 id="go-port:3a0c4ad8daa6401e3210f1f5461e42df">Go Port</h3>
 
 <p>Most of my nights and weekends over the past couple of weeks have gone into the porting of JavaEWAH to Go. There&rsquo;s also a C++ version of EWAH which I&rsquo;ve also gone through. Code structure wise it&rsquo;s very similar to the Java version. You can find the <a href="https://github.com/reducedb/bitmap">Go EWAH port on Github</a>.</p>
 
@@ -147,7 +156,7 @@
 
 <p>What I found is that in my Go port using this same approach was running fairly slow as there are multiple nested iterators. (Results later.) Now to be completely honest and fair, this does not mean the Java version is also slow. It&rsquo;s just the <strong>My Go version</strong> is slow. As I have learned over the past few projects, there are always ways to make things faster. I tried to apply what I&rsquo;ve learned in previous projects in these new projects but it certainly doesn&rsquo;t mean I always succeed.</p>
 
-<h4 id="toc_5">Cursors</h4>
+<h4 id="cursors:3a0c4ad8daa6401e3210f1f5461e42df">Cursors</h4>
 
 <p>After porting the Java version to Go directly, I learned a ton about the structure of the algorithm and how the different bit operations are performed. Given that my Go version was running fairly slow, I decided to try a different approach. Instead of the nested iterator approach, I implemented a Cursor structure that basically collapsed RunningLengthWord, BufferedRunningLengthWord, IteratingBufferedRunningLengthWord, and EWAHIterator into a single structure.</p>
 
@@ -155,7 +164,7 @@
 
 <p>In many cases during my benchmarks, the cursor-based performance is 2-4x faster over the previous approach.  I took great care to make sure the results of the two different implementations return exactly the same thing. You can see some of that in my tests.</p>
 
-<h4 id="toc_6">Get</h4>
+<h4 id="get:3a0c4ad8daa6401e3210f1f5461e42df">Get</h4>
 
 <p>The original Java implementation did not have a Get function, which gets the bit at any random location. This is because bitmap implementation such as CONCISE and EWAH are meant to be used with bitmap indices and in most cases you don&rsquo;t need to check a random bit. The common use cases are to perform bit operations on two bitmaps, then find all the bits that are set.</p>
 
@@ -173,11 +182,11 @@
 <li>Get using the nested iterators approach - 822530 ns/op</li>
 </ul>
 
-<h3 id="toc_7">Results</h3>
+<h3 id="results:3a0c4ad8daa6401e3210f1f5461e42df">Results</h3>
 
 <p>The <a href="https://github.com/reducedb/bitmap">final product</a> of this project is available on Github. I ran quite a few benchmarks with different bitmap density (1-sparsity) as well as running bit operations with two bitmaps of varying density. Here are some points to note.</p>
 
-<h4 id="toc_8">Density vs Space Saving</h4>
+<h4 id="density-vs-space-saving:3a0c4ad8daa6401e3210f1f5461e42df">Density vs Space Saving</h4>
 
 <p>The whole reason for bitmap compression to exist is to save space. So here are some results from that test. Probably not surprisingly, the higher the density, the lower the space savings. The charte below shows how density and space savings correlate for a bitmap that had a cardinality of 10,000.</p>
 
@@ -223,7 +232,7 @@
 
 <p>At the bottom, you will find the full list of bitmaps I generated for the tests. (Look at the bitmaps tab)</p>
 
-<h4 id="toc_9">Cursor vs Nested Iterators</h4>
+<h4 id="cursor-vs-nested-iterators:3a0c4ad8daa6401e3210f1f5461e42df">Cursor vs Nested Iterators</h4>
 
 <p>Another interesting benchmark I did was test the performance between the cursor-based implementation and the nested-iterators implementation. I tested the two implementations using a wide variaty of combinations, totaling 225 benchmarks per bit operation (AND, OR, XOR, ANDNOT).</p>
 
@@ -238,7 +247,7 @@
 <li>AND/OR/XOR/ANDNOT 2 - This is the nested-iterator-based implementation</li>
 </ul>
 
-<h4 id="toc_10">Embedded Spreadsheet</h4>
+<h4 id="embedded-spreadsheet:3a0c4ad8daa6401e3210f1f5461e42df">Embedded Spreadsheet</h4>
 
 <iframe width='800' height='500' frameborder='0' src='https://docs.google.com/spreadsheet/pub?key=0ApDLtJuUH-1rdHh2bzY1d0h3U042UXNkLUlzaENLMUE&output=html&widget=true'></iframe>
 

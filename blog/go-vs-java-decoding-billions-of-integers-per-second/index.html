@@ -22,6 +22,8 @@
   
   <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
 
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -44,22 +46,29 @@
       </p>
     </div>
 
-
-
     <ul class="sidebar-nav">
       <li><a href="http://zhen.org/blog">Archive</a></li>
+      <br/>
+      <li>Projects</li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/strace/sequence">sequence</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surgemq/surgemq">surgemq</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surge">zhenjl/others</a></li>
       
     </ul>
-      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      
-      
-      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
+
+    <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+    <a href="http://linkedin.com/in/zhenjl"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
+    
+    
+    
 
     <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
     Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
     Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
-    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    &copy; 2015 Jian Zhen. All Rights Reserved.</p>
     
   </div>
 </div>
@@ -84,7 +93,7 @@
 
 <p>I would like to ask for your help, if you can spare the time, to share some of your optimization tips and secrets. I would love to make this library even faster if possible.</p>
 
-<h3 id="toc_0">tl;dr</h3>
+<h3 id="tl-dr:2c8d0496131f181c56ff2ef05dc70d5e">tl;dr</h3>
 
 <p>The following chart shows how much (%) faster Java is compare to Go in decoding integers that are encoded using different codecs. It shows results from processing two different files. See below for more details.</p>
 
@@ -98,7 +107,7 @@
 <li>This benchmark is purely a CPU benchmark. The test environment has enough memory to keep all the arrays in memory without causing swap, and there&rsquo;s no disk IO involved in the actual encoding/decoding functions.</li>
 </ul>
 
-<h3 id="toc_1">Project Review</h3>
+<h3 id="project-review:2c8d0496131f181c56ff2ef05dc70d5e">Project Review</h3>
 
 <p>A month ago I wrote about my &ldquo;Go Learn&rdquo; project #6: <a href="http://zhen.org/blog/benchmarking-integer-compression-in-go/">Benchmarking Integer Compression in Go</a> <a href="https://github.com/reducedb/encoding">(github)</a>. In that project I ported 6 different codecs for encoding and decoding 32-bit integers. Since then, I have ported a couple more codecs, cleaned up the directories, and performed a ton of profiling and optimization to increase performance.</p>
 
@@ -126,7 +135,7 @@
 
 <p>In addition, the <em>benchmark</em> program under <em>benchmark/</em> is provided to let users easily test different integer lists and codecs.</p>
 
-<h3 id="toc_2">Techniques Tried</h3>
+<h3 id="techniques-tried:2c8d0496131f181c56ff2ef05dc70d5e">Techniques Tried</h3>
 
 <p>I cannot say this enough: <strong>benchmark, profile, optimize, rinse, repeat</strong>. Go has made testing, benchmarking, and profiling extremely simple. You owe it to yourself to optimize your code using these tools. Previously I have written about how I was able to <a href="http://zhen.org/blog/improving-cityhash-performance-by-go-profiling/">improve the cityhash Go implementation performance by 3-16X by Go profiling</a>.</p>
 
@@ -134,7 +143,7 @@
 
 <p>Below are some of the optimizations I&rsquo;ve tried. Some helped, some didn&rsquo;t.</p>
 
-<h4 id="toc_3">For-Range Through Slices</h4>
+<h4 id="for-range-through-slices:2c8d0496131f181c56ff2ef05dc70d5e">For-Range Through Slices</h4>
 
 <p>I learned this when Ian Taylor from Google (and others) helped me optimize one of the functions using range to loop through the slices instead of <code>for i := 0; i &lt; b; i++ {}</code> loops. The for-range method can be 4-7 times faster than the other way. You can see the difference between BenchmarkOffset and BenchmarkRange <a href="https://gist.github.com/zhenjl/7495442">here</a>.</p>
 
@@ -142,7 +151,7 @@
 
 <p>Side note: this set of benchmarks are courtesy of DisposaBoy and Athiwat in the #go-nuts IRC channel. Thanks for your help guys.</p>
 
-<h4 id="toc_4">Unroll Simple Loops</h4>
+<h4 id="unroll-simple-loops:2c8d0496131f181c56ff2ef05dc70d5e">Unroll Simple Loops</h4>
 
 <p>For some simple, known-size, loops, such as initializing a slice with the same initial non-zero value, unrolling the loop makes a big difference. The caveat is that <em>gccgo -O3</em> does an amazing job of optimizing these simple range loops, so in that case unrolling the loop is actually slower.</p>
 
@@ -169,19 +178,19 @@ for i, _ := range tmp {
 
 <p>For now, I am keeping the unrolled version of the function.</p>
 
-<h4 id="toc_5">Unroll Even More Loops</h4>
+<h4 id="unroll-even-more-loops:2c8d0496131f181c56ff2ef05dc70d5e">Unroll Even More Loops</h4>
 
 <p>Given the success of unrolling the above simple loop, I thought I try unrolling <a href="https://github.com/reducedb/encoding/blob/master/util.go#L150">even</a> . <a href="https://github.com/reducedb/encoding/blob/master/util.go#L281">more</a> . <a href="https://github.com/reducedb/encoding/blob/master/util.go#L412">loops</a> to see if it helps.</p>
 
 <p>It turns out performance actually suffered in some cases. I speculated that the reason may have to do with the bound checking when accessing slices. It turns out I might be right. After I disabled bound checking, performance increased when unrolling these loops. See below regarding disable bound checking.</p>
 
-<h4 id="toc_6">Inline Simple Functions</h4>
+<h4 id="inline-simple-functions:2c8d0496131f181c56ff2ef05dc70d5e">Inline Simple Functions</h4>
 
 <p>There are <a href="https://github.com/reducedb/encoding/blob/master/util.go#L53">several</a> . <a href="https://github.com/reducedb/encoding/blob/master/util.go#L60">small</a> functions that gets called quite often in this encoding library. During profiling I see these functions being on top all the time.</p>
 
 <p>I decided to try and inline these functions to see if the reduced function call overhead will help. In general I didn&rsquo;t see much performance improvements using this technique. The most I saw was a 1% increase in performance. I contribute that to noise.</p>
 
-<h4 id="toc_7">Disable Bound Checking (Generally NOT Recommended)</h4>
+<h4 id="disable-bound-checking-generally-not-recommended:2c8d0496131f181c56ff2ef05dc70d5e">Disable Bound Checking (Generally NOT Recommended)</h4>
 
 <p>This integer encoding library operates on large slices of data. There&rsquo;s a TON of slice access using index. Knowing the every slice access using index requires bound checking, I decided to try disabling bound checking using <code>-gcflags -B</code> to compile the code.</p>
 
@@ -193,7 +202,7 @@ for i, _ := range tmp {
 
 <p>The question is, is it worth the removal of bound checking? For the raw results, I kept the numbers from the for-range loops.</p>
 
-<h4 id="toc_8">Using gccgo</h4>
+<h4 id="using-gccgo:2c8d0496131f181c56ff2ef05dc70d5e">Using gccgo</h4>
 
 <p>When I was looking around for Go optimization techniques, I saw several posts on StackOverflow as well as the Go mailing list suggesting people try <em>gccgo</em> as the compiler if they wanted more performance. So I thought I give it a shot as well. After downloading gcc 4.8.2 and letting it compile overnight, I was finally able to test it out.</p>
 
@@ -201,7 +210,7 @@ for i, _ := range tmp {
 
 <p>As mentioned above, <em>gccgo -O3</em> seems to do a pretty amazing job of optimizing simple range loops. I was able to achieve 33% performance increase using for-range with <em>gccgo -O3</em> instead of unrolling the simple loop. The final result was within 6% of the Java version for Delta BP32 decoding.</p>
 
-<h4 id="toc_9">Use Some Assembly</h4>
+<h4 id="use-some-assembly:2c8d0496131f181c56ff2ef05dc70d5e">Use Some Assembly</h4>
 
 <p>The final trick I tried is to convert one of the often used functions to assembly language. This was suggested to me almost 6 weeks ago by Dave Andersen on the golang-nuts Google group. He suggested that I steal the bitLen function in the math/big/arith files. That&rsquo;s <a href="https://github.com/reducedb/encoding/commit/ea080c479fb4994e400ebba021d13f10c4f3fecc">exactly what I did</a>.</p>
 
@@ -211,13 +220,13 @@ for i, _ := range tmp {
 
 <p>As such, the <a href="https://github.com/reducedb/encoding">code</a> has been updated to use the assembly version of the bitlen.</p>
 
-<h3 id="toc_10">Benchmark Environment</h3>
+<h3 id="benchmark-environment:2c8d0496131f181c56ff2ef05dc70d5e">Benchmark Environment</h3>
 
 <p>The system I used to run the benchmarks was graciously provided by Dr. Daniel Lemire. Here are the CPU and memory information at the time I ran the benchmarks. As you can see, we have plenty of memory to load the large integer arrays and should cause no swap. (I had this issue running these tests on my little MBA with 4GB of memory. :)</p>
 
 <p>No disk IO is involved in this benchmark.</p>
 
-<h4 id="toc_11">OS</h4>
+<h4 id="os:2c8d0496131f181c56ff2ef05dc70d5e">OS</h4>
 
 <pre><code>NAME=&quot;Ubuntu&quot;
 VERSION=&quot;12.10, Quantal Quetzal&quot;
@@ -227,14 +236,14 @@ PRETTY_NAME=&quot;Ubuntu quantal (12.10)&quot;
 VERSION_ID=&quot;12.10&quot;
 </code></pre>
 
-<h4 id="toc_12">CPU</h4>
+<h4 id="cpu:2c8d0496131f181c56ff2ef05dc70d5e">CPU</h4>
 
 <pre><code>model name      : Intel(R) Xeon(R) CPU E5-1620 0 @ 3.60GHz
 cpu MHz         : 3591.566
 cache size      : 10240 KB
 </code></pre>
 
-<h4 id="toc_13">Memory</h4>
+<h4 id="memory:2c8d0496131f181c56ff2ef05dc70d5e">Memory</h4>
 
 <pre><code>             total       used       free     shared    buffers     cached
 Mem:      32872068   13548960   19323108          0     209416   11517476
@@ -242,20 +251,20 @@ Mem:      32872068   13548960   19323108          0     209416   11517476
 Swap:     33476604          0   33476604
 </code></pre>
 
-<h4 id="toc_14">java</h4>
+<h4 id="java:2c8d0496131f181c56ff2ef05dc70d5e">java</h4>
 
 <pre><code>java version &quot;1.7.0_25&quot;
 OpenJDK Runtime Environment (IcedTea 2.3.10) (7u25-2.3.10-1ubuntu0.12.10.2)
 OpenJDK 64-Bit Server VM (build 23.7-b01, mixed mode)
 </code></pre>
 
-<h4 id="toc_15">go and gccgo</h4>
+<h4 id="go-and-gccgo:2c8d0496131f181c56ff2ef05dc70d5e">go and gccgo</h4>
 
 <pre><code>go version go1.2rc4 linux/amd64
 gcc version 4.8.2 (GCC)
 </code></pre>
 
-<h4 id="toc_16">Files</h4>
+<h4 id="files:2c8d0496131f181c56ff2ef05dc70d5e">Files</h4>
 
 <p>There are two files used in this benchmark:</p>
 
@@ -264,7 +273,7 @@ gcc version 4.8.2 (GCC)
 <li>File 2: <em>latency.txt</em> contains 144285498 <strong>unsorted</strong> integers. An example, lat.txt.gz, can be seen <a href="https://github.com/reducedb/encoding/tree/master/benchmark/data">here</a>.</li>
 </ul>
 
-<h4 id="toc_17">Codecs</h4>
+<h4 id="codecs:2c8d0496131f181c56ff2ef05dc70d5e">Codecs</h4>
 
 <p>For this benchmark, I used 4 different codecs:</p>
 
@@ -279,7 +288,7 @@ gcc version 4.8.2 (GCC)
 
 <p>The Java and Go versions of the codecs are almost identical, logic-wise, aside from language differences. These codecs operate on arrays (or slices in Go) of integers. There are a lot of bitwise and shift operations, and lots of loops.</p>
 
-<h3 id="toc_18">Benchmark Results</h3>
+<h3 id="benchmark-results:2c8d0496131f181c56ff2ef05dc70d5e">Benchmark Results</h3>
 
 <p>The <a href="https://docs.google.com/spreadsheet/pub?key=0ApDLtJuUH-1rdDRyNEhPWUlqMHZzMG5FWFQzX1ZoZ1E&amp;output=html">raw results</a> from running different Go compilers (and flags) and codes are in the Google spreadsheet at the bottom of the post.</p>
 
@@ -291,7 +300,7 @@ gcc version 4.8.2 (GCC)
 
 <p>So you can say that A is faster than B by X%.</p>
 
-<h4 id="toc_19">Go Fastest</h4>
+<h4 id="go-fastest:2c8d0496131f181c56ff2ef05dc70d5e">Go Fastest</h4>
 
 <p>I compiled 4 different versions of Go binary for this benchmark:</p>
 
@@ -330,7 +339,7 @@ gcc version 4.8.2 (GCC)
 
 <p>For the comparison with Java, I am using the <em>gccgo-O3</em> numbers.</p>
 
-<h4 id="toc_20">Bits Per Integer (Lower is Better)</h4>
+<h4 id="bits-per-integer-lower-is-better:2c8d0496131f181c56ff2ef05dc70d5e">Bits Per Integer (Lower is Better)</h4>
 
 <p><img src="/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/bits_per_integer.png"></p>
 
@@ -342,7 +351,7 @@ gcc version 4.8.2 (GCC)
 
 <p>I also tested the latency file against the <a href="https://developers.google.com/protocol-buffers/docs/encoding#varints">zigzag</a> delta codecs and achieved ~25 bits per 32-bit integer. So it&rsquo;s not much better than the standard codecs. However, zigzag delta comes in extremely handy when the negative numbers are smaller.</p>
 
-<h4 id="toc_21">Java vs. Go</h4>
+<h4 id="java-vs-go:2c8d0496131f181c56ff2ef05dc70d5e">Java vs. Go</h4>
 
 <p>For this section, we are comparing the decoding speed between the fastest Go version and Java. As you saw at the beginning of this post. Daniel Lemire&rsquo;s <a href="https://github.com/lemire/JavaFastPFOR">Java version</a> is anywhere from 12% to 180% faster than my <a href="https://github.com/reducedb/encoding">Go version</a> for decoding integers.</p>
 
@@ -358,7 +367,7 @@ gcc version 4.8.2 (GCC)
 
 <p><img src="/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_latency.png"></p>
 
-<h4 id="toc_22">Raw Results</h4>
+<h4 id="raw-results:2c8d0496131f181c56ff2ef05dc70d5e">Raw Results</h4>
 
 <p>The <a href="https://docs.google.com/spreadsheet/pub?key=0ApDLtJuUH-1rdDRyNEhPWUlqMHZzMG5FWFQzX1ZoZ1E&amp;output=html">raw results</a> are in the following Google spreadsheet.</p>
 

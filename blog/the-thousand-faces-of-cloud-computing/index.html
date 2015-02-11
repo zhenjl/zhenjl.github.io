@@ -22,6 +22,8 @@
   
   <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
 
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -44,22 +46,29 @@
       </p>
     </div>
 
-
-
     <ul class="sidebar-nav">
       <li><a href="http://zhen.org/blog">Archive</a></li>
+      <br/>
+      <li>Projects</li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/strace/sequence">sequence</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surgemq/surgemq">surgemq</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surge">zhenjl/others</a></li>
       
     </ul>
-      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      
-      
-      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
+
+    <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+    <a href="http://linkedin.com/in/zhenjl"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
+    
+    
+    
 
     <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
     Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
     Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
-    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    &copy; 2015 Jian Zhen. All Rights Reserved.</p>
     
   </div>
 </div>
@@ -88,7 +97,7 @@
 <li>Five characteristics</li>
 </ul>
 
-<h3 id="toc_0">Two Perspectives</h3>
+<h3 id="two-perspectives:752843077b76a12e7a68dfad6d032a15">Two Perspectives</h3>
 
 <p>There are passionate discussions on the definition of Cloud and Cloud Computing. If we summarize the arguments, we can see that there are really two camps of people: those who looks at Cloud as an architecture and those who looks at Cloud as a business model. In many cases they agree on many of the characteristics but there&rsquo;s usually one topic that really heats up the discussion and that is whether pricing and billing should be a defining characteristic of the Cloud.</p>
 
@@ -121,7 +130,7 @@
 <p>Consumption Model
 ✓</p>
 
-<h3 id="toc_1">Five Architecture Characteristics</h3>
+<h3 id="five-architecture-characteristics:752843077b76a12e7a68dfad6d032a15">Five Architecture Characteristics</h3>
 
 <ul>
 <li>Infrastructure Abstraction</li>
@@ -133,7 +142,7 @@
 
 <p>I am going to refer you to the write ups in <a href="http://www.cloudsecurityalliance.org/guidance/csaguide.pdf">Guidance for Critical Areas of Focus in Cloud Computing</a> from <a href="http://www.cloudsecurityalliance.org/">Cloud Security Alliance</a>, as well as the <a href="http://www.elasticvapor.com/2009/05/us-federal-government-defines-cloud.html">Draft NIST Working Definition of Cloud Computing</a>. These folks have done an awesome job of writing these up so I won&rsquo;t elaborate here. Notice that these five are architecture characteristics so I didn&rsquo;t include the utility-based pricing characteristics here.</p>
 
-<h3 id="toc_2">Three Delivery Models</h3>
+<h3 id="three-delivery-models:752843077b76a12e7a68dfad6d032a15">Three Delivery Models</h3>
 
 <ul>
 <li>Software as a Service</li>
@@ -143,7 +152,7 @@
 
 <p>Again, I am going to refer you to the write ups in <a href="http://www.cloudsecurityalliance.org/guidance/csaguide.pdf">Guidance for Critical Areas of Focus in Cloud Computing</a> from <a href="http://www.cloudsecurityalliance.org/">Cloud Security Alliance</a>, as well as the <a href="http://www.elasticvapor.com/2009/05/us-federal-government-defines-cloud.html">Draft NIST Working Definition of Cloud Computing</a>. This is generally referred to as the SPI model.</p>
 
-<h3 id="toc_3">Three Deploy Models</h3>
+<h3 id="three-deploy-models:752843077b76a12e7a68dfad6d032a15">Three Deploy Models</h3>
 
 <p>I found that the distinction of <em>public, private, managed, community and hybrid</em> clouds in both the NIST and CSA documents somewhat difficult to comprehend. I don&rsquo;t mean that they don&rsquo;t make sense but you really have to think through them before you can understand them. In most cases, the follow three seem to be easier to understand.</p>
 
@@ -153,7 +162,7 @@
 <li>Private Cloud - A private cloud is a combination of internal and external clouds. In most cases enterprises have more than one cloud just like they have some infrastructures inside the 4 walls and some outside. Even though there&rsquo;s both internal and external clouds, enterprises will want to control and manage all of the resources that belong to them, potentially through a single pane of glass. The cloud resoures are <strong><em>private</em></strong> to the customers, thus the name private cloud.</li>
 </ul>
 
-<h3 id="toc_4">Three Consumption Models</h3>
+<h3 id="three-consumption-models:752843077b76a12e7a68dfad6d032a15">Three Consumption Models</h3>
 
 <ul>
 <li>Allocation-based</li>
@@ -163,7 +172,7 @@
 
 <p>I&rsquo;ve <a href="http://www.zhen.org/zen20/2009/05/09/three-cloud-resource-consumption-models/">previously written</a> about the consumption models so please use that as reference.</p>
 
-<h3 id="toc_5">Two Pricing Models</h3>
+<h3 id="two-pricing-models:752843077b76a12e7a68dfad6d032a15">Two Pricing Models</h3>
 
 <p>One of the interesting debates out there is whether Clouds must have utility-based pricing, that is, consumers are only billed for what they used/allocated. I&rsquo;ve generally seen the following two pricing models from service providers who have cloud offerings.</p>
 
@@ -172,7 +181,7 @@
 <li>Subscription-based - Most people tend to forget the subscription model is very popular in the cloud as well. For example, Salesforce is based on a per-user-per-month charge, so is Google Apps Premium Edition (per-user-per-year.) In fact, most of the cloud applications (SaaS) are based on this model. In addition, we are seeing some of the traditional service providers who are launching clouds also offer this pricing model as well.</li>
 </ul>
 
-<h3 id="toc_6">Six Types of Users</h3>
+<h3 id="six-types-of-users:752843077b76a12e7a68dfad6d032a15">Six Types of Users</h3>
 
 <p>We will take a look at it from the angle of cloud consumers and why they care about clouds. On a high level, there are probably six types of cloud users.</p>
 
@@ -185,7 +194,7 @@
 <li>Consumers</li>
 </ul>
 
-<h4 id="toc_7">Enterprise IT</h4>
+<h4 id="enterprise-it:752843077b76a12e7a68dfad6d032a15">Enterprise IT</h4>
 
 <p>Enterprise IT teams are the ones that manages and operates corporate IT infrastructures. They are responsible for delivering applications and infrastructure to support the lines of businesses (LOBs). They are the ones that care most about enterprise features such as security, manageability, reliability, availability, etc etc.</p>
 
@@ -193,33 +202,33 @@
 
 <p>Clouds are appealing to the enterprise IT teams because it provides seemingly infinite resources at their fingertip and the IT teams can provision the resources on-demand. So instead of requiring the LOBs to wait 3 months, IT teams can now do that much quicker.</p>
 
-<h4 id="toc_8">Independent Software Vendors (ISVs)</h4>
+<h4 id="independent-software-vendors-isvs:752843077b76a12e7a68dfad6d032a15">Independent Software Vendors (ISVs)</h4>
 
 <p>ISVs are users who develop products and solutions for enterprises. Traditionally they have delivered their products as software or hardware appliances. The ISVs will need to support multiple versions of their software as most of their customers will not likely upgrade as soon as new versions come out. They may support 2 versions back or 10 versions back, depending on the size of the customers, how much influence the customers have and the maturity of the ISVs. Government entities are notorious in their slowness in upgrade as each version will need to go through rigorous testing process. For ISVs who deliver products as software, they have to also worry about the runtime environments such as the OS, application stack, etc. There are ISVs that have hundreds of combinations they have to test for each version they release. Last but not least, some ISVs simply don&rsquo;t have the resource to acquire a TON of hardware for test and development due to load/performance testing requirements or the number of environments the have to worry about.</p>
 
 <p>Supporting existing versions and testing for hundreds of runtime environments take a huge amount of resources and limits the resource available for innovation. So clouds are appealing to the ISVs as they can now deliver their software as a service (SaaS). By going the SaaS route, the ISVs can largely eliminate the runtime environment concerns as they can have much better control of the infrastructure they use to run their SaaS. The ISVs can also have better control over how and when they upgrade their products as they generally only have one environment to upgrade, instead of potentially thousands of different environments. And with the cloud, the ISVs can provision additional resources as needed to test their products and not have to worry about paying huge capex upfront.</p>
 
-<h4 id="toc_9">System Integrators (SIs)</h4>
+<h4 id="system-integrators-sis:752843077b76a12e7a68dfad6d032a15">System Integrators (SIs)</h4>
 
 <p>System integrators, such as Accenture and Cap Gemini, are almost extensions to the enterprise IT teams. Their solutions are generally developed as consulting projects. They develop and deliver solutions to clients who have engaged them to solve specific problems. The solutions they develop sometimes are large scale projects that can take months or years to deliver. For years, SIs have been creating best practices from the custom solutions they developed so they can speed up the development of delivery of other projects (but charge the same regardless. :)</p>
 
 <p>Clouds are appealing to them because they see clouds as one way to help them accelerate the development and delivery of solutions to their clients. They clients will see quick turnaround for solutions and the SIs can easily replicate some of the solutions they developed for one client to another. It&rsquo;s a win-win situation for both of them.</p>
 
-<h4 id="toc_10">Web Developers</h4>
+<h4 id="web-developers:752843077b76a12e7a68dfad6d032a15">Web Developers</h4>
 
 <p>Web developers are the early adopters of the clouds. They are the ones who are developing Web 2.0 sites such as Smugmug and others. AWS highlights many of these web developers on <a href="http://aws.typepad.com/">their blog</a>. These web developers care about time to market and usually don&rsquo;t have the expertise, desire and/or capital to provision and manage large infrastructures. They are focused on solving a specific problem and the less they have to worry about infrastructure, the better it is for them.</p>
 
 <p>Clouds are appealing to the web developers because of these exact reasons. Clouds deliver to the web developers on-demand and elastic resources, thus removing the concern of infrastructure provisioning. The clouds allow web developers to focus on their problems.</p>
 
-<h4 id="toc_11">Community Developers</h4>
+<h4 id="community-developers:752843077b76a12e7a68dfad6d032a15">Community Developers</h4>
 
 <p>Community developers are individual and open source developers who just wants to have their own playground but don&rsquo;t want to concern themselves with hardware provisioning. They are very similar to the web developers category but they are not developing a business in the cloud.</p>
 
-<h4 id="toc_12">Consumers</h4>
+<h4 id="consumers:752843077b76a12e7a68dfad6d032a15">Consumers</h4>
 
 <p>The consumers in general loves the clouds. Consider the number of users there are for cloud applications such as Yahoo! Mail, Gmail, Google Apps, Salesforce.com, Qualys, NetSuite and many others, then you will start to see the scale and reach of cloud applications. In many cases, consumers don&rsquo;t even care whether you call these &ldquo;cloud applications.&rdquo; To them they care about the ease of use and access, and that they don&rsquo;t have to worry about any software installation or configurations. The wide spread of cloud applications is one reason why Netbooks are so appealing these days.</p>
 
-<h3 id="toc_13">Four Business Benefits</h3>
+<h3 id="four-business-benefits:752843077b76a12e7a68dfad6d032a15">Four Business Benefits</h3>
 
 <p>Where the Cloud Architecture camp is focused on how to create the best architecture to handle the business needs, the Cloud Business camp is zeroed in on translating the architectural benefits into financial terms. It’s great that enterprises can have ubiquitous access and elasticity, but if it costs them 10x more in investment for a 2x return, that’s not going to fly. In this section we will look at some of the business benefits of Cloud Computing:</p>
 
@@ -233,7 +242,7 @@
 <li><p>Maintain Focus</p></li>
 </ul>
 
-<h4 id="toc_14">Reduce Cost</h4>
+<h4 id="reduce-cost:752843077b76a12e7a68dfad6d032a15">Reduce Cost</h4>
 
 <p>One large enterprise has outsourced their test and development environments to an outsourcer, and paying approximately $10,000 per environment per year, regardless of whether the resources are virtual or physical. They have 3000 such environments, so they are essentially paying $30 million per year on just test and development environments. They did a user survey to find out the utilization of these environments, and all the developers responded saying that these environments are heavily utilized and there’s tight handoff from one team to another. An audit, however, revealed that overall, the environments are utilized &lt; 10%, and that 70% of the environments are logged into once per year by developers.</p>
 
@@ -241,7 +250,7 @@
 
 <p>Enterprises can lower CAPEX by not having to procure additional hardware and software but to use cloud providers and their pay-per-use utility pricing to handle resource spikes; they can lower OPEX by abstracting the hardware differences, and providing self-service capabilities to the end users so IT don’t always have to be the middle man; and they can lower their CAPEX and OPEX by increasing utilization of these expensive resources, or reduce the amount of resources required to accomplish the same tasks.</p>
 
-<h4 id="toc_15">Minimize Risk</h4>
+<h4 id="minimize-risk:752843077b76a12e7a68dfad6d032a15">Minimize Risk</h4>
 
 <p>It still shocks me that in this age, companies are still running some of their mission critical applications on servers sitting under a IT administrator’s desk. But more often than not, when I talk to enterprises, this very scenario always comes up. IT administrators do this for different reasons. Some just don’t want to give up control; some don’t want to go through the arduous procurement process; some don’t have the time; and some simply don’t see why it’s a problem. In majority of these cases, if enterprises can provide these IT administrators the ability to quickly migrate these servers into the Cloud, they are more than willing to do so.</p>
 
@@ -251,7 +260,7 @@
 
 <p>The Cloud centralizing the procurement and management of hardware and software, IT can maintain control but at the same time provide users the resources they are looking for. It will be a win-win situation for both sides.</p>
 
-<h4 id="toc_16">Increase Agility</h4>
+<h4 id="increase-agility:752843077b76a12e7a68dfad6d032a15">Increase Agility</h4>
 
 <p>Joe Weinman, AT&T;’s VP of Strategy, said that “an on-demand service provider typically charges a utility premium — a higher cost per unit time for a resource than if it were owned, financed or leased.” Joe is absolutely correct here, and the recent McKenzie report validates this as well. To determine whether Cloud Computing is the right approach, enterprises must look at other business benefits in addition to hard cost.</p>
 
@@ -259,7 +268,7 @@
 
 <p>The global economy is forcing companies to be global as well. One such company has 10’s of 1000’s of developers/consultants spread all over the world, all requiring quick access to test and development environments. It’s impractical for this company to build and operate data centers around the world, and it’s also not the company’s core competency and strategy to have all these data centers. One of the things they are looking to do is build a “cloud abstraction layer” on top of multiple clouds, and allow developers to request resources. Depending on the developer’s location and resource requirement, the software will automatically provision the right resources and inform the user when ready. The ability to distribute the workload onto multiple clouds gives this company the flexibility and speed to respond to business needs. How much does this worth?</p>
 
-<h4 id="toc_17">Maintain Focus</h4>
+<h4 id="maintain-focus:752843077b76a12e7a68dfad6d032a15">Maintain Focus</h4>
 
 <p>Like the company described above, most enterprises do not consider building and operating data centers as their core competency. These enterprises consider it to be more of a distraction to their core business. By utilizing the service provider clouds, the enterprises can maintain their focus and accelerate innovation on their core business.</p>
 
@@ -267,19 +276,19 @@
 
 <p>The Cloud allows allow IT organizations to focus on providing the best infrastructure possible, and developers to focus on their applications instead of the infrastructure.</p>
 
-<h3 id="toc_18">Five Characteristics</h3>
+<h3 id="five-characteristics:752843077b76a12e7a68dfad6d032a15">Five Characteristics</h3>
 
 <p>In this section, I will describe somewhat of a revised set of architecture characteristics that define Cloud Computing.</p>
 
-<h4 id="toc_19">Abstraction</h4>
+<h4 id="abstraction:752843077b76a12e7a68dfad6d032a15">Abstraction</h4>
 
 <p>A key characteristic of the Cloud is to provide an abstraction layer for the lower level resources, including compute, network and storage components. Users are strongly discouraged, or disallowed, to think in terms of the physical hardware, but instead consider in terms of the resources required. The users don’t need to worry about whether the underlying hardware is from IBM, HP, Cisco, Juniper, NetApp or EMC. What’s presented to them is a homogenous set of resources. This removes the users from having to worry about the differences in hardware or software configuration. The resources may be shared amongst many different users, or dedicated to a single user; and maybe presented as a set of virtual machines or a set of APIs.</p>
 
-<h4 id="toc_20">On-Demand</h4>
+<h4 id="on-demand:752843077b76a12e7a68dfad6d032a15">On-Demand</h4>
 
 <p>The set of resources presented by the Cloud can be provision or de-provisioned as needed by the users. The term “on-demand” also conveys a notion of speed. When resources are requested, they are provisioned within minutes, not days, weeks or even months. In most enterprises today, hardware procurement is a multi-month long process that can slow down projects and frustrate employees. One large system integrator has recently trimmed the process of provisioning environments from 8 weeks to 3 days. However, to truly meet the business needs, they must go from 3 days to hours, if not minutes.</p>
 
-<h4 id="toc_21">Elasticity</h4>
+<h4 id="elasticity:752843077b76a12e7a68dfad6d032a15">Elasticity</h4>
 
 <p>Elasticity is probably the most defining characteristic for Cloud Computing. In addition to the need to provision on demand, enterprises are increasingly required to scale for anticipated or unanticipated resource requirements. For example, one top university that we recently talked had a housing application that gets HAMMERED two weeks before the start of the school year, EVERY year. Traffic dies down and there’s very little activity after the initial period. A large financial services firm has 30 servers dedicated to handling a 15-minute job every day. These are examples of anticipated resource requirements. Enterprises know when they will need the additional resources, how much resources are required and the duration of time they will need the resources for.</p>
 
@@ -287,11 +296,11 @@
 
 <p>Elasticity, or the ability to rapidly provision and quickly scale up and down the resources, is an architecture model that affects not just infrastructure, but also the application design. In addition, given that most of these scenarios, whether anticipated or unanticipated, do not happen often, so it’s unrealistic financially for enterprises to provision enough resource to handle these spikes. The Cloud would allow enterprises to rent the additional resources in any quantity at any time.</p>
 
-<h4 id="toc_22">Self-Service</h4>
+<h4 id="self-service:752843077b76a12e7a68dfad6d032a15">Self-Service</h4>
 
 <p>The traditional process of application owners or developer asking IT to procure and provision resources is arduous and long. Consider the software vendor scenario we described earlier where developers need to spin up 50 to 500 servers for software testing. The developers need to modify this environment often to test different configurations and application architectures, and they need to have these modifications done in real-time so they don’t miss their delivery schedule. IT organizations are not resourced to handle this type of scenarios. The best resolution would be to provide the developers a pool of resources that they can do their own configurations. The self-service model not only works for these developers, but more and more business users are asking for similar capabilities as they are asked to be more efficient.</p>
 
-<h4 id="toc_23">Ubiquitous</h4>
+<h4 id="ubiquitous:752843077b76a12e7a68dfad6d032a15">Ubiquitous</h4>
 
 <p>Ubiquitous access, or the ability to access from anywhere, using any device, is one of the great promises of the Web. This promise will become real as smart phones, netbooks and laptops become the prevalent way of access information. Ray Ozzie, Micrisoft’s Chief Software Architect, described his vision of “3 Windows in the Cloud,” where the 3 Windows included Windows on PC, Windows on mobile devices, and Windows on TVs. As you can see, one of key messages in this vision is ubiquitous access.</p>
 

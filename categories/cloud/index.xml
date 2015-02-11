@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Cloud on Zen 3.1 </title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://zhen.org/categories/cloud/index.xml/</link>
+    <title>Cloud on Zen 3.1</title>
+    <link>http://zhen.org/categories/cloud/</link>
+    <description>Recent content in Cloud on Zen 3.1</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Jian Zhen</author>
-    <copyright>Jian Zhen</copyright>
-    <updated>Fri, 15 May 2009 22:43:27 &#43;0000</updated>
+    
+    
+    <copyright>Jian Zhen. All Rights Reserved.</copyright>
+    <lastBuildDate>Fri, 15 May 2009 22:43:27 &#43;0000</lastBuildDate>
+    <atom:link href="http://zhen.org/categories/cloud/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>The Thousand Faces of Cloud Computing</title>
       <link>http://zhen.org/blog/the-thousand-faces-of-cloud-computing/</link>
       <pubDate>Fri, 15 May 2009 22:43:27 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/the-thousand-faces-of-cloud-computing/</guid>
       <description>
 
@@ -35,7 +38,7 @@
 &lt;li&gt;Five characteristics&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;Two Perspectives&lt;/h3&gt;
+&lt;h3 id=&#34;two-perspectives:752843077b76a12e7a68dfad6d032a15&#34;&gt;Two Perspectives&lt;/h3&gt;
 
 &lt;p&gt;There are passionate discussions on the definition of Cloud and Cloud Computing. If we summarize the arguments, we can see that there are really two camps of people: those who looks at Cloud as an architecture and those who looks at Cloud as a business model. In many cases they agree on many of the characteristics but there&amp;rsquo;s usually one topic that really heats up the discussion and that is whether pricing and billing should be a defining characteristic of the Cloud.&lt;/p&gt;
 
@@ -68,7 +71,7 @@
 &lt;p&gt;Consumption Model
 ✓&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Five Architecture Characteristics&lt;/h3&gt;
+&lt;h3 id=&#34;five-architecture-characteristics:752843077b76a12e7a68dfad6d032a15&#34;&gt;Five Architecture Characteristics&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Infrastructure Abstraction&lt;/li&gt;
@@ -80,7 +83,7 @@
 
 &lt;p&gt;I am going to refer you to the write ups in &lt;a href=&#34;http://www.cloudsecurityalliance.org/guidance/csaguide.pdf&#34;&gt;Guidance for Critical Areas of Focus in Cloud Computing&lt;/a&gt; from &lt;a href=&#34;http://www.cloudsecurityalliance.org/&#34;&gt;Cloud Security Alliance&lt;/a&gt;, as well as the &lt;a href=&#34;http://www.elasticvapor.com/2009/05/us-federal-government-defines-cloud.html&#34;&gt;Draft NIST Working Definition of Cloud Computing&lt;/a&gt;. These folks have done an awesome job of writing these up so I won&amp;rsquo;t elaborate here. Notice that these five are architecture characteristics so I didn&amp;rsquo;t include the utility-based pricing characteristics here.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Three Delivery Models&lt;/h3&gt;
+&lt;h3 id=&#34;three-delivery-models:752843077b76a12e7a68dfad6d032a15&#34;&gt;Three Delivery Models&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Software as a Service&lt;/li&gt;
@@ -90,7 +93,7 @@
 
 &lt;p&gt;Again, I am going to refer you to the write ups in &lt;a href=&#34;http://www.cloudsecurityalliance.org/guidance/csaguide.pdf&#34;&gt;Guidance for Critical Areas of Focus in Cloud Computing&lt;/a&gt; from &lt;a href=&#34;http://www.cloudsecurityalliance.org/&#34;&gt;Cloud Security Alliance&lt;/a&gt;, as well as the &lt;a href=&#34;http://www.elasticvapor.com/2009/05/us-federal-government-defines-cloud.html&#34;&gt;Draft NIST Working Definition of Cloud Computing&lt;/a&gt;. This is generally referred to as the SPI model.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;Three Deploy Models&lt;/h3&gt;
+&lt;h3 id=&#34;three-deploy-models:752843077b76a12e7a68dfad6d032a15&#34;&gt;Three Deploy Models&lt;/h3&gt;
 
 &lt;p&gt;I found that the distinction of &lt;em&gt;public, private, managed, community and hybrid&lt;/em&gt; clouds in both the NIST and CSA documents somewhat difficult to comprehend. I don&amp;rsquo;t mean that they don&amp;rsquo;t make sense but you really have to think through them before you can understand them. In most cases, the follow three seem to be easier to understand.&lt;/p&gt;
 
@@ -100,7 +103,7 @@
 &lt;li&gt;Private Cloud - A private cloud is a combination of internal and external clouds. In most cases enterprises have more than one cloud just like they have some infrastructures inside the 4 walls and some outside. Even though there&amp;rsquo;s both internal and external clouds, enterprises will want to control and manage all of the resources that belong to them, potentially through a single pane of glass. The cloud resoures are &lt;strong&gt;&lt;em&gt;private&lt;/em&gt;&lt;/strong&gt; to the customers, thus the name private cloud.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;Three Consumption Models&lt;/h3&gt;
+&lt;h3 id=&#34;three-consumption-models:752843077b76a12e7a68dfad6d032a15&#34;&gt;Three Consumption Models&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Allocation-based&lt;/li&gt;
@@ -110,7 +113,7 @@
 
 &lt;p&gt;I&amp;rsquo;ve &lt;a href=&#34;http://www.zhen.org/zen20/2009/05/09/three-cloud-resource-consumption-models/&#34;&gt;previously written&lt;/a&gt; about the consumption models so please use that as reference.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;Two Pricing Models&lt;/h3&gt;
+&lt;h3 id=&#34;two-pricing-models:752843077b76a12e7a68dfad6d032a15&#34;&gt;Two Pricing Models&lt;/h3&gt;
 
 &lt;p&gt;One of the interesting debates out there is whether Clouds must have utility-based pricing, that is, consumers are only billed for what they used/allocated. I&amp;rsquo;ve generally seen the following two pricing models from service providers who have cloud offerings.&lt;/p&gt;
 
@@ -119,7 +122,7 @@
 &lt;li&gt;Subscription-based - Most people tend to forget the subscription model is very popular in the cloud as well. For example, Salesforce is based on a per-user-per-month charge, so is Google Apps Premium Edition (per-user-per-year.) In fact, most of the cloud applications (SaaS) are based on this model. In addition, we are seeing some of the traditional service providers who are launching clouds also offer this pricing model as well.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;Six Types of Users&lt;/h3&gt;
+&lt;h3 id=&#34;six-types-of-users:752843077b76a12e7a68dfad6d032a15&#34;&gt;Six Types of Users&lt;/h3&gt;
 
 &lt;p&gt;We will take a look at it from the angle of cloud consumers and why they care about clouds. On a high level, there are probably six types of cloud users.&lt;/p&gt;
 
@@ -132,7 +135,7 @@
 &lt;li&gt;Consumers&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&#34;toc_7&#34;&gt;Enterprise IT&lt;/h4&gt;
+&lt;h4 id=&#34;enterprise-it:752843077b76a12e7a68dfad6d032a15&#34;&gt;Enterprise IT&lt;/h4&gt;
 
 &lt;p&gt;Enterprise IT teams are the ones that manages and operates corporate IT infrastructures. They are responsible for delivering applications and infrastructure to support the lines of businesses (LOBs). They are the ones that care most about enterprise features such as security, manageability, reliability, availability, etc etc.&lt;/p&gt;
 
@@ -140,33 +143,33 @@
 
 &lt;p&gt;Clouds are appealing to the enterprise IT teams because it provides seemingly infinite resources at their fingertip and the IT teams can provision the resources on-demand. So instead of requiring the LOBs to wait 3 months, IT teams can now do that much quicker.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_8&#34;&gt;Independent Software Vendors (ISVs)&lt;/h4&gt;
+&lt;h4 id=&#34;independent-software-vendors-isvs:752843077b76a12e7a68dfad6d032a15&#34;&gt;Independent Software Vendors (ISVs)&lt;/h4&gt;
 
 &lt;p&gt;ISVs are users who develop products and solutions for enterprises. Traditionally they have delivered their products as software or hardware appliances. The ISVs will need to support multiple versions of their software as most of their customers will not likely upgrade as soon as new versions come out. They may support 2 versions back or 10 versions back, depending on the size of the customers, how much influence the customers have and the maturity of the ISVs. Government entities are notorious in their slowness in upgrade as each version will need to go through rigorous testing process. For ISVs who deliver products as software, they have to also worry about the runtime environments such as the OS, application stack, etc. There are ISVs that have hundreds of combinations they have to test for each version they release. Last but not least, some ISVs simply don&amp;rsquo;t have the resource to acquire a TON of hardware for test and development due to load/performance testing requirements or the number of environments the have to worry about.&lt;/p&gt;
 
 &lt;p&gt;Supporting existing versions and testing for hundreds of runtime environments take a huge amount of resources and limits the resource available for innovation. So clouds are appealing to the ISVs as they can now deliver their software as a service (SaaS). By going the SaaS route, the ISVs can largely eliminate the runtime environment concerns as they can have much better control of the infrastructure they use to run their SaaS. The ISVs can also have better control over how and when they upgrade their products as they generally only have one environment to upgrade, instead of potentially thousands of different environments. And with the cloud, the ISVs can provision additional resources as needed to test their products and not have to worry about paying huge capex upfront.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_9&#34;&gt;System Integrators (SIs)&lt;/h4&gt;
+&lt;h4 id=&#34;system-integrators-sis:752843077b76a12e7a68dfad6d032a15&#34;&gt;System Integrators (SIs)&lt;/h4&gt;
 
 &lt;p&gt;System integrators, such as Accenture and Cap Gemini, are almost extensions to the enterprise IT teams. Their solutions are generally developed as consulting projects. They develop and deliver solutions to clients who have engaged them to solve specific problems. The solutions they develop sometimes are large scale projects that can take months or years to deliver. For years, SIs have been creating best practices from the custom solutions they developed so they can speed up the development of delivery of other projects (but charge the same regardless. :)&lt;/p&gt;
 
 &lt;p&gt;Clouds are appealing to them because they see clouds as one way to help them accelerate the development and delivery of solutions to their clients. They clients will see quick turnaround for solutions and the SIs can easily replicate some of the solutions they developed for one client to another. It&amp;rsquo;s a win-win situation for both of them.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_10&#34;&gt;Web Developers&lt;/h4&gt;
+&lt;h4 id=&#34;web-developers:752843077b76a12e7a68dfad6d032a15&#34;&gt;Web Developers&lt;/h4&gt;
 
 &lt;p&gt;Web developers are the early adopters of the clouds. They are the ones who are developing Web 2.0 sites such as Smugmug and others. AWS highlights many of these web developers on &lt;a href=&#34;http://aws.typepad.com/&#34;&gt;their blog&lt;/a&gt;. These web developers care about time to market and usually don&amp;rsquo;t have the expertise, desire and/or capital to provision and manage large infrastructures. They are focused on solving a specific problem and the less they have to worry about infrastructure, the better it is for them.&lt;/p&gt;
 
 &lt;p&gt;Clouds are appealing to the web developers because of these exact reasons. Clouds deliver to the web developers on-demand and elastic resources, thus removing the concern of infrastructure provisioning. The clouds allow web developers to focus on their problems.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_11&#34;&gt;Community Developers&lt;/h4&gt;
+&lt;h4 id=&#34;community-developers:752843077b76a12e7a68dfad6d032a15&#34;&gt;Community Developers&lt;/h4&gt;
 
 &lt;p&gt;Community developers are individual and open source developers who just wants to have their own playground but don&amp;rsquo;t want to concern themselves with hardware provisioning. They are very similar to the web developers category but they are not developing a business in the cloud.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_12&#34;&gt;Consumers&lt;/h4&gt;
+&lt;h4 id=&#34;consumers:752843077b76a12e7a68dfad6d032a15&#34;&gt;Consumers&lt;/h4&gt;
 
 &lt;p&gt;The consumers in general loves the clouds. Consider the number of users there are for cloud applications such as Yahoo! Mail, Gmail, Google Apps, Salesforce.com, Qualys, NetSuite and many others, then you will start to see the scale and reach of cloud applications. In many cases, consumers don&amp;rsquo;t even care whether you call these &amp;ldquo;cloud applications.&amp;rdquo; To them they care about the ease of use and access, and that they don&amp;rsquo;t have to worry about any software installation or configurations. The wide spread of cloud applications is one reason why Netbooks are so appealing these days.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_13&#34;&gt;Four Business Benefits&lt;/h3&gt;
+&lt;h3 id=&#34;four-business-benefits:752843077b76a12e7a68dfad6d032a15&#34;&gt;Four Business Benefits&lt;/h3&gt;
 
 &lt;p&gt;Where the Cloud Architecture camp is focused on how to create the best architecture to handle the business needs, the Cloud Business camp is zeroed in on translating the architectural benefits into financial terms. It’s great that enterprises can have ubiquitous access and elasticity, but if it costs them 10x more in investment for a 2x return, that’s not going to fly. In this section we will look at some of the business benefits of Cloud Computing:&lt;/p&gt;
 
@@ -180,7 +183,7 @@
 &lt;li&gt;&lt;p&gt;Maintain Focus&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&#34;toc_14&#34;&gt;Reduce Cost&lt;/h4&gt;
+&lt;h4 id=&#34;reduce-cost:752843077b76a12e7a68dfad6d032a15&#34;&gt;Reduce Cost&lt;/h4&gt;
 
 &lt;p&gt;One large enterprise has outsourced their test and development environments to an outsourcer, and paying approximately $10,000 per environment per year, regardless of whether the resources are virtual or physical. They have 3000 such environments, so they are essentially paying $30 million per year on just test and development environments. They did a user survey to find out the utilization of these environments, and all the developers responded saying that these environments are heavily utilized and there’s tight handoff from one team to another. An audit, however, revealed that overall, the environments are utilized &amp;lt; 10%, and that 70% of the environments are logged into once per year by developers.&lt;/p&gt;
 
@@ -188,7 +191,7 @@
 
 &lt;p&gt;Enterprises can lower CAPEX by not having to procure additional hardware and software but to use cloud providers and their pay-per-use utility pricing to handle resource spikes; they can lower OPEX by abstracting the hardware differences, and providing self-service capabilities to the end users so IT don’t always have to be the middle man; and they can lower their CAPEX and OPEX by increasing utilization of these expensive resources, or reduce the amount of resources required to accomplish the same tasks.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_15&#34;&gt;Minimize Risk&lt;/h4&gt;
+&lt;h4 id=&#34;minimize-risk:752843077b76a12e7a68dfad6d032a15&#34;&gt;Minimize Risk&lt;/h4&gt;
 
 &lt;p&gt;It still shocks me that in this age, companies are still running some of their mission critical applications on servers sitting under a IT administrator’s desk. But more often than not, when I talk to enterprises, this very scenario always comes up. IT administrators do this for different reasons. Some just don’t want to give up control; some don’t want to go through the arduous procurement process; some don’t have the time; and some simply don’t see why it’s a problem. In majority of these cases, if enterprises can provide these IT administrators the ability to quickly migrate these servers into the Cloud, they are more than willing to do so.&lt;/p&gt;
 
@@ -198,7 +201,7 @@
 
 &lt;p&gt;The Cloud centralizing the procurement and management of hardware and software, IT can maintain control but at the same time provide users the resources they are looking for. It will be a win-win situation for both sides.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_16&#34;&gt;Increase Agility&lt;/h4&gt;
+&lt;h4 id=&#34;increase-agility:752843077b76a12e7a68dfad6d032a15&#34;&gt;Increase Agility&lt;/h4&gt;
 
 &lt;p&gt;Joe Weinman, AT&amp;T;’s VP of Strategy, said that “an on-demand service provider typically charges a utility premium — a higher cost per unit time for a resource than if it were owned, financed or leased.” Joe is absolutely correct here, and the recent McKenzie report validates this as well. To determine whether Cloud Computing is the right approach, enterprises must look at other business benefits in addition to hard cost.&lt;/p&gt;
 
@@ -206,7 +209,7 @@
 
 &lt;p&gt;The global economy is forcing companies to be global as well. One such company has 10’s of 1000’s of developers/consultants spread all over the world, all requiring quick access to test and development environments. It’s impractical for this company to build and operate data centers around the world, and it’s also not the company’s core competency and strategy to have all these data centers. One of the things they are looking to do is build a “cloud abstraction layer” on top of multiple clouds, and allow developers to request resources. Depending on the developer’s location and resource requirement, the software will automatically provision the right resources and inform the user when ready. The ability to distribute the workload onto multiple clouds gives this company the flexibility and speed to respond to business needs. How much does this worth?&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_17&#34;&gt;Maintain Focus&lt;/h4&gt;
+&lt;h4 id=&#34;maintain-focus:752843077b76a12e7a68dfad6d032a15&#34;&gt;Maintain Focus&lt;/h4&gt;
 
 &lt;p&gt;Like the company described above, most enterprises do not consider building and operating data centers as their core competency. These enterprises consider it to be more of a distraction to their core business. By utilizing the service provider clouds, the enterprises can maintain their focus and accelerate innovation on their core business.&lt;/p&gt;
 
@@ -214,19 +217,19 @@
 
 &lt;p&gt;The Cloud allows allow IT organizations to focus on providing the best infrastructure possible, and developers to focus on their applications instead of the infrastructure.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_18&#34;&gt;Five Characteristics&lt;/h3&gt;
+&lt;h3 id=&#34;five-characteristics:752843077b76a12e7a68dfad6d032a15&#34;&gt;Five Characteristics&lt;/h3&gt;
 
 &lt;p&gt;In this section, I will describe somewhat of a revised set of architecture characteristics that define Cloud Computing.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_19&#34;&gt;Abstraction&lt;/h4&gt;
+&lt;h4 id=&#34;abstraction:752843077b76a12e7a68dfad6d032a15&#34;&gt;Abstraction&lt;/h4&gt;
 
 &lt;p&gt;A key characteristic of the Cloud is to provide an abstraction layer for the lower level resources, including compute, network and storage components. Users are strongly discouraged, or disallowed, to think in terms of the physical hardware, but instead consider in terms of the resources required. The users don’t need to worry about whether the underlying hardware is from IBM, HP, Cisco, Juniper, NetApp or EMC. What’s presented to them is a homogenous set of resources. This removes the users from having to worry about the differences in hardware or software configuration. The resources may be shared amongst many different users, or dedicated to a single user; and maybe presented as a set of virtual machines or a set of APIs.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_20&#34;&gt;On-Demand&lt;/h4&gt;
+&lt;h4 id=&#34;on-demand:752843077b76a12e7a68dfad6d032a15&#34;&gt;On-Demand&lt;/h4&gt;
 
 &lt;p&gt;The set of resources presented by the Cloud can be provision or de-provisioned as needed by the users. The term “on-demand” also conveys a notion of speed. When resources are requested, they are provisioned within minutes, not days, weeks or even months. In most enterprises today, hardware procurement is a multi-month long process that can slow down projects and frustrate employees. One large system integrator has recently trimmed the process of provisioning environments from 8 weeks to 3 days. However, to truly meet the business needs, they must go from 3 days to hours, if not minutes.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_21&#34;&gt;Elasticity&lt;/h4&gt;
+&lt;h4 id=&#34;elasticity:752843077b76a12e7a68dfad6d032a15&#34;&gt;Elasticity&lt;/h4&gt;
 
 &lt;p&gt;Elasticity is probably the most defining characteristic for Cloud Computing. In addition to the need to provision on demand, enterprises are increasingly required to scale for anticipated or unanticipated resource requirements. For example, one top university that we recently talked had a housing application that gets HAMMERED two weeks before the start of the school year, EVERY year. Traffic dies down and there’s very little activity after the initial period. A large financial services firm has 30 servers dedicated to handling a 15-minute job every day. These are examples of anticipated resource requirements. Enterprises know when they will need the additional resources, how much resources are required and the duration of time they will need the resources for.&lt;/p&gt;
 
@@ -234,11 +237,11 @@
 
 &lt;p&gt;Elasticity, or the ability to rapidly provision and quickly scale up and down the resources, is an architecture model that affects not just infrastructure, but also the application design. In addition, given that most of these scenarios, whether anticipated or unanticipated, do not happen often, so it’s unrealistic financially for enterprises to provision enough resource to handle these spikes. The Cloud would allow enterprises to rent the additional resources in any quantity at any time.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_22&#34;&gt;Self-Service&lt;/h4&gt;
+&lt;h4 id=&#34;self-service:752843077b76a12e7a68dfad6d032a15&#34;&gt;Self-Service&lt;/h4&gt;
 
 &lt;p&gt;The traditional process of application owners or developer asking IT to procure and provision resources is arduous and long. Consider the software vendor scenario we described earlier where developers need to spin up 50 to 500 servers for software testing. The developers need to modify this environment often to test different configurations and application architectures, and they need to have these modifications done in real-time so they don’t miss their delivery schedule. IT organizations are not resourced to handle this type of scenarios. The best resolution would be to provide the developers a pool of resources that they can do their own configurations. The self-service model not only works for these developers, but more and more business users are asking for similar capabilities as they are asked to be more efficient.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_23&#34;&gt;Ubiquitous&lt;/h4&gt;
+&lt;h4 id=&#34;ubiquitous:752843077b76a12e7a68dfad6d032a15&#34;&gt;Ubiquitous&lt;/h4&gt;
 
 &lt;p&gt;Ubiquitous access, or the ability to access from anywhere, using any device, is one of the great promises of the Web. This promise will become real as smart phones, netbooks and laptops become the prevalent way of access information. Ray Ozzie, Micrisoft’s Chief Software Architect, described his vision of “3 Windows in the Cloud,” where the 3 Windows included Windows on PC, Windows on mobile devices, and Windows on TVs. As you can see, one of key messages in this vision is ubiquitous access.&lt;/p&gt;
 </description>
@@ -248,7 +251,7 @@
       <title>Google Lost Grip on Enterprise Reality</title>
       <link>http://zhen.org/blog/google-lost-grip-on-enterprise-reality/</link>
       <pubDate>Wed, 13 May 2009 08:01:43 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/google-lost-grip-on-enterprise-reality/</guid>
       <description>
 
@@ -256,7 +259,7 @@
 
 &lt;p&gt;[ Full disclosure: I work for VMware and Dan&amp;rsquo;s my boss. However, this is my personal blog and the opinions expressed in this blog are my views and do not necessarily reflect the views and opinions of VMware. ]&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;Enterprise IT&lt;/h3&gt;
+&lt;h3 id=&#34;enterprise-it:e247f8e025ebc25e67c8fcc99af54535&#34;&gt;Enterprise IT&lt;/h3&gt;
 
 &lt;p&gt;First of all, Google has lost grip on the reality of enterprise computing. Or maybe Google never really got it since it never truly was an enterprise IT provider. Remember, in 2008, Google got 97% of its revenues from web advertising. Even though Google does probably run one of the biggest enterprise IT shops in the world (their own,) the applications they use and maintain are vastly different than 90% of the enterprise IT shops out there.&lt;/p&gt;
 
@@ -266,7 +269,7 @@
 
 &lt;p&gt;Last but not least, with respect to the section about Google can innovate faster, enterprise IT teams would much prefer to innovate on their own terms instead of Google dictating innovation. When was the last time someone or some organization can influence Google in their product direction?&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Enterprise Workloads&lt;/h3&gt;
+&lt;h3 id=&#34;enterprise-workloads:e247f8e025ebc25e67c8fcc99af54535&#34;&gt;Enterprise Workloads&lt;/h3&gt;
 
 &lt;p&gt;Google&amp;rsquo;s cloud offerings (GAE, GMail, etc) are definitely good for some enterprise workloads, assuming they are not mission critical and do not contain any sensitive data. If businesses depend on the applications or the data contain sensitive information such as credit card or PII, Google&amp;rsquo;s likely not the best option. Let&amp;rsquo;s look at some common enterprise use cases that Google cannot support with the &amp;ldquo;supercomputer.&amp;rdquo;&lt;/p&gt;
 
@@ -278,7 +281,7 @@
 &lt;li&gt;Many enterprises are interested in the ability to overflow additional capacity requirements to the clouds operated by service providers. For example, a company might be expecting to run a huge marketing campaign and need extra capacity. What they don&amp;rsquo;t want to do is buy new servers and software and only run them for the campaign period. In this case, moving some of the workload into the cloud makes perfect sense. Again, nothing Google can do about this.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Enterprise Requirements&lt;/h3&gt;
+&lt;h3 id=&#34;enterprise-requirements:e247f8e025ebc25e67c8fcc99af54535&#34;&gt;Enterprise Requirements&lt;/h3&gt;
 
 &lt;p&gt;Notwithstanding the fact that Google cannot handle most of the enterprise workload, Google also cannot support some of the key enterprise requirements.&lt;/p&gt;
 
@@ -289,7 +292,7 @@
 &lt;li&gt;Integration - GAE can only execute calls from an HTTP request and (pls correct me if I am wrong) can only integrate with other web/cloud services via HTTP requests. This definitely limits the type of applications that can be developed.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;Summary&lt;/h3&gt;
+&lt;h3 id=&#34;summary:e247f8e025ebc25e67c8fcc99af54535&#34;&gt;Summary&lt;/h3&gt;
 
 &lt;p&gt;Google&amp;rsquo;s cloud offerings have their places and they obviously work very well for Google in many cases. For example, GAE is great when you need to develop a brand new web-based application that doesn&amp;rsquo;t require enterprise-class features. Gmail and Google Apps are awesome as well (I use both) but they just can&amp;rsquo;t replace the enterprise products at this time.&lt;/p&gt;
 
@@ -301,7 +304,7 @@
       <title>Three Cloud Resource Consumption Models</title>
       <link>http://zhen.org/blog/three-cloud-resource-consumption-models/</link>
       <pubDate>Sun, 10 May 2009 03:25:37 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/three-cloud-resource-consumption-models/</guid>
       <description>&lt;p&gt;For the Infrastructure-as-a-Service market, there appears to be three models of consumption today:&lt;/p&gt;
 
@@ -327,7 +330,7 @@
       <title>The Reality of Workload Mobility, Federation, and Distribution</title>
       <link>http://zhen.org/blog/the-reality-of-workload-mobility-federation-and-distribution/</link>
       <pubDate>Wed, 06 May 2009 07:41:57 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/the-reality-of-workload-mobility-federation-and-distribution/</guid>
       <description>
 
@@ -343,7 +346,7 @@
 
 &lt;p&gt;The reality is, workload federation is HARD. It&amp;rsquo;s a great vision and I am totally onboard with it. But still, this stuff is DIFFICULT to do! It&amp;rsquo;s not that it&amp;rsquo;s impossible, it&amp;rsquo;s just not as simple as &amp;ldquo;Beam me up Scotty.&amp;rdquo; In this series of posts, I want to explore this topic from several perspectives: goals, use cases and workloads.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;Goals&lt;/h3&gt;
+&lt;h3 id=&#34;goals:d4d03c78cc54e8f6b79dfefcce0cc6e0&#34;&gt;Goals&lt;/h3&gt;
 
 &lt;p&gt;There are really two types of goals: business and operational. Business goals are what IT and LOB executives care about the most. These goals are generally factors that go into running a business. Operational goals are really technical goals that are related to running the infrastructure and providing the best user experience. The goals are summarized as follows:&lt;/p&gt;
 
@@ -401,7 +404,7 @@
       <title>Google Group Discussion on &#34;Private&#34; Clouds</title>
       <link>http://zhen.org/blog/google-group-discussion-on-private-clouds/</link>
       <pubDate>Fri, 05 Sep 2008 04:28:01 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/google-group-discussion-on-private-clouds/</guid>
       <description>&lt;p&gt;I asked a totally unrelated question on the &lt;a href=&#34;http://groups.google.ca/group/cloud-computing/&#34;&gt;Cloud Computing google group&lt;/a&gt; a few days ago and triggered a &lt;a href=&#34;http://groups.google.ca/group/cloud-computing/browse_thread/thread/42b3784a39af2707?hl=en&#34;&gt;very active discussion&lt;/a&gt; on where &amp;ldquo;private&amp;rdquo; cloud is an oxymoron or not.&lt;/p&gt;
 
@@ -467,7 +470,7 @@ using ec2)&lt;/p&gt;
       <title>The Rise of Cloud Privatization</title>
       <link>http://zhen.org/blog/the-rise-of-cloud-privatization/</link>
       <pubDate>Thu, 04 Sep 2008 14:16:39 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/the-rise-of-cloud-privatization/</guid>
       <description>
 
@@ -487,7 +490,7 @@ using ec2)&lt;/p&gt;
 &lt;p&gt;Cloud computing is a broader concept than utility computing and relates to the underlying architecture in which the services are designed. &lt;strong&gt;It may be applied equally to utility services and internal corporate data centers&lt;/strong&gt;, as George Gilder reported in a story for Wired Magazine titled &lt;a href=&#34;http://www.wired.com/wired/archive/14.10/cloudware.html?pg=1&amp;amp;topic=cloudware&amp;amp;topic_set=&#34;&gt;The Information Factories&lt;/a&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;Cloud Attributes&lt;/h3&gt;
+&lt;h3 id=&#34;cloud-attributes:4df572e596de2eb5855f81508a51a708&#34;&gt;Cloud Attributes&lt;/h3&gt;
 
 &lt;p&gt;But instead of everyone trying to create their own definition of clouds, let&amp;rsquo;s look at the list of attributes that clouds have and compare public and private clouds.&lt;/p&gt;
 
@@ -565,7 +568,7 @@ using ec2)&lt;/p&gt;
 
 &lt;p&gt;So if we are looking purely from a technology perspective, private clouds can absolutely exist. In fact, given the questions for the public cloud, enterprises are more likely to experiment with private clouds for mission critical applications.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Market and Vendors&lt;/h3&gt;
+&lt;h3 id=&#34;market-and-vendors:4df572e596de2eb5855f81508a51a708&#34;&gt;Market and Vendors&lt;/h3&gt;
 
 &lt;p&gt;According to Merrill Lynch, the public and private cloud infrastructure, platform, applications and advertising together will be a $160 billion market by 2011, or roughly 12% of the total worldwide software market.&lt;/p&gt;
 
@@ -598,7 +601,7 @@ Enomalism&lt;/p&gt;
 &lt;p&gt;GigaSpaces
 XAP, EDG, and Community Edition&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Private Cloud Links&lt;/h3&gt;
+&lt;h3 id=&#34;private-cloud-links:4df572e596de2eb5855f81508a51a708&#34;&gt;Private Cloud Links&lt;/h3&gt;
 </description>
     </item>
     
@@ -606,7 +609,7 @@ XAP, EDG, and Community Edition&lt;/p&gt;
       <title>The Rise of Cloud Platforms and Why the OS Doesn&#39;t Matter</title>
       <link>http://zhen.org/blog/the-rise-of-cloud-platforms-and-why-the-os-doesnt-matter/</link>
       <pubDate>Fri, 29 Aug 2008 04:43:54 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/the-rise-of-cloud-platforms-and-why-the-os-doesnt-matter/</guid>
       <description>&lt;p&gt;Platform-as-a-Service (PaaS) is one of the buzzwords that&amp;rsquo;s mentioned often in the cloud computing space. I&amp;rsquo;ve written a &lt;a href=&#34;http://onsaas.net/2008/06/03/defining-saas-paas-iaas-etc/&#34;&gt;blog post&lt;/a&gt; describing IaaS, PaaS and SaaS. In short, PaaS is a platform for delivering applications, similar to a pre-built system with hardware, OS and application stack all built in. In the PaaS case, this system is hosted. All you have to do is &amp;ldquo;upload&amp;rdquo; the application code and it should take care of the executing and scaling of it.&lt;/p&gt;
 
@@ -660,7 +663,7 @@ Business applications&lt;/p&gt;
       <title>Response to &#34;Assessing the Security Benefits of Cloud Computing&#34;</title>
       <link>http://zhen.org/blog/response-to-assessing-the-security-benefits-of-cloud-computing/</link>
       <pubDate>Thu, 28 Aug 2008 01:58:22 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/response-to-assessing-the-security-benefits-of-cloud-computing/</guid>
       <description>
 
@@ -671,7 +674,7 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;Overall, Craig has made a good list of potential benefits. However, we really need to distinguish the benefits of virtualization vs cloud computing. Many of the benefits listed here are really benefits of virtualization and not cloud computing. When I read the title, I was hoping to read about how the cloud could be more secure than enterprise environments. I think this list has a mix of that, and how enterprise could use the cloud for some security use cases. That&amp;rsquo;s fine but mixing them together can be misleading.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;1. Centralised Data&lt;/h3&gt;
+&lt;h3 id=&#34;1-centralised-data:6f40eb59ee53d3eb29452a51daa15d4e&#34;&gt;1. Centralised Data&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Reduced Data Leakage&lt;/strong&gt;&lt;/p&gt;
 
@@ -685,7 +688,7 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;In my opinion, cloud storage makes it even tougher to monitor data leakage. Think about the tools available to monitor enterprise file servers. Many of them monitors all types of access: read, write, via CIFS/NFS/etc, via local system. How do you do all of that in the cloud? Think S3, the only thing S3 provide you are http access logs. You have no way of knowing who else viewed your files if it&amp;rsquo;s done locally, for example.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;2. Incident Response / Forensics&lt;/h3&gt;
+&lt;h3 id=&#34;2-incident-response-forensics:6f40eb59ee53d3eb29452a51daa15d4e&#34;&gt;2. Incident Response / Forensics&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Forensic readiness&lt;/strong&gt;&lt;/p&gt;
 
@@ -715,7 +718,7 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;Both this and the next benefit are really about the elasticity and scalability of the clouds and not security.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;3. Password assurance testing (aka cracking)&lt;/h3&gt;
+&lt;h3 id=&#34;3-password-assurance-testing-aka-cracking:6f40eb59ee53d3eb29452a51daa15d4e&#34;&gt;3. Password assurance testing (aka cracking)&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Decrease password cracking time&lt;/strong&gt;&lt;/p&gt;
 
@@ -725,7 +728,7 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;Same as above, this is about the benefits of elasticity and scalability, not security.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;4. Logging&lt;/h3&gt;
+&lt;h3 id=&#34;4-logging:6f40eb59ee53d3eb29452a51daa15d4e&#34;&gt;4. Logging&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;‘Unlimited’, pay per drink storage&lt;/strong&gt;&lt;/li&gt;
@@ -735,13 +738,13 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;Ok, this is about the utility and scalability of the cloud. Not a cloud security benefit. It&amp;rsquo;s about using the cloud for security tasks.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;5. Improve the state of security software (performance)&lt;/h3&gt;
+&lt;h3 id=&#34;5-improve-the-state-of-security-software-performance:6f40eb59ee53d3eb29452a51daa15d4e&#34;&gt;5. Improve the state of security software (performance)&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Drive vendors to create more efficient security software&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;I believe this is true for even software on dedicated machines. Not cloud-exclusive.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;6. Secure builds&lt;/h3&gt;
+&lt;h3 id=&#34;6-secure-builds:6f40eb59ee53d3eb29452a51daa15d4e&#34;&gt;6. Secure builds&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Pre-hardened, change control builds&lt;/strong&gt;&lt;/p&gt;
 
@@ -757,7 +760,7 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;Again I agree. However, it&amp;rsquo;s still the benefit of virtualization, not necessarily cloud-exclusive.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;7. Security Testing&lt;/h3&gt;
+&lt;h3 id=&#34;7-security-testing:6f40eb59ee53d3eb29452a51daa15d4e&#34;&gt;7. Security Testing&lt;/h3&gt;
 
 &lt;p&gt;**Reduce cost of testing security: **&lt;/p&gt;
 
@@ -769,13 +772,13 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
       <title>Response to &#34;10 Reasons Enterprises Aren’t Ready to Trust the Cloud&#34;</title>
       <link>http://zhen.org/blog/response-to-10-reasons-enterprises-arent-ready-to-trust-the-cloud/</link>
       <pubDate>Wed, 02 Jul 2008 04:57:28 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/response-to-10-reasons-enterprises-arent-ready-to-trust-the-cloud/</guid>
       <description>
 
 &lt;p&gt;Stacey Higginbotham over at GigaOM wrote an interesting piece on &lt;a href=&#34;http://gigaom.com/2008/07/01/10-reasons-enterprises-arent-ready-to-trust-the-cloud/&#34;&gt;10 Reasons Enterprises Aren’t Ready to Trust the Cloud&lt;/a&gt;. Even though I agree that some of these points are valid reasons on why enterprises are hesitant in moving into the cloud, I have to wonder whether Stacey meant to be provocative (read: flame bait) on the piece. Also, the piece seems to be quite opinionated and lack support in many cases. Let&amp;rsquo;s drill down on it a bit.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;1. It’s not secure.&lt;/h3&gt;
+&lt;h3 id=&#34;1-it-s-not-secure:04cb4978b778f4b3d1eb595c4f50d825&#34;&gt;1. It’s not secure.&lt;/h3&gt;
 
 &lt;p&gt;I have written extensively on this blog (&lt;a href=&#34;http://onsaas.net/2008/06/10/tough-security-questions-for-saas-providers-part-1/&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;http://onsaas.net/2008/06/18/tough-security-questions-for-saas-providers-part-2/&#34;&gt;here&lt;/a&gt;) regarding the security concerns of SaaS and cloud computing. However, saying that the cloud is not secure is definitely a stretch. I would like to see some supporting evidence on this. The only major &amp;ldquo;security breach&amp;rdquo; I&amp;rsquo;ve seen is probably the &lt;a href=&#34;http://blog.washingtonpost.com/securityfix/2007/10/database_theft_leads_to_target.html&#34;&gt;Salesforce case&lt;/a&gt;.&lt;/p&gt;
 
@@ -783,15 +786,15 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;What CIOs/CSOs care mostly about is that cloud (application or platform) providers must meet their security requirements, there&amp;rsquo;s transparency in the security and operational practices, and that they can audit the provider or review the appropriate audit reports from the provider. The issue comes down to trust.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;2. It can’t be logged.&lt;/h3&gt;
+&lt;h3 id=&#34;2-it-can-t-be-logged:04cb4978b778f4b3d1eb595c4f50d825&#34;&gt;2. It can’t be logged.&lt;/h3&gt;
 
 &lt;p&gt;Again, this is really about auditability, especially for compliance. This is definitely an area that&amp;rsquo;s lacking and cloud providers would be wise to do more in this area. Again, I wrote about that here: &lt;a href=&#34;http://onsaas.net/2008/06/10/tough-security-questions-for-saas-providers-part-1/&#34;&gt;4. Access Audit - Who has accessed my data and where’s my access logs?&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;3. It’s not platform agnostic.&lt;/h3&gt;
+&lt;h3 id=&#34;3-it-s-not-platform-agnostic:04cb4978b778f4b3d1eb595c4f50d825&#34;&gt;3. It’s not platform agnostic.&lt;/h3&gt;
 
 &lt;p&gt;Seriously though, is this really an issue? We are still in the world of multiple OS platforms, including different variants of Linux, Microsoft Windows, Mac OS X, Sun Solaris, IBM AIX, HP UX, etc etc etc. Is platform agnostic really that critical? Just like in the on-premise world, enterprises would be wise to evaluate the cloud platforms they plan to use based on a predefined set of requirements. Also, is supporting multiple cloud platforms really a concern that will prevent enterprise adoption?&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;4. Reliability is still an issue.&lt;/h3&gt;
+&lt;h3 id=&#34;4-reliability-is-still-an-issue:04cb4978b778f4b3d1eb595c4f50d825&#34;&gt;4. Reliability is still an issue.&lt;/h3&gt;
 
 &lt;p&gt;Again, I agree that reliability is a concern. However, that&amp;rsquo;s a concern regardless of what you decide. You have to worry about reliability if you choose to go with your own data center or cloud. You have to worry about reliability if you choose to partner with a data center provider to hose your gears. You have to worry about reliability if you choose to go into the cloud. Heck, you have to worry about reliability even if you just host your gears in your own IT network.&lt;/p&gt;
 
@@ -799,19 +802,19 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;I believe the real issue is service level agreement. Are the cloud providers providing adequate SLAs and do the CIOs feel comfortable with the SLA that they are getting?&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;5. Portability isn’t seamless.&lt;/h3&gt;
+&lt;h3 id=&#34;5-portability-isn-t-seamless:04cb4978b778f4b3d1eb595c4f50d825&#34;&gt;5. Portability isn’t seamless.&lt;/h3&gt;
 
 &lt;p&gt;No disagreement here. Currently there&amp;rsquo;s not an enterprise version of the &lt;a href=&#34;http://www.dataportability.org/&#34;&gt;data portability standard&lt;/a&gt;. That can turn many enterprises away if they have no way of retrieving/migrating their data if they choose to go with another provider.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;6. It’s not environmentally sustainable.&lt;/h3&gt;
+&lt;h3 id=&#34;6-it-s-not-environmentally-sustainable:04cb4978b778f4b3d1eb595c4f50d825&#34;&gt;6. It’s not environmentally sustainable.&lt;/h3&gt;
 
 &lt;p&gt;Again, a good issue to raise. However, I would like to see some evidence to show that creating and maintaining your own data center is more efficient than going into the cloud. There will always be excess capacity in order to handle spikes, regardless whether you build your own data center or go into the cloud.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;7. Cloud computing still has to exist on physical servers.&lt;/h3&gt;
+&lt;h3 id=&#34;7-cloud-computing-still-has-to-exist-on-physical-servers:04cb4978b778f4b3d1eb595c4f50d825&#34;&gt;7. Cloud computing still has to exist on physical servers.&lt;/h3&gt;
 
 &lt;p&gt;No disagreement that data locality is an important consideration when moving into the cloud. I wrote about it in a previous blog. However, that just means enterprises should be aware of this issue and make sure that&amp;rsquo;s part of their requirement for evaluating the cloud vendors. This however does not mean enterprises won&amp;rsquo;t adopt because of this concern.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_7&#34;&gt;8. The need for speed still reigns at some firms.&lt;/h3&gt;
+&lt;h3 id=&#34;8-the-need-for-speed-still-reigns-at-some-firms:04cb4978b778f4b3d1eb595c4f50d825&#34;&gt;8. The need for speed still reigns at some firms.&lt;/h3&gt;
 
 &lt;p&gt;The increase in bandwidth to home and offices is one of the main reasons why clouds are hot these days. However, I agree with Stacey that speed is definitely a concern for certain types of applications. At CloudCamp, during Jeff Barr&amp;rsquo;s AWS feedback session, the first hot topic that came up was how do people move a HUGE amount of data into the cloud and back. People talked about shipping hard drives as a solution to this type of problem.&lt;/p&gt;
 
@@ -819,13 +822,13 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;So again, a valid concern, but not a show stopper.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_8&#34;&gt;9. Large companies already have an internal cloud.&lt;/h3&gt;
+&lt;h3 id=&#34;9-large-companies-already-have-an-internal-cloud:04cb4978b778f4b3d1eb595c4f50d825&#34;&gt;9. Large companies already have an internal cloud.&lt;/h3&gt;
 
 &lt;p&gt;Again, I would like to hear more evidence from Stacey to back this up. I agree that most enterprises already have IT infrastructure in place, but most of these infrastructures are not considered clouds. My conversations with enterprises, including discussion from CloudCamp, is that enterprise IT groups are stretched thin and they can&amp;rsquo;t respond fast enough to business requirements. When the business require certain applications to do their job, they have to go provision hardware, software, space, etc and that process can take months. Going with the cloud allows them to quickly react to the business requirements and makes it a win-win situation.&lt;/p&gt;
 
 &lt;p&gt;Even if enterprises have their internal clouds, does that mean that shouldn&amp;rsquo;t consider external clouds? Enterprises should, and will, always weigh the cost/benefits to determine what&amp;rsquo;s the right solution for them.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_9&#34;&gt;10. Bureaucracy will cause the transition to take longer than building replacement housing in New Orleans.&lt;/h3&gt;
+&lt;h3 id=&#34;10-bureaucracy-will-cause-the-transition-to-take-longer-than-building-replacement-housing-in-new-orleans:04cb4978b778f4b3d1eb595c4f50d825&#34;&gt;10. Bureaucracy will cause the transition to take longer than building replacement housing in New Orleans.&lt;/h3&gt;
 
 &lt;p&gt;Agreed. In big companies that&amp;rsquo;s ways going to be the case. No one is suggesting that all enterprises will move into the cloud overnight. Many of the enterprises are just starting to experiment with the cloud to see what can and cannot be done. This is healthy and it&amp;rsquo;s the right approach. A good example is &lt;a href=&#34;http://open.blogs.nytimes.com/2008/05/21/the-new-york-times-archives-amazon-web-services-timesmachine/&#34;&gt;New York Times using Amazon EC2 to convert millions of articles and TIFF image into PDF files&lt;/a&gt;.&lt;/p&gt;
 
@@ -837,7 +840,7 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
       <title>Is SaaS Cloud Computing?</title>
       <link>http://zhen.org/blog/is-saas-cloud-computing/</link>
       <pubDate>Fri, 27 Jun 2008 13:15:18 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/is-saas-cloud-computing/</guid>
       <description>
 
@@ -855,7 +858,7 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;Based on these definitions, it would seem like running and using any type of application, including SaaS applications, would be considered &amp;ldquo;computing.&amp;rdquo;&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;So then what is cloud computing?&lt;/h3&gt;
+&lt;h3 id=&#34;so-then-what-is-cloud-computing:9bc945b64ead9ffd91d49d3e900844f7&#34;&gt;So then what is cloud computing?&lt;/h3&gt;
 
 &lt;p&gt;Gartner defines cloud computing as, &amp;ldquo;a style of computing in which massively scalable IT-enabled
 capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple customers using Internet technologies.&amp;rdquo;&lt;/p&gt;
@@ -876,7 +879,7 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
 
 &lt;p&gt;This is no different in the cloud computing world. In the cloud computing world, there are &amp;ldquo;&lt;strong&gt;Cloud Platforms&lt;/strong&gt;&amp;rdquo; and &amp;ldquo;&lt;strong&gt;Cloud Applications&lt;/strong&gt;.&amp;rdquo; Cloud platforms include offerings such as Amazon&amp;rsquo;s EC2 and S3, or Joyent&amp;rsquo;s Accelerator. Cloud applications include offerings such as Salesforce.com, NetSuite, SuccessFactor and many others.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;So, is SaaS cloud computing?&lt;/h3&gt;
+&lt;h3 id=&#34;so-is-saas-cloud-computing:9bc945b64ead9ffd91d49d3e900844f7&#34;&gt;So, is SaaS cloud computing?&lt;/h3&gt;
 
 &lt;p&gt;Absolutely!&lt;/p&gt;
 
@@ -894,7 +897,7 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
       <title>CloudCamp: Cloud Definition, SLAs, Security and Others</title>
       <link>http://zhen.org/blog/cloudcamp-cloud-definition-slas-security-and-others/</link>
       <pubDate>Thu, 26 Jun 2008 06:09:17 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/cloudcamp-cloud-definition-slas-security-and-others/</guid>
       <description>
 
@@ -902,7 +905,7 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
 
 &lt;p&gt;Here are some of the topics that I gathered based on the sessions I attended and people I&amp;rsquo;ve talked to.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;The definition is very cloudy!&lt;/h3&gt;
+&lt;h3 id=&#34;the-definition-is-very-cloudy:7701a71df8c80489da85c83e7da2bcce&#34;&gt;The definition is very cloudy!&lt;/h3&gt;
 
 &lt;p&gt;There&amp;rsquo;s no agreement on the definition of Cloud Computing. Reuven Cohen held a very popular session on &amp;ldquo;What is Cloud Computing?&amp;rdquo; There were at least 40 people in the room that was supposed to hold only 20. There were a wide variant of definitions, going from Reuven&amp;rsquo;s very open definition (internet centric software) to another person&amp;rsquo;s very restrictive definition (cloud computing must use web services, XML, SOAP, etc).&lt;/p&gt;
 
@@ -912,17 +915,17 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
 
 &lt;p&gt;The term that&amp;rsquo;s used most to describe cloud computing is &lt;em&gt;elasticity&lt;/em&gt;: the ability to quickly provision and de-provision computing resources on demand. Almost everyone I&amp;rsquo;ve talked to or listened to agrees to that. Some of the enterprise attendees also noted this as one of the biggest benefits of the cloud. When business units come to IT with new application requirements, IT now has a way to quickly spin up resources without having to wait weeks or months to procure equipment. The other thing that everyone agrees on is the &lt;em&gt;utility&lt;/em&gt; model: the ability to pay for what you use.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Service level agreements&lt;/h3&gt;
+&lt;h3 id=&#34;service-level-agreements:7701a71df8c80489da85c83e7da2bcce&#34;&gt;Service level agreements&lt;/h3&gt;
 
 &lt;p&gt;This topic was heavily discussed in the &amp;ldquo;No Cure for Cancer: Manage the Expectations of Cloud Computing&amp;rdquo; session. To summarize, there&amp;rsquo;s almost no SLAs provided by the cloud providers today. Even Jeff Barr from Amazon said that AWS only provides SLA for their S3 service. I haven&amp;rsquo;t researched the SLA issue so not sure how true that is. But if it&amp;rsquo;s true, I think this will be one of the biggest factor, if not the biggest factor, in enterprise adoption. Can you imagine enterprises signing up cloud computing contracts without SLAs clearly defined? It&amp;rsquo;s like going to host their business critical infrastructure in a data center that doesn&amp;rsquo;t have clearly defined SLA.&lt;/p&gt;
 
 &lt;p&gt;We all know that SLAs really doesn&amp;rsquo;t buy you much. In most cases, enterprises get refunded for the amount of time that the network was down. No SLA will cover business loss. However, as one of the CSOs I met said, it&amp;rsquo;s about risk transfer. As long as there&amp;rsquo;s a defined SLA on paper, when the network/site goes down, they can go after somebody. If there&amp;rsquo;s no SLA, it will be the CIO/CSO&amp;rsquo;s head that&amp;rsquo;s on the chopping block.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Security&lt;/h3&gt;
+&lt;h3 id=&#34;security:7701a71df8c80489da85c83e7da2bcce&#34;&gt;Security&lt;/h3&gt;
 
 &lt;p&gt;Another topic that was discussed in Sam Charrington&amp;rsquo;s &amp;ldquo;How Cloud Impacts Enterprise Computing&amp;rdquo; session is security in the cloud. When Sam asked the group what are the factors that prevent enterprise from adopting the cloud, Ben Charian from ServiceCloud empathically said &amp;ldquo;security.&amp;rdquo; He talked about that the clouds must be certified or audited against standards or frameworks such as PCI. I&amp;rsquo;ve written about cloud security requirements &lt;a href=&#34;http://onsaas.net/2008/06/10/tough-security-questions-for-saas-providers-part-1/&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;http://onsaas.net/2008/06/18/tough-security-questions-for-saas-providers-part-2/&#34;&gt;here&lt;/a&gt; so I won&amp;rsquo;t elaborate on this topic. Needless to say, I am in total agreement with Ben. What I didn&amp;rsquo;t agree with Ben on is the need to rewrite these frameworks or standards specifically for the cloud. I believe many of the controls such as identity management and segregation of duties are the same in the cloud or out of the cloud.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;Other observations and interesting tidbits&lt;/h3&gt;
+&lt;h3 id=&#34;other-observations-and-interesting-tidbits:7701a71df8c80489da85c83e7da2bcce&#34;&gt;Other observations and interesting tidbits&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;As the enterprise use more cloud resources, there will be a point where it may make sense to bring things back in house rather than continuing to use the cloud.&lt;/li&gt;
@@ -937,7 +940,7 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
       <title>Mike Kavis on Cloud Computing</title>
       <link>http://zhen.org/blog/mike-kavis-on-cloud-computing/</link>
       <pubDate>Sun, 15 Jun 2008 21:44:22 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/mike-kavis-on-cloud-computing/</guid>
       <description>&lt;p&gt;Mike Kavis, aka madgreek65, did an interesting &lt;a href=&#34;http://madgreek65.blogspot.com/2008/06/vlog-cloud-computing-and-paas.html&#34;&gt;7-minute video blog&lt;/a&gt; on the topic of cloud computing where he explains his view of it as well as explaining the risks. He then followed up with a blog post on &lt;a href=&#34;http://madgreek65.blogspot.com/2008/06/future-is-in-clouds.html&#34;&gt;The future is in the Clouds&lt;/a&gt;.&lt;/p&gt;
 
@@ -959,7 +962,7 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
       <title>Tough security questions for SaaS providers</title>
       <link>http://zhen.org/blog/tough-security-questions-for-saas-providers/</link>
       <pubDate>Tue, 10 Jun 2008 13:06:31 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/tough-security-questions-for-saas-providers/</guid>
       <description>
 
@@ -976,7 +979,7 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
 
 &lt;p&gt;SaaS providers should be prepared to answer security questions from customers and enterprises. Here are a list of questions that SaaS providers will likely get asked during customer trials/evaulations.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;1. Data Locality - Where&amp;rsquo;s my data?&lt;/h3&gt;
+&lt;h3 id=&#34;1-data-locality-where-s-my-data:0d27251a71dd5c23fbd84c5c04faf896&#34;&gt;1. Data Locality - Where&amp;rsquo;s my data?&lt;/h3&gt;
 
 &lt;p&gt;Due to compliance and data privacy laws in various countries, locality of data is of utmost importance in many enterprise architecture. For example, in many EU and South America countries, certain types of data cannot leave the country because of potentially sensitive information. In addition to the issue of local laws, there&amp;rsquo;s also the question of whose jurisdiction the data falls under when an investigation occurs. In most cases, the government where the data is housed will likely win. A good example of this type of concern is when the &lt;a href=&#34;http://www.ft.com/cms/s/2/dde45086-1e97-11dc-bc22-000b5df10621.html&#34;&gt;French cabinet banned the use of Blackberry devices&lt;/a&gt;.&lt;/p&gt;
 
@@ -984,7 +987,7 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
 
 &lt;p&gt;Given the regulatory compliance and data privacy concerns, SaaS providers should be ready to answer tough questions about where their computing resources are and will customer data be ever transferred outside to another jurisdiction with different laws.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;2. ata Segregation - How is my data segregated with other customers, potentially my competitors?&lt;/h3&gt;
+&lt;h3 id=&#34;2-ata-segregation-how-is-my-data-segregated-with-other-customers-potentially-my-competitors:0d27251a71dd5c23fbd84c5c04faf896&#34;&gt;2. ata Segregation - How is my data segregated with other customers, potentially my competitors?&lt;/h3&gt;
 
 &lt;p&gt;Everyone&amp;rsquo;s talking about the benefits of multi-tenancy in the SaaS world, but many seem to ignore one of the biggest security concerns, mixing customer data together, that came along with multi-tenancy.&lt;/p&gt;
 
@@ -992,13 +995,13 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
 
 &lt;p&gt;Saas Providers would be wise to consider data segregation early on in the architectural design. For most ISVs turning into SaaS providers, this is an unfamiliar territory and should seek guidance if possible. SaaS providers should also understand the customer concerns and address them early on.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;3. Data Access - Who can access my data in your company?&lt;/h3&gt;
+&lt;h3 id=&#34;3-data-access-who-can-access-my-data-in-your-company:0d27251a71dd5c23fbd84c5c04faf896&#34;&gt;3. Data Access - Who can access my data in your company?&lt;/h3&gt;
 
 &lt;p&gt;Enterprises have spent hundreds of thousands of dollars on identity and access management systems, log management systems and other software to ensure that employees access only information they are allowed. Within the confines of their firewalls, IT organizations may feel that they have the situation somewhat under control. The advent of SaaS have changed that. With the company data outside of the firewall and in a &amp;ldquo;cloud,&amp;rdquo; IT organizations no longer can control who and when their data-in-the-cloud will be accessed. Without visibility into the cloud, IT organizations are accepting a much bigger risk compare to when everything&amp;rsquo;s inside the firewall. Even though many SaaS providers have offered various capabilities such as authentication integration with customers&amp;rsquo; own LDAP servers, this perception of lost control is a difficult hurdle to get over.&lt;/p&gt;
 
 &lt;p&gt;SaaS providers offering cloud services, whether it&amp;rsquo;s infrastructure, platform or application, should accept the responsibility of protecting customer data as a single breach could affect all of the customers. SaaS providers must be prepared to help customers understand their security policies on user access, activity monitoring as well as segregation of duties.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;4. Access Audit - Who has accessed my data and where&amp;rsquo;s my access logs?&lt;/h3&gt;
+&lt;h3 id=&#34;4-access-audit-who-has-accessed-my-data-and-where-s-my-access-logs:0d27251a71dd5c23fbd84c5c04faf896&#34;&gt;4. Access Audit - Who has accessed my data and where&amp;rsquo;s my access logs?&lt;/h3&gt;
 
 &lt;p&gt;The last few years we have seen a rise of &lt;a href=&#34;http://www.loglogic.com&#34;&gt;log management&lt;/a&gt; and &lt;a href=&#34;http://www.arcsight.com&#34;&gt;SIEM&lt;/a&gt; solutions aimed at compliance-aware organizations. These products is responsible for collecting, analyzing, correlating, archiving and reporting on all activities happening inside an IT infrastructure. Part of the reason these products became such a success is because of the need to track and monitor user activities in the world of regulatory compliance. In addition to compliance, IT organizations use logs to help them identify security issues, perform troubleshooting and forensics analysis, and analyze traffic and user patterns.&lt;/p&gt;
 
@@ -1006,7 +1009,7 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
 
 &lt;p&gt;Knowing how critical access logs are to compliance, operations and security matters for IT organizations, SaaS providers should consider providing access logs as a part of their normal service or have it as an option for customers. As an example, &lt;a href=&#34;http://docs.amazonwebservices.com/AmazonS3/2006-03-01/ServerLogs.html&#34;&gt;Amazon&amp;rsquo;s S3 service offers options to enable and download access logs.&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;5. How are the users authenticated and authorized?&lt;/h3&gt;
+&lt;h3 id=&#34;5-how-are-the-users-authenticated-and-authorized:0d27251a71dd5c23fbd84c5c04faf896&#34;&gt;5. How are the users authenticated and authorized?&lt;/h3&gt;
 
 &lt;p&gt;Companies have spent hundreds of man years and millions of dollars trying to setup single-sign-on systems inside the corporate firewalls. Most companies, if not all, are storing their employee information in some type of LDAP servers. In the case of SMB companies, a segment that has the highest SaaS adoption rate, Active Directory seems to be the most popular tool for managing users. In many cases, companies have designed their IT infrastructure so that all authentication, including VPN, web proxy, file server, and others will go through this single infrastructure. The process of employee onboarding and termination is much easier this way.&lt;/p&gt;
 
@@ -1014,7 +1017,7 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
 
 &lt;p&gt;SaaS customers will start asking questions on identity and access integration and providers would be wise to design such features in early on. For example, SaaS providers can provide delegate the authentication process to the customer&amp;rsquo;s internal LDAP/AD server so that companies can retain control over the management of users.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;6. Web Application Security - How secure is the SaaS provider&amp;rsquo;s web application?&lt;/h3&gt;
+&lt;h3 id=&#34;6-web-application-security-how-secure-is-the-saas-provider-s-web-application:0d27251a71dd5c23fbd84c5c04faf896&#34;&gt;6. Web Application Security - How secure is the SaaS provider&amp;rsquo;s web application?&lt;/h3&gt;
 
 &lt;p&gt;One of the &amp;ldquo;must-have&amp;rdquo; requirements for a SaaS application is that it has to be used and managed over the web (in a browser.) This creates an interesting scenario. In the on-premise scenario, when a vulnerability is found, at least you have your firewall protecting the application so you may get a bit more time to patch it (assuming the application vendor provides the patch in a timely fashion.) However, in the SaaS world, there is no such luxury. Any vulnerability identified can potentially have detrimental impact on all of the customers. Even leading security companies &lt;a href=&#34;http://www.darkreading.com/document.asp?doc_id=155995&amp;amp;f_src=drdaily&#34;&gt;aren&amp;rsquo;t immune to security holes&lt;/a&gt; in their web applications.&lt;/p&gt;
 
@@ -1077,7 +1080,7 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
 
 &lt;p&gt;SC Magazine also has an article on &lt;a href=&#34;http://www.scmagazineus.com/Deconstructing-PCI-66/article/110013/&#34;&gt;Deconstructing PCI 6.6&lt;/a&gt; for the management folks.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;7. Data Breaches - How do you protect my data from insider breaches?&lt;/h3&gt;
+&lt;h3 id=&#34;7-data-breaches-how-do-you-protect-my-data-from-insider-breaches:0d27251a71dd5c23fbd84c5c04faf896&#34;&gt;7. Data Breaches - How do you protect my data from insider breaches?&lt;/h3&gt;
 
 &lt;p&gt;In the &lt;a href=&#34;http://securityblog.verizonbusiness.com/2008/06/10/2008-data-breach-investigations-report/&#34;&gt;Verizon Business breach report blog&lt;/a&gt;, Verizon Business stated that&lt;/p&gt;
 
@@ -1092,7 +1095,7 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
 
 &lt;p&gt;SaaS providers should be prepared to answer questions on what tools and processes are utilized to ensure segregation of duties and protect from insider breaches. Remember, in the case of the mult-billion dollar insider incident at Société Générale, IT management had implemented all of the controls recommended by auditors, but nobody was monitoring them. So it&amp;rsquo;s extremely critical to be able to show the processes around these security controls.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_7&#34;&gt;8. PCI DSS - Are you compliant with PCI DSS?&lt;/h3&gt;
+&lt;h3 id=&#34;8-pci-dss-are-you-compliant-with-pci-dss:0d27251a71dd5c23fbd84c5c04faf896&#34;&gt;8. PCI DSS - Are you compliant with PCI DSS?&lt;/h3&gt;
 
 &lt;p&gt;PCI DSS has a specific section for hosting providers (including SaaS providers):&lt;/p&gt;
 
@@ -1123,7 +1126,7 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
       <title>Defining Infrastructure-as-a-Service (IaaS)</title>
       <link>http://zhen.org/blog/defining-infrastructure-as-a-service-iaas/</link>
       <pubDate>Tue, 03 Jun 2008 18:28:28 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/defining-infrastructure-as-a-service-iaas/</guid>
       <description>&lt;p&gt;As described in &lt;a href=&#34;http://onsaas.net/blog/defining-saas-paas-iaas-cloud-computing-etc&#34;&gt;a previous post&lt;/a&gt;, the infrastructure layer of the whole setup is about space, pipe, firewalls, VPNs, routers, switches, physical server and storage. In order to maintain such infrastructure, a company must employ a whole team of network, security and storage engineers. Even with hosting providers such as Savvis and Rackspace providing professional services, the amount of work companies must do in order to setup and maintain this type of infrastructure is still tremendous. To scale this infrastructure, the companies must monitor the usage and acquire new servers as needed. In addition, space and pipe are usually the biggest cost factor when it comes to hosting. That&amp;rsquo;s why the dotCom hosting providers such as Exodus were such high flying companies during the boom days.&lt;/p&gt;
 
@@ -1159,7 +1162,7 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
       <title>The world is even more flatter in the SaaS market</title>
       <link>http://zhen.org/blog/the-world-is-even-more-flatter-in-the-saas-market/</link>
       <pubDate>Sun, 01 Jun 2008 22:19:53 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/the-world-is-even-more-flatter-in-the-saas-market/</guid>
       <description>&lt;p&gt;In the past 10 years or so, offshoring countries such as India and China have utilized the tens of thousands to help US and European countries develop products in the traditional software market. As the SaaS model becomes more and more accepted by the general market, we will be seeing these countries be more focused in this market and will be spending more and more resources in this area. &lt;a href=&#34;http://www.livemint.com/2008/06/01232337/Indian-cos-to-gain-from-softwa.html&#34;&gt;This article from Mint&lt;/a&gt; describes some of the major Indian firms taking their consultancy practice to assist ISV clients transition from their current offering to the new SaaS model.&lt;/p&gt;
 

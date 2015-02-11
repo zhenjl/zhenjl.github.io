@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Skiplist on Zen 3.1 </title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://zhen.org/categories/skiplist/index.xml/</link>
+    <title>Skiplist on Zen 3.1</title>
+    <link>http://zhen.org/categories/skiplist/</link>
+    <description>Recent content in Skiplist on Zen 3.1</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Jian Zhen</author>
-    <copyright>Jian Zhen</copyright>
-    <updated>Mon, 02 Sep 2013 13:09:22 -0800</updated>
+    
+    
+    <copyright>Jian Zhen. All Rights Reserved.</copyright>
+    <lastBuildDate>Mon, 02 Sep 2013 13:09:22 -0800</lastBuildDate>
+    <atom:link href="http://zhen.org/categories/skiplist/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Go Skiplist</title>
       <link>http://zhen.org/blog/go-skiplist/</link>
       <pubDate>Mon, 02 Sep 2013 13:09:22 -0800</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/go-skiplist/</guid>
       <description>
 
@@ -29,7 +32,7 @@
 
 &lt;p&gt;This skiplist implementation also uses search fingers, based on William Pugh&amp;rsquo;s work, &lt;a href=&#34;http://drum.lib.umd.edu/bitstream/1903/544/2/CS-TR-2286.1.pdf&#34;&gt;A Skiplist Cookbook&lt;/a&gt;. So the efficiency is O(log k) where k is the distance between the last searched/updated item and the current one.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;Performance&lt;/h3&gt;
+&lt;h3 id=&#34;performance:1df45c670e50a048b6e2b3cb9be0fc80&#34;&gt;Performance&lt;/h3&gt;
 
 &lt;p&gt;{% gist e8779545c102c69aae10 %}&lt;/p&gt;
 
@@ -41,7 +44,7 @@
 
 &lt;p&gt;The other benchmarks should have the average O(log k) efficiency.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Example (Int)&lt;/h3&gt;
+&lt;h3 id=&#34;example-int:1df45c670e50a048b6e2b3cb9be0fc80&#34;&gt;Example (Int)&lt;/h3&gt;
 
 &lt;p&gt;You can see additional examples in the &lt;a href=&#34;https://github.com/reducedb/skiplist/blob/master/skiplist_test.go&#34;&gt;test file&lt;/a&gt;.&lt;/p&gt;
 
@@ -80,7 +83,7 @@ rIter, err = list.SelectRange(1, 2)
 rIter, err = list.DeleteRange(1, 2)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Bultin Comparators&lt;/h3&gt;
+&lt;h3 id=&#34;bultin-comparators:1df45c670e50a048b6e2b3cb9be0fc80&#34;&gt;Bultin Comparators&lt;/h3&gt;
 
 &lt;p&gt;There are three built-in comparator functions:&lt;/p&gt;
 

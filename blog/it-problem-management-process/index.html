@@ -22,6 +22,8 @@
   
   <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
 
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -44,22 +46,29 @@
       </p>
     </div>
 
-
-
     <ul class="sidebar-nav">
       <li><a href="http://zhen.org/blog">Archive</a></li>
+      <br/>
+      <li>Projects</li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/strace/sequence">sequence</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surgemq/surgemq">surgemq</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surge">zhenjl/others</a></li>
       
     </ul>
-      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      
-      
-      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
+
+    <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+    <a href="http://linkedin.com/in/zhenjl"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
+    
+    
+    
 
     <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
     Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
     Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
-    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    &copy; 2015 Jian Zhen. All Rights Reserved.</p>
     
   </div>
 </div>
@@ -76,7 +85,7 @@
 
 <p>In order to understand why thats the case, it is necessary to understand the process of IT problem management. There are generally five steps in the problem management process: detection, identification, determination, resolution, and reflection.</p>
 
-<h3 id="toc_0">Detection</h3>
+<h3 id="detection:1979b5a4b95172a3b4fc7da57e58fe38">Detection</h3>
 
 <p>The ability to detect whats happening in your infrastructure is a crucial first step in managing problems. Is your router or switch down? Is your web server or email server down? Is your network connection degraded? Is someone intruding your network or servers? Has someone transferred intellectual property out of your network?</p>
 
@@ -84,13 +93,13 @@
 
 <p>All the technologies, however, are designed for detection but cannot tell you where the actual cause of the problem might be nor can it tell you what caused the problem to occur.</p>
 
-<h3 id="toc_1">Identification</h3>
+<h3 id="identification:1979b5a4b95172a3b4fc7da57e58fe38">Identification</h3>
 
 <p>Given that most of the technologies only perform detection, IT administrators must spent a lot of their time in identifying where the problem has actually occurred. These IT administrators utilize the most basic network tools such as ping and traceroute, rely on domain knowledge of their own network to perform process of elimination, or analyzing network traffic using sniffers to help determine the actual location of the problem.</p>
 
 <p>To accelerate the process, some companies have developed technologies in the attempt to identify where the problem actually occurred. One such example is EMC Smarts. Smarts starts by mapping out an infrastructure using various automated tools as well as human knowledge. The mapping will identify, for example, which switch ports are connected via the same cable or what servers are behind the same router or switch. Once the mapping is complete, Smarts will utilize its proprietary Codebook Correlation Technology, SNMP traps and log messages from routers/switches/servers to identify where the fault or problem may have occurred.</p>
 
-<h3 id="toc_2">Determination</h3>
+<h3 id="determination:1979b5a4b95172a3b4fc7da57e58fe38">Determination</h3>
 
 <p>Even though some of these newer technologies may help IT administrators identify where the problem might be, they are still very limited in determining the actual root cause. Why did my web server go down? Was it due to memory corruption? Was it due to a security exploit? Was it due to misconfiguration? Why is my network so slow? Is it because of a router or switch interface mismatch? Is it because someone is transferring a movie over the wire?</p>
 
@@ -98,7 +107,7 @@
 
 <p>However, even today, IT administrators must manually perform root-cause or forensic analysis by digging through mountains of log files or analyzing seas of traffic packets. No technologies have been developed to help IT administrators to automate the determination process.</p>
 
-<h3 id="toc_3">Resolution</h3>
+<h3 id="resolution:1979b5a4b95172a3b4fc7da57e58fe38">Resolution</h3>
 
 <p>Once the problem has been identified and root cause has been determined, IT administrators can most of the time fix the problem quickly, e.g., fix the interface mismatch or restart the web server. There are obviously some problems that require long-term resolution such as fixing the memory corruption of applications or upgrading the network bandwidth due to increase in number of users.</p>
 
@@ -106,7 +115,7 @@
 
 <p>This type of technology can be extremely dangerous as mistakes can lead to the network or infrastructure to become unavailable. Intruders may also be able to exploit these automated resolution mechanisms to perform Denial-of-Service attacks against the IT infrastructure.</p>
 
-<h3 id="toc_4">Reflection</h3>
+<h3 id="reflection:1979b5a4b95172a3b4fc7da57e58fe38">Reflection</h3>
 
 <p>Reflection, or post mortem is probably one of the most important stages in this whole process. The idea of reflection is that IT administrators should take time to</p>
 

@@ -22,6 +22,8 @@
   
   <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
 
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -44,22 +46,29 @@
       </p>
     </div>
 
-
-
     <ul class="sidebar-nav">
       <li><a href="http://zhen.org/blog">Archive</a></li>
+      <br/>
+      <li>Projects</li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/strace/sequence">sequence</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surgemq/surgemq">surgemq</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surge">zhenjl/others</a></li>
       
     </ul>
-      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      
-      
-      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
+
+    <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+    <a href="http://linkedin.com/in/zhenjl"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
+    
+    
+    
 
     <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
     Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
     Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
-    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    &copy; 2015 Jian Zhen. All Rights Reserved.</p>
     
   </div>
 </div>
@@ -82,7 +91,7 @@
 
 <p><strong>SurgeMQ is currently under active development and should be considered unstable until further notice.</strong></p>
 
-<h3 id="toc_0">MQTT</h3>
+<h3 id="mqtt:924dac401fc2f0061be94c47a8c89e4c">MQTT</h3>
 
 <p>According to the <a href="http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html">MQTT spec</a>:</p>
 
@@ -108,7 +117,7 @@
 
 <p>There&rsquo;s some very large implementation of MQTT such as <a href="https://www.facebook.com/notes/facebook-engineering/building-facebook-messenger/10150259350998920">Facebook Messenger</a>. There&rsquo;s also an active Eclipse project, <a href="https://eclipse.org/paho/">Paho</a>, that provides scalable open-source client implementations for many different languages, including C/C++, Java, Python, JavaScript, C# .Net and Go.</p>
 
-<h3 id="toc_1">Features, Limitations, and Future</h3>
+<h3 id="features-limitations-and-future:924dac401fc2f0061be94c47a8c89e4c">Features, Limitations, and Future</h3>
 
 <p><strong>Features</strong></p>
 
@@ -142,7 +151,7 @@
 <li>Better authentication modules</li>
 </ul>
 
-<h3 id="toc_2">Performance</h3>
+<h3 id="performance:924dac401fc2f0061be94c47a8c89e4c">Performance</h3>
 
 <p>Current performance benchmark of SurgeMQ, running all publishers, subscribers and broker on a single 4-core (2.8Ghz i7) MacBook Pro, is able to achieve:</p>
 
@@ -153,7 +162,7 @@
 <li>over <strong>700,000 MPS</strong> in a full mesh configuration with 20 clients</li>
 </ul>
 
-<h3 id="toc_3">Compatibility</h3>
+<h3 id="compatibility:924dac401fc2f0061be94c47a8c89e4c">Compatibility</h3>
 
 <p>In addition, SurgeMQ has been tested with the following client libraries and it <em>seems</em> to work:</p>
 
@@ -170,13 +179,13 @@
 <li><em>Paho C Client library (in C).</em> Tested with most of the test cases and failed the same ones as the conformance test because the features are not yet implemented. Actually I think there&rsquo;s a bug in the test suite as it calls the PUBLISH handler function for non-PUBLISH messages.</li>
 </ul>
 
-<h3 id="toc_4">Documentation</h3>
+<h3 id="documentation:924dac401fc2f0061be94c47a8c89e4c">Documentation</h3>
 
 <p>Documentation is available at <a href="http://godoc.org/github.com/surge/surgemq">godoc</a>.</p>
 
 <p>More information regarding the design of the SurgeMQ is available at <a href="http://surgemq.com">zen 3.1</a>.</p>
 
-<h3 id="toc_5">License</h3>
+<h3 id="license:924dac401fc2f0061be94c47a8c89e4c">License</h3>
 
 <p>Copyright &copy; 2014 Dataence, LLC. All rights reserved.</p>
 
@@ -192,9 +201,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
 
-<h3 id="toc_6">Examples</h3>
+<h3 id="examples:924dac401fc2f0061be94c47a8c89e4c">Examples</h3>
 
-<h4 id="toc_7">Server Example</h4>
+<h4 id="server-example:924dac401fc2f0061be94c47a8c89e4c">Server Example</h4>
 
 <pre><code>// Create a new server
 svr := &amp;service.Server{
@@ -209,7 +218,7 @@ svr := &amp;service.Server{
 svr.ListenAndServe(&quot;tcp://:1883&quot;)
 </code></pre>
 
-<h4 id="toc_8">Client Example</h4>
+<h4 id="client-example:924dac401fc2f0061be94c47a8c89e4c">Client Example</h4>
 
 <pre><code>// Instantiates a new Client
 c := &amp;Client{}

@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Stemming on Zen 3.1 </title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://zhen.org/categories/stemming/index.xml/</link>
+    <title>Stemming on Zen 3.1</title>
+    <link>http://zhen.org/categories/stemming/</link>
+    <description>Recent content in Stemming on Zen 3.1</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Jian Zhen</author>
-    <copyright>Jian Zhen</copyright>
-    <updated>Wed, 21 Jan 2015 20:48:44 PST</updated>
+    
+    
+    <copyright>Jian Zhen. All Rights Reserved.</copyright>
+    <lastBuildDate>Wed, 21 Jan 2015 20:48:44 PST</lastBuildDate>
+    <atom:link href="http://zhen.org/categories/stemming/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Generating Porter2 FSM For Fun and Performance in Go</title>
       <link>http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/</link>
       <pubDate>Wed, 21 Jan 2015 20:48:44 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;http://godoc.org/github.com/surgebase/porter2&#34;&gt;&lt;img src=&#34;http://godoc.org/github.com/surgebase/porter2?status.svg&#34; alt=&#34;GoDoc&#34; /&gt;
 &lt;/a&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_0&#34;&gt;tl;dr&lt;/h2&gt;
+&lt;h2 id=&#34;tl-dr:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;tl;dr&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;This post describes the &lt;a href=&#34;https://github.com/surgebase/porter2&#34;&gt;Porter2&lt;/a&gt; package I implemented. It is written in Go (#golang).&lt;/li&gt;
@@ -29,13 +32,13 @@
 &lt;li&gt;Hand-coding FSM is a PITA!!! &lt;a href=&#34;https://github.com/surgebase/porter2/tree/master/cmd/suffixfsm&#34;&gt;Automate&lt;/a&gt; if possible.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;toc_1&#34;&gt;Introduction&lt;/h2&gt;
+&lt;h2 id=&#34;introduction:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;In a personal project I am working on, I had the need to perform word stemming in two scenarios. First, I need to perform stemming for all the string literals in a LARGE corpus and then determine if the words are in a fixed set of literals. Second, I need to perform stemming for a subset of words in real-time, as messages stream in.&lt;/p&gt;
 
 &lt;p&gt;In the first case, performance is important but not critical; in the second case, performance is a huge factor.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Stemming&lt;/h3&gt;
+&lt;h3 id=&#34;stemming:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Stemming&lt;/h3&gt;
 
 &lt;p&gt;To start, according to &lt;a href=&#34;http://en.wikipedia.org/wiki/Stemming&#34;&gt;wikipedia&lt;/a&gt;:&lt;/p&gt;
 
@@ -49,7 +52,7 @@
 
 &lt;p&gt;&lt;a href=&#34;http://snowball.tartarus.org/algorithms/english/stemmer.html&#34;&gt;Porter2&lt;/a&gt; is universally considered to be an enhancement over the original Porter algorithm. Porter2 has an improved set of rules and it&amp;rsquo;s widely used as well.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_3&#34;&gt;Implementation&lt;/h2&gt;
+&lt;h2 id=&#34;implementation:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Implementation&lt;/h2&gt;
 
 &lt;p&gt;This package, &lt;a href=&#34;https://github.com/surgebase/porter2&#34;&gt;Porter2&lt;/a&gt;, implements the Porter2 stemmer. It is written completely using finite state machines to perform suffix comparison, rather than the usual string-based or tree-based approaches. As a result, it is 660% faster compare to string comparison-based approach written in the same (Go) language.&lt;/p&gt;
 
@@ -62,7 +65,7 @@
 fmt.Println(porter2.Stem(&amp;quot;seaweed&amp;quot;)) // should get seawe
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;Performance&lt;/h3&gt;
+&lt;h3 id=&#34;performance:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Performance&lt;/h3&gt;
 
 &lt;p&gt;This implementation by far has the highest performance of the various Go-based implementations, AFAICT. I tested a few of the implementations and the results are below.&lt;/p&gt;
 
@@ -98,7 +101,7 @@ fmt.Println(porter2.Stem(&amp;quot;seaweed&amp;quot;)) // should get seawe
 
 &lt;p&gt;To run the test again, you can run &lt;a href=&#34;https://github.com/surgebase/porter2/tree/master/cmd/compare&#34;&gt;compare.go&lt;/a&gt; (&lt;code&gt;go run compare.go&lt;/code&gt;).&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;State Machines&lt;/h3&gt;
+&lt;h3 id=&#34;state-machines:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;State Machines&lt;/h3&gt;
 
 &lt;p&gt;Most of the implementations, like the ones in the table above, rely completely on suffix string comparison. Basically there&amp;rsquo;s a list of suffixes, and the code will loop through the list to see if there&amp;rsquo;s a match. Given most of the time you are looking for the longest match, so you order the list so the longest is the first one. So if you are luckly, the match will be early on the list. But regardless that&amp;rsquo;s a huge performance hit.&lt;/p&gt;
 
@@ -145,7 +148,7 @@ fmt.Println(porter2.Stem(&amp;quot;seaweed&amp;quot;)) // should get seawe
 
 &lt;p&gt;To do that, we need to assign a state number to each of the nodes in the suffix tree, and output each of the states and the transitions based on the rune encountered. The tree above is the same as the one before, but now has a state number assigned to each node.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;Generator&lt;/h3&gt;
+&lt;h3 id=&#34;generator:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Generator&lt;/h3&gt;
 
 &lt;p&gt;I actually started building all the porter2 FSMs manually with a completely different approach than what I am describing here. I won&amp;rsquo;t go into details here but needless to say, it was disastrous. Not only was hand coding state machines extremely error-prone, the approach I was taking also had a lot of potential for bugs. It took me MANY HOURS to hand build those FSMs but at the end, I was happy to abandon all of them for the approach I am taking now.&lt;/p&gt;
 
@@ -227,7 +230,7 @@ loop:
 	return rs
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;toc_7&#34;&gt;Finally&lt;/h2&gt;
+&lt;h2 id=&#34;finally:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Finally&lt;/h2&gt;
 
 &lt;p&gt;This is a technique that can probably be applied to any fixed data set. The performance may vary based on the size of the state machine so test it with both maps and FSM to see what works best.&lt;/p&gt;
 

@@ -22,6 +22,8 @@
   
   <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
 
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -44,22 +46,29 @@
       </p>
     </div>
 
-
-
     <ul class="sidebar-nav">
       <li><a href="http://zhen.org/blog">Archive</a></li>
+      <br/>
+      <li>Projects</li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/strace/sequence">sequence</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surgemq/surgemq">surgemq</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surge">zhenjl/others</a></li>
       
     </ul>
-      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      
-      
-      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
+
+    <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+    <a href="http://linkedin.com/in/zhenjl"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
+    
+    
+    
 
     <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
     Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
     Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
-    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    &copy; 2015 Jian Zhen. All Rights Reserved.</p>
     
   </div>
 </div>
@@ -82,7 +91,7 @@
 
 <p>The goal of this project, for me at least, is to implement a pure Go package that doesn&rsquo;t rely on wrappers to other langagues. There&rsquo;s already <a href="https://github.com/search?l=Go&amp;q=bloom&amp;ref=cmdform&amp;type=Repositories">quite a few</a> bloom filters implemented in Go. But hey, in the name of learning, why not implement another one!</p>
 
-<h3 id="toc_0">Bloom Filters</h3>
+<h3 id="bloom-filters:75bc04a36b7f857175f963f46bbada5d">Bloom Filters</h3>
 
 <p>Wikipedia says,</p>
 
@@ -100,7 +109,7 @@
 
 <p>There are a ton more variants for bloom filters. You can raed all about them in <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=5&amp;cad=rja&amp;ved=0CE4QFjAE&amp;url=http%3A%2F%2Fwww.tribler.org%2Ftrac%2Fraw-attachment%2Fwiki%2FJelleRoozenburg%2Fresearch_assignment_jroozenburg_20051108.pdf&amp;ei=JHInUt6oO6GTiQK-44DYDg&amp;usg=AFQjCNG057WVJ2m2QYPuqWzCZ0Vn4JnOug&amp;sig2=NVlad7xGO4S_hFpMU9apGA&amp;bvm=bv.51773540,d.cGE">this paper</a> and <a href="http://www.dca.fee.unicamp.br/~chesteve/pubs/bloom-filter-ieee-survey-preprint.pdf">this paper</a>.</p>
 
-<h3 id="toc_1">Hash Functions</h3>
+<h3 id="hash-functions:75bc04a36b7f857175f963f46bbada5d">Hash Functions</h3>
 
 <p>To add an element, bloom filters hashes the element using <em>k</em> hashing functions, identifying <em>k</em> positions in the bit array, and setting those bits to 1. To check for an element, you essentially do the same thing (hash the element with <em>k</em> hash functions) and then check to see if all the bits at those positions are set. If all set, then most likely the element is available. If any of them are not set, then the element is definitely not avaiable. So bloom filters can have false positives, but not false negatives.</p>
 
@@ -121,7 +130,7 @@
 
 <p>As a side note, MD5 and SHA1 return 128 bit hash values. Since we only use the first 64 bits, we throw away the last 64 bits.</p>
 
-<h3 id="toc_2">Test Setup</h3>
+<h3 id="test-setup:75bc04a36b7f857175f963f46bbada5d">Test Setup</h3>
 
 <p>The machine that ran these tests is a Macbook Air 10.8.4 1.8GHz Intel Core i5 4GB 1600MHz DDR3.</p>
 
@@ -157,7 +166,7 @@ end
 
 <p>You can see the tests in the <a href="https://github.com/reducedb/bloom">github repo</a>. Just look for all the _test.go files.</p>
 
-<h3 id="toc_3">Test Results</h3>
+<h3 id="test-results:75bc04a36b7f857175f963f46bbada5d">Test Results</h3>
 
 <p>The following is a summary of the test results. You can also feel free to look at all the <a href="https://gist.github.com/zhenjl/6433634">gory details</a>.</p>
 
@@ -183,11 +192,11 @@ end
 
 <p><img src="https://docs.google.com/spreadsheet/oimg?key=0ApDLtJuUH-1rdEEwZ3JwaVVTZGxBX1g1NkthSFVVTXc&oid=1&zx=jbizsaoepc5x" /></p>
 
-<h3 id="toc_4">Feedback</h3>
+<h3 id="feedback:75bc04a36b7f857175f963f46bbada5d">Feedback</h3>
 
 <p>Feel free to send me any feedback via <a href="https://github.com/reducedb/bloom/issues">github issues</a> or on <a href="https://news.ycombinator.com/item?id=6329616">Hacker News</a>.</p>
 
-<h3 id="toc_5">References</h3>
+<h3 id="references:75bc04a36b7f857175f963f46bbada5d">References</h3>
 
 <p>During this process I referenced and leveraged some of these other projects, so thank you all!</p>
 

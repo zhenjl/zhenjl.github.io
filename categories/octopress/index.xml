@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Octopress on Zen 3.1 </title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://zhen.org/categories/octopress/index.xml/</link>
+    <title>Octopress on Zen 3.1</title>
+    <link>http://zhen.org/categories/octopress/</link>
+    <description>Recent content in Octopress on Zen 3.1</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Jian Zhen</author>
-    <copyright>Jian Zhen</copyright>
-    <updated>Sun, 18 Aug 2013 21:22:22 -0800</updated>
+    
+    
+    <copyright>Jian Zhen. All Rights Reserved.</copyright>
+    <lastBuildDate>Sun, 18 Aug 2013 21:22:22 -0800</lastBuildDate>
+    <atom:link href="http://zhen.org/categories/octopress/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Migrating 40,000 Posts from Wordpress to Octopress</title>
       <link>http://zhen.org/blog/migrating-40000-posts-from-wordpress-to-octopress/</link>
       <pubDate>Sun, 18 Aug 2013 21:22:22 -0800</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/migrating-40000-posts-from-wordpress-to-octopress/</guid>
       <description>
 
@@ -21,9 +24,9 @@
 
 &lt;p&gt;I have one more, &lt;a href=&#34;http://cloudaware.net&#34;&gt;Cloudaware&lt;/a&gt;, that I need to migrate but that one will take a bit of work. I&amp;rsquo;ll explain why a bit later.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;tl;dr&lt;/h3&gt;
+&lt;h3 id=&#34;tl-dr:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;tl;dr&lt;/h3&gt;
 
-&lt;h4 id=&#34;toc_1&#34;&gt;The Bad&lt;/h4&gt;
+&lt;h4 id=&#34;the-bad:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;The Bad&lt;/h4&gt;
 
 &lt;ul&gt;
 &lt;li&gt;If you are not familiar with git, don&amp;rsquo;t use Octopress. I almost want to say if you don&amp;rsquo;t use git on other development projects on a fairly regular basis, don&amp;rsquo;t use Octopress because you will run into issues that you may not be able to resolve.&lt;/li&gt;
@@ -33,7 +36,7 @@
 &lt;li&gt;If your site uses a special theme you may want to investigate the effort of migrating the theme. There&amp;rsquo;s not a large selection like Wordpress. If you want your own theme then prepare to get your hands dirty or pay someone to do it. Good thing is octopress themes are much simpler than wordpress.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&#34;toc_2&#34;&gt;The Good&lt;/h4&gt;
+&lt;h4 id=&#34;the-good:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;The Good&lt;/h4&gt;
 
 &lt;ul&gt;
 &lt;li&gt;If you are a developer and have a blog with mostly static content, Octopress is for you.&lt;/li&gt;
@@ -42,11 +45,11 @@
 &lt;li&gt;If you don&amp;rsquo;t want to keep updating wordpress versions, Octopress is for you.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;The Reasons&lt;/h3&gt;
+&lt;h3 id=&#34;the-reasons:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;The Reasons&lt;/h3&gt;
 
 &lt;p&gt;So what caused me to make the jump all of a sudden?&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_4&#34;&gt;#1: I am lazy but I need better security&lt;/h4&gt;
+&lt;h4 id=&#34;1-i-am-lazy-but-i-need-better-security:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;#1: I am lazy but I need better security&lt;/h4&gt;
 
 &lt;p&gt;Due to family, work, and side project reasons, I&amp;rsquo;ve been not been paying much attention to these blogs. Some of them are automated but even the automation scripts are failing as I have not kept up with the APIs. This blog especially has been dormant since June 2009. Well, until now at least. This is my first blog post using Octopress.&lt;/p&gt;
 
@@ -56,7 +59,7 @@
 
 &lt;p&gt;So a static site hosted by someone else completely seems like the perfect approach.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_5&#34;&gt;#2 and #3: I am cheap but I want flexibility and performance&lt;/h4&gt;
+&lt;h4 id=&#34;2-and-3-i-am-cheap-but-i-want-flexibility-and-performance:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;#2 and #3: I am cheap but I want flexibility and performance&lt;/h4&gt;
 
 &lt;p&gt;For the past several years I&amp;rsquo;ve been keeping a VPS just to run my blogs. I like to use my own domains and I don&amp;rsquo;t feel like paying wordpress.com for mapping a custom domain and customizing themes. Not to mention you can&amp;rsquo;t even customize the themes all that much. On top of that, I want to server my own ads, not pay wordpress.com NOT to display ads on my blog.&lt;/p&gt;
 
@@ -66,7 +69,7 @@
 
 &lt;p&gt;So the static site will give me the performance I need and I want the ability to customize the heck out of the site (not that I do it all that much, but the perception of flexibility is still good.)&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;The Process&lt;/h3&gt;
+&lt;h3 id=&#34;the-process:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;The Process&lt;/h3&gt;
 
 &lt;p&gt;Another name for this post could be: Migrate From Wordpress to Octopress in 9 Not-So-Simple Steps&lt;/p&gt;
 
@@ -99,11 +102,11 @@
 
 &lt;p&gt;Many of these blogs explained how they migrated and were tremendously helpful. I can&amp;rsquo;t thank these folks enough for sharing their experiences.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_7&#34;&gt;The Details&lt;/h3&gt;
+&lt;h3 id=&#34;the-details:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;The Details&lt;/h3&gt;
 
 &lt;p&gt;For each of the blogs I migrated, I did the following.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_8&#34;&gt;1. Clone Octopress&lt;/h4&gt;
+&lt;h4 id=&#34;1-clone-octopress:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;1. Clone Octopress&lt;/h4&gt;
 
 &lt;p&gt;You need to do this once for each blog, so replace cloudfeed with the blog name.&lt;/p&gt;
 
@@ -137,7 +140,7 @@ git push origin :site-2.1
 
 &lt;p&gt;These commands will remove all the extra branches from your fork.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_9&#34;&gt;2. Export wordpress posts&lt;/h4&gt;
+&lt;h4 id=&#34;2-export-wordpress-posts:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;2. Export wordpress posts&lt;/h4&gt;
 
 &lt;p&gt;Do this once for each blog you are converting.&lt;/p&gt;
 
@@ -145,7 +148,7 @@ git push origin :site-2.1
 
 &lt;p&gt;However, make sure you run &lt;code&gt;xmllint&lt;/code&gt; on the exported XML and fix any issue you see. However, watch out for any malformed HTML inside the CDATA section. Not exactly sure how to catch that but just remember exitwp requies parsing of the HTML to convert into markdown.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_10&#34;&gt;3. Convert using Exitwp&lt;/h4&gt;
+&lt;h4 id=&#34;3-convert-using-exitwp:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;3. Convert using Exitwp&lt;/h4&gt;
 
 &lt;p&gt;You only need to do this step once.&lt;/p&gt;
 
@@ -187,7 +190,7 @@ git push origin :site-2.1
 
 &lt;p&gt;&lt;code&gt;cp -r build/jekyll/cloudfeed/_posts ../cloudfeed/source/_posts&lt;/code&gt;&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_11&#34;&gt;4. Set up the Octopress Theme&lt;/h4&gt;
+&lt;h4 id=&#34;4-set-up-the-octopress-theme:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;4. Set up the Octopress Theme&lt;/h4&gt;
 
 &lt;p&gt;You need to do this for each blog you are migrating.&lt;/p&gt;
 
@@ -203,7 +206,7 @@ rake &amp;quot;install[greyshade]&amp;quot;
 
 &lt;p&gt;Personally I don&amp;rsquo;t really like it as it adds unncessary files to the source and sass directories, so I just copied the necessary files over to the new theme. You may not want to go through that level of pain.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_12&#34;&gt;5. Generate the Static Site&lt;/h4&gt;
+&lt;h4 id=&#34;5-generate-the-static-site:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;5. Generate the Static Site&lt;/h4&gt;
 
 &lt;p&gt;You need to do this for each blog you are migrating, and each time you update the site.&lt;/p&gt;
 
@@ -213,11 +216,11 @@ rake &amp;quot;install[greyshade]&amp;quot;
 
 &lt;p&gt;Hopefully at some point jekyll can do incremental generation coz this really sucks (yes it&amp;rsquo;s a technical word.)&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_13&#34;&gt;6. Preview the Site&lt;/h4&gt;
+&lt;h4 id=&#34;6-preview-the-site:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;6. Preview the Site&lt;/h4&gt;
 
 &lt;p&gt;To preview the site before publishing, you can run &lt;code&gt;rake preview&lt;/code&gt;. It will start a web server on port 4000, so you can go to &amp;ldquo;&lt;a href=&#34;http://localhost:4000&amp;quot;&#34;&gt;http://localhost:4000&amp;quot;&lt;/a&gt; to see what your site looks like before publishing. It&amp;rsquo;s great for reviewing new posts.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_14&#34;&gt;7. Prepare for Publishing&lt;/h4&gt;
+&lt;h4 id=&#34;7-prepare-for-publishing:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;7. Prepare for Publishing&lt;/h4&gt;
 
 &lt;p&gt;If you are publishing to github, you need to run the following command to setup the github repo. Read the &lt;a href=&#34;http://octopress.org/docs/deploying/github/&#34;&gt;Deploying to Github Pages&lt;/a&gt; page very carefully and follow the instructions there.&lt;/p&gt;
 
@@ -225,7 +228,7 @@ rake &amp;quot;install[greyshade]&amp;quot;
 
 &lt;p&gt;In any case, run the following command &lt;code&gt;rake setup_github_pages&lt;/code&gt; to set the git repo to publish to.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_15&#34;&gt;8. Publish the Site&lt;/h4&gt;
+&lt;h4 id=&#34;8-publish-the-site:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;8. Publish the Site&lt;/h4&gt;
 
 &lt;p&gt;&lt;code&gt;rake deploy&lt;/code&gt;&lt;/p&gt;
 
@@ -254,7 +257,7 @@ git commit -a -m &amp;quot;merging&amp;quot;
 
 &lt;p&gt;You can also combine this and step #5 (generate) using &lt;code&gt;rake gen_deploy&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_16&#34;&gt;9. Commit your source&lt;/h4&gt;
+&lt;h4 id=&#34;9-commit-your-source:6179c412d73dfc58d4666cd8e15301ec&#34;&gt;9. Commit your source&lt;/h4&gt;
 
 &lt;p&gt;By now you have reviewed your spanking new website and are probably pretty happy you have gotten this far. But don&amp;rsquo;t forget the last thing which is to save your site&amp;rsquo;s source.&lt;/p&gt;
 

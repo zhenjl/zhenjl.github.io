@@ -1,19 +1,73 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Security on Zen 3.1 </title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://zhen.org/categories/security/index.xml/</link>
+    <title>Security on Zen 3.1</title>
+    <link>http://zhen.org/categories/security/</link>
+    <description>Recent content in Security on Zen 3.1</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Jian Zhen</author>
-    <copyright>Jian Zhen</copyright>
-    <updated>Sun, 08 Feb 2015 19:57:56 PST</updated>
+    
+    
+    <copyright>Jian Zhen. All Rights Reserved.</copyright>
+    <lastBuildDate>Sun, 08 Feb 2015 19:57:56 PST</lastBuildDate>
+    <atom:link href="http://zhen.org/categories/security/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Papers I Read: 2015 Week 6</title>
+      <link>http://zhen.org/blog/papers-i-read-2015-week-7/</link>
+      <pubDate>Sun, 08 Feb 2015 19:57:56 PST</pubDate>
+      
+      <guid>http://zhen.org/blog/papers-i-read-2015-week-7/</guid>
+      <description>
+
+&lt;h3 id=&#34;random-ramblings:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Random Ramblings&lt;/h3&gt;
+
+&lt;p&gt;Athem hack&lt;/p&gt;
+
+&lt;p&gt;Another great resource of computer science papers is Adrian Coyler&amp;rsquo;s &lt;a href=&#34;http://blog.acolyer.org/&#34;&gt;the morning paper&lt;/a&gt;. He selects and summarizes &amp;ldquo;an interesting/influential/important paper from the world of CS every weekday morning&amp;rdquo;.&lt;/p&gt;
+
+&lt;h3 id=&#34;papers-i-read:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Papers I Read&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cs.put.poznan.pl/dweiss/site/publications/download/fsacomp.pdf&#34;&gt;Smaller Representation of Finite State Automata&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I read this paper when I was trying to figure out how to make the FSAs smaller for the &lt;a href=&#34;https://github.com/surge/xparse/tree/master/etld&#34;&gt;Effective TLD matcher&lt;/a&gt; I created. The FSM I generated is 212,294 lines long. That&amp;rsquo;s just absolutely crazy. This paper seems to present an interesting way of compressing them.&lt;/p&gt;
+
+&lt;p&gt;I am not exactly sure if &lt;a href=&#34;https://godoc.org/golang.org/x/net/publicsuffix&#34;&gt;PublicSuffix&lt;/a&gt; uses a similar representation but it basically represents a FSA as an array of bytes, and then walk the bytes like a binary search tree. It&amp;rsquo;s interesting for sure.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This paper is a follow-up to Jan Daciuk’s experiments on space-efficient finite state automata representation that can be used directly for traversals in main memory [4]. We investigate several techniques of reducing the memory footprint of minimal automata, mainly exploiting the fact that transition labels and transition pointer offset values are not evenly distributed and so are suitable for compression. We achieve a size gain of around 20–30% compared to the original representation given in [4]. This result is comparable to the state-of-the-art dictionary compression techniques like the LZ-trie [12] method, but remains
+memory and CPU efficient during construction.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://arxiv.org/pdf/1409.5942v1.pdf&#34;&gt;IP Tracing and Active Network Response&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This work presents integrated model for active security response model. The proposed model introduces Active Response Mechanism (ARM) for tracing anonymous attacks in the network back to their source. This work is motivated by the increased frequency and sophistication of denial-of-service attacks and by the difficulty in tracing packets with incorrect, or “spoofed”, source addresses. This paper presents within the proposed model two tracing approaches based on:
+• Sleepy Watermark Tracing (SWT) for unauthorized access attacks.
+• Probabilistic Packet Marking (PPM) in the network for Denial of Service
+(DoS) and Distributed Denial of Service (DDoS) attacks.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://static.googleusercontent.com/media/research.google.com/en/us/pubs/archive/36356.pdf&#34;&gt;Dapper, a Large-Scale Distributed Systems Tracing Infrastructure&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Here we introduce the design of Dapper, Google’s production distributed systems tracing infrastructure, and describe how our design goals of low overhead, application-level transparency, and ubiquitous deployment on a very large scale system were met. Dapper shares conceptual similarities with other tracing systems, particularly Magpie [3] and X-Trace [12], but certain design
+choices were made that have been key to its success in our environment, such as the use of sampling and restricting the instrumentation to a rather small number of common libraries.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
     
     <item>
       <title>Papers I Read: 2015 Week 6</title>
       <link>http://zhen.org/blog/papers-i-read-2015-week-6/</link>
       <pubDate>Sun, 08 Feb 2015 19:57:56 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/papers-i-read-2015-week-6/</guid>
       <description>
 
@@ -23,7 +77,7 @@
 
 &lt;p&gt;In any case, I thought it might be an interesting idea to share some of the papers I read/scan/skim on weekly basis. This way I can also track what I read over time.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;Random Ramblings&lt;/h3&gt;
+&lt;h3 id=&#34;random-ramblings:e2137c343047358d9912399632750231&#34;&gt;Random Ramblings&lt;/h3&gt;
 
 &lt;p&gt;This week has been a disaster. I was the last one in the family to catch the cold, but probably lasted the longest. In fact I am still only about 50%. This whole week I have been having headaches, body aches, and haven&amp;rsquo;t been able to concentrate. My body must be trying to catch up on sleep or something. For a couple days I actually slept for almost 12 hours a night!&lt;/p&gt;
 
@@ -41,7 +95,7 @@
 
 &lt;p&gt;[Disclaimer: any mistake in my calculations/assumptions I blame on my drugged brain cells.]&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Papers I Read&lt;/h3&gt;
+&lt;h3 id=&#34;papers-i-read:e2137c343047358d9912399632750231&#34;&gt;Papers I Read&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.covert.io/research-papers/security/Beehive%20-%20Large-Scale%20Log%20Analysis%20for%20Detecting%20Suspicious%20Activity%20in%20Enterprise%20Networks.pdf&#34;&gt;Beehive: Large-Scale Log Analysis for Detecting Suspicious Activity in Enterprise Networks&lt;/a&gt;&lt;/li&gt;
@@ -101,41 +155,10 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
     </item>
     
     <item>
-      <title>Papers I Read: 2015 Week 6</title>
-      <link>http://zhen.org/blog/papers-i-read-2015-week-7/</link>
-      <pubDate>Sun, 08 Feb 2015 19:57:56 PST</pubDate>
-      <author>Jian Zhen</author>
-      <guid>http://zhen.org/blog/papers-i-read-2015-week-7/</guid>
-      <description>
-
-&lt;h3 id=&#34;toc_0&#34;&gt;Random Ramblings&lt;/h3&gt;
-
-&lt;p&gt;Athem hack&lt;/p&gt;
-
-&lt;p&gt;Another great resource of computer science papers is Adrian Coyler&amp;rsquo;s &lt;a href=&#34;http://blog.acolyer.org/&#34;&gt;the morning paper&lt;/a&gt;. He selects and summarizes &amp;ldquo;an interesting/influential/important paper from the world of CS every weekday morning&amp;rdquo;.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_1&#34;&gt;Papers I Read&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.cs.put.poznan.pl/dweiss/site/publications/download/fsacomp.pdf&#34;&gt;Smaller Representation of Finite State Automata&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I read this paper when I was trying to figure out how to make the FSAs smaller for the &lt;a href=&#34;https://github.com/surge/xparse/tree/master/etld&#34;&gt;Effective TLD matcher&lt;/a&gt; I created. The FSM I generated is 212,294 lines long. That&amp;rsquo;s just absolutely crazy. This paper seems to present an interesting way of compressing them.&lt;/p&gt;
-
-&lt;p&gt;I am not exactly sure if &lt;a href=&#34;https://godoc.org/golang.org/x/net/publicsuffix&#34;&gt;PublicSuffix&lt;/a&gt; uses a similar representation but it basically represents a FSA as an array of bytes, and then walk the bytes like a binary search tree. It&amp;rsquo;s interesting for sure.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;This paper is a follow-up to Jan Daciuk’s experiments on space-efficient finite state automata representation that can be used directly for traversals in main memory [4]. We investigate several techniques of reducing the memory footprint of minimal automata, mainly exploiting the fact that transition labels and transition pointer offset values are not evenly distributed and so are suitable for compression. We achieve a size gain of around 20–30% compared to the original representation given in [4]. This result is comparable to the state-of-the-art dictionary compression techniques like the LZ-trie [12] method, but remains
-memory and CPU efficient during construction.&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Response to &#34;Assessing the Security Benefits of Cloud Computing&#34;</title>
       <link>http://zhen.org/blog/response-to-assessing-the-security-benefits-of-cloud-computing/</link>
       <pubDate>Thu, 28 Aug 2008 01:58:22 &#43;0000</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/response-to-assessing-the-security-benefits-of-cloud-computing/</guid>
       <description>
 
@@ -146,7 +169,7 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;Overall, Craig has made a good list of potential benefits. However, we really need to distinguish the benefits of virtualization vs cloud computing. Many of the benefits listed here are really benefits of virtualization and not cloud computing. When I read the title, I was hoping to read about how the cloud could be more secure than enterprise environments. I think this list has a mix of that, and how enterprise could use the cloud for some security use cases. That&amp;rsquo;s fine but mixing them together can be misleading.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;1. Centralised Data&lt;/h3&gt;
+&lt;h3 id=&#34;1-centralised-data:6f40eb59ee53d3eb29452a51daa15d4e&#34;&gt;1. Centralised Data&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Reduced Data Leakage&lt;/strong&gt;&lt;/p&gt;
 
@@ -160,7 +183,7 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;In my opinion, cloud storage makes it even tougher to monitor data leakage. Think about the tools available to monitor enterprise file servers. Many of them monitors all types of access: read, write, via CIFS/NFS/etc, via local system. How do you do all of that in the cloud? Think S3, the only thing S3 provide you are http access logs. You have no way of knowing who else viewed your files if it&amp;rsquo;s done locally, for example.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;2. Incident Response / Forensics&lt;/h3&gt;
+&lt;h3 id=&#34;2-incident-response-forensics:6f40eb59ee53d3eb29452a51daa15d4e&#34;&gt;2. Incident Response / Forensics&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Forensic readiness&lt;/strong&gt;&lt;/p&gt;
 
@@ -190,7 +213,7 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;Both this and the next benefit are really about the elasticity and scalability of the clouds and not security.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;3. Password assurance testing (aka cracking)&lt;/h3&gt;
+&lt;h3 id=&#34;3-password-assurance-testing-aka-cracking:6f40eb59ee53d3eb29452a51daa15d4e&#34;&gt;3. Password assurance testing (aka cracking)&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Decrease password cracking time&lt;/strong&gt;&lt;/p&gt;
 
@@ -200,7 +223,7 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;Same as above, this is about the benefits of elasticity and scalability, not security.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;4. Logging&lt;/h3&gt;
+&lt;h3 id=&#34;4-logging:6f40eb59ee53d3eb29452a51daa15d4e&#34;&gt;4. Logging&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;‘Unlimited’, pay per drink storage&lt;/strong&gt;&lt;/li&gt;
@@ -210,13 +233,13 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;Ok, this is about the utility and scalability of the cloud. Not a cloud security benefit. It&amp;rsquo;s about using the cloud for security tasks.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;5. Improve the state of security software (performance)&lt;/h3&gt;
+&lt;h3 id=&#34;5-improve-the-state-of-security-software-performance:6f40eb59ee53d3eb29452a51daa15d4e&#34;&gt;5. Improve the state of security software (performance)&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Drive vendors to create more efficient security software&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;I believe this is true for even software on dedicated machines. Not cloud-exclusive.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;6. Secure builds&lt;/h3&gt;
+&lt;h3 id=&#34;6-secure-builds:6f40eb59ee53d3eb29452a51daa15d4e&#34;&gt;6. Secure builds&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Pre-hardened, change control builds&lt;/strong&gt;&lt;/p&gt;
 
@@ -232,7 +255,7 @@ I have only quoted the headers from Craig&amp;rsquo;s article so please refer to
 
 &lt;p&gt;Again I agree. However, it&amp;rsquo;s still the benefit of virtualization, not necessarily cloud-exclusive.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;7. Security Testing&lt;/h3&gt;
+&lt;h3 id=&#34;7-security-testing:6f40eb59ee53d3eb29452a51daa15d4e&#34;&gt;7. Security Testing&lt;/h3&gt;
 
 &lt;p&gt;**Reduce cost of testing security: **&lt;/p&gt;
 

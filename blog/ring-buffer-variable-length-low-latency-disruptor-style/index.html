@@ -22,6 +22,8 @@
   
   <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
 
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -44,22 +46,29 @@
       </p>
     </div>
 
-
-
     <ul class="sidebar-nav">
       <li><a href="http://zhen.org/blog">Archive</a></li>
+      <br/>
+      <li>Projects</li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/strace/sequence">sequence</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surgemq/surgemq">surgemq</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surge">zhenjl/others</a></li>
       
     </ul>
-      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      
-      
-      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
+
+    <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+    <a href="http://linkedin.com/in/zhenjl"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
+    
+    
+    
 
     <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
     Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
     Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
-    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    &copy; 2015 Jian Zhen. All Rights Reserved.</p>
     
   </div>
 </div>
@@ -80,7 +89,7 @@
 Benchmark1ProducerAnd1ConsumerInBytes-3 10000000               147 ns/op
 </code></pre>
 
-<h3 id="toc_0">tl;dr</h3>
+<h3 id="tl-dr:bdc146ca9cda0984f90718c5048177bd">tl;dr</h3>
 
 <ul>
 <li><a href="https://github.com/reducedb/ringbuffer">This project</a> implements a low-latency lock-free ring buffer for variable length byte slices. It is modeled after the <a href="https://github.com/LMAX-Exchange/disruptor/">LMAX Disruptor</a>, but not a direct port.</li>
@@ -93,7 +102,7 @@ Benchmark1ProducerAnd1ConsumerInBytes-3 10000000               147 ns/op
 <li>You can also read more about <a href="http://en.wikipedia.org/wiki/Circular_buffer">circular buffer</a>, <a href="http://en.wikipedia.org/wiki/Producer-consumer_problem">producer–consumer problem</a>.</li>
 </ul>
 
-<h3 id="toc_1">Go Learn Project #7 - Ring Buffer</h3>
+<h3 id="go-learn-project-7-ring-buffer:bdc146ca9cda0984f90718c5048177bd">Go Learn Project #7 - Ring Buffer</h3>
 
 <p>For the past several projects (<a href="http://zhen.org/blog/benchmarking-integer-compression-in-go/">#6</a>, <a href="http://zhen.org/blog/bitmap-compression-using-ewah-in-go/">#5</a>, <a href="http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/">#4</a>), I&rsquo;ve mostly been hacking bits, and optimizing them as much as possible for a single core.</p>
 
@@ -105,7 +114,7 @@ Benchmark1ProducerAnd1ConsumerInBytes-3 10000000               147 ns/op
 
 <p>The goal is to process millions of data items per second.</p>
 
-<h4 id="toc_2">Ring Buffer</h4>
+<h4 id="ring-buffer:bdc146ca9cda0984f90718c5048177bd">Ring Buffer</h4>
 
 <p>There are several ways to tackle this. A queue or ring buffer is usually a good data structure for this. You can think of a ring buffer is just a special type of queue that&rsquo;s just contiguous by wrapping itself. As Wikipedia said,</p>
 
@@ -117,7 +126,7 @@ Benchmark1ProducerAnd1ConsumerInBytes-3 10000000               147 ns/op
 
 <p>In most implementations, the pointers are mod&rsquo;ed with the ring size to determine the next slot size. Also, mutex is used to ensure only one thread is modifying these pointers at the same time.</p>
 
-<h4 id="toc_3">Go Channels</h4>
+<h4 id="go-channels:bdc146ca9cda0984f90718c5048177bd">Go Channels</h4>
 
 <p>In Go, an idiomatic and fairly common way is to use <a href="http://golang.org/doc/effective_go.html#channels">buffered channels</a> to solve this problem. It is effectively a queue where a producer puts data items into one end of the channel, and the consumer reads the data items on the other end of the channel. There are certainly pros and cons to to this approach.</p>
 
@@ -131,13 +140,13 @@ Benchmark1ProducerAnd1ConsumerInBytes-3 10000000               147 ns/op
 
 <p>There might actually be a way to implement the leaky buffer with a big preallocated slice. I may just do that as the next project. The goal is to see if we can avoid having to allocate individual byte slices and leverage CPU caching for the big buffer.</p>
 
-<h4 id="toc_4">Lock-Free Ring Buffer</h4>
+<h4 id="lock-free-ring-buffer:bdc146ca9cda0984f90718c5048177bd">Lock-Free Ring Buffer</h4>
 
 <p>The way that I&rsquo;ve decided to tackle this problem is to model the ring buffer after the LMAX Disruptor. If you haven&rsquo;t read Martin Fowler&rsquo;s <a href="http://martinfowler.com/articles/lmax.html">article on LMAX Architecture</a>, at this time I would recommend that you stop and go read it first. After that, you should go read <a href="http://mechanitis.blogspot.com/search/label/disruptor">Trisha&rsquo;s Disruptor blog series</a> that explains in even more details how the Disruptor works.</p>
 
 <p>One thing to keep in mind is that the Disruptor-style ring buffer has significant resource requirement, i.e., it requires N cores, where N is the number of producers and consumers, to be performant. And it will keep cores busy by busy waiting (looping). So huge downside. If you don&rsquo;t need this type of low latency architecture, it&rsquo;s much better to stay with channels.</p>
 
-<h3 id="toc_5">Performance Comparison</h3>
+<h3 id="performance-comparison:bdc146ca9cda0984f90718c5048177bd">Performance Comparison</h3>
 
 <p>These benchmarks are performed on a MacBook Pro with 2.8GHz Intel Core i7 procesor (Haswell), and 16 GB 1600MHz DDR3 memory. Go version 1.2rc5.</p>
 
@@ -163,9 +172,9 @@ BenchmarkChannels2Consumers-2    5000000               647 ns/op
 BenchmarkChannels2Consumers-3    5000000               570 ns/op
 </code></pre>
 
-<h3 id="toc_6">Examples</h3>
+<h3 id="examples:bdc146ca9cda0984f90718c5048177bd">Examples</h3>
 
-<h4 id="toc_7">Go Channel: 1 Producer and 1 Consumer</h4>
+<h4 id="go-channel-1-producer-and-1-consumer:bdc146ca9cda0984f90718c5048177bd">Go Channel: 1 Producer and 1 Consumer</h4>
 
 <pre><code>func BenchmarkChannels(b *testing.B) {
 	dataSize := 256
@@ -195,7 +204,7 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
 }
 </code></pre>
 
-<h4 id="toc_8">Ring Buffer: 1 Producer and 1 Consumer</h4>
+<h4 id="ring-buffer-1-producer-and-1-consumer:bdc146ca9cda0984f90718c5048177bd">Ring Buffer: 1 Producer and 1 Consumer</h4>
 
 <p>This test function creates a 256-slot ring buffer, with each slot being 128 bytes long. It also creates 1 producer and 1 consumer, where the producer will put the same byte slice into the buffer 10,000 times, and the consumer will read from the buffer and then make sure we read the correct byte slice.</p>
 
@@ -272,11 +281,11 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
 
 </code></pre>
 
-<h4 id="toc_9">Ring Buffer: 1 Producer and 2 Consumers</h4>
+<h4 id="ring-buffer-1-producer-and-2-consumers:bdc146ca9cda0984f90718c5048177bd">Ring Buffer: 1 Producer and 2 Consumers</h4>
 
 <p>As mentioned before, the ring buffer supports multiple consumers. <a href="https://github.com/reducedb/ringbuffer/blob/master/bytebuffer/ringbuffer_test.go#L304">This example</a> shows how you would create two consumers.</p>
 
-<h3 id="toc_10">Conclusion</h3>
+<h3 id="conclusion:bdc146ca9cda0984f90718c5048177bd">Conclusion</h3>
 
 <p>See tl;dr on top.</p>
 

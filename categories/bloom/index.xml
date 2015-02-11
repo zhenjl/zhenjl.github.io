@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Bloom on Zen 3.1 </title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://zhen.org/categories/bloom/index.xml/</link>
+    <title>Bloom on Zen 3.1</title>
+    <link>http://zhen.org/categories/bloom/</link>
+    <description>Recent content in Bloom on Zen 3.1</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Jian Zhen</author>
-    <copyright>Jian Zhen</copyright>
-    <updated>Wed, 04 Sep 2013 00:23:22 -0800</updated>
+    
+    
+    <copyright>Jian Zhen. All Rights Reserved.</copyright>
+    <lastBuildDate>Wed, 04 Sep 2013 00:23:22 -0800</lastBuildDate>
+    <atom:link href="http://zhen.org/categories/bloom/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Benchmarking Bloom Filters and Hash Functions in Go</title>
       <link>http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</link>
       <pubDate>Wed, 04 Sep 2013 00:23:22 -0800</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</guid>
       <description>
 
@@ -29,7 +32,7 @@
 
 &lt;p&gt;The goal of this project, for me at least, is to implement a pure Go package that doesn&amp;rsquo;t rely on wrappers to other langagues. There&amp;rsquo;s already &lt;a href=&#34;https://github.com/search?l=Go&amp;amp;q=bloom&amp;amp;ref=cmdform&amp;amp;type=Repositories&#34;&gt;quite a few&lt;/a&gt; bloom filters implemented in Go. But hey, in the name of learning, why not implement another one!&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;Bloom Filters&lt;/h3&gt;
+&lt;h3 id=&#34;bloom-filters:75bc04a36b7f857175f963f46bbada5d&#34;&gt;Bloom Filters&lt;/h3&gt;
 
 &lt;p&gt;Wikipedia says,&lt;/p&gt;
 
@@ -47,7 +50,7 @@
 
 &lt;p&gt;There are a ton more variants for bloom filters. You can raed all about them in &lt;a href=&#34;https://www.google.com/url?sa=t&amp;amp;rct=j&amp;amp;q=&amp;amp;esrc=s&amp;amp;source=web&amp;amp;cd=5&amp;amp;cad=rja&amp;amp;ved=0CE4QFjAE&amp;amp;url=http%3A%2F%2Fwww.tribler.org%2Ftrac%2Fraw-attachment%2Fwiki%2FJelleRoozenburg%2Fresearch_assignment_jroozenburg_20051108.pdf&amp;amp;ei=JHInUt6oO6GTiQK-44DYDg&amp;amp;usg=AFQjCNG057WVJ2m2QYPuqWzCZ0Vn4JnOug&amp;amp;sig2=NVlad7xGO4S_hFpMU9apGA&amp;amp;bvm=bv.51773540,d.cGE&#34;&gt;this paper&lt;/a&gt; and &lt;a href=&#34;http://www.dca.fee.unicamp.br/~chesteve/pubs/bloom-filter-ieee-survey-preprint.pdf&#34;&gt;this paper&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Hash Functions&lt;/h3&gt;
+&lt;h3 id=&#34;hash-functions:75bc04a36b7f857175f963f46bbada5d&#34;&gt;Hash Functions&lt;/h3&gt;
 
 &lt;p&gt;To add an element, bloom filters hashes the element using &lt;em&gt;k&lt;/em&gt; hashing functions, identifying &lt;em&gt;k&lt;/em&gt; positions in the bit array, and setting those bits to 1. To check for an element, you essentially do the same thing (hash the element with &lt;em&gt;k&lt;/em&gt; hash functions) and then check to see if all the bits at those positions are set. If all set, then most likely the element is available. If any of them are not set, then the element is definitely not avaiable. So bloom filters can have false positives, but not false negatives.&lt;/p&gt;
 
@@ -68,7 +71,7 @@
 
 &lt;p&gt;As a side note, MD5 and SHA1 return 128 bit hash values. Since we only use the first 64 bits, we throw away the last 64 bits.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Test Setup&lt;/h3&gt;
+&lt;h3 id=&#34;test-setup:75bc04a36b7f857175f963f46bbada5d&#34;&gt;Test Setup&lt;/h3&gt;
 
 &lt;p&gt;The machine that ran these tests is a Macbook Air 10.8.4 1.8GHz Intel Core i5 4GB 1600MHz DDR3.&lt;/p&gt;
 
@@ -104,7 +107,7 @@ end
 
 &lt;p&gt;You can see the tests in the &lt;a href=&#34;https://github.com/reducedb/bloom&#34;&gt;github repo&lt;/a&gt;. Just look for all the _test.go files.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;Test Results&lt;/h3&gt;
+&lt;h3 id=&#34;test-results:75bc04a36b7f857175f963f46bbada5d&#34;&gt;Test Results&lt;/h3&gt;
 
 &lt;p&gt;The following is a summary of the test results. You can also feel free to look at all the &lt;a href=&#34;https://gist.github.com/zhenjl/6433634&#34;&gt;gory details&lt;/a&gt;.&lt;/p&gt;
 
@@ -130,11 +133,11 @@ end
 
 &lt;p&gt;&lt;img src=&#34;https://docs.google.com/spreadsheet/oimg?key=0ApDLtJuUH-1rdEEwZ3JwaVVTZGxBX1g1NkthSFVVTXc&amp;oid=1&amp;zx=jbizsaoepc5x&#34; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;Feedback&lt;/h3&gt;
+&lt;h3 id=&#34;feedback:75bc04a36b7f857175f963f46bbada5d&#34;&gt;Feedback&lt;/h3&gt;
 
 &lt;p&gt;Feel free to send me any feedback via &lt;a href=&#34;https://github.com/reducedb/bloom/issues&#34;&gt;github issues&lt;/a&gt; or on &lt;a href=&#34;https://news.ycombinator.com/item?id=6329616&#34;&gt;Hacker News&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;References&lt;/h3&gt;
+&lt;h3 id=&#34;references:75bc04a36b7f857175f963f46bbada5d&#34;&gt;References&lt;/h3&gt;
 
 &lt;p&gt;During this process I referenced and leveraged some of these other projects, so thank you all!&lt;/p&gt;
 

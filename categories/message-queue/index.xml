@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Message-Queue on Zen 3.1 </title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://zhen.org/categories/message-queue/index.xml/</link>
+    <title>Message Queue on Zen 3.1</title>
+    <link>http://zhen.org/categories/message-queue/</link>
+    <description>Recent content in Message Queue on Zen 3.1</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Jian Zhen</author>
-    <copyright>Jian Zhen</copyright>
-    <updated>Thu, 25 Dec 2014 00:00:33 PST</updated>
+    
+    
+    <copyright>Jian Zhen. All Rights Reserved.</copyright>
+    <lastBuildDate>Thu, 25 Dec 2014 00:00:33 PST</lastBuildDate>
+    <atom:link href="http://zhen.org/categories/message-queue/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>PingMQ: A SurgeMQ-based ICMP Monitoring Tool</title>
       <link>http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</link>
       <pubDate>Thu, 25 Dec 2014 00:00:33 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</guid>
       <description>
 
@@ -53,7 +56,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 8 bytes from 8.8.8.8: seq=1 ttl=56 tos=32 time=21.753711ms
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;Commands&lt;/h3&gt;
+&lt;h3 id=&#34;commands:2953f7aa0fe0aa3757fe6bf025e7fa57&#34;&gt;Commands&lt;/h3&gt;
 
 &lt;p&gt;There are two builtin commands for &lt;code&gt;pingmq&lt;/code&gt;.&lt;/p&gt;
 
@@ -81,7 +84,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
   -t, --topic=[]: Comma separated list of topics to subscribe to
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;IP Addresses&lt;/h3&gt;
+&lt;h3 id=&#34;ip-addresses:2953f7aa0fe0aa3757fe6bf025e7fa57&#34;&gt;IP Addresses&lt;/h3&gt;
 
 &lt;p&gt;To list IPs you like to use with &lt;code&gt;pingmq&lt;/code&gt;, you can use the following formats:&lt;/p&gt;
 
@@ -107,7 +110,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 10.1.1.128/25 -&amp;gt; 10.1.1.128 ... 10.1.1.255
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Topic Format&lt;/h3&gt;
+&lt;h3 id=&#34;topic-format:2953f7aa0fe0aa3757fe6bf025e7fa57&#34;&gt;Topic Format&lt;/h3&gt;
 
 &lt;p&gt;TO subscribe to the &lt;code&gt;pingmq&lt;/code&gt; results, you can use the following formats:&lt;/p&gt;
 
@@ -118,7 +121,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 &lt;li&gt;&lt;code&gt;ping/+/8.8.8.8&lt;/code&gt; will subscribe to both success and failed pings for all IP 8.8.8.8&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;Building&lt;/h3&gt;
+&lt;h3 id=&#34;building:2953f7aa0fe0aa3757fe6bf025e7fa57&#34;&gt;Building&lt;/h3&gt;
 
 &lt;p&gt;To build &lt;code&gt;pingmq&lt;/code&gt;, you need to have installed &lt;a href=&#34;http://golang.org&#34;&gt;Go 1.3.3 or 1.4&lt;/a&gt;. Then run the following:&lt;/p&gt;
 
@@ -135,7 +138,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
       <title>SurgeMQ: High Performance MQTT Server and Client Libraries in Go</title>
       <link>http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</link>
       <pubDate>Wed, 24 Dec 2014 19:20:40 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</guid>
       <description>
 
@@ -151,7 +154,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 
 &lt;p&gt;&lt;strong&gt;SurgeMQ is currently under active development and should be considered unstable until further notice.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;MQTT&lt;/h3&gt;
+&lt;h3 id=&#34;mqtt:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;MQTT&lt;/h3&gt;
 
 &lt;p&gt;According to the &lt;a href=&#34;http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html&#34;&gt;MQTT spec&lt;/a&gt;:&lt;/p&gt;
 
@@ -177,7 +180,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 
 &lt;p&gt;There&amp;rsquo;s some very large implementation of MQTT such as &lt;a href=&#34;https://www.facebook.com/notes/facebook-engineering/building-facebook-messenger/10150259350998920&#34;&gt;Facebook Messenger&lt;/a&gt;. There&amp;rsquo;s also an active Eclipse project, &lt;a href=&#34;https://eclipse.org/paho/&#34;&gt;Paho&lt;/a&gt;, that provides scalable open-source client implementations for many different languages, including C/C++, Java, Python, JavaScript, C# .Net and Go.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Features, Limitations, and Future&lt;/h3&gt;
+&lt;h3 id=&#34;features-limitations-and-future:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Features, Limitations, and Future&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;
 
@@ -211,7 +214,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 &lt;li&gt;Better authentication modules&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Performance&lt;/h3&gt;
+&lt;h3 id=&#34;performance:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Performance&lt;/h3&gt;
 
 &lt;p&gt;Current performance benchmark of SurgeMQ, running all publishers, subscribers and broker on a single 4-core (2.8Ghz i7) MacBook Pro, is able to achieve:&lt;/p&gt;
 
@@ -222,7 +225,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 &lt;li&gt;over &lt;strong&gt;700,000 MPS&lt;/strong&gt; in a full mesh configuration with 20 clients&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;Compatibility&lt;/h3&gt;
+&lt;h3 id=&#34;compatibility:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Compatibility&lt;/h3&gt;
 
 &lt;p&gt;In addition, SurgeMQ has been tested with the following client libraries and it &lt;em&gt;seems&lt;/em&gt; to work:&lt;/p&gt;
 
@@ -239,13 +242,13 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 &lt;li&gt;&lt;em&gt;Paho C Client library (in C).&lt;/em&gt; Tested with most of the test cases and failed the same ones as the conformance test because the features are not yet implemented. Actually I think there&amp;rsquo;s a bug in the test suite as it calls the PUBLISH handler function for non-PUBLISH messages.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;Documentation&lt;/h3&gt;
+&lt;h3 id=&#34;documentation:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Documentation&lt;/h3&gt;
 
 &lt;p&gt;Documentation is available at &lt;a href=&#34;http://godoc.org/github.com/surge/surgemq&#34;&gt;godoc&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;More information regarding the design of the SurgeMQ is available at &lt;a href=&#34;http://surgemq.com&#34;&gt;zen 3.1&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;License&lt;/h3&gt;
+&lt;h3 id=&#34;license:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;License&lt;/h3&gt;
 
 &lt;p&gt;Copyright &amp;copy; 2014 Dataence, LLC. All rights reserved.&lt;/p&gt;
 
@@ -261,9 +264,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;Examples&lt;/h3&gt;
+&lt;h3 id=&#34;examples:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Examples&lt;/h3&gt;
 
-&lt;h4 id=&#34;toc_7&#34;&gt;Server Example&lt;/h4&gt;
+&lt;h4 id=&#34;server-example:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Server Example&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;// Create a new server
 svr := &amp;amp;service.Server{
@@ -278,7 +281,7 @@ svr := &amp;amp;service.Server{
 svr.ListenAndServe(&amp;quot;tcp://:1883&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_8&#34;&gt;Client Example&lt;/h4&gt;
+&lt;h4 id=&#34;client-example:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Client Example&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;// Instantiates a new Client
 c := &amp;amp;Client{}
@@ -329,7 +332,7 @@ c.Disconnect()
       <title>SurgeMQ: MQTT Message Queue @ 750,000 MPS</title>
       <link>http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/</link>
       <pubDate>Thu, 04 Dec 2014 22:44:07 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/</guid>
       <description>
 
@@ -338,7 +341,7 @@ c.Disconnect()
 &lt;li&gt;jacques_chester on HN has an &lt;a href=&#34;https://news.ycombinator.com/item?id=8709146&#34;&gt;EXCELLENT comment&lt;/a&gt; that&amp;rsquo;s definitely worth reading. &lt;a href=&#34;https://news.ycombinator.com/item?id=8709557&#34;&gt;My response&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;tl;dr&lt;/h3&gt;
+&lt;h3 id=&#34;tl-dr:6ef28047216284b846a43eee6e7c23b5&#34;&gt;tl;dr&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt; aims to provide a MQTT broker and client library that&amp;rsquo;s fully compliant with &lt;a href=&#34;http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html&#34;&gt;MQTT spec 3.1.1&lt;/a&gt;. In addition, it tries to be backward compatible with 3.1.&lt;/li&gt;
@@ -366,7 +369,7 @@ c.Disconnect()
 &lt;p&gt;Lesson 4: Use the race detector!&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Go Learn Project #8 - Message Queue&lt;/h3&gt;
+&lt;h3 id=&#34;go-learn-project-8-message-queue:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Go Learn Project #8 - Message Queue&lt;/h3&gt;
 
 &lt;p&gt;It&amp;rsquo;s now been over a year since my last post! Family and work have occupied pretty much all of my time so spare time to learn Go was hard to come by.&lt;/p&gt;
 
@@ -374,7 +377,7 @@ c.Disconnect()
 
 &lt;p&gt;Now months later, I am finally able spend a few weekends and nights developing &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt;, a (soon to be) full MQTT 3.1.1 compliant message broker.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_2&#34;&gt;Message Queues&lt;/h4&gt;
+&lt;h4 id=&#34;message-queues:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Message Queues&lt;/h4&gt;
 
 &lt;p&gt;According to &lt;a href=&#34;http://en.wikipedia.org/wiki/Message_queue&#34;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
 
@@ -386,7 +389,7 @@ c.Disconnect()
 
 &lt;p&gt;In that post, Tyler found that borkerless queues had the highest throughput, achieving millions of MPS sent and received. Brokered message queue performances ranged from 12,000 MPS (&lt;a href=&#34;nsq.io&#34;&gt;NSQ&lt;/a&gt;) to 195,000 MPS (&lt;a href=&#34;nats.io&#34;&gt;Gnatsd&lt;/a&gt;). While the post showed that the Gnatsd latency to be around 300+ microseconds, in reality it&amp;rsquo;s probably more like the NSQ in terms of latency due to the sender sleeping whenever Gnatsd is 10+ messages behind. Regardless, hats off to Tyler. Great job!&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_3&#34;&gt;MQTT&lt;/h4&gt;
+&lt;h4 id=&#34;mqtt:6ef28047216284b846a43eee6e7c23b5&#34;&gt;MQTT&lt;/h4&gt;
 
 &lt;p&gt;I got interested in MQTT because &amp;ldquo;&lt;a href=&#34;http://mqtt.org&#34;&gt;MQTT&lt;/a&gt; is a machine-to-machine (M2M)/&amp;ldquo;Internet of Things&amp;rdquo; connectivity protocol. It was designed as an extremely lightweight publish/subscribe messaging transport.&amp;rdquo;&lt;/p&gt;
 
@@ -416,9 +419,9 @@ c.Disconnect()
 
 &lt;p&gt;Given the popularity, I decided to implement a MQTT broker in order to learn about message queues.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;Architecture&lt;/h3&gt;
+&lt;h3 id=&#34;architecture:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Architecture&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/surgemq-mqtt-message-queue-750k-mps/smqfailedarch.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/surgemq-mqtt-message-queue-750k-mps/smqfailedarch.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The above image showed a couple of the architecture approaches I attempted. In them, R is the receiver, which reads from net.Conn, P is the processor, which processes the messages and determines what to do or where to send them, and S is the sender, which sends any messages out to net.Conn. Each R, P, and S are their own goroutines.&lt;/p&gt;
 
@@ -447,7 +450,7 @@ c.Disconnect()
 
 &lt;p&gt;After profiling and looking at the &lt;a href=&#34;/images/surgemq-mqtt-message-queue-750k-mps/2ndfailcpuprof.svg&#34;&gt;CPU profile&lt;/a&gt;, I realized there are a lot of memory copying (io.Copy and io.CopyN), as well as there are still quite a bit GC activities (scanblock). On the memory copying front, there&amp;rsquo;s copying from net.Conn into bufio, then more copying from bufio to the MQTT messages internal buffer, then more copying from MQTT message internal buffers to the outgoing bufio, then to the net.Conn. So lots and lots of memory copying, not a good thing.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_5&#34;&gt;Buffered Network IO&lt;/h4&gt;
+&lt;h4 id=&#34;buffered-network-io:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Buffered Network IO&lt;/h4&gt;
 
 &lt;p&gt;The buffered network IO is a good approach, however, there are two things I wished I had:&lt;/p&gt;
 
@@ -482,7 +485,7 @@ c.Disconnect()
 &lt;p&gt;Lesson 2: Reduce or remove memory copying.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h4 id=&#34;toc_6&#34;&gt;Final Architecture&lt;/h4&gt;
+&lt;h4 id=&#34;final-architecture:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Final Architecture&lt;/h4&gt;
 
 &lt;p&gt;This the final architecture I ended up with and it&amp;rsquo;s working very well. The cost of each client connection are:&lt;/p&gt;
 
@@ -493,9 +496,9 @@ c.Disconnect()
 
 &lt;p&gt;There&amp;rsquo;s very few memory copy operations going on, nor is there much memory allocation. So a good outcome overall.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/surgemq-mqtt-message-queue-750k-mps/finalarch.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/surgemq-mqtt-message-queue-750k-mps/finalarch.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_7&#34;&gt;Race Conditions&lt;/h3&gt;
+&lt;h3 id=&#34;race-conditions:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Race Conditions&lt;/h3&gt;
 
 &lt;p&gt;With the ring bufer implementation, I was able to achieve 400,000 MPS with a 1:1 configuration. This worked well until I started doing multiple publishers and subscribers. The first problem I ran into was the Processor hanging. &lt;code&gt;go test -race&lt;/code&gt; also didn&amp;rsquo;t show anything that could help me.&lt;/p&gt;
 
@@ -553,7 +556,7 @@ c.Disconnect()
 &lt;p&gt;Lesson 3: Race conditions can happen even if you think you followed all the right steps.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h4 id=&#34;toc_8&#34;&gt;But Wait, There&amp;rsquo;s More (Race Conditions)&lt;/h4&gt;
+&lt;h4 id=&#34;but-wait-there-s-more-race-conditions:6ef28047216284b846a43eee6e7c23b5&#34;&gt;But Wait, There&amp;rsquo;s More (Race Conditions)&lt;/h4&gt;
 
 &lt;p&gt;As I increase the number of publishers and subscribers, all the sudden I was getting errors about receiving RESERVED messages, and this happens intermittenly, and only when I blast enough messages. Sometimes I have to run the tests many times to catch this from happening.&lt;/p&gt;
 
@@ -567,7 +570,7 @@ c.Disconnect()
 &lt;p&gt;Lesson 4: Use the race detector!&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;toc_9&#34;&gt;Performance Benchmarks&lt;/h3&gt;
+&lt;h3 id=&#34;performance-benchmarks:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Performance Benchmarks&lt;/h3&gt;
 
 &lt;p&gt;These performance numbers are calculated as follows:&lt;/p&gt;
 
@@ -576,7 +579,7 @@ c.Disconnect()
 &lt;li&gt;received messages MPS = total messages received / total elapsed time between 1st and last message received for all receivers&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&#34;toc_10&#34;&gt;Environment&lt;/h4&gt;
+&lt;h4 id=&#34;environment:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Environment&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;$ go version
 go version go1.3.3 darwin/amd64
@@ -588,7 +591,7 @@ Macbook Pro Late 2013
 16 GB 1600 MHz DDR3
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_11&#34;&gt;Server&lt;/h4&gt;
+&lt;h4 id=&#34;server:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Server&lt;/h4&gt;
 
 &lt;p&gt;To start the server,&lt;/p&gt;
 
@@ -597,7 +600,7 @@ $ GOMAXPROCS=2 go test -run=TestServer -vv=2 -logtostderr
 server/ListenAndServe: server is ready...
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_12&#34;&gt;1:1&lt;/h4&gt;
+&lt;h4 id=&#34;1-1:6ef28047216284b846a43eee6e7c23b5&#34;&gt;1:1&lt;/h4&gt;
 
 &lt;p&gt;To run the single publisher and single subscriber test case:&lt;/p&gt;
 
@@ -606,7 +609,7 @@ Total Sent 1000000 messages in 2434523153 ns, 2434 ns/msg, 410758 msgs/sec
 Total Received 1000000 messages in 2434523153 ns, 2434 ns/msg, 410758 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_13&#34;&gt;Fan-In&lt;/h4&gt;
+&lt;h4 id=&#34;fan-in:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Fan-In&lt;/h4&gt;
 
 &lt;p&gt;To run the Fan-In test with 20 senders and 1 receiver:&lt;/p&gt;
 
@@ -615,7 +618,7 @@ Total Sent 1035436 messages in 2212609304 ns, 2136 ns/msg, 467970 msgs/sec
 Total Received 1000022 messages in 2212609304 ns, 2212 ns/msg, 451965 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_14&#34;&gt;Fan-Out&lt;/h4&gt;
+&lt;h4 id=&#34;fan-out:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Fan-Out&lt;/h4&gt;
 
 &lt;p&gt;To run the Fan-Out test with 1 sender and 20 receivers:&lt;/p&gt;
 
@@ -624,7 +627,7 @@ Total Sent 1000000 messages in 10715317340 ns, 10715 ns/msg, 93324 msgs/sec
 Total Received 8180723 messages in 10715317340 ns, 1309 ns/msg, 763460 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_15&#34;&gt;Mesh&lt;/h4&gt;
+&lt;h4 id=&#34;mesh:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Mesh&lt;/h4&gt;
 
 &lt;p&gt;To run a full mesh test where every client is subscribed to the same topic, thus every message sent w/ the right topic will go to ALL of the other clients:&lt;/p&gt;
 
@@ -633,7 +636,7 @@ Total Sent 2000000 messages in 51385336097 ns, 25692 ns/msg, 38921 msgs/sec
 Total Received 40000000 messages in 51420975243 ns, 1285 ns/msg, 777892 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_16&#34;&gt;Next Steps&lt;/h3&gt;
+&lt;h3 id=&#34;next-steps:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Next Steps&lt;/h3&gt;
 
 &lt;p&gt;There&amp;rsquo;s a lot more to do with SurgeMQ. Given the limited time I have, I expect it will take me a while to get to full compliant with the MQTT spec. But that will be my focus, now that performance is out of the way, as I get time.&lt;/p&gt;
 </description>

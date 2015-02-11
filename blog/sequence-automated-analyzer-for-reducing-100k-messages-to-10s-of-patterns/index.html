@@ -22,6 +22,8 @@
   
   <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
 
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -44,22 +46,29 @@
       </p>
     </div>
 
-
-
     <ul class="sidebar-nav">
       <li><a href="http://zhen.org/blog">Archive</a></li>
+      <br/>
+      <li>Projects</li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/strace/sequence">sequence</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surgemq/surgemq">surgemq</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surge">zhenjl/others</a></li>
       
     </ul>
-      <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
-      
-      
-      <a href="https://github.com/zhenjl"><i class="fa fa-github-square"></i></a>&nbsp;&nbsp;
-      
+
+    <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+    <a href="http://linkedin.com/in/zhenjl"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
+    
+    
+    
 
     <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
     Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
     Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
-    &copy; 2015 Jian Zhen. All rights reserved.</p>
+    &copy; 2015 Jian Zhen. All Rights Reserved.</p>
     
   </div>
 </div>
@@ -80,7 +89,7 @@
 
 <p>This is part 2 of the <code>sequence</code> series. <a href="http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/">Part 1</a> is about the high performance parser that can parse 100,000-200,000 MPs.</p>
 
-<h2 id="toc_0">Background</h2>
+<h2 id="background:61b1adc09fb9bc31a28d4faabfef3631">Background</h2>
 
 <p>This post really takes me down the memory lane. Back in 2005, while I was at LogLogic, we envisioned an automated approach to tagging, or labeling, log messages. More specifically, we wanted to automatically tag specific components within the log messages with their semantic label, such as a source IP address, or a target user.</p>
 
@@ -100,7 +109,7 @@
 
 <p>It is understandable, unfortunately. Log parsing is <strong>BORING</strong>. I mean, who wants to sit there and stare at logs all day and try to come up with regular expressions or other types of parsing rules? LogLogic used to have a team of LogLabs analysts that did that, and I have to say I truly appreciated their effort and patience, because I cannot do that.</p>
 
-<h3 id="toc_1">The End Result</h3>
+<h3 id="the-end-result:61b1adc09fb9bc31a28d4faabfef3631">The End Result</h3>
 
 <p>So instead of writing rules all day long, I decided to create an analyzer that can help us get at least 75% of the way there. The end result is the <code>Analyzer</code>, written in <a href="http://golang.org">Go</a>, in the <a href="https://github.com/strace/sequence">sequence</a> project I created. Here are some preliminary results. Below, we analyzed 2 files. The first is a file with over 200,000 sshd messages. The second is a file with a mixture of ASA, sshd, sudo and su log messages. It contains almost 450,000 messages.</p>
 
@@ -131,7 +140,7 @@ Analyzed 447745 messages, found 103 unique patterns, 103 are new.
 Analyzed 212897 messages, found 39 unique patterns, 4 are new.
 </code></pre>
 
-<h3 id="toc_2">Parser - Quick Review</h3>
+<h3 id="parser-quick-review:61b1adc09fb9bc31a28d4faabfef3631">Parser - Quick Review</h3>
 
 <p>I wrote about the <a href="http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/">sequence parser</a> a couple of weeks back. It is a <em>high performance sequential log parser</em>. It <em>sequentially</em> goes through a log message, <em>parses</em> out the meaningful parts, without the use regular expressions. It can achieve <em>high performance</em> parsing of <strong>100,000 - 200,000 messages per second (MPS)</strong> without the need to separate parsing rules by log source type. Underneath the hood, the <code>sequence</code> parser basically constructs a tree based on the sequential rules, walks the tree to identify all the possible paths, and returns the path that has the best match (highest weight) for the message.</p>
 
@@ -139,11 +148,11 @@ Analyzed 212897 messages, found 39 unique patterns, 4 are new.
 
 <p>The approach taken by the <code>sequence</code> parser is pretty much the same as liblognorm or other tree-based approaches.</p>
 
-<h2 id="toc_3">Sequence Analyzer</h2>
+<h2 id="sequence-analyzer:61b1adc09fb9bc31a28d4faabfef3631">Sequence Analyzer</h2>
 
 <p>In the following section I will go through additional details of how the <code>sequence</code> analyzer reduces 100 of 1000&rsquo;s of raw log messages down to just 10&rsquo;s of unique patterns, and then determining how to label the individual tokens.</p>
 
-<h3 id="toc_4">Identifying Unique Patterns</h3>
+<h3 id="identifying-unique-patterns:61b1adc09fb9bc31a28d4faabfef3631">Identifying Unique Patterns</h3>
 
 <p>Analyzer builds an analysis tree that represents all the Sequences from messages. It can be used to determine all of the unique patterns for a large body of messages.</p>
 
@@ -176,7 +185,7 @@ messages is:</p>
 
 <p>By applying this concept, we can effectively identify all the unique patterns in a log file.</p>
 
-<h3 id="toc_5">Determining the Correct Labels</h3>
+<h3 id="determining-the-correct-labels:61b1adc09fb9bc31a28d4faabfef3631">Determining the Correct Labels</h3>
 
 <p>Now that we have the unique patterns, we will scan the tokens to determine which labels we should apply to them.</p>
 
@@ -282,7 +291,7 @@ object = [
 
 <p>Finally, after all that, we scan through the sequence again, and identify any numbers that follow an IP address, but separated by either a &ldquo;/&rdquo; or &ldquo;:&ldquo;. Then we label these numbers as either <code>%srcport%</code> or <code>%dstport%</code> based on how the previous IP address is labeled.</p>
 
-<h3 id="toc_6">Summary</h3>
+<h3 id="summary:61b1adc09fb9bc31a28d4faabfef3631">Summary</h3>
 
 <p>There are some limitations to the <code>sequence</code> parser and analyzer. For example, currently <code>sequence</code> does not handle multi-line logs. Each log message must appear as a single line. So if there&rsquo;s multi-line logs, they must be first be converted into a single line. Also, <code>sequence</code> has been only tested with a limited set of system (Linux, AIX, sudo, ssh, su, dhcp, etc etc), network (ASA, PIX, Neoteris, CheckPoint, Juniper Firewall) and infrastructure application (apache, bluecoat, etc) logs.</p>
 

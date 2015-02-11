@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Blogs on Zen 3.1 </title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://zhen.org/blog/index.xml/</link>
+    <title>Blogs on Zen 3.1</title>
+    <link>http://zhen.org/blog/</link>
+    <description>Recent content in Blogs on Zen 3.1</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Jian Zhen</author>
-    <copyright>Jian Zhen</copyright>
-    <updated>Tue, 10 Feb 2015 06:40:20 PST</updated>
+    
+    
+    <copyright>Jian Zhen. All Rights Reserved.</copyright>
+    <lastBuildDate>Tue, 10 Feb 2015 06:40:20 PST</lastBuildDate>
+    <atom:link href="http://zhen.org/blog/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Sequence: Automated Analyzer for Reducing 100,000&#39;s of Log Messages to 10&#39;s of Patterns</title>
       <link>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</link>
       <pubDate>Tue, 10 Feb 2015 06:40:20 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</guid>
       <description>
 
@@ -27,7 +30,7 @@
 
 &lt;p&gt;This is part 2 of the &lt;code&gt;sequence&lt;/code&gt; series. &lt;a href=&#34;http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/&#34;&gt;Part 1&lt;/a&gt; is about the high performance parser that can parse 100,000-200,000 MPs.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_0&#34;&gt;Background&lt;/h2&gt;
+&lt;h2 id=&#34;background:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Background&lt;/h2&gt;
 
 &lt;p&gt;This post really takes me down the memory lane. Back in 2005, while I was at LogLogic, we envisioned an automated approach to tagging, or labeling, log messages. More specifically, we wanted to automatically tag specific components within the log messages with their semantic label, such as a source IP address, or a target user.&lt;/p&gt;
 
@@ -47,7 +50,7 @@
 
 &lt;p&gt;It is understandable, unfortunately. Log parsing is &lt;strong&gt;BORING&lt;/strong&gt;. I mean, who wants to sit there and stare at logs all day and try to come up with regular expressions or other types of parsing rules? LogLogic used to have a team of LogLabs analysts that did that, and I have to say I truly appreciated their effort and patience, because I cannot do that.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;The End Result&lt;/h3&gt;
+&lt;h3 id=&#34;the-end-result:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;The End Result&lt;/h3&gt;
 
 &lt;p&gt;So instead of writing rules all day long, I decided to create an analyzer that can help us get at least 75% of the way there. The end result is the &lt;code&gt;Analyzer&lt;/code&gt;, written in &lt;a href=&#34;http://golang.org&#34;&gt;Go&lt;/a&gt;, in the &lt;a href=&#34;https://github.com/strace/sequence&#34;&gt;sequence&lt;/a&gt; project I created. Here are some preliminary results. Below, we analyzed 2 files. The first is a file with over 200,000 sshd messages. The second is a file with a mixture of ASA, sshd, sudo and su log messages. It contains almost 450,000 messages.&lt;/p&gt;
 
@@ -78,7 +81,7 @@ Analyzed 447745 messages, found 103 unique patterns, 103 are new.
 Analyzed 212897 messages, found 39 unique patterns, 4 are new.
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Parser - Quick Review&lt;/h3&gt;
+&lt;h3 id=&#34;parser-quick-review:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Parser - Quick Review&lt;/h3&gt;
 
 &lt;p&gt;I wrote about the &lt;a href=&#34;http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/&#34;&gt;sequence parser&lt;/a&gt; a couple of weeks back. It is a &lt;em&gt;high performance sequential log parser&lt;/em&gt;. It &lt;em&gt;sequentially&lt;/em&gt; goes through a log message, &lt;em&gt;parses&lt;/em&gt; out the meaningful parts, without the use regular expressions. It can achieve &lt;em&gt;high performance&lt;/em&gt; parsing of &lt;strong&gt;100,000 - 200,000 messages per second (MPS)&lt;/strong&gt; without the need to separate parsing rules by log source type. Underneath the hood, the &lt;code&gt;sequence&lt;/code&gt; parser basically constructs a tree based on the sequential rules, walks the tree to identify all the possible paths, and returns the path that has the best match (highest weight) for the message.&lt;/p&gt;
 
@@ -86,11 +89,11 @@ Analyzed 212897 messages, found 39 unique patterns, 4 are new.
 
 &lt;p&gt;The approach taken by the &lt;code&gt;sequence&lt;/code&gt; parser is pretty much the same as liblognorm or other tree-based approaches.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_3&#34;&gt;Sequence Analyzer&lt;/h2&gt;
+&lt;h2 id=&#34;sequence-analyzer:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Sequence Analyzer&lt;/h2&gt;
 
 &lt;p&gt;In the following section I will go through additional details of how the &lt;code&gt;sequence&lt;/code&gt; analyzer reduces 100 of 1000&amp;rsquo;s of raw log messages down to just 10&amp;rsquo;s of unique patterns, and then determining how to label the individual tokens.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;Identifying Unique Patterns&lt;/h3&gt;
+&lt;h3 id=&#34;identifying-unique-patterns:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Identifying Unique Patterns&lt;/h3&gt;
 
 &lt;p&gt;Analyzer builds an analysis tree that represents all the Sequences from messages. It can be used to determine all of the unique patterns for a large body of messages.&lt;/p&gt;
 
@@ -123,7 +126,7 @@ messages is:&lt;/p&gt;
 
 &lt;p&gt;By applying this concept, we can effectively identify all the unique patterns in a log file.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;Determining the Correct Labels&lt;/h3&gt;
+&lt;h3 id=&#34;determining-the-correct-labels:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Determining the Correct Labels&lt;/h3&gt;
 
 &lt;p&gt;Now that we have the unique patterns, we will scan the tokens to determine which labels we should apply to them.&lt;/p&gt;
 
@@ -229,7 +232,7 @@ object = [
 
 &lt;p&gt;Finally, after all that, we scan through the sequence again, and identify any numbers that follow an IP address, but separated by either a &amp;ldquo;/&amp;rdquo; or &amp;ldquo;:&amp;ldquo;. Then we label these numbers as either &lt;code&gt;%srcport%&lt;/code&gt; or &lt;code&gt;%dstport%&lt;/code&gt; based on how the previous IP address is labeled.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;Summary&lt;/h3&gt;
+&lt;h3 id=&#34;summary:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Summary&lt;/h3&gt;
 
 &lt;p&gt;There are some limitations to the &lt;code&gt;sequence&lt;/code&gt; parser and analyzer. For example, currently &lt;code&gt;sequence&lt;/code&gt; does not handle multi-line logs. Each log message must appear as a single line. So if there&amp;rsquo;s multi-line logs, they must be first be converted into a single line. Also, &lt;code&gt;sequence&lt;/code&gt; has been only tested with a limited set of system (Linux, AIX, sudo, ssh, su, dhcp, etc etc), network (ASA, PIX, Neoteris, CheckPoint, Juniper Firewall) and infrastructure application (apache, bluecoat, etc) logs.&lt;/p&gt;
 
@@ -245,9 +248,60 @@ object = [
     
     <item>
       <title>Papers I Read: 2015 Week 6</title>
+      <link>http://zhen.org/blog/papers-i-read-2015-week-7/</link>
+      <pubDate>Sun, 08 Feb 2015 19:57:56 PST</pubDate>
+      
+      <guid>http://zhen.org/blog/papers-i-read-2015-week-7/</guid>
+      <description>
+
+&lt;h3 id=&#34;random-ramblings:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Random Ramblings&lt;/h3&gt;
+
+&lt;p&gt;Athem hack&lt;/p&gt;
+
+&lt;p&gt;Another great resource of computer science papers is Adrian Coyler&amp;rsquo;s &lt;a href=&#34;http://blog.acolyer.org/&#34;&gt;the morning paper&lt;/a&gt;. He selects and summarizes &amp;ldquo;an interesting/influential/important paper from the world of CS every weekday morning&amp;rdquo;.&lt;/p&gt;
+
+&lt;h3 id=&#34;papers-i-read:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Papers I Read&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cs.put.poznan.pl/dweiss/site/publications/download/fsacomp.pdf&#34;&gt;Smaller Representation of Finite State Automata&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I read this paper when I was trying to figure out how to make the FSAs smaller for the &lt;a href=&#34;https://github.com/surge/xparse/tree/master/etld&#34;&gt;Effective TLD matcher&lt;/a&gt; I created. The FSM I generated is 212,294 lines long. That&amp;rsquo;s just absolutely crazy. This paper seems to present an interesting way of compressing them.&lt;/p&gt;
+
+&lt;p&gt;I am not exactly sure if &lt;a href=&#34;https://godoc.org/golang.org/x/net/publicsuffix&#34;&gt;PublicSuffix&lt;/a&gt; uses a similar representation but it basically represents a FSA as an array of bytes, and then walk the bytes like a binary search tree. It&amp;rsquo;s interesting for sure.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This paper is a follow-up to Jan Daciuk’s experiments on space-efficient finite state automata representation that can be used directly for traversals in main memory [4]. We investigate several techniques of reducing the memory footprint of minimal automata, mainly exploiting the fact that transition labels and transition pointer offset values are not evenly distributed and so are suitable for compression. We achieve a size gain of around 20–30% compared to the original representation given in [4]. This result is comparable to the state-of-the-art dictionary compression techniques like the LZ-trie [12] method, but remains
+memory and CPU efficient during construction.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://arxiv.org/pdf/1409.5942v1.pdf&#34;&gt;IP Tracing and Active Network Response&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This work presents integrated model for active security response model. The proposed model introduces Active Response Mechanism (ARM) for tracing anonymous attacks in the network back to their source. This work is motivated by the increased frequency and sophistication of denial-of-service attacks and by the difficulty in tracing packets with incorrect, or “spoofed”, source addresses. This paper presents within the proposed model two tracing approaches based on:
+• Sleepy Watermark Tracing (SWT) for unauthorized access attacks.
+• Probabilistic Packet Marking (PPM) in the network for Denial of Service
+(DoS) and Distributed Denial of Service (DDoS) attacks.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://static.googleusercontent.com/media/research.google.com/en/us/pubs/archive/36356.pdf&#34;&gt;Dapper, a Large-Scale Distributed Systems Tracing Infrastructure&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Here we introduce the design of Dapper, Google’s production distributed systems tracing infrastructure, and describe how our design goals of low overhead, application-level transparency, and ubiquitous deployment on a very large scale system were met. Dapper shares conceptual similarities with other tracing systems, particularly Magpie [3] and X-Trace [12], but certain design
+choices were made that have been key to its success in our environment, such as the use of sampling and restricting the instrumentation to a rather small number of common libraries.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Papers I Read: 2015 Week 6</title>
       <link>http://zhen.org/blog/papers-i-read-2015-week-6/</link>
       <pubDate>Sun, 08 Feb 2015 19:57:56 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/papers-i-read-2015-week-6/</guid>
       <description>
 
@@ -257,7 +311,7 @@ object = [
 
 &lt;p&gt;In any case, I thought it might be an interesting idea to share some of the papers I read/scan/skim on weekly basis. This way I can also track what I read over time.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;Random Ramblings&lt;/h3&gt;
+&lt;h3 id=&#34;random-ramblings:e2137c343047358d9912399632750231&#34;&gt;Random Ramblings&lt;/h3&gt;
 
 &lt;p&gt;This week has been a disaster. I was the last one in the family to catch the cold, but probably lasted the longest. In fact I am still only about 50%. This whole week I have been having headaches, body aches, and haven&amp;rsquo;t been able to concentrate. My body must be trying to catch up on sleep or something. For a couple days I actually slept for almost 12 hours a night!&lt;/p&gt;
 
@@ -275,7 +329,7 @@ object = [
 
 &lt;p&gt;[Disclaimer: any mistake in my calculations/assumptions I blame on my drugged brain cells.]&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Papers I Read&lt;/h3&gt;
+&lt;h3 id=&#34;papers-i-read:e2137c343047358d9912399632750231&#34;&gt;Papers I Read&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.covert.io/research-papers/security/Beehive%20-%20Large-Scale%20Log%20Analysis%20for%20Detecting%20Suspicious%20Activity%20in%20Enterprise%20Networks.pdf&#34;&gt;Beehive: Large-Scale Log Analysis for Detecting Suspicious Activity in Enterprise Networks&lt;/a&gt;&lt;/li&gt;
@@ -335,41 +389,10 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
     </item>
     
     <item>
-      <title>Papers I Read: 2015 Week 6</title>
-      <link>http://zhen.org/blog/papers-i-read-2015-week-7/</link>
-      <pubDate>Sun, 08 Feb 2015 19:57:56 PST</pubDate>
-      <author>Jian Zhen</author>
-      <guid>http://zhen.org/blog/papers-i-read-2015-week-7/</guid>
-      <description>
-
-&lt;h3 id=&#34;toc_0&#34;&gt;Random Ramblings&lt;/h3&gt;
-
-&lt;p&gt;Athem hack&lt;/p&gt;
-
-&lt;p&gt;Another great resource of computer science papers is Adrian Coyler&amp;rsquo;s &lt;a href=&#34;http://blog.acolyer.org/&#34;&gt;the morning paper&lt;/a&gt;. He selects and summarizes &amp;ldquo;an interesting/influential/important paper from the world of CS every weekday morning&amp;rdquo;.&lt;/p&gt;
-
-&lt;h3 id=&#34;toc_1&#34;&gt;Papers I Read&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.cs.put.poznan.pl/dweiss/site/publications/download/fsacomp.pdf&#34;&gt;Smaller Representation of Finite State Automata&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I read this paper when I was trying to figure out how to make the FSAs smaller for the &lt;a href=&#34;https://github.com/surge/xparse/tree/master/etld&#34;&gt;Effective TLD matcher&lt;/a&gt; I created. The FSM I generated is 212,294 lines long. That&amp;rsquo;s just absolutely crazy. This paper seems to present an interesting way of compressing them.&lt;/p&gt;
-
-&lt;p&gt;I am not exactly sure if &lt;a href=&#34;https://godoc.org/golang.org/x/net/publicsuffix&#34;&gt;PublicSuffix&lt;/a&gt; uses a similar representation but it basically represents a FSA as an array of bytes, and then walk the bytes like a binary search tree. It&amp;rsquo;s interesting for sure.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;This paper is a follow-up to Jan Daciuk’s experiments on space-efficient finite state automata representation that can be used directly for traversals in main memory [4]. We investigate several techniques of reducing the memory footprint of minimal automata, mainly exploiting the fact that transition labels and transition pointer offset values are not evenly distributed and so are suitable for compression. We achieve a size gain of around 20–30% compared to the original representation given in [4]. This result is comparable to the state-of-the-art dictionary compression techniques like the LZ-trie [12] method, but remains
-memory and CPU efficient during construction.&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Sequence: A High Performance Sequential Semantic Log Parser at 175,000 MPS</title>
       <link>http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/</link>
       <pubDate>Sun, 01 Feb 2015 10:40:20 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/</guid>
       <description>
 
@@ -391,7 +414,7 @@ memory and CPU efficient during construction.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;If you have a set of logs you would like me to test out, please feel free to &lt;a href=&#34;https://github.com/strace/sequence/issues&#34;&gt;open an issue&lt;/a&gt; and we can arrange a way for me to download and test your logs.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;Motivation&lt;/h3&gt;
+&lt;h3 id=&#34;motivation:d4419a1968098b45153921045f06326c&#34;&gt;Motivation&lt;/h3&gt;
 
 &lt;p&gt;Log messages are notoriusly difficult to parse because they all have different formats. Industries (see Splunk, ArcSight, Tibco LogLogic, Sumo Logic, Logentries, Loggly, LogRhythm, etc etc etc) have been built to solve the problems of parsing, understanding and analyzing log messages.&lt;/p&gt;
 
@@ -407,7 +430,7 @@ memory and CPU efficient during construction.&lt;/p&gt;
 
 &lt;p&gt;Sequence is developed to make analyzing and parsing log messages a lot easier and faster.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Performance&lt;/h3&gt;
+&lt;h3 id=&#34;performance:d4419a1968098b45153921045f06326c&#34;&gt;Performance&lt;/h3&gt;
 
 &lt;p&gt;The following performance benchmarks are run on a single 4-core (2.8Ghz i7) MacBook Pro. The first file is a
 bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA log file, averaging 180 bytes per message.&lt;/p&gt;
@@ -434,11 +457,11 @@ bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA lo
   Parsed 447745 messages in 2.52 secs, ~ 177875.94 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Documentation&lt;/h3&gt;
+&lt;h3 id=&#34;documentation:d4419a1968098b45153921045f06326c&#34;&gt;Documentation&lt;/h3&gt;
 
 &lt;p&gt;Documentation is available at godoc: &lt;a href=&#34;http://godoc.org/github.com/strace/sequence&#34;&gt;package&lt;/a&gt;, &lt;a href=&#34;http://godoc.org/github.com/strace/sequence/sequence&#34;&gt;command&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;License&lt;/h3&gt;
+&lt;h3 id=&#34;license:d4419a1968098b45153921045f06326c&#34;&gt;License&lt;/h3&gt;
 
 &lt;p&gt;Copyright &amp;copy; 2014 Dataence, LLC. All rights reserved.&lt;/p&gt;
 
@@ -454,11 +477,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;Roadmap / Futures&lt;/h3&gt;
+&lt;h3 id=&#34;roadmap-futures:d4419a1968098b45153921045f06326c&#34;&gt;Roadmap / Futures&lt;/h3&gt;
 
 &lt;p&gt;There are some pattern files developed for ASA, Sudo and SSH in the &lt;code&gt;patterns&lt;/code&gt; directory. The goal is to continue to develop a set of patterns for the various log messages, and along the way add additional features to the parser that can help make it even easier to parse log messages. So currently there&amp;rsquo;s not a set roadmap.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_5&#34;&gt;Concepts&lt;/h2&gt;
+&lt;h2 id=&#34;concepts:d4419a1968098b45153921045f06326c&#34;&gt;Concepts&lt;/h2&gt;
 
 &lt;p&gt;The following concepts are part of the package:&lt;/p&gt;
 
@@ -477,7 +500,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
 &lt;li&gt;&lt;p&gt;A &lt;em&gt;Parser&lt;/em&gt; is a tree-based parsing engine for log messages. It builds a parsing tree based on pattern sequence supplied, and for each message sequence, returns the matching pattern sequence. Each of the message tokens will be marked with the semantic field types.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;toc_6&#34;&gt;Sequence Command&lt;/h2&gt;
+&lt;h2 id=&#34;sequence-command:d4419a1968098b45153921045f06326c&#34;&gt;Sequence Command&lt;/h2&gt;
 
 &lt;p&gt;The &lt;code&gt;sequence&lt;/code&gt; command is developed to demonstrate the use of this package. You can find it in the &lt;code&gt;sequence&lt;/code&gt; directory. The &lt;code&gt;sequence&lt;/code&gt; command implements the &lt;em&gt;sequential semantic log parser&lt;/em&gt;.&lt;/p&gt;
 
@@ -491,7 +514,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
      help [command]            Help about any command
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_7&#34;&gt;Scan&lt;/h3&gt;
+&lt;h3 id=&#34;scan:d4419a1968098b45153921045f06326c&#34;&gt;Scan&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence scan [flags]
@@ -529,7 +552,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
   #  22: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;ustream&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_8&#34;&gt;Parse&lt;/h3&gt;
+&lt;h3 id=&#34;parse:d4419a1968098b45153921045f06326c&#34;&gt;Parse&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence parse [flags]
@@ -580,7 +603,7 @@ To get a more realistic performance number, see the benchmark section below.&lt;
   #  24: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;)&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_9&#34;&gt;Benchmark&lt;/h3&gt;
+&lt;h3 id=&#34;benchmark:d4419a1968098b45153921045f06326c&#34;&gt;Benchmark&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence bench [flags]
@@ -620,14 +643,14 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
       <title>Generating Porter2 FSM For Fun and Performance in Go</title>
       <link>http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/</link>
       <pubDate>Wed, 21 Jan 2015 20:48:44 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;http://godoc.org/github.com/surgebase/porter2&#34;&gt;&lt;img src=&#34;http://godoc.org/github.com/surgebase/porter2?status.svg&#34; alt=&#34;GoDoc&#34; /&gt;
 &lt;/a&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_0&#34;&gt;tl;dr&lt;/h2&gt;
+&lt;h2 id=&#34;tl-dr:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;tl;dr&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;This post describes the &lt;a href=&#34;https://github.com/surgebase/porter2&#34;&gt;Porter2&lt;/a&gt; package I implemented. It is written in Go (#golang).&lt;/li&gt;
@@ -636,13 +659,13 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 &lt;li&gt;Hand-coding FSM is a PITA!!! &lt;a href=&#34;https://github.com/surgebase/porter2/tree/master/cmd/suffixfsm&#34;&gt;Automate&lt;/a&gt; if possible.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;toc_1&#34;&gt;Introduction&lt;/h2&gt;
+&lt;h2 id=&#34;introduction:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;In a personal project I am working on, I had the need to perform word stemming in two scenarios. First, I need to perform stemming for all the string literals in a LARGE corpus and then determine if the words are in a fixed set of literals. Second, I need to perform stemming for a subset of words in real-time, as messages stream in.&lt;/p&gt;
 
 &lt;p&gt;In the first case, performance is important but not critical; in the second case, performance is a huge factor.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Stemming&lt;/h3&gt;
+&lt;h3 id=&#34;stemming:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Stemming&lt;/h3&gt;
 
 &lt;p&gt;To start, according to &lt;a href=&#34;http://en.wikipedia.org/wiki/Stemming&#34;&gt;wikipedia&lt;/a&gt;:&lt;/p&gt;
 
@@ -656,7 +679,7 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://snowball.tartarus.org/algorithms/english/stemmer.html&#34;&gt;Porter2&lt;/a&gt; is universally considered to be an enhancement over the original Porter algorithm. Porter2 has an improved set of rules and it&amp;rsquo;s widely used as well.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_3&#34;&gt;Implementation&lt;/h2&gt;
+&lt;h2 id=&#34;implementation:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Implementation&lt;/h2&gt;
 
 &lt;p&gt;This package, &lt;a href=&#34;https://github.com/surgebase/porter2&#34;&gt;Porter2&lt;/a&gt;, implements the Porter2 stemmer. It is written completely using finite state machines to perform suffix comparison, rather than the usual string-based or tree-based approaches. As a result, it is 660% faster compare to string comparison-based approach written in the same (Go) language.&lt;/p&gt;
 
@@ -669,7 +692,7 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 fmt.Println(porter2.Stem(&amp;quot;seaweed&amp;quot;)) // should get seawe
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;Performance&lt;/h3&gt;
+&lt;h3 id=&#34;performance:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Performance&lt;/h3&gt;
 
 &lt;p&gt;This implementation by far has the highest performance of the various Go-based implementations, AFAICT. I tested a few of the implementations and the results are below.&lt;/p&gt;
 
@@ -705,7 +728,7 @@ fmt.Println(porter2.Stem(&amp;quot;seaweed&amp;quot;)) // should get seawe
 
 &lt;p&gt;To run the test again, you can run &lt;a href=&#34;https://github.com/surgebase/porter2/tree/master/cmd/compare&#34;&gt;compare.go&lt;/a&gt; (&lt;code&gt;go run compare.go&lt;/code&gt;).&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;State Machines&lt;/h3&gt;
+&lt;h3 id=&#34;state-machines:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;State Machines&lt;/h3&gt;
 
 &lt;p&gt;Most of the implementations, like the ones in the table above, rely completely on suffix string comparison. Basically there&amp;rsquo;s a list of suffixes, and the code will loop through the list to see if there&amp;rsquo;s a match. Given most of the time you are looking for the longest match, so you order the list so the longest is the first one. So if you are luckly, the match will be early on the list. But regardless that&amp;rsquo;s a huge performance hit.&lt;/p&gt;
 
@@ -752,7 +775,7 @@ fmt.Println(porter2.Stem(&amp;quot;seaweed&amp;quot;)) // should get seawe
 
 &lt;p&gt;To do that, we need to assign a state number to each of the nodes in the suffix tree, and output each of the states and the transitions based on the rune encountered. The tree above is the same as the one before, but now has a state number assigned to each node.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;Generator&lt;/h3&gt;
+&lt;h3 id=&#34;generator:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Generator&lt;/h3&gt;
 
 &lt;p&gt;I actually started building all the porter2 FSMs manually with a completely different approach than what I am describing here. I won&amp;rsquo;t go into details here but needless to say, it was disastrous. Not only was hand coding state machines extremely error-prone, the approach I was taking also had a lot of potential for bugs. It took me MANY HOURS to hand build those FSMs but at the end, I was happy to abandon all of them for the approach I am taking now.&lt;/p&gt;
 
@@ -834,7 +857,7 @@ loop:
 	return rs
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;toc_7&#34;&gt;Finally&lt;/h2&gt;
+&lt;h2 id=&#34;finally:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Finally&lt;/h2&gt;
 
 &lt;p&gt;This is a technique that can probably be applied to any fixed data set. The performance may vary based on the size of the state machine so test it with both maps and FSM to see what works best.&lt;/p&gt;
 
@@ -846,7 +869,7 @@ loop:
       <title>Go: From a Non-Programmer&#39;s Perspective</title>
       <link>http://zhen.org/blog/golang-from-a-non-programmers-perspective/</link>
       <pubDate>Tue, 13 Jan 2015 13:30:00 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/golang-from-a-non-programmers-perspective/</guid>
       <description>
 
@@ -860,7 +883,7 @@ loop:
 
 &lt;p&gt;In short, I like Go. It&amp;rsquo;s the first programming language I&amp;rsquo;ve used in recent years that I can actually build some interesting projects, e.g., &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt; (&lt;a href=&#34;/blog/surgemq-mqtt-message-queue-750k-mps/&#34;&gt;detailed post&lt;/a&gt;), in my limited spare time.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_0&#34;&gt;My Background&lt;/h2&gt;
+&lt;h2 id=&#34;my-background:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;My Background&lt;/h2&gt;
 
 &lt;p&gt;I am not a programmer/developer. Not full-time, not part-time, not moonlight. I tell my colleagues and teams that &amp;ldquo;I am not technical.&amp;rdquo;&lt;/p&gt;
 
@@ -876,11 +899,11 @@ loop:
 
 &lt;p&gt;In the past 12 years, my most used IDE is called Microsoft Office. So, in short, I am probably semi-technical, and know just enough to be dangerous.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;My History with Go&lt;/h3&gt;
+&lt;h3 id=&#34;my-history-with-go:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;My History with Go&lt;/h3&gt;
 
 &lt;p&gt;In &lt;sup&gt;2011&lt;/sup&gt;&amp;frasl;&lt;sub&gt;2012&lt;/sub&gt;, I had the responsibility of building a brand new engineering team (I was already running product management) at VMware to embark on a new strategic initiative. The nature of the product/service is not important now. However, at the time, because the team is brand new, we had some leeway in choosing a language for the project. VMware at the time was heavily Java, and specifically Spring given the &lt;a href=&#34;http://www.vmware.com/company/news/releases/springsource&#34;&gt;2009 acquisition of SpringSource&lt;/a&gt;. While the new team had mostly Java experience, there was desire to choose something less bloated, and something that had good support for the emerging patterns of distributed software.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_2&#34;&gt;First Touch&lt;/h4&gt;
+&lt;h4 id=&#34;first-touch:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;First Touch&lt;/h4&gt;
 
 &lt;p&gt;Some of the team members had experience with Scala, so that became an obvious option. I did some research on the web, and found some discussions of Go. At the time, Go hasn&amp;rsquo;t reached 1.0 yet, but there was already a buzz around it. I looked on Amazon, and found &lt;a href=&#34;http://www.amazon.com/gp/product/B0083RVAJW/ref=docs-os-doi_0&#34;&gt;The Way to Go&lt;/a&gt;, which was probably the only Go book around at the time. For $3 on the Kindle, it was well worth it. However, due to the nascent nature of Go (pre 1.0), it was not a comfortable choice so I didn&amp;rsquo;t put that as an option. But this was my &lt;strong&gt;first touch of Go and it felt relatively painless&lt;/strong&gt;.&lt;/p&gt;
 
@@ -890,7 +913,7 @@ loop:
 
 &lt;p&gt;I also tried to read up Scala and at least understand the concept. I even tried to take the online course on Coursera offered by Martin Odersky. However, I just could not get my non-functional mind to wrap around the functional Scala. And since I really didn&amp;rsquo;t need to code (nor the developers want me to), I gave up on learning Scala.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_3&#34;&gt;Second Touch&lt;/h4&gt;
+&lt;h4 id=&#34;second-touch:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;Second Touch&lt;/h4&gt;
 
 &lt;p&gt;In any case, fast forward 2 years to Q3 of 2013. I had since left VMware and joined my current company, &lt;a href=&#34;http://jolata.com&#34;&gt;Jolata&lt;/a&gt;, to build a big data network analytics solutions for mobile carriers and high-frequency trading financial services firms. We are a small startup that&amp;rsquo;s trying to do a ton of things. So even though I run products, I have to get my hands dirty often.&lt;/p&gt;
 
@@ -904,7 +927,7 @@ loop:
 
 &lt;p&gt;In the end, I wrote the data generator in Go (private repo) and got the first taste of goroutines. Again, &lt;strong&gt;this second touch with Go was also relatively painless&lt;/strong&gt;. The only confusion I had at the time was the Go source tree structure. Trying to understand $GOROOT, $GOPATH and other Go environment variables were all new to me. This was also the first time in 10 years that I really spent time writing a piece of software, so I just considered the confusion as my inexperience.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_4&#34;&gt;Third Touch and Beyond&lt;/h4&gt;
+&lt;h4 id=&#34;third-touch-and-beyond:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;Third Touch and Beyond&lt;/h4&gt;
 
 &lt;p&gt;Today, I no longer code at work as we have more developers now. Also, the Jolata product is mostly C/C++, Java and Node, so Go is also no longer in the mix. However, After getting a taste of Go in the first couple of Go projects, I&amp;rsquo;ve since spent a tremendous amount of my limited personal spare time working with it.&lt;/p&gt;
 
@@ -914,11 +937,11 @@ loop:
 
 &lt;p&gt;All these have allowed me to learn Go enough to build a real project, &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt;. It is by far my most popular project and one that I expect to continue developing.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_5&#34;&gt;My Views on Go&lt;/h2&gt;
+&lt;h2 id=&#34;my-views-on-go:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;My Views on Go&lt;/h2&gt;
 
 &lt;p&gt;Go is not just a langauge, it also has a very active community around it. The views are based on my observation over the past 1.5 years of using Go. My Go environment is primary Sublime Text 3 with GoSublime plugin.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;As a Language&amp;hellip;&lt;/h3&gt;
+&lt;h3 id=&#34;as-a-language:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;As a Language&amp;hellip;&lt;/h3&gt;
 
 &lt;p&gt;I am not a language theorist, nor do I claim to be a language expert. In fact, prior to actually using Go, I&amp;rsquo;ve barely heard of generics, communicating sequential processes, and other &amp;ldquo;cool&amp;rdquo; and &amp;ldquo;advanced&amp;rdquo; concepts. I&amp;rsquo;ve heard of all the new cool programming languages such as Clojure and Rust, but have never looked at any of the code. So my view of Go is basically one of a developer n00b.&lt;/p&gt;
 
@@ -928,7 +951,7 @@ loop:
 
 &lt;p&gt;However, as long as the language doesn&amp;rsquo;t slow me down, then I feel it&amp;rsquo;s serving my needs.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_7&#34;&gt;Go is Simple&lt;/h4&gt;
+&lt;h4 id=&#34;go-is-simple:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;Go is Simple&lt;/h4&gt;
 
 &lt;p&gt;As a language for a new deverloper, Go was very easy to pick up. Go&amp;rsquo;s design is fairly simple and minimalistic. You can sit down and read through the &lt;a href=&#34;https://golang.org/ref/spec&#34;&gt;Language Specification&lt;/a&gt; fairly quickly in an idle afternoon. I actually didn&amp;rsquo;t find the language reference until later. My first touch of Go was by scanning through the book &lt;em&gt;The Way To Go&lt;/em&gt;. Regardless, there&amp;rsquo;s not a lot to the language so it&amp;rsquo;s relatively easy for someone like myself to pick up the basics. (Btw, I&amp;rsquo;ve also never gone through the &lt;a href=&#34;https://tour.golang.org/&#34;&gt;Go Tour&lt;/a&gt;. I know it&amp;rsquo;s highly recommended to all new Go developers. I just never did it.)&lt;/p&gt;
 
@@ -942,7 +965,7 @@ loop:
 
 &lt;p&gt;As a language a team, the simplicity of Go is &lt;em&gt;HUGE&lt;/em&gt;. It allows develoeprs to quickly come up to speed and be productive in the shortest period of time. And in this case, time is literally money.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_8&#34;&gt;Go is Opinionated&lt;/h4&gt;
+&lt;h4 id=&#34;go-is-opinionated:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;Go is Opinionated&lt;/h4&gt;
 
 &lt;p&gt;Go is opinionated in many ways. For example, probably one of the most frustrating thing about Go is how to structure the code directory. Unlike other languages where you can just create a directory and get started, Go wants you to put things in $GOPATH. It took a few readings of &lt;a href=&#34;https://golang.org/doc/code.html&#34;&gt;How to Write Go Code&lt;/a&gt; for me to grasp what&amp;rsquo;s going on, and it took even longer for me to really get the hang of code organization, and how Go imports packages (e.g., &lt;code&gt;go get&lt;/code&gt;).&lt;/p&gt;
 
@@ -954,7 +977,7 @@ loop:
 
 &lt;p&gt;Go is also very opininated in terms of variable use and package import. If a variable is declared but not used, the Go compiler will complain. If a package is imported but not used, the Go compiler will complain. Personally, I like the compiler complaining about the unused variables. It keeps the code clean, and reduce the chance of unexpected bugs. I am less concerned about unused packages but have also learned to live with the compiler complains. I use &lt;a href=&#34;https://github.com/bradfitz/goimports&#34;&gt;goimports&lt;/a&gt; in Sublime Text 3 to effectively and quickly take care of the import statements. In fact, in 99% of the cases I don&amp;rsquo;t even need to type in the import statements myself.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_9&#34;&gt;Go is Safe&lt;/h4&gt;
+&lt;h4 id=&#34;go-is-safe:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;Go is Safe&lt;/h4&gt;
 
 &lt;p&gt;Go is safe for a couple of reasons. For a new developer, Go does not make it easy for you to be lazy. For example, Go is a statically typed language, which means every variable must explicitly have a type associated with it. The Go compiler does infer types under certain situations, but regardless, there&amp;rsquo;s a type for every variable. This may feel uncomfortable for developers coming from dynamic languages, but the benefit definitely outweighs the cost. I&amp;rsquo;ve experience first hand, as a product person waiting for bugs to be fixed, how long it takes to troubleshoot problems in Node. Having static types gives you a feeling of &amp;ldquo;correctness&amp;rdquo; after you have written the code.&lt;/p&gt;
 
@@ -966,7 +989,7 @@ loop:
 
 &lt;p&gt;Again, as a team langauge, the safety aspect is very important. The team will likely end up spending much less time dealing with memory bugs and focus more on feature development.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_10&#34;&gt;Go is Powerful&lt;/h4&gt;
+&lt;h4 id=&#34;go-is-powerful:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;Go is Powerful&lt;/h4&gt;
 
 &lt;p&gt;What makes Go powerful are its simplicity, its high performance, and advanced concepts such as channels, goroutines, interfaces, type composition, etc. We have discussed all of these in previous sections.&lt;/p&gt;
 
@@ -980,7 +1003,7 @@ loop:
 
 &lt;p&gt;One last thing, Go has a very large and complete standard library. It enables developers to do most, if not all, of their work quickly and efficiently. As the language matures and the community grows, there will be more and more 3rd party open source libraries one can leverage.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_11&#34;&gt;As a Community&lt;/h3&gt;
+&lt;h3 id=&#34;as-a-community:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;As a Community&lt;/h3&gt;
 
 &lt;p&gt;Today, Go has a very active community behind it. Specifically, the information sources I&amp;rsquo;ve followed and gotten help from include &lt;a href=&#34;https://botbot.me/freenode/go-nuts/&#34;&gt;#go-nuts IRC&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/search?q=golang&amp;amp;sort=new&amp;amp;restrict_sr=on&amp;amp;t=all&#34;&gt;golang subreddit&lt;/a&gt;, and obviously the &lt;a href=&#34;https://groups.google.com/forum/#!forum/golang-nuts&#34;&gt;golang-nuts mailing list&lt;/a&gt;.&lt;/p&gt;
 
@@ -1010,7 +1033,7 @@ loop:
 
 &lt;p&gt;Overall though, I felt I&amp;rsquo;ve learned a ton from the Go community. People have generally been helpful and are willing to offer solutions to problems. I have nothing to compare to, but I feel that the positives of the Go community far outweighs any negatives.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_12&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;h2 id=&#34;conclusion:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;Conclusion&lt;/h2&gt;
 
 &lt;p&gt;In conclusion, it has been a tremendous 1.5 years of working with Go, and seeing Go grow both as a language and as a community has been very rewarding.&lt;/p&gt;
 
@@ -1022,7 +1045,7 @@ loop:
       <title>PingMQ: A SurgeMQ-based ICMP Monitoring Tool</title>
       <link>http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</link>
       <pubDate>Thu, 25 Dec 2014 00:00:33 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</guid>
       <description>
 
@@ -1062,7 +1085,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 8 bytes from 8.8.8.8: seq=1 ttl=56 tos=32 time=21.753711ms
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;Commands&lt;/h3&gt;
+&lt;h3 id=&#34;commands:2953f7aa0fe0aa3757fe6bf025e7fa57&#34;&gt;Commands&lt;/h3&gt;
 
 &lt;p&gt;There are two builtin commands for &lt;code&gt;pingmq&lt;/code&gt;.&lt;/p&gt;
 
@@ -1090,7 +1113,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
   -t, --topic=[]: Comma separated list of topics to subscribe to
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;IP Addresses&lt;/h3&gt;
+&lt;h3 id=&#34;ip-addresses:2953f7aa0fe0aa3757fe6bf025e7fa57&#34;&gt;IP Addresses&lt;/h3&gt;
 
 &lt;p&gt;To list IPs you like to use with &lt;code&gt;pingmq&lt;/code&gt;, you can use the following formats:&lt;/p&gt;
 
@@ -1116,7 +1139,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 10.1.1.128/25 -&amp;gt; 10.1.1.128 ... 10.1.1.255
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Topic Format&lt;/h3&gt;
+&lt;h3 id=&#34;topic-format:2953f7aa0fe0aa3757fe6bf025e7fa57&#34;&gt;Topic Format&lt;/h3&gt;
 
 &lt;p&gt;TO subscribe to the &lt;code&gt;pingmq&lt;/code&gt; results, you can use the following formats:&lt;/p&gt;
 
@@ -1127,7 +1150,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 &lt;li&gt;&lt;code&gt;ping/+/8.8.8.8&lt;/code&gt; will subscribe to both success and failed pings for all IP 8.8.8.8&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;Building&lt;/h3&gt;
+&lt;h3 id=&#34;building:2953f7aa0fe0aa3757fe6bf025e7fa57&#34;&gt;Building&lt;/h3&gt;
 
 &lt;p&gt;To build &lt;code&gt;pingmq&lt;/code&gt;, you need to have installed &lt;a href=&#34;http://golang.org&#34;&gt;Go 1.3.3 or 1.4&lt;/a&gt;. Then run the following:&lt;/p&gt;
 
@@ -1144,7 +1167,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
       <title>SurgeMQ: High Performance MQTT Server and Client Libraries in Go</title>
       <link>http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</link>
       <pubDate>Wed, 24 Dec 2014 19:20:40 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</guid>
       <description>
 
@@ -1160,7 +1183,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 
 &lt;p&gt;&lt;strong&gt;SurgeMQ is currently under active development and should be considered unstable until further notice.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;MQTT&lt;/h3&gt;
+&lt;h3 id=&#34;mqtt:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;MQTT&lt;/h3&gt;
 
 &lt;p&gt;According to the &lt;a href=&#34;http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html&#34;&gt;MQTT spec&lt;/a&gt;:&lt;/p&gt;
 
@@ -1186,7 +1209,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 
 &lt;p&gt;There&amp;rsquo;s some very large implementation of MQTT such as &lt;a href=&#34;https://www.facebook.com/notes/facebook-engineering/building-facebook-messenger/10150259350998920&#34;&gt;Facebook Messenger&lt;/a&gt;. There&amp;rsquo;s also an active Eclipse project, &lt;a href=&#34;https://eclipse.org/paho/&#34;&gt;Paho&lt;/a&gt;, that provides scalable open-source client implementations for many different languages, including C/C++, Java, Python, JavaScript, C# .Net and Go.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Features, Limitations, and Future&lt;/h3&gt;
+&lt;h3 id=&#34;features-limitations-and-future:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Features, Limitations, and Future&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;
 
@@ -1220,7 +1243,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 &lt;li&gt;Better authentication modules&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Performance&lt;/h3&gt;
+&lt;h3 id=&#34;performance:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Performance&lt;/h3&gt;
 
 &lt;p&gt;Current performance benchmark of SurgeMQ, running all publishers, subscribers and broker on a single 4-core (2.8Ghz i7) MacBook Pro, is able to achieve:&lt;/p&gt;
 
@@ -1231,7 +1254,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 &lt;li&gt;over &lt;strong&gt;700,000 MPS&lt;/strong&gt; in a full mesh configuration with 20 clients&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;Compatibility&lt;/h3&gt;
+&lt;h3 id=&#34;compatibility:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Compatibility&lt;/h3&gt;
 
 &lt;p&gt;In addition, SurgeMQ has been tested with the following client libraries and it &lt;em&gt;seems&lt;/em&gt; to work:&lt;/p&gt;
 
@@ -1248,13 +1271,13 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 &lt;li&gt;&lt;em&gt;Paho C Client library (in C).&lt;/em&gt; Tested with most of the test cases and failed the same ones as the conformance test because the features are not yet implemented. Actually I think there&amp;rsquo;s a bug in the test suite as it calls the PUBLISH handler function for non-PUBLISH messages.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;Documentation&lt;/h3&gt;
+&lt;h3 id=&#34;documentation:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Documentation&lt;/h3&gt;
 
 &lt;p&gt;Documentation is available at &lt;a href=&#34;http://godoc.org/github.com/surge/surgemq&#34;&gt;godoc&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;More information regarding the design of the SurgeMQ is available at &lt;a href=&#34;http://surgemq.com&#34;&gt;zen 3.1&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;License&lt;/h3&gt;
+&lt;h3 id=&#34;license:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;License&lt;/h3&gt;
 
 &lt;p&gt;Copyright &amp;copy; 2014 Dataence, LLC. All rights reserved.&lt;/p&gt;
 
@@ -1270,9 +1293,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;Examples&lt;/h3&gt;
+&lt;h3 id=&#34;examples:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Examples&lt;/h3&gt;
 
-&lt;h4 id=&#34;toc_7&#34;&gt;Server Example&lt;/h4&gt;
+&lt;h4 id=&#34;server-example:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Server Example&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;// Create a new server
 svr := &amp;amp;service.Server{
@@ -1287,7 +1310,7 @@ svr := &amp;amp;service.Server{
 svr.ListenAndServe(&amp;quot;tcp://:1883&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_8&#34;&gt;Client Example&lt;/h4&gt;
+&lt;h4 id=&#34;client-example:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Client Example&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;// Instantiates a new Client
 c := &amp;amp;Client{}
@@ -1338,7 +1361,7 @@ c.Disconnect()
       <title>SurgeMQ: MQTT Message Queue @ 750,000 MPS</title>
       <link>http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/</link>
       <pubDate>Thu, 04 Dec 2014 22:44:07 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/</guid>
       <description>
 
@@ -1347,7 +1370,7 @@ c.Disconnect()
 &lt;li&gt;jacques_chester on HN has an &lt;a href=&#34;https://news.ycombinator.com/item?id=8709146&#34;&gt;EXCELLENT comment&lt;/a&gt; that&amp;rsquo;s definitely worth reading. &lt;a href=&#34;https://news.ycombinator.com/item?id=8709557&#34;&gt;My response&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;tl;dr&lt;/h3&gt;
+&lt;h3 id=&#34;tl-dr:6ef28047216284b846a43eee6e7c23b5&#34;&gt;tl;dr&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt; aims to provide a MQTT broker and client library that&amp;rsquo;s fully compliant with &lt;a href=&#34;http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html&#34;&gt;MQTT spec 3.1.1&lt;/a&gt;. In addition, it tries to be backward compatible with 3.1.&lt;/li&gt;
@@ -1375,7 +1398,7 @@ c.Disconnect()
 &lt;p&gt;Lesson 4: Use the race detector!&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Go Learn Project #8 - Message Queue&lt;/h3&gt;
+&lt;h3 id=&#34;go-learn-project-8-message-queue:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Go Learn Project #8 - Message Queue&lt;/h3&gt;
 
 &lt;p&gt;It&amp;rsquo;s now been over a year since my last post! Family and work have occupied pretty much all of my time so spare time to learn Go was hard to come by.&lt;/p&gt;
 
@@ -1383,7 +1406,7 @@ c.Disconnect()
 
 &lt;p&gt;Now months later, I am finally able spend a few weekends and nights developing &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt;, a (soon to be) full MQTT 3.1.1 compliant message broker.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_2&#34;&gt;Message Queues&lt;/h4&gt;
+&lt;h4 id=&#34;message-queues:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Message Queues&lt;/h4&gt;
 
 &lt;p&gt;According to &lt;a href=&#34;http://en.wikipedia.org/wiki/Message_queue&#34;&gt;Wikipedia&lt;/a&gt;:&lt;/p&gt;
 
@@ -1395,7 +1418,7 @@ c.Disconnect()
 
 &lt;p&gt;In that post, Tyler found that borkerless queues had the highest throughput, achieving millions of MPS sent and received. Brokered message queue performances ranged from 12,000 MPS (&lt;a href=&#34;nsq.io&#34;&gt;NSQ&lt;/a&gt;) to 195,000 MPS (&lt;a href=&#34;nats.io&#34;&gt;Gnatsd&lt;/a&gt;). While the post showed that the Gnatsd latency to be around 300+ microseconds, in reality it&amp;rsquo;s probably more like the NSQ in terms of latency due to the sender sleeping whenever Gnatsd is 10+ messages behind. Regardless, hats off to Tyler. Great job!&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_3&#34;&gt;MQTT&lt;/h4&gt;
+&lt;h4 id=&#34;mqtt:6ef28047216284b846a43eee6e7c23b5&#34;&gt;MQTT&lt;/h4&gt;
 
 &lt;p&gt;I got interested in MQTT because &amp;ldquo;&lt;a href=&#34;http://mqtt.org&#34;&gt;MQTT&lt;/a&gt; is a machine-to-machine (M2M)/&amp;ldquo;Internet of Things&amp;rdquo; connectivity protocol. It was designed as an extremely lightweight publish/subscribe messaging transport.&amp;rdquo;&lt;/p&gt;
 
@@ -1425,9 +1448,9 @@ c.Disconnect()
 
 &lt;p&gt;Given the popularity, I decided to implement a MQTT broker in order to learn about message queues.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;Architecture&lt;/h3&gt;
+&lt;h3 id=&#34;architecture:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Architecture&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/surgemq-mqtt-message-queue-750k-mps/smqfailedarch.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/surgemq-mqtt-message-queue-750k-mps/smqfailedarch.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The above image showed a couple of the architecture approaches I attempted. In them, R is the receiver, which reads from net.Conn, P is the processor, which processes the messages and determines what to do or where to send them, and S is the sender, which sends any messages out to net.Conn. Each R, P, and S are their own goroutines.&lt;/p&gt;
 
@@ -1456,7 +1479,7 @@ c.Disconnect()
 
 &lt;p&gt;After profiling and looking at the &lt;a href=&#34;/images/surgemq-mqtt-message-queue-750k-mps/2ndfailcpuprof.svg&#34;&gt;CPU profile&lt;/a&gt;, I realized there are a lot of memory copying (io.Copy and io.CopyN), as well as there are still quite a bit GC activities (scanblock). On the memory copying front, there&amp;rsquo;s copying from net.Conn into bufio, then more copying from bufio to the MQTT messages internal buffer, then more copying from MQTT message internal buffers to the outgoing bufio, then to the net.Conn. So lots and lots of memory copying, not a good thing.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_5&#34;&gt;Buffered Network IO&lt;/h4&gt;
+&lt;h4 id=&#34;buffered-network-io:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Buffered Network IO&lt;/h4&gt;
 
 &lt;p&gt;The buffered network IO is a good approach, however, there are two things I wished I had:&lt;/p&gt;
 
@@ -1491,7 +1514,7 @@ c.Disconnect()
 &lt;p&gt;Lesson 2: Reduce or remove memory copying.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h4 id=&#34;toc_6&#34;&gt;Final Architecture&lt;/h4&gt;
+&lt;h4 id=&#34;final-architecture:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Final Architecture&lt;/h4&gt;
 
 &lt;p&gt;This the final architecture I ended up with and it&amp;rsquo;s working very well. The cost of each client connection are:&lt;/p&gt;
 
@@ -1502,9 +1525,9 @@ c.Disconnect()
 
 &lt;p&gt;There&amp;rsquo;s very few memory copy operations going on, nor is there much memory allocation. So a good outcome overall.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/surgemq-mqtt-message-queue-750k-mps/finalarch.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/surgemq-mqtt-message-queue-750k-mps/finalarch.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_7&#34;&gt;Race Conditions&lt;/h3&gt;
+&lt;h3 id=&#34;race-conditions:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Race Conditions&lt;/h3&gt;
 
 &lt;p&gt;With the ring bufer implementation, I was able to achieve 400,000 MPS with a 1:1 configuration. This worked well until I started doing multiple publishers and subscribers. The first problem I ran into was the Processor hanging. &lt;code&gt;go test -race&lt;/code&gt; also didn&amp;rsquo;t show anything that could help me.&lt;/p&gt;
 
@@ -1562,7 +1585,7 @@ c.Disconnect()
 &lt;p&gt;Lesson 3: Race conditions can happen even if you think you followed all the right steps.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h4 id=&#34;toc_8&#34;&gt;But Wait, There&amp;rsquo;s More (Race Conditions)&lt;/h4&gt;
+&lt;h4 id=&#34;but-wait-there-s-more-race-conditions:6ef28047216284b846a43eee6e7c23b5&#34;&gt;But Wait, There&amp;rsquo;s More (Race Conditions)&lt;/h4&gt;
 
 &lt;p&gt;As I increase the number of publishers and subscribers, all the sudden I was getting errors about receiving RESERVED messages, and this happens intermittenly, and only when I blast enough messages. Sometimes I have to run the tests many times to catch this from happening.&lt;/p&gt;
 
@@ -1576,7 +1599,7 @@ c.Disconnect()
 &lt;p&gt;Lesson 4: Use the race detector!&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;toc_9&#34;&gt;Performance Benchmarks&lt;/h3&gt;
+&lt;h3 id=&#34;performance-benchmarks:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Performance Benchmarks&lt;/h3&gt;
 
 &lt;p&gt;These performance numbers are calculated as follows:&lt;/p&gt;
 
@@ -1585,7 +1608,7 @@ c.Disconnect()
 &lt;li&gt;received messages MPS = total messages received / total elapsed time between 1st and last message received for all receivers&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&#34;toc_10&#34;&gt;Environment&lt;/h4&gt;
+&lt;h4 id=&#34;environment:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Environment&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;$ go version
 go version go1.3.3 darwin/amd64
@@ -1597,7 +1620,7 @@ Macbook Pro Late 2013
 16 GB 1600 MHz DDR3
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_11&#34;&gt;Server&lt;/h4&gt;
+&lt;h4 id=&#34;server:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Server&lt;/h4&gt;
 
 &lt;p&gt;To start the server,&lt;/p&gt;
 
@@ -1606,7 +1629,7 @@ $ GOMAXPROCS=2 go test -run=TestServer -vv=2 -logtostderr
 server/ListenAndServe: server is ready...
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_12&#34;&gt;1:1&lt;/h4&gt;
+&lt;h4 id=&#34;1-1:6ef28047216284b846a43eee6e7c23b5&#34;&gt;1:1&lt;/h4&gt;
 
 &lt;p&gt;To run the single publisher and single subscriber test case:&lt;/p&gt;
 
@@ -1615,7 +1638,7 @@ Total Sent 1000000 messages in 2434523153 ns, 2434 ns/msg, 410758 msgs/sec
 Total Received 1000000 messages in 2434523153 ns, 2434 ns/msg, 410758 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_13&#34;&gt;Fan-In&lt;/h4&gt;
+&lt;h4 id=&#34;fan-in:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Fan-In&lt;/h4&gt;
 
 &lt;p&gt;To run the Fan-In test with 20 senders and 1 receiver:&lt;/p&gt;
 
@@ -1624,7 +1647,7 @@ Total Sent 1035436 messages in 2212609304 ns, 2136 ns/msg, 467970 msgs/sec
 Total Received 1000022 messages in 2212609304 ns, 2212 ns/msg, 451965 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_14&#34;&gt;Fan-Out&lt;/h4&gt;
+&lt;h4 id=&#34;fan-out:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Fan-Out&lt;/h4&gt;
 
 &lt;p&gt;To run the Fan-Out test with 1 sender and 20 receivers:&lt;/p&gt;
 
@@ -1633,7 +1656,7 @@ Total Sent 1000000 messages in 10715317340 ns, 10715 ns/msg, 93324 msgs/sec
 Total Received 8180723 messages in 10715317340 ns, 1309 ns/msg, 763460 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_15&#34;&gt;Mesh&lt;/h4&gt;
+&lt;h4 id=&#34;mesh:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Mesh&lt;/h4&gt;
 
 &lt;p&gt;To run a full mesh test where every client is subscribed to the same topic, thus every message sent w/ the right topic will go to ALL of the other clients:&lt;/p&gt;
 
@@ -1642,7 +1665,7 @@ Total Sent 2000000 messages in 51385336097 ns, 25692 ns/msg, 38921 msgs/sec
 Total Received 40000000 messages in 51420975243 ns, 1285 ns/msg, 777892 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_16&#34;&gt;Next Steps&lt;/h3&gt;
+&lt;h3 id=&#34;next-steps:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Next Steps&lt;/h3&gt;
 
 &lt;p&gt;There&amp;rsquo;s a lot more to do with SurgeMQ. Given the limited time I have, I expect it will take me a while to get to full compliant with the MQTT spec. But that will be my focus, now that performance is out of the way, as I get time.&lt;/p&gt;
 </description>
@@ -1652,7 +1675,7 @@ Total Received 40000000 messages in 51420975243 ns, 1285 ns/msg, 777892 msgs/sec
       <title>Graceful Shutdown of Go net.Listeners</title>
       <link>http://zhen.org/blog/graceful-shutdown-of-go-net-dot-listeners/</link>
       <pubDate>Thu, 12 Dec 2013 23:33:22 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/graceful-shutdown-of-go-net-dot-listeners/</guid>
       <description>&lt;p&gt;Comments/Feedbacks at &lt;a href=&#34;https://news.ycombinator.com/item?id=6899568&#34;&gt;Hacker News&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1ss929/graceful_shutdown_of_go_netlisteners/&#34;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
 
@@ -1682,7 +1705,7 @@ Total Received 40000000 messages in 51420975243 ns, 1285 ns/msg, 777892 msgs/sec
       <title>Ring Buffer - Variable-Length, Low-Latency, Lock-Free, Disruptor-Style</title>
       <link>http://zhen.org/blog/ring-buffer-variable-length-low-latency-disruptor-style/</link>
       <pubDate>Sat, 30 Nov 2013 23:20:22 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/ring-buffer-variable-length-low-latency-disruptor-style/</guid>
       <description>
 
@@ -1696,7 +1719,7 @@ Total Received 40000000 messages in 51420975243 ns, 1285 ns/msg, 777892 msgs/sec
 Benchmark1ProducerAnd1ConsumerInBytes-3 10000000               147 ns/op
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;tl;dr&lt;/h3&gt;
+&lt;h3 id=&#34;tl-dr:bdc146ca9cda0984f90718c5048177bd&#34;&gt;tl;dr&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/reducedb/ringbuffer&#34;&gt;This project&lt;/a&gt; implements a low-latency lock-free ring buffer for variable length byte slices. It is modeled after the &lt;a href=&#34;https://github.com/LMAX-Exchange/disruptor/&#34;&gt;LMAX Disruptor&lt;/a&gt;, but not a direct port.&lt;/li&gt;
@@ -1709,7 +1732,7 @@ Benchmark1ProducerAnd1ConsumerInBytes-3 10000000               147 ns/op
 &lt;li&gt;You can also read more about &lt;a href=&#34;http://en.wikipedia.org/wiki/Circular_buffer&#34;&gt;circular buffer&lt;/a&gt;, &lt;a href=&#34;http://en.wikipedia.org/wiki/Producer-consumer_problem&#34;&gt;producer–consumer problem&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Go Learn Project #7 - Ring Buffer&lt;/h3&gt;
+&lt;h3 id=&#34;go-learn-project-7-ring-buffer:bdc146ca9cda0984f90718c5048177bd&#34;&gt;Go Learn Project #7 - Ring Buffer&lt;/h3&gt;
 
 &lt;p&gt;For the past several projects (&lt;a href=&#34;http://zhen.org/blog/benchmarking-integer-compression-in-go/&#34;&gt;#6&lt;/a&gt;, &lt;a href=&#34;http://zhen.org/blog/bitmap-compression-using-ewah-in-go/&#34;&gt;#5&lt;/a&gt;, &lt;a href=&#34;http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/&#34;&gt;#4&lt;/a&gt;), I&amp;rsquo;ve mostly been hacking bits, and optimizing them as much as possible for a single core.&lt;/p&gt;
 
@@ -1721,7 +1744,7 @@ Benchmark1ProducerAnd1ConsumerInBytes-3 10000000               147 ns/op
 
 &lt;p&gt;The goal is to process millions of data items per second.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_2&#34;&gt;Ring Buffer&lt;/h4&gt;
+&lt;h4 id=&#34;ring-buffer:bdc146ca9cda0984f90718c5048177bd&#34;&gt;Ring Buffer&lt;/h4&gt;
 
 &lt;p&gt;There are several ways to tackle this. A queue or ring buffer is usually a good data structure for this. You can think of a ring buffer is just a special type of queue that&amp;rsquo;s just contiguous by wrapping itself. As Wikipedia said,&lt;/p&gt;
 
@@ -1733,7 +1756,7 @@ Benchmark1ProducerAnd1ConsumerInBytes-3 10000000               147 ns/op
 
 &lt;p&gt;In most implementations, the pointers are mod&amp;rsquo;ed with the ring size to determine the next slot size. Also, mutex is used to ensure only one thread is modifying these pointers at the same time.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_3&#34;&gt;Go Channels&lt;/h4&gt;
+&lt;h4 id=&#34;go-channels:bdc146ca9cda0984f90718c5048177bd&#34;&gt;Go Channels&lt;/h4&gt;
 
 &lt;p&gt;In Go, an idiomatic and fairly common way is to use &lt;a href=&#34;http://golang.org/doc/effective_go.html#channels&#34;&gt;buffered channels&lt;/a&gt; to solve this problem. It is effectively a queue where a producer puts data items into one end of the channel, and the consumer reads the data items on the other end of the channel. There are certainly pros and cons to to this approach.&lt;/p&gt;
 
@@ -1747,13 +1770,13 @@ Benchmark1ProducerAnd1ConsumerInBytes-3 10000000               147 ns/op
 
 &lt;p&gt;There might actually be a way to implement the leaky buffer with a big preallocated slice. I may just do that as the next project. The goal is to see if we can avoid having to allocate individual byte slices and leverage CPU caching for the big buffer.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_4&#34;&gt;Lock-Free Ring Buffer&lt;/h4&gt;
+&lt;h4 id=&#34;lock-free-ring-buffer:bdc146ca9cda0984f90718c5048177bd&#34;&gt;Lock-Free Ring Buffer&lt;/h4&gt;
 
 &lt;p&gt;The way that I&amp;rsquo;ve decided to tackle this problem is to model the ring buffer after the LMAX Disruptor. If you haven&amp;rsquo;t read Martin Fowler&amp;rsquo;s &lt;a href=&#34;http://martinfowler.com/articles/lmax.html&#34;&gt;article on LMAX Architecture&lt;/a&gt;, at this time I would recommend that you stop and go read it first. After that, you should go read &lt;a href=&#34;http://mechanitis.blogspot.com/search/label/disruptor&#34;&gt;Trisha&amp;rsquo;s Disruptor blog series&lt;/a&gt; that explains in even more details how the Disruptor works.&lt;/p&gt;
 
 &lt;p&gt;One thing to keep in mind is that the Disruptor-style ring buffer has significant resource requirement, i.e., it requires N cores, where N is the number of producers and consumers, to be performant. And it will keep cores busy by busy waiting (looping). So huge downside. If you don&amp;rsquo;t need this type of low latency architecture, it&amp;rsquo;s much better to stay with channels.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;Performance Comparison&lt;/h3&gt;
+&lt;h3 id=&#34;performance-comparison:bdc146ca9cda0984f90718c5048177bd&#34;&gt;Performance Comparison&lt;/h3&gt;
 
 &lt;p&gt;These benchmarks are performed on a MacBook Pro with 2.8GHz Intel Core i7 procesor (Haswell), and 16 GB 1600MHz DDR3 memory. Go version 1.2rc5.&lt;/p&gt;
 
@@ -1779,9 +1802,9 @@ BenchmarkChannels2Consumers-2    5000000               647 ns/op
 BenchmarkChannels2Consumers-3    5000000               570 ns/op
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;Examples&lt;/h3&gt;
+&lt;h3 id=&#34;examples:bdc146ca9cda0984f90718c5048177bd&#34;&gt;Examples&lt;/h3&gt;
 
-&lt;h4 id=&#34;toc_7&#34;&gt;Go Channel: 1 Producer and 1 Consumer&lt;/h4&gt;
+&lt;h4 id=&#34;go-channel-1-producer-and-1-consumer:bdc146ca9cda0984f90718c5048177bd&#34;&gt;Go Channel: 1 Producer and 1 Consumer&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;func BenchmarkChannels(b *testing.B) {
 	dataSize := 256
@@ -1811,7 +1834,7 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_8&#34;&gt;Ring Buffer: 1 Producer and 1 Consumer&lt;/h4&gt;
+&lt;h4 id=&#34;ring-buffer-1-producer-and-1-consumer:bdc146ca9cda0984f90718c5048177bd&#34;&gt;Ring Buffer: 1 Producer and 1 Consumer&lt;/h4&gt;
 
 &lt;p&gt;This test function creates a 256-slot ring buffer, with each slot being 128 bytes long. It also creates 1 producer and 1 consumer, where the producer will put the same byte slice into the buffer 10,000 times, and the consumer will read from the buffer and then make sure we read the correct byte slice.&lt;/p&gt;
 
@@ -1888,11 +1911,11 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_9&#34;&gt;Ring Buffer: 1 Producer and 2 Consumers&lt;/h4&gt;
+&lt;h4 id=&#34;ring-buffer-1-producer-and-2-consumers:bdc146ca9cda0984f90718c5048177bd&#34;&gt;Ring Buffer: 1 Producer and 2 Consumers&lt;/h4&gt;
 
 &lt;p&gt;As mentioned before, the ring buffer supports multiple consumers. &lt;a href=&#34;https://github.com/reducedb/ringbuffer/blob/master/bytebuffer/ringbuffer_test.go#L304&#34;&gt;This example&lt;/a&gt; shows how you would create two consumers.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_10&#34;&gt;Conclusion&lt;/h3&gt;
+&lt;h3 id=&#34;conclusion:bdc146ca9cda0984f90718c5048177bd&#34;&gt;Conclusion&lt;/h3&gt;
 
 &lt;p&gt;See tl;dr on top.&lt;/p&gt;
 
@@ -1904,7 +1927,7 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
       <title>Go vs Java: Decoding Billions of Integers Per Second</title>
       <link>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</link>
       <pubDate>Thu, 14 Nov 2013 19:40:22 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</guid>
       <description>
 
@@ -1922,11 +1945,11 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
 
 &lt;p&gt;I would like to ask for your help, if you can spare the time, to share some of your optimization tips and secrets. I would love to make this library even faster if possible.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;tl;dr&lt;/h3&gt;
+&lt;h3 id=&#34;tl-dr:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;tl;dr&lt;/h3&gt;
 
 &lt;p&gt;The following chart shows how much (%) faster Java is compare to Go in decoding integers that are encoded using different codecs. It shows results from processing two different files. See below for more details.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Daniel Lemire&amp;rsquo;s &lt;a href=&#34;https://github.com/lemire/JavaFastPFOR&#34;&gt;Java version&lt;/a&gt; is anywhere from 12% to 180% faster than my &lt;a href=&#34;https://github.com/reducedb/encoding&#34;&gt;Go version&lt;/a&gt; for decoding integers. I didn&amp;rsquo;t compare the &lt;a href=&#34;https://github.com/lemire/fastpfor&#34;&gt;C++ version&lt;/a&gt; but given that the C++ version has access to SIMD operations, it can be much faster.&lt;/li&gt;
@@ -1936,7 +1959,7 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
 &lt;li&gt;This benchmark is purely a CPU benchmark. The test environment has enough memory to keep all the arrays in memory without causing swap, and there&amp;rsquo;s no disk IO involved in the actual encoding/decoding functions.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Project Review&lt;/h3&gt;
+&lt;h3 id=&#34;project-review:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Project Review&lt;/h3&gt;
 
 &lt;p&gt;A month ago I wrote about my &amp;ldquo;Go Learn&amp;rdquo; project #6: &lt;a href=&#34;http://zhen.org/blog/benchmarking-integer-compression-in-go/&#34;&gt;Benchmarking Integer Compression in Go&lt;/a&gt; &lt;a href=&#34;https://github.com/reducedb/encoding&#34;&gt;(github)&lt;/a&gt;. In that project I ported 6 different codecs for encoding and decoding 32-bit integers. Since then, I have ported a couple more codecs, cleaned up the directories, and performed a ton of profiling and optimization to increase performance.&lt;/p&gt;
 
@@ -1964,7 +1987,7 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
 
 &lt;p&gt;In addition, the &lt;em&gt;benchmark&lt;/em&gt; program under &lt;em&gt;benchmark/&lt;/em&gt; is provided to let users easily test different integer lists and codecs.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Techniques Tried&lt;/h3&gt;
+&lt;h3 id=&#34;techniques-tried:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Techniques Tried&lt;/h3&gt;
 
 &lt;p&gt;I cannot say this enough: &lt;strong&gt;benchmark, profile, optimize, rinse, repeat&lt;/strong&gt;. Go has made testing, benchmarking, and profiling extremely simple. You owe it to yourself to optimize your code using these tools. Previously I have written about how I was able to &lt;a href=&#34;http://zhen.org/blog/improving-cityhash-performance-by-go-profiling/&#34;&gt;improve the cityhash Go implementation performance by 3-16X by Go profiling&lt;/a&gt;.&lt;/p&gt;
 
@@ -1972,7 +1995,7 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
 
 &lt;p&gt;Below are some of the optimizations I&amp;rsquo;ve tried. Some helped, some didn&amp;rsquo;t.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_3&#34;&gt;For-Range Through Slices&lt;/h4&gt;
+&lt;h4 id=&#34;for-range-through-slices:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;For-Range Through Slices&lt;/h4&gt;
 
 &lt;p&gt;I learned this when Ian Taylor from Google (and others) helped me optimize one of the functions using range to loop through the slices instead of &lt;code&gt;for i := 0; i &amp;lt; b; i++ {}&lt;/code&gt; loops. The for-range method can be 4-7 times faster than the other way. You can see the difference between BenchmarkOffset and BenchmarkRange &lt;a href=&#34;https://gist.github.com/zhenjl/7495442&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
@@ -1980,7 +2003,7 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
 
 &lt;p&gt;Side note: this set of benchmarks are courtesy of DisposaBoy and Athiwat in the #go-nuts IRC channel. Thanks for your help guys.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_4&#34;&gt;Unroll Simple Loops&lt;/h4&gt;
+&lt;h4 id=&#34;unroll-simple-loops:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Unroll Simple Loops&lt;/h4&gt;
 
 &lt;p&gt;For some simple, known-size, loops, such as initializing a slice with the same initial non-zero value, unrolling the loop makes a big difference. The caveat is that &lt;em&gt;gccgo -O3&lt;/em&gt; does an amazing job of optimizing these simple range loops, so in that case unrolling the loop is actually slower.&lt;/p&gt;
 
@@ -2007,19 +2030,19 @@ for i, _ := range tmp {
 
 &lt;p&gt;For now, I am keeping the unrolled version of the function.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_5&#34;&gt;Unroll Even More Loops&lt;/h4&gt;
+&lt;h4 id=&#34;unroll-even-more-loops:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Unroll Even More Loops&lt;/h4&gt;
 
 &lt;p&gt;Given the success of unrolling the above simple loop, I thought I try unrolling &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/util.go#L150&#34;&gt;even&lt;/a&gt; . &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/util.go#L281&#34;&gt;more&lt;/a&gt; . &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/util.go#L412&#34;&gt;loops&lt;/a&gt; to see if it helps.&lt;/p&gt;
 
 &lt;p&gt;It turns out performance actually suffered in some cases. I speculated that the reason may have to do with the bound checking when accessing slices. It turns out I might be right. After I disabled bound checking, performance increased when unrolling these loops. See below regarding disable bound checking.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_6&#34;&gt;Inline Simple Functions&lt;/h4&gt;
+&lt;h4 id=&#34;inline-simple-functions:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Inline Simple Functions&lt;/h4&gt;
 
 &lt;p&gt;There are &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/util.go#L53&#34;&gt;several&lt;/a&gt; . &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/util.go#L60&#34;&gt;small&lt;/a&gt; functions that gets called quite often in this encoding library. During profiling I see these functions being on top all the time.&lt;/p&gt;
 
 &lt;p&gt;I decided to try and inline these functions to see if the reduced function call overhead will help. In general I didn&amp;rsquo;t see much performance improvements using this technique. The most I saw was a 1% increase in performance. I contribute that to noise.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_7&#34;&gt;Disable Bound Checking (Generally NOT Recommended)&lt;/h4&gt;
+&lt;h4 id=&#34;disable-bound-checking-generally-not-recommended:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Disable Bound Checking (Generally NOT Recommended)&lt;/h4&gt;
 
 &lt;p&gt;This integer encoding library operates on large slices of data. There&amp;rsquo;s a TON of slice access using index. Knowing the every slice access using index requires bound checking, I decided to try disabling bound checking using &lt;code&gt;-gcflags -B&lt;/code&gt; to compile the code.&lt;/p&gt;
 
@@ -2027,11 +2050,11 @@ for i, _ := range tmp {
 
 &lt;p&gt;However, if I disabled bound checking AND unrolled even more loops, we saw decoding performance increase anywhere from 10-40%. Encoding performance didn&amp;rsquo;t see much change. The following chart shows the performance increase (%) from the for-range loops to unrolled some additional loops when I disabled bound checking. This is comparing to the standard &lt;em&gt;gc&lt;/em&gt; compiler.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/no_bound_checking.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/no_bound_checking.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The question is, is it worth the removal of bound checking? For the raw results, I kept the numbers from the for-range loops.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_8&#34;&gt;Using gccgo&lt;/h4&gt;
+&lt;h4 id=&#34;using-gccgo:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Using gccgo&lt;/h4&gt;
 
 &lt;p&gt;When I was looking around for Go optimization techniques, I saw several posts on StackOverflow as well as the Go mailing list suggesting people try &lt;em&gt;gccgo&lt;/em&gt; as the compiler if they wanted more performance. So I thought I give it a shot as well. After downloading gcc 4.8.2 and letting it compile overnight, I was finally able to test it out.&lt;/p&gt;
 
@@ -2039,7 +2062,7 @@ for i, _ := range tmp {
 
 &lt;p&gt;As mentioned above, &lt;em&gt;gccgo -O3&lt;/em&gt; seems to do a pretty amazing job of optimizing simple range loops. I was able to achieve 33% performance increase using for-range with &lt;em&gt;gccgo -O3&lt;/em&gt; instead of unrolling the simple loop. The final result was within 6% of the Java version for Delta BP32 decoding.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_9&#34;&gt;Use Some Assembly&lt;/h4&gt;
+&lt;h4 id=&#34;use-some-assembly:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Use Some Assembly&lt;/h4&gt;
 
 &lt;p&gt;The final trick I tried is to convert one of the often used functions to assembly language. This was suggested to me almost 6 weeks ago by Dave Andersen on the golang-nuts Google group. He suggested that I steal the bitLen function in the math/big/arith files. That&amp;rsquo;s &lt;a href=&#34;https://github.com/reducedb/encoding/commit/ea080c479fb4994e400ebba021d13f10c4f3fecc&#34;&gt;exactly what I did&lt;/a&gt;.&lt;/p&gt;
 
@@ -2049,13 +2072,13 @@ for i, _ := range tmp {
 
 &lt;p&gt;As such, the &lt;a href=&#34;https://github.com/reducedb/encoding&#34;&gt;code&lt;/a&gt; has been updated to use the assembly version of the bitlen.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_10&#34;&gt;Benchmark Environment&lt;/h3&gt;
+&lt;h3 id=&#34;benchmark-environment:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Benchmark Environment&lt;/h3&gt;
 
 &lt;p&gt;The system I used to run the benchmarks was graciously provided by Dr. Daniel Lemire. Here are the CPU and memory information at the time I ran the benchmarks. As you can see, we have plenty of memory to load the large integer arrays and should cause no swap. (I had this issue running these tests on my little MBA with 4GB of memory. :)&lt;/p&gt;
 
 &lt;p&gt;No disk IO is involved in this benchmark.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_11&#34;&gt;OS&lt;/h4&gt;
+&lt;h4 id=&#34;os:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;OS&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;NAME=&amp;quot;Ubuntu&amp;quot;
 VERSION=&amp;quot;12.10, Quantal Quetzal&amp;quot;
@@ -2065,14 +2088,14 @@ PRETTY_NAME=&amp;quot;Ubuntu quantal (12.10)&amp;quot;
 VERSION_ID=&amp;quot;12.10&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_12&#34;&gt;CPU&lt;/h4&gt;
+&lt;h4 id=&#34;cpu:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;CPU&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;model name      : Intel(R) Xeon(R) CPU E5-1620 0 @ 3.60GHz
 cpu MHz         : 3591.566
 cache size      : 10240 KB
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_13&#34;&gt;Memory&lt;/h4&gt;
+&lt;h4 id=&#34;memory:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Memory&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;             total       used       free     shared    buffers     cached
 Mem:      32872068   13548960   19323108          0     209416   11517476
@@ -2080,20 +2103,20 @@ Mem:      32872068   13548960   19323108          0     209416   11517476
 Swap:     33476604          0   33476604
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_14&#34;&gt;java&lt;/h4&gt;
+&lt;h4 id=&#34;java:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;java&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;java version &amp;quot;1.7.0_25&amp;quot;
 OpenJDK Runtime Environment (IcedTea 2.3.10) (7u25-2.3.10-1ubuntu0.12.10.2)
 OpenJDK 64-Bit Server VM (build 23.7-b01, mixed mode)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_15&#34;&gt;go and gccgo&lt;/h4&gt;
+&lt;h4 id=&#34;go-and-gccgo:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;go and gccgo&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;go version go1.2rc4 linux/amd64
 gcc version 4.8.2 (GCC)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;toc_16&#34;&gt;Files&lt;/h4&gt;
+&lt;h4 id=&#34;files:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Files&lt;/h4&gt;
 
 &lt;p&gt;There are two files used in this benchmark:&lt;/p&gt;
 
@@ -2102,7 +2125,7 @@ gcc version 4.8.2 (GCC)
 &lt;li&gt;File 2: &lt;em&gt;latency.txt&lt;/em&gt; contains 144285498 &lt;strong&gt;unsorted&lt;/strong&gt; integers. An example, lat.txt.gz, can be seen &lt;a href=&#34;https://github.com/reducedb/encoding/tree/master/benchmark/data&#34;&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&#34;toc_17&#34;&gt;Codecs&lt;/h4&gt;
+&lt;h4 id=&#34;codecs:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Codecs&lt;/h4&gt;
 
 &lt;p&gt;For this benchmark, I used 4 different codecs:&lt;/p&gt;
 
@@ -2117,7 +2140,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;p&gt;The Java and Go versions of the codecs are almost identical, logic-wise, aside from language differences. These codecs operate on arrays (or slices in Go) of integers. There are a lot of bitwise and shift operations, and lots of loops.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_18&#34;&gt;Benchmark Results&lt;/h3&gt;
+&lt;h3 id=&#34;benchmark-results:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Benchmark Results&lt;/h3&gt;
 
 &lt;p&gt;The &lt;a href=&#34;https://docs.google.com/spreadsheet/pub?key=0ApDLtJuUH-1rdDRyNEhPWUlqMHZzMG5FWFQzX1ZoZ1E&amp;amp;output=html&#34;&gt;raw results&lt;/a&gt; from running different Go compilers (and flags) and codes are in the Google spreadsheet at the bottom of the post.&lt;/p&gt;
 
@@ -2129,7 +2152,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;p&gt;So you can say that A is faster than B by X%.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_19&#34;&gt;Go Fastest&lt;/h4&gt;
+&lt;h4 id=&#34;go-fastest:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Go Fastest&lt;/h4&gt;
 
 &lt;p&gt;I compiled 4 different versions of Go binary for this benchmark:&lt;/p&gt;
 
@@ -2162,15 +2185,15 @@ gcc version 4.8.2 (GCC)
 
 &lt;p&gt;Lastly, the &lt;em&gt;gccgo-O3&lt;/em&gt; version is the fastest. This is the version that&amp;rsquo;s compiled using &lt;code&gt;-O3&lt;/code&gt; flag for gccgo. We saw that the &lt;em&gt;gccgo-O3&lt;/em&gt; version is anywhere from 10% to 60% faster than the &lt;em&gt;gc&lt;/em&gt; version.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/comparing_go_binaries.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/comparing_go_binaries.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;Above is a chart that shows the decoding performance of the &lt;em&gt;ts.txt&lt;/em&gt; file for the different binaries and codecs.&lt;/p&gt;
 
 &lt;p&gt;For the comparison with Java, I am using the &lt;em&gt;gccgo-O3&lt;/em&gt; numbers.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_20&#34;&gt;Bits Per Integer (Lower is Better)&lt;/h4&gt;
+&lt;h4 id=&#34;bits-per-integer-lower-is-better:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Bits Per Integer (Lower is Better)&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/bits_per_integer.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/bits_per_integer.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;As you can tell, when the integers are sorted (ts.txt), the compression ratio is VERY good. Delta BP32 achieved 0.25 bits per 32-bit integer, and Delta FastPFOR is even better at 0.13 bits per integer. This is also because there are a lot of repeats in ts.txt.&lt;/p&gt;
 
@@ -2180,23 +2203,23 @@ gcc version 4.8.2 (GCC)
 
 &lt;p&gt;I also tested the latency file against the &lt;a href=&#34;https://developers.google.com/protocol-buffers/docs/encoding#varints&#34;&gt;zigzag&lt;/a&gt; delta codecs and achieved ~25 bits per 32-bit integer. So it&amp;rsquo;s not much better than the standard codecs. However, zigzag delta comes in extremely handy when the negative numbers are smaller.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_21&#34;&gt;Java vs. Go&lt;/h4&gt;
+&lt;h4 id=&#34;java-vs-go:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Java vs. Go&lt;/h4&gt;
 
 &lt;p&gt;For this section, we are comparing the decoding speed between the fastest Go version and Java. As you saw at the beginning of this post. Daniel Lemire&amp;rsquo;s &lt;a href=&#34;https://github.com/lemire/JavaFastPFOR&#34;&gt;Java version&lt;/a&gt; is anywhere from 12% to 180% faster than my &lt;a href=&#34;https://github.com/reducedb/encoding&#34;&gt;Go version&lt;/a&gt; for decoding integers.&lt;/p&gt;
 
 &lt;p&gt;The following chart shows how much (%) faster Java is compare to Go in decoding integers that are encoded using different codecs. It shows results from processing two different files. See below for more details.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The following chart shows the decoding performance while processing &lt;em&gt;ts.txt&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_tstxt.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_tstxt.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The following chart shows the decoding performance while processing &lt;em&gt;latency.txt&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_latency.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_latency.png&#34;&gt;&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_22&#34;&gt;Raw Results&lt;/h4&gt;
+&lt;h4 id=&#34;raw-results:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Raw Results&lt;/h4&gt;
 
 &lt;p&gt;The &lt;a href=&#34;https://docs.google.com/spreadsheet/pub?key=0ApDLtJuUH-1rdDRyNEhPWUlqMHZzMG5FWFQzX1ZoZ1E&amp;amp;output=html&#34;&gt;raw results&lt;/a&gt; are in the following Google spreadsheet.&lt;/p&gt;
 
@@ -2210,7 +2233,7 @@ gcc version 4.8.2 (GCC)
       <title>Improving Cityhash Performance by Go Profiling</title>
       <link>http://zhen.org/blog/improving-cityhash-performance-by-go-profiling/</link>
       <pubDate>Sun, 10 Nov 2013 15:04:22 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/improving-cityhash-performance-by-go-profiling/</guid>
       <description>
 
@@ -2224,7 +2247,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;p&gt;However, since family and work pretty much occupied most of my waking hours over the past few weeks, I haven&amp;rsquo;t made much progress on the &amp;ldquo;Go Learn&amp;rdquo; projects. To keep myself going, I picked a smaller task over the weekend and decided to go back to &amp;ldquo;Go Learn Project #1&amp;rdquo;, my &lt;a href=&#34;https://github.com/reducedb/cityhash&#34;&gt;cityhash&lt;/a&gt; Go implementation.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;Go Learn Project #1&lt;/h3&gt;
+&lt;h3 id=&#34;go-learn-project-1:c82123e7d16007176a816d99942a250f&#34;&gt;Go Learn Project #1&lt;/h3&gt;
 
 &lt;p&gt;When I first decided to learn Go, I struggled quite a bit to find a project that I can sink my teeth into. I am not sure if others are the same way, for me to learn a new language, I have to have something meaningful to work on. I can&amp;rsquo;t just write hello world programs or follow tutorials. I can read books and articles, but I will also procrastinate for weeks if I can&amp;rsquo;t find a relevant project.&lt;/p&gt;
 
@@ -2236,13 +2259,13 @@ gcc version 4.8.2 (GCC)
 
 &lt;p&gt;In any case, the porting process wasn&amp;rsquo;t too difficult, as it turned out. Overall I was able to do that over a weekend. I was also able to port the test program (city-test.cc) over as well (vim substitution FTW) to validate that my implementation was functionally correct.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Performance Sucked&lt;/h3&gt;
+&lt;h3 id=&#34;performance-sucked:c82123e7d16007176a816d99942a250f&#34;&gt;Performance Sucked&lt;/h3&gt;
 
 &lt;p&gt;I had always suspected that my Go cityhash implementation wasn&amp;rsquo;t great performance wise. At the time I hadn&amp;rsquo;t learned how to benchmark or profile Go programs, so I didn&amp;rsquo;t do a whole lot except ensuring functionally the results are correct. Also my data generator at work was working fine so I left the implementation as is.&lt;/p&gt;
 
 &lt;p&gt;In September, I implemented a &lt;a href=&#34;https://github.com/reducedb/bloom&#34;&gt;Bloom Filter package&lt;/a&gt; which required a hash function as part of the implementation. For that package, I &lt;a href=&#34;http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/&#34;&gt;tested different hash functions&lt;/a&gt; to see how they affect the performance of the bloom filter. As you can see from those benchmarks, Cityhash is consistently 3x slower compare to the others. At the time I knew it was because of my implementation but didn&amp;rsquo;t look into it further.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Profiling Go Cityhash&lt;/h3&gt;
+&lt;h3 id=&#34;profiling-go-cityhash:c82123e7d16007176a816d99942a250f&#34;&gt;Profiling Go Cityhash&lt;/h3&gt;
 
 &lt;p&gt;Since that first project, I have learned quite a bit more about benchmarking and profiling. So this weekend I finally took time to profile the Go implementation and found some interesting results. Now Go experts probably will read this and say &amp;ldquo;of course, you had no idea what you were doing.&amp;rdquo; And that would be true. I had no idea at the time. Hopefully this post will make up for it.&lt;/p&gt;
 
@@ -2276,7 +2299,7 @@ Total: 4295 samples
 
 &lt;p&gt;By this time, some of the readers are probably wondering why the heck I am using binary.Read() if I knew that I will be reading a uint64 from a slice. And they would be right again. Only excuse I have is that I had no clue and that was the first thing I found to work a few months back, so I just used it.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;Modifying the Implementation&lt;/h3&gt;
+&lt;h3 id=&#34;modifying-the-implementation:c82123e7d16007176a816d99942a250f&#34;&gt;Modifying the Implementation&lt;/h3&gt;
 
 &lt;p&gt;The change turned out to be relatively simple. Instead of using binary.Read(), I used LittleEndian.Uint64() to read the uint64. After the change, I ran the same program again.&lt;/p&gt;
 
@@ -2298,7 +2321,7 @@ Total: 245 samples
 
 &lt;p&gt;Also, nothing really jumps out when looking at the &lt;a href=&#34;/images/2013-11-10-improving-cithhash-performance-by-go-profiling/after.svg&#34;&gt;post-change profile data graph&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;Bloom Filter Benchmarks&lt;/h3&gt;
+&lt;h3 id=&#34;bloom-filter-benchmarks:c82123e7d16007176a816d99942a250f&#34;&gt;Bloom Filter Benchmarks&lt;/h3&gt;
 
 &lt;p&gt;Now that the changes are in, I went back and re-ran some of the bloom filter benchmarks. They look a lot more reasonable as well. Below is a comparison of the Scalable Bloom Filter. The post-change run is almost 2.5x faster than the pre-change run. Also, the post-change number (1442 ns/op) is a lot closer to some of the other hash functions (~1100 ns/op).&lt;/p&gt;
 
@@ -2308,7 +2331,7 @@ BenchmarkBloomCityHash   1000000              1442 ns/op (after cityhash change)
 BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;Summary&lt;/h3&gt;
+&lt;h3 id=&#34;summary:c82123e7d16007176a816d99942a250f&#34;&gt;Summary&lt;/h3&gt;
 
 &lt;p&gt;The Go authors have made it extermely simple to test, benchmark and profile Go programs so there&amp;rsquo;s really reason for anyone not to do that often. It helps you see how your program works and where the bottlenecks are. It can also help you identify surprises that you may not have though of. A good example is in my case, I had no idea binary.Read() works the way it works until I profiled my program.&lt;/p&gt;
 
@@ -2320,7 +2343,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
       <title>Benchmarking Integer Compression in Go</title>
       <link>http://zhen.org/blog/benchmarking-integer-compression-in-go/</link>
       <pubDate>Fri, 11 Oct 2013 22:39:22 -0800</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/benchmarking-integer-compression-in-go/</guid>
       <description>
 
@@ -2330,7 +2353,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 &lt;p&gt;Updated post: &lt;a href=&#34;http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/&#34;&gt;Go vs Java: Decoding Billions of Integers Per Second&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;tl;dr&lt;/h3&gt;
+&lt;h3 id=&#34;tl-dr:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;tl;dr&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/reducedb/encoding&#34;&gt;Source code&lt;/a&gt;&lt;/li&gt;
@@ -2342,7 +2365,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 &lt;li&gt;I would love it if someone can run these tests on a faster machine and send me the results. I would be happy to put them into the spreadsheet.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;Go Learn Project #6 - Integer Compression&lt;/h3&gt;
+&lt;h3 id=&#34;go-learn-project-6-integer-compression:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;Go Learn Project #6 - Integer Compression&lt;/h3&gt;
 
 &lt;p&gt;It&amp;rsquo;s been 4 weeks since my last post and I have been BUSY! My day job has been busier than ever (in a good way) and has taken over many of my nights and weekends. However, I&amp;rsquo;ve not forgotten the &amp;ldquo;Go Learn&amp;rdquo; project and continued to tinker with Go as I find time.&lt;/p&gt;
 
@@ -2354,7 +2377,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 &lt;p&gt;Some CODECs (&amp;ldquo;integrated codecs&amp;rdquo;) assume that the integers are in sorted orders. Most others do not.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Thank You, Daniel Lemire&lt;/h3&gt;
+&lt;h3 id=&#34;thank-you-daniel-lemire:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;Thank You, Daniel Lemire&lt;/h3&gt;
 
 &lt;p&gt;As you may have noticed, this is the second Daniel Lemire project that I&amp;rsquo;ve ported over. The previous one is &lt;a href=&#34;http://zhen.org/blog/bitmap-compression-using-ewah-in-go/&#34;&gt;Bitmap Compression using EWAH in Go&lt;/a&gt;.&lt;/p&gt;
 
@@ -2364,7 +2387,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 
 &lt;p&gt;So thank you Daniel!&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_3&#34;&gt;Decoding Billions of Integers per Second Through Vectorization&lt;/h4&gt;
+&lt;h4 id=&#34;decoding-billions-of-integers-per-second-through-vectorization:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;Decoding Billions of Integers per Second Through Vectorization&lt;/h4&gt;
 
 &lt;p&gt;This project is inspired by Danile&amp;rsquo;s blog post, &lt;a href=&#34;http://lemire.me/blog/archives/2012/09/12/fast-integer-compression-decoding-billions-of-integers-per-second/&#34;&gt;Fast integer compression: decoding billions of integers per second&lt;/a&gt;, and &lt;a href=&#34;http://arxiv.org/abs/1209.2137&#34;&gt;paper&lt;/a&gt;. As the paper states:&lt;/p&gt;
 
@@ -2376,7 +2399,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 
 &lt;p&gt;However, because Go has no access to the SSE instruction sets (well, not without getting into C or assembly), I was not able to port over the SIMD versions of the algorithms.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;The Port&lt;/h3&gt;
+&lt;h3 id=&#34;the-port:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;The Port&lt;/h3&gt;
 
 &lt;p&gt;The Go port is available on &lt;a href=&#34;https://github.com/reducedb/encoding&#34;&gt;github&lt;/a&gt;. In this version, I&amp;rsquo;ve proted over six algorithms, including&lt;/p&gt;
 
@@ -2391,7 +2414,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 
 &lt;p&gt;I won&amp;rsquo;t go into details of how each of these algorithms work. If you are interested, I strongly encourage you to go read Daniel&amp;rsquo;s paper.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;The Benchmarks&lt;/h3&gt;
+&lt;h3 id=&#34;the-benchmarks:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;The Benchmarks&lt;/h3&gt;
 
 &lt;p&gt;To benchmark these algorithms, I&amp;rsquo;ve created 5 sets of data.&lt;/p&gt;
 
@@ -2412,13 +2435,13 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 
 &lt;p&gt;Along with benchmarking the integer encoding algorithms, I also benchmarked the Go implementations of Gzip, LZW and Snappy. Both Gzip and LZW are part of the Go standard library. Snappy is a &lt;a href=&#34;https://code.google.com/p/snappy-go/&#34;&gt;separate project&lt;/a&gt; implemented by the Go developers.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;The Results&lt;/h3&gt;
+&lt;h3 id=&#34;the-results:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;The Results&lt;/h3&gt;
 
 &lt;p&gt;All benchmarks are performed on a machine with Intel&amp;reg; Xeon&amp;reg; CPU E5-2609 0 @ 2.40GHz.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_7&#34;&gt;Compression Ratio (Lower is Better)&lt;/h4&gt;
+&lt;h4 id=&#34;compression-ratio-lower-is-better:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;Compression Ratio (Lower is Better)&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Compression-Ratio.png&#34; alt=&#34;Compression Ratio&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Compression-Ratio.png&#34; alt=&#34;Compression Ratio&#34; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;Compression ratio is measured in bits/integer. Before compression, the integers we are compressing are all 32-bit integers. This chart shows us how many bits are used for each integer after compression.&lt;/p&gt;
@@ -2432,9 +2455,9 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 &lt;li&gt;Delta BP32 performs the best for sorted lists, but really has problems with unsorted lists.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&#34;toc_8&#34;&gt;Compression Speed (Higher is Better)&lt;/h4&gt;
+&lt;h4 id=&#34;compression-speed-higher-is-better:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;Compression Speed (Higher is Better)&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Compression-Speed.png&#34; alt=&#34;Compression Speed&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Compression-Speed.png&#34; alt=&#34;Compression Speed&#34; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;Compression speed is measured in millions of integers per second (MiS). Note that:&lt;/p&gt;
@@ -2445,9 +2468,9 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 &lt;li&gt;Gzip and LZW perfom the most poorly.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&#34;toc_9&#34;&gt;Decompression Speed&lt;/h4&gt;
+&lt;h4 id=&#34;decompression-speed:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;Decompression Speed&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Decompression-Speed.png&#34; alt=&#34;Decompression Ratio&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Decompression-Speed.png&#34; alt=&#34;Decompression Ratio&#34; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;Decompression speed is measured in millions of integers per second (MiS). Note that:&lt;/p&gt;
@@ -2458,7 +2481,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 &lt;li&gt;FastPFOR seems to perform the most consistently for integer compression algorithms. (For compression as well.)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_10&#34;&gt;The Conclusions&lt;/h3&gt;
+&lt;h3 id=&#34;the-conclusions:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;The Conclusions&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;For encoding sorted numbers, Delta BP32 has the best combination of compression ratio, and encoding/decoding speed.&lt;/li&gt;
@@ -2466,7 +2489,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 &lt;li&gt;For long term storage, it might be worth considering gzip. It provides the best compression ratio for data that may not be accessed for a long while.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_11&#34;&gt;The Raw Result&lt;/h3&gt;
+&lt;h3 id=&#34;the-raw-result:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;The Raw Result&lt;/h3&gt;
 
 &lt;p&gt;The following is a Google spreadsheet that contains the raw result set.&lt;/p&gt;
 
@@ -2480,13 +2503,13 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
       <title>Bitmap Compression using EWAH in Go</title>
       <link>http://zhen.org/blog/bitmap-compression-using-ewah-in-go/</link>
       <pubDate>Sun, 15 Sep 2013 23:08:22 -0800</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/bitmap-compression-using-ewah-in-go/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6392197&#34;&gt;comments/suggestions&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_0&#34;&gt;tl;dr&lt;/h3&gt;
+&lt;h3 id=&#34;tl-dr:3a0c4ad8daa6401e3210f1f5461e42df&#34;&gt;tl;dr&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;If you are interested in database bitmap index, then it&amp;rsquo;s definitely worth learning more about bitmap compression.&lt;/li&gt;
@@ -2494,13 +2517,13 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 &lt;li&gt;Sorry I think you should read the rest of the article. :)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;The Real Deal&lt;/h3&gt;
+&lt;h3 id=&#34;the-real-deal:3a0c4ad8daa6401e3210f1f5461e42df&#34;&gt;The Real Deal&lt;/h3&gt;
 
 &lt;p&gt;For &amp;ldquo;Go Learn&amp;rdquo; project #5, I&amp;rsquo;ve decided to continue implementing bit-related data structures. This time I decided to port a bitmap (not image) compression data structure to Go. Unlike bloom filters, which had quite a few implementations, I couldn&amp;rsquo;t really find any compressed bitmap implementations in Go. Most of them are in C/C++ or Java. (For previous projects please see previous blog posts.)&lt;/p&gt;
 
 &lt;p&gt;Btw, if you have any suggestions on what project I should do next, feel free to drop me a comment.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Bitmaps&lt;/h3&gt;
+&lt;h3 id=&#34;bitmaps:3a0c4ad8daa6401e3210f1f5461e42df&#34;&gt;Bitmaps&lt;/h3&gt;
 
 &lt;p&gt;Bitmap compression is often used for database &lt;a href=&#34;http://en.wikipedia.org/wiki/Bitmap_index&#34;&gt;bitmap indexing&lt;/a&gt;. To quote Wikipedia again:&lt;/p&gt;
 
@@ -2514,7 +2537,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 
 &lt;p&gt;There are quite a few approaches to bitmap compression. You will find most of the work listed in the wikipedia page. The two I found to be most interesting are &lt;a href=&#34;http://ricerca.mat.uniroma3.it/users/colanton/docs/concise.pdf&#34;&gt;CONCISE&lt;/a&gt; and &lt;a href=&#34;https://code.google.com/p/javaewah/&#34;&gt;Enhanced Word-Aligned Hybrid (EWAH)&lt;/a&gt;. After reading throught both papers and looking at their Java implementations, I decided to start with EWAH. There&amp;rsquo;s no primary reason for starting with EWAH first. But Daniel Lemire&amp;rsquo;s comment intrigued me, &amp;ldquo;Out of the bitmap formats that I have often tested, Concise is the most concise, but JavaEWAH is often faster. So there is a trade-off.&amp;rdquo; I wanted to see how fast the Go implementation can be so I figure I start with EWAH. I may still port CONCISE later. (Note: I am not the best Go programmer nor do I claim that my code is the most performant. This is a learning project so there will definitely be room for improvement.)&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_3&#34;&gt;EWAH&lt;/h3&gt;
+&lt;h3 id=&#34;ewah:3a0c4ad8daa6401e3210f1f5461e42df&#34;&gt;EWAH&lt;/h3&gt;
 
 &lt;p&gt;Enhanced Word-Aligned Hybrid (EWAH) is a bitmap compression algorithm created by Daniel Lemire, Owen Kaser, and Kamel Aouiche. (&lt;a href=&#34;http://arxiv.org/pdf/0901.3751v4.pdf&#34;&gt;paper&lt;/a&gt;)&lt;/p&gt;
 
@@ -2547,7 +2570,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 
 &lt;p&gt;Technically you can solve both of these problems, but the cost of doing such operations will be extremely high.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;Go Port&lt;/h3&gt;
+&lt;h3 id=&#34;go-port:3a0c4ad8daa6401e3210f1f5461e42df&#34;&gt;Go Port&lt;/h3&gt;
 
 &lt;p&gt;Most of my nights and weekends over the past couple of weeks have gone into the porting of JavaEWAH to Go. There&amp;rsquo;s also a C++ version of EWAH which I&amp;rsquo;ve also gone through. Code structure wise it&amp;rsquo;s very similar to the Java version. You can find the &lt;a href=&#34;https://github.com/reducedb/bitmap&#34;&gt;Go EWAH port on Github&lt;/a&gt;.&lt;/p&gt;
 
@@ -2561,7 +2584,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 
 &lt;p&gt;What I found is that in my Go port using this same approach was running fairly slow as there are multiple nested iterators. (Results later.) Now to be completely honest and fair, this does not mean the Java version is also slow. It&amp;rsquo;s just the &lt;strong&gt;My Go version&lt;/strong&gt; is slow. As I have learned over the past few projects, there are always ways to make things faster. I tried to apply what I&amp;rsquo;ve learned in previous projects in these new projects but it certainly doesn&amp;rsquo;t mean I always succeed.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_5&#34;&gt;Cursors&lt;/h4&gt;
+&lt;h4 id=&#34;cursors:3a0c4ad8daa6401e3210f1f5461e42df&#34;&gt;Cursors&lt;/h4&gt;
 
 &lt;p&gt;After porting the Java version to Go directly, I learned a ton about the structure of the algorithm and how the different bit operations are performed. Given that my Go version was running fairly slow, I decided to try a different approach. Instead of the nested iterator approach, I implemented a Cursor structure that basically collapsed RunningLengthWord, BufferedRunningLengthWord, IteratingBufferedRunningLengthWord, and EWAHIterator into a single structure.&lt;/p&gt;
 
@@ -2569,7 +2592,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 
 &lt;p&gt;In many cases during my benchmarks, the cursor-based performance is 2-4x faster over the previous approach.  I took great care to make sure the results of the two different implementations return exactly the same thing. You can see some of that in my tests.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_6&#34;&gt;Get&lt;/h4&gt;
+&lt;h4 id=&#34;get:3a0c4ad8daa6401e3210f1f5461e42df&#34;&gt;Get&lt;/h4&gt;
 
 &lt;p&gt;The original Java implementation did not have a Get function, which gets the bit at any random location. This is because bitmap implementation such as CONCISE and EWAH are meant to be used with bitmap indices and in most cases you don&amp;rsquo;t need to check a random bit. The common use cases are to perform bit operations on two bitmaps, then find all the bits that are set.&lt;/p&gt;
 
@@ -2587,11 +2610,11 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 &lt;li&gt;Get using the nested iterators approach - 822530 ns/op&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;toc_7&#34;&gt;Results&lt;/h3&gt;
+&lt;h3 id=&#34;results:3a0c4ad8daa6401e3210f1f5461e42df&#34;&gt;Results&lt;/h3&gt;
 
 &lt;p&gt;The &lt;a href=&#34;https://github.com/reducedb/bitmap&#34;&gt;final product&lt;/a&gt; of this project is available on Github. I ran quite a few benchmarks with different bitmap density (1-sparsity) as well as running bit operations with two bitmaps of varying density. Here are some points to note.&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_8&#34;&gt;Density vs Space Saving&lt;/h4&gt;
+&lt;h4 id=&#34;density-vs-space-saving:3a0c4ad8daa6401e3210f1f5461e42df&#34;&gt;Density vs Space Saving&lt;/h4&gt;
 
 &lt;p&gt;The whole reason for bitmap compression to exist is to save space. So here are some results from that test. Probably not surprisingly, the higher the density, the lower the space savings. The charte below shows how density and space savings correlate for a bitmap that had a cardinality of 10,000.&lt;/p&gt;
 
@@ -2637,7 +2660,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 
 &lt;p&gt;At the bottom, you will find the full list of bitmaps I generated for the tests. (Look at the bitmaps tab)&lt;/p&gt;
 
-&lt;h4 id=&#34;toc_9&#34;&gt;Cursor vs Nested Iterators&lt;/h4&gt;
+&lt;h4 id=&#34;cursor-vs-nested-iterators:3a0c4ad8daa6401e3210f1f5461e42df&#34;&gt;Cursor vs Nested Iterators&lt;/h4&gt;
 
 &lt;p&gt;Another interesting benchmark I did was test the performance between the cursor-based implementation and the nested-iterators implementation. I tested the two implementations using a wide variaty of combinations, totaling 225 benchmarks per bit operation (AND, OR, XOR, ANDNOT).&lt;/p&gt;
 
@@ -2652,7 +2675,7 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
 &lt;li&gt;AND/OR/XOR/ANDNOT 2 - This is the nested-iterator-based implementation&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&#34;toc_10&#34;&gt;Embedded Spreadsheet&lt;/h4&gt;
+&lt;h4 id=&#34;embedded-spreadsheet:3a0c4ad8daa6401e3210f1f5461e42df&#34;&gt;Embedded Spreadsheet&lt;/h4&gt;
 
 &lt;iframe width=&#39;800&#39; height=&#39;500&#39; frameborder=&#39;0&#39; src=&#39;https://docs.google.com/spreadsheet/pub?key=0ApDLtJuUH-1rdHh2bzY1d0h3U042UXNkLUlzaENLMUE&amp;output=html&amp;widget=true&#39;&gt;&lt;/iframe&gt;
 

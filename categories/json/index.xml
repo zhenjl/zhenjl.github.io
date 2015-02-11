@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Json on Zen 3.1 </title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://zhen.org/categories/json/index.xml/</link>
+    <title>Json on Zen 3.1</title>
+    <link>http://zhen.org/categories/json/</link>
+    <description>Recent content in Json on Zen 3.1</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Jian Zhen</author>
-    <copyright>Jian Zhen</copyright>
-    <updated>Wed, 28 Aug 2013 14:20:22 -0800</updated>
+    
+    
+    <copyright>Jian Zhen. All Rights Reserved.</copyright>
+    <lastBuildDate>Wed, 28 Aug 2013 14:20:22 -0800</lastBuildDate>
+    <atom:link href="http://zhen.org/categories/json/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Testing MsgPack and BSON</title>
       <link>http://zhen.org/blog/testing-msgpack-and-bson/</link>
       <pubDate>Wed, 28 Aug 2013 14:20:22 -0800</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/testing-msgpack-and-bson/</guid>
       <description>&lt;p&gt;In one of the projects I am working on we are trying to select a message encoding scheme. The use case is pretty simple. We have a server that accepts data records from different clients, and our goal is support 100K messages per second per node. Our selection criteria are pretty simple as well:&lt;/p&gt;
 

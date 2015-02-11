@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Product on Zen 3.1 </title>
-      <generator uri="https://hugo.spf13.com">Hugo</generator>
-    <link>http://zhen.org/categories/product/index.xml/</link>
+    <title>Product on Zen 3.1</title>
+    <link>http://zhen.org/categories/product/</link>
+    <description>Recent content in Product on Zen 3.1</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Jian Zhen</author>
-    <copyright>Jian Zhen</copyright>
-    <updated>Tue, 10 Feb 2015 06:40:20 PST</updated>
+    
+    
+    <copyright>Jian Zhen. All Rights Reserved.</copyright>
+    <lastBuildDate>Tue, 10 Feb 2015 06:40:20 PST</lastBuildDate>
+    <atom:link href="http://zhen.org/categories/product/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Sequence: Automated Analyzer for Reducing 100,000&#39;s of Log Messages to 10&#39;s of Patterns</title>
       <link>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</link>
       <pubDate>Tue, 10 Feb 2015 06:40:20 PST</pubDate>
-      <author>Jian Zhen</author>
+      
       <guid>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</guid>
       <description>
 
@@ -27,7 +30,7 @@
 
 &lt;p&gt;This is part 2 of the &lt;code&gt;sequence&lt;/code&gt; series. &lt;a href=&#34;http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/&#34;&gt;Part 1&lt;/a&gt; is about the high performance parser that can parse 100,000-200,000 MPs.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_0&#34;&gt;Background&lt;/h2&gt;
+&lt;h2 id=&#34;background:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Background&lt;/h2&gt;
 
 &lt;p&gt;This post really takes me down the memory lane. Back in 2005, while I was at LogLogic, we envisioned an automated approach to tagging, or labeling, log messages. More specifically, we wanted to automatically tag specific components within the log messages with their semantic label, such as a source IP address, or a target user.&lt;/p&gt;
 
@@ -47,7 +50,7 @@
 
 &lt;p&gt;It is understandable, unfortunately. Log parsing is &lt;strong&gt;BORING&lt;/strong&gt;. I mean, who wants to sit there and stare at logs all day and try to come up with regular expressions or other types of parsing rules? LogLogic used to have a team of LogLabs analysts that did that, and I have to say I truly appreciated their effort and patience, because I cannot do that.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_1&#34;&gt;The End Result&lt;/h3&gt;
+&lt;h3 id=&#34;the-end-result:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;The End Result&lt;/h3&gt;
 
 &lt;p&gt;So instead of writing rules all day long, I decided to create an analyzer that can help us get at least 75% of the way there. The end result is the &lt;code&gt;Analyzer&lt;/code&gt;, written in &lt;a href=&#34;http://golang.org&#34;&gt;Go&lt;/a&gt;, in the &lt;a href=&#34;https://github.com/strace/sequence&#34;&gt;sequence&lt;/a&gt; project I created. Here are some preliminary results. Below, we analyzed 2 files. The first is a file with over 200,000 sshd messages. The second is a file with a mixture of ASA, sshd, sudo and su log messages. It contains almost 450,000 messages.&lt;/p&gt;
 
@@ -78,7 +81,7 @@ Analyzed 447745 messages, found 103 unique patterns, 103 are new.
 Analyzed 212897 messages, found 39 unique patterns, 4 are new.
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;toc_2&#34;&gt;Parser - Quick Review&lt;/h3&gt;
+&lt;h3 id=&#34;parser-quick-review:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Parser - Quick Review&lt;/h3&gt;
 
 &lt;p&gt;I wrote about the &lt;a href=&#34;http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/&#34;&gt;sequence parser&lt;/a&gt; a couple of weeks back. It is a &lt;em&gt;high performance sequential log parser&lt;/em&gt;. It &lt;em&gt;sequentially&lt;/em&gt; goes through a log message, &lt;em&gt;parses&lt;/em&gt; out the meaningful parts, without the use regular expressions. It can achieve &lt;em&gt;high performance&lt;/em&gt; parsing of &lt;strong&gt;100,000 - 200,000 messages per second (MPS)&lt;/strong&gt; without the need to separate parsing rules by log source type. Underneath the hood, the &lt;code&gt;sequence&lt;/code&gt; parser basically constructs a tree based on the sequential rules, walks the tree to identify all the possible paths, and returns the path that has the best match (highest weight) for the message.&lt;/p&gt;
 
@@ -86,11 +89,11 @@ Analyzed 212897 messages, found 39 unique patterns, 4 are new.
 
 &lt;p&gt;The approach taken by the &lt;code&gt;sequence&lt;/code&gt; parser is pretty much the same as liblognorm or other tree-based approaches.&lt;/p&gt;
 
-&lt;h2 id=&#34;toc_3&#34;&gt;Sequence Analyzer&lt;/h2&gt;
+&lt;h2 id=&#34;sequence-analyzer:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Sequence Analyzer&lt;/h2&gt;
 
 &lt;p&gt;In the following section I will go through additional details of how the &lt;code&gt;sequence&lt;/code&gt; analyzer reduces 100 of 1000&amp;rsquo;s of raw log messages down to just 10&amp;rsquo;s of unique patterns, and then determining how to label the individual tokens.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_4&#34;&gt;Identifying Unique Patterns&lt;/h3&gt;
+&lt;h3 id=&#34;identifying-unique-patterns:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Identifying Unique Patterns&lt;/h3&gt;
 
 &lt;p&gt;Analyzer builds an analysis tree that represents all the Sequences from messages. It can be used to determine all of the unique patterns for a large body of messages.&lt;/p&gt;
 
@@ -123,7 +126,7 @@ messages is:&lt;/p&gt;
 
 &lt;p&gt;By applying this concept, we can effectively identify all the unique patterns in a log file.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_5&#34;&gt;Determining the Correct Labels&lt;/h3&gt;
+&lt;h3 id=&#34;determining-the-correct-labels:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Determining the Correct Labels&lt;/h3&gt;
 
 &lt;p&gt;Now that we have the unique patterns, we will scan the tokens to determine which labels we should apply to them.&lt;/p&gt;
 
@@ -229,7 +232,7 @@ object = [
 
 &lt;p&gt;Finally, after all that, we scan through the sequence again, and identify any numbers that follow an IP address, but separated by either a &amp;ldquo;/&amp;rdquo; or &amp;ldquo;:&amp;ldquo;. Then we label these numbers as either &lt;code&gt;%srcport%&lt;/code&gt; or &lt;code&gt;%dstport%&lt;/code&gt; based on how the previous IP address is labeled.&lt;/p&gt;
 
-&lt;h3 id=&#34;toc_6&#34;&gt;Summary&lt;/h3&gt;
+&lt;h3 id=&#34;summary:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Summary&lt;/h3&gt;
 
 &lt;p&gt;There are some limitations to the &lt;code&gt;sequence&lt;/code&gt; parser and analyzer. For example, currently &lt;code&gt;sequence&lt;/code&gt; does not handle multi-line logs. Each log message must appear as a single line. So if there&amp;rsquo;s multi-line logs, they must be first be converted into a single line. Also, &lt;code&gt;sequence&lt;/code&gt; has been only tested with a limited set of system (Linux, AIX, sudo, ssh, su, dhcp, etc etc), network (ASA, PIX, Neoteris, CheckPoint, Juniper Firewall) and infrastructure application (apache, bluecoat, etc) logs.&lt;/p&gt;
 
