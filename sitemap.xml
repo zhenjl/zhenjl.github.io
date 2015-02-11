@@ -2,238 +2,233 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://zhen.org/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2015-02-10T06:40:20-08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</loc>
+    <loc>http://localhost:1313/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</loc>
     <lastmod>2015-02-10T06:40:20-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/papers-i-read-2015-week-6/</loc>
+    <loc>http://localhost:1313/blog/papers-i-read-2015-week-6/</loc>
     <lastmod>2015-02-08T19:57:56-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/papers-i-read-2015-week-7/</loc>
-    <lastmod>2015-02-08T19:57:56-08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/</loc>
+    <loc>http://localhost:1313/blog/sequence-high-performance-sequential-semantic-log--parser/</loc>
     <lastmod>2015-02-01T10:40:20-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/</loc>
+    <loc>http://localhost:1313/blog/generating-porter2-fsm-for-fun-and-performance/</loc>
     <lastmod>2015-01-21T20:48:44-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/golang-from-a-non-programmers-perspective/</loc>
+    <loc>http://localhost:1313/blog/golang-from-a-non-programmers-perspective/</loc>
     <lastmod>2015-01-13T13:30:00-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</loc>
+    <loc>http://localhost:1313/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</loc>
     <lastmod>2014-12-25T00:00:33-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</loc>
+    <loc>http://localhost:1313/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</loc>
     <lastmod>2014-12-24T19:20:40-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/</loc>
+    <loc>http://localhost:1313/blog/surgemq-mqtt-message-queue-750k-mps/</loc>
     <lastmod>2014-12-04T22:44:07-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/graceful-shutdown-of-go-net-dot-listeners/</loc>
+    <loc>http://localhost:1313/blog/graceful-shutdown-of-go-net-dot-listeners/</loc>
     <lastmod>2013-12-12T23:33:22-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/ring-buffer-variable-length-low-latency-disruptor-style/</loc>
+    <loc>http://localhost:1313/blog/ring-buffer-variable-length-low-latency-disruptor-style/</loc>
     <lastmod>2013-11-30T23:20:22-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</loc>
+    <loc>http://localhost:1313/blog/go-vs-java-decoding-billions-of-integers-per-second/</loc>
     <lastmod>2013-11-14T19:40:22-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/improving-cityhash-performance-by-go-profiling/</loc>
+    <loc>http://localhost:1313/blog/improving-cityhash-performance-by-go-profiling/</loc>
     <lastmod>2013-11-10T15:04:22-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/benchmarking-integer-compression-in-go/</loc>
+    <loc>http://localhost:1313/blog/benchmarking-integer-compression-in-go/</loc>
     <lastmod>2013-10-11T22:39:22-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/bitmap-compression-using-ewah-in-go/</loc>
+    <loc>http://localhost:1313/blog/bitmap-compression-using-ewah-in-go/</loc>
     <lastmod>2013-09-15T23:08:22-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</loc>
+    <loc>http://localhost:1313/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</loc>
     <lastmod>2013-09-04T00:23:22-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/go-skiplist/</loc>
+    <loc>http://localhost:1313/blog/go-skiplist/</loc>
     <lastmod>2013-09-02T13:09:22-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/testing-msgpack-and-bson/</loc>
+    <loc>http://localhost:1313/blog/testing-msgpack-and-bson/</loc>
     <lastmod>2013-08-28T14:20:22-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/migrating-40000-posts-from-wordpress-to-octopress/</loc>
+    <loc>http://localhost:1313/blog/migrating-40000-posts-from-wordpress-to-octopress/</loc>
     <lastmod>2013-08-18T21:22:22-08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/the-thousand-faces-of-cloud-computing/</loc>
+    <loc>http://localhost:1313/blog/the-thousand-faces-of-cloud-computing/</loc>
     <lastmod>2009-05-15T22:43:27+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/google-lost-grip-on-enterprise-reality/</loc>
+    <loc>http://localhost:1313/blog/google-lost-grip-on-enterprise-reality/</loc>
     <lastmod>2009-05-13T08:01:43+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/three-cloud-resource-consumption-models/</loc>
+    <loc>http://localhost:1313/blog/three-cloud-resource-consumption-models/</loc>
     <lastmod>2009-05-10T03:25:37+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/the-reality-of-workload-mobility-federation-and-distribution/</loc>
+    <loc>http://localhost:1313/blog/the-reality-of-workload-mobility-federation-and-distribution/</loc>
     <lastmod>2009-05-06T07:41:57+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/google-group-discussion-on-private-clouds/</loc>
+    <loc>http://localhost:1313/blog/google-group-discussion-on-private-clouds/</loc>
     <lastmod>2008-09-05T04:28:01+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/the-rise-of-cloud-privatization/</loc>
+    <loc>http://localhost:1313/blog/the-rise-of-cloud-privatization/</loc>
     <lastmod>2008-09-04T14:16:39+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/the-rise-of-cloud-platforms-and-why-the-os-doesnt-matter/</loc>
+    <loc>http://localhost:1313/blog/the-rise-of-cloud-platforms-and-why-the-os-doesnt-matter/</loc>
     <lastmod>2008-08-29T04:43:54+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/response-to-assessing-the-security-benefits-of-cloud-computing/</loc>
+    <loc>http://localhost:1313/blog/response-to-assessing-the-security-benefits-of-cloud-computing/</loc>
     <lastmod>2008-08-28T01:58:22+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/response-to-10-reasons-enterprises-arent-ready-to-trust-the-cloud/</loc>
+    <loc>http://localhost:1313/blog/response-to-10-reasons-enterprises-arent-ready-to-trust-the-cloud/</loc>
     <lastmod>2008-07-02T04:57:28+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/is-saas-cloud-computing/</loc>
+    <loc>http://localhost:1313/blog/is-saas-cloud-computing/</loc>
     <lastmod>2008-06-27T13:15:18+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/cloudcamp-cloud-definition-slas-security-and-others/</loc>
+    <loc>http://localhost:1313/blog/cloudcamp-cloud-definition-slas-security-and-others/</loc>
     <lastmod>2008-06-26T06:09:17+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/mike-kavis-on-cloud-computing/</loc>
+    <loc>http://localhost:1313/blog/mike-kavis-on-cloud-computing/</loc>
     <lastmod>2008-06-15T21:44:22+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/tough-security-questions-for-saas-providers/</loc>
+    <loc>http://localhost:1313/blog/tough-security-questions-for-saas-providers/</loc>
     <lastmod>2008-06-10T13:06:31+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/defining-infrastructure-as-a-service-iaas/</loc>
+    <loc>http://localhost:1313/blog/defining-infrastructure-as-a-service-iaas/</loc>
     <lastmod>2008-06-03T18:28:28+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/the-world-is-even-more-flatter-in-the-saas-market/</loc>
+    <loc>http://localhost:1313/blog/the-world-is-even-more-flatter-in-the-saas-market/</loc>
     <lastmod>2008-06-01T22:19:53+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/5-easy-ways-to-be-a-better-developer/</loc>
+    <loc>http://localhost:1313/blog/5-easy-ways-to-be-a-better-developer/</loc>
     <lastmod>2006-09-17T21:07:12+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/retrieving-incremental-logs/</loc>
+    <loc>http://localhost:1313/blog/retrieving-incremental-logs/</loc>
     <lastmod>2006-01-05T09:02:21+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/it-problem-management-process/</loc>
+    <loc>http://localhost:1313/blog/it-problem-management-process/</loc>
     <lastmod>2005-06-22T06:17:29+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/entering-chinas-software-market/</loc>
+    <loc>http://localhost:1313/blog/entering-chinas-software-market/</loc>
     <lastmod>2005-05-31T18:39:01+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/war-on-intellectual-property-leakage/</loc>
+    <loc>http://localhost:1313/blog/war-on-intellectual-property-leakage/</loc>
     <lastmod>2004-12-28T23:00:54+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/anatomy-of-logs-part-1/</loc>
+    <loc>http://localhost:1313/blog/anatomy-of-logs-part-1/</loc>
     <lastmod>2004-12-15T04:54:28+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/log-management-requirements-for-msps/</loc>
+    <loc>http://localhost:1313/blog/log-management-requirements-for-msps/</loc>
     <lastmod>2004-11-29T02:44:45+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/five-factors-to-consider-when-building-your-logging-infrastructure/</loc>
+    <loc>http://localhost:1313/blog/five-factors-to-consider-when-building-your-logging-infrastructure/</loc>
     <lastmod>2004-11-19T09:39:12+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/pros-and-cons-of-mssps/</loc>
+    <loc>http://localhost:1313/blog/pros-and-cons-of-mssps/</loc>
     <lastmod>2004-11-19T09:39:12+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/regex-less-parsing-of-messages/</loc>
+    <loc>http://localhost:1313/blog/regex-less-parsing-of-messages/</loc>
     <lastmod>2004-11-19T09:39:12+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/microscope-vs-telescope/</loc>
+    <loc>http://localhost:1313/blog/microscope-vs-telescope/</loc>
     <lastmod>2004-11-06T17:47:32+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zhen.org/blog/five-business-mistakes-of-log-analysis/</loc>
+    <loc>http://localhost:1313/blog/five-business-mistakes-of-log-analysis/</loc>
     <lastmod>2004-11-04T03:06:54+00:00</lastmod>
   </url>
   

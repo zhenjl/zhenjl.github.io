@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>It on Zen 3.1</title>
-    <link>http://zhen.org/categories/it/</link>
+    <link>http://localhost:1313/categories/it/</link>
     <description>Recent content in It on Zen 3.1</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
@@ -10,14 +10,14 @@
     
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
     <lastBuildDate>Wed, 22 Jun 2005 06:17:29 &#43;0000</lastBuildDate>
-    <atom:link href="http://zhen.org/categories/it/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/categories/it/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>IT Problem Management Process</title>
-      <link>http://zhen.org/blog/it-problem-management-process/</link>
+      <link>http://localhost:1313/blog/it-problem-management-process/</link>
       <pubDate>Wed, 22 Jun 2005 06:17:29 &#43;0000</pubDate>
       
-      <guid>http://zhen.org/blog/it-problem-management-process/</guid>
+      <guid>http://localhost:1313/blog/it-problem-management-process/</guid>
       <description>
 
 &lt;p&gt;These are scary figures that are sure to keep all CIOs, IT directors and managers up at night. According to the report, The Cost of Enterprise Downtime, North America 2004, conducted by Infonectics Research, network downtime is costing companies 3.6 percent of annual revenue. After studying over 80 large corporations, Infonectics Research found that companies experience an average of 501 hours of network downtime per year. This adds up to millions of dollars of lost productivity and revenue.&lt;/p&gt;

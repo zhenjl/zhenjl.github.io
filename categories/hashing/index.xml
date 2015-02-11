@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hashing on Zen 3.1</title>
-    <link>http://zhen.org/categories/hashing/</link>
+    <link>http://localhost:1313/categories/hashing/</link>
     <description>Recent content in Hashing on Zen 3.1</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
@@ -10,14 +10,14 @@
     
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
     <lastBuildDate>Sun, 10 Nov 2013 15:04:22 PST</lastBuildDate>
-    <atom:link href="http://zhen.org/categories/hashing/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/categories/hashing/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Improving Cityhash Performance by Go Profiling</title>
-      <link>http://zhen.org/blog/improving-cityhash-performance-by-go-profiling/</link>
+      <link>http://localhost:1313/blog/improving-cityhash-performance-by-go-profiling/</link>
       <pubDate>Sun, 10 Nov 2013 15:04:22 PST</pubDate>
       
-      <guid>http://zhen.org/blog/improving-cityhash-performance-by-go-profiling/</guid>
+      <guid>http://localhost:1313/blog/improving-cityhash-performance-by-go-profiling/</guid>
       <description>
 
 &lt;p&gt;Comments/Feedback on &lt;a href=&#34;https://news.ycombinator.com/item?id=6710115&#34;&gt;Hacker News&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1qcygc/improving_cityhash_performance_by_go_profiling/&#34;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
@@ -74,7 +74,7 @@ Total: 4295 samples
 
 &lt;p&gt;As you can see, most of the time were spent copying memory (64.4%). And also the sweepspan (part of GC) is also running quite often (8.7%).&lt;/p&gt;
 
-&lt;p&gt;Before this, I had no idea that there&amp;rsquo;s that much memory being copied. So this is definitely interesting. I then looked the &lt;a href=&#34;http://zhen.org/images/2013-11-10-improving-cithhash-performance-by-go-profiling/before.svg&#34;&gt;graph of the profile data&lt;/a&gt; using the &amp;ldquo;web&amp;rdquo; command.&lt;/p&gt;
+&lt;p&gt;Before this, I had no idea that there&amp;rsquo;s that much memory being copied. So this is definitely interesting. I then looked the &lt;a href=&#34;http://localhost:1313/images/2013-11-10-improving-cithhash-performance-by-go-profiling/before.svg&#34;&gt;graph of the profile data&lt;/a&gt; using the &amp;ldquo;web&amp;rdquo; command.&lt;/p&gt;
 
 &lt;p&gt;It shows clearly that unalignedLoad64, a function that loads a uint64 from the buffer, is causing most of the memmove. Technically, it&amp;rsquo;s calling binary.Read(), which creates an array of 8 bytes, and passes to another function which eventually calls runtime.copy to copy a few bytes of data from the original buffer into the array.&lt;/p&gt;
 
@@ -102,7 +102,7 @@ Total: 245 samples
        0   0.0% 100.0%      227  92.7% github.com/reducedb/cityhash.CityHash128
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Also, nothing really jumps out when looking at the &lt;a href=&#34;http://zhen.org/images/2013-11-10-improving-cithhash-performance-by-go-profiling/after.svg&#34;&gt;post-change profile data graph&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Also, nothing really jumps out when looking at the &lt;a href=&#34;http://localhost:1313/images/2013-11-10-improving-cithhash-performance-by-go-profiling/after.svg&#34;&gt;post-change profile data graph&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h3 id=&#34;bloom-filter-benchmarks:c82123e7d16007176a816d99942a250f&#34;&gt;Bloom Filter Benchmarks&lt;/h3&gt;
 
@@ -124,10 +124,10 @@ BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change
     
     <item>
       <title>Benchmarking Bloom Filters and Hash Functions in Go</title>
-      <link>http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</link>
+      <link>http://localhost:1313/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</link>
       <pubDate>Wed, 04 Sep 2013 00:23:22 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</guid>
+      <guid>http://localhost:1313/blog/benchmarking-bloom-filters-and-hash-functions-in-go/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6329616&#34;&gt;discussion/comments&lt;/a&gt;&lt;/p&gt;
