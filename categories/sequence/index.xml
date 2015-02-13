@@ -20,7 +20,7 @@
       <guid>http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/</guid>
       <description>
 
-&lt;p&gt;Really appreciate everyone upvoting my previous &lt;code&gt;sequence&lt;/code&gt; posts on &lt;a href=&#34;http://www.reddit.com/r/golang/&#34;&gt;reddit&lt;/a&gt; and &lt;a href=&#34;https://news.ycombinator.com/newest&#34;&gt;Hacker News&lt;/a&gt;. I hope you can &lt;a href=&#34;https://news.ycombinator.com/item?id=9047770&#34;&gt;upvote this post&lt;/a&gt; as well!&lt;/p&gt;
+&lt;p&gt;Really appreciate everyone upvoting my previous &lt;code&gt;sequence&lt;/code&gt; posts on &lt;a href=&#34;http://www.reddit.com/r/golang/&#34;&gt;reddit&lt;/a&gt; and &lt;a href=&#34;https://news.ycombinator.com/newest&#34;&gt;Hacker News&lt;/a&gt;. I hope you can &lt;a href=&#34;https://news.ycombinator.com/item?id=9047795&#34;&gt;upvote this post&lt;/a&gt; as well!&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://godoc.org/github.com/strace/sequence&#34;&gt;&lt;img src=&#34;http://godoc.org/github.com/strace/sequence?status.svg&#34; alt=&#34;GoDoc&#34; /&gt;
 &lt;/a&gt;&lt;/p&gt;
