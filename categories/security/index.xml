@@ -9,8 +9,84 @@
     
     
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
-    <lastBuildDate>Sun, 08 Feb 2015 19:57:56 PST</lastBuildDate>
+    <lastBuildDate>Sun, 15 Feb 2015 19:57:56 PST</lastBuildDate>
     <atom:link href="http://zhen.org/categories/security/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Papers I Read: 2015 Week 7</title>
+      <link>http://zhen.org/blog/papers-i-read-2015-week-7/</link>
+      <pubDate>Sun, 15 Feb 2015 19:57:56 PST</pubDate>
+      
+      <guid>http://zhen.org/blog/papers-i-read-2015-week-7/</guid>
+      <description>
+
+&lt;h2 id=&#34;random-ramblings:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Random Ramblings&lt;/h2&gt;
+
+&lt;p&gt;Well, another week, &lt;a href=&#34;http://www.nytimes.com/2015/02/05/business/hackers-breached-data-of-millions-insurer-says.html&#34;&gt;another big data breach&lt;/a&gt;. This time is Anthem, one of the nation’s largest health insurers. Ok, maybe it was last week that it happend. But this week they revealed that &lt;a href=&#34;http://consumerist.com/2015/02/13/anthem-says-data-from-as-far-back-as-2004-exposed-during-hack-offering-free-identity-theft-protection/&#34;&gt;hackers had access &amp;hellip; going back as far as 2004&lt;/a&gt;. WSJ blamed Anthem for &lt;a href=&#34;http://www.wsj.com/articles/investigators-eye-china-in-anthem-hack-1423167560&#34;&gt;not encrypting the data&lt;/a&gt;. Though I have to agree with Rich Mogull over at Securosis that &amp;ldquo;&lt;a href=&#34;https://securosis.com/blog/even-if-anthem-encrypted-it-probably-wouldnt-have-mattered&#34;&gt;even if Anthem had encrypted, it probably wouldn’t have helped&lt;/a&gt;&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;I feel bad for saying this but there&amp;rsquo;s one positive side effect from all these data breaches. Security is now officially a boardroom topic. Anthem&amp;rsquo;s CEO, Joseph Swedish, is now &lt;a href=&#34;http://www.latimes.com/business/la-fi-anthem-hack-ceo-20150213-story.html#page=1&#34;&gt;under the gun&lt;/a&gt; because top level executives are no longer immune to major security breaches that affect the company&amp;rsquo;s top line. Just ask &lt;a href=&#34;http://www.forbes.com/sites/ericbasu/2014/06/15/target-ceo-fired-can-you-be-fired-if-your-company-is-hacked/&#34;&gt;Target’s CEO Gregg Steinhafel&lt;/a&gt;, or &lt;a href=&#34;http://abcnews.go.com/Entertainment/wireStory/sony-chief-amy-pascal-acknowledges-fired-28918607&#34;&gt;Sony&amp;rsquo;s Co-Chairwoman Amy Pascal&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Brian Krebs wrote a &lt;a href=&#34;http://krebsonsecurity.com/2015/02/anthem-breach-may-have-started-in-april-2014/&#34;&gt;detailed piece&lt;/a&gt; analyzing the various pieces of information available relating to the Anthem hack. Quite an interesting read.&lt;/p&gt;
+
+&lt;p&gt;One chart in the artile that Brian referred to is the time difference between the “time to compromise” and the “time to discovery&amp;rdquo;, taken from &lt;a href=&#34;http://www.verizonenterprise.com/DBIR/2014/&#34;&gt;Verizon’s 2014 Data Breach Investigations Report&lt;/a&gt;. As Brian summaries, &amp;ldquo;TL;DR: That gap is not improving, but instead is widening.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;What this really says is that, &lt;strong&gt;you will get hacked&lt;/strong&gt;. So how do you shorten the time between getting hacked, and finding out that you are hacked so you can quickly remediate the problem before worse things happen?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://krebsonsecurity.com/wp-content/uploads/2015/02/timetocompromise.png&#34; alt=&#34;The time difference between the “time to compromise” and the “time to discovery.”&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;With all these data breaches as backdrop, this week we also saw &amp;ldquo;President Barack Obama signed an executive order on Friday designed to spur businesses and the Federal Government to share with each other information related to cybersecurity, hacking and data breaches for the purpose of safeguarding U.S. infrastructure, economics and citizens from cyber attacks.&amp;rdquo; (&lt;a href=&#34;https://gigaom.com/2015/02/13/obamas-executive-order-calls-for-sharing-of-security-data/&#34;&gt;Gigaom&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;In general I don&amp;rsquo;t really think government mandates like this will work. The industry has to feel the pain enough that they are willing to participate, otherwise it&amp;rsquo;s just a waste of paper and ink. Facebook seems to be taking a lead in security information sharing and &lt;a href=&#34;https://www.facebook.com/notes/protect-the-graph/threatexchange-sharing-for-a-safer-internet/1566584370248375&#34;&gt;launched their ThreatExchange security framework&lt;/a&gt; this week. along with Pinterest, Tumblr, Twitter, and Yahoo. Good for them! I hope this is not a temporary PR thing, and that they keep funding and supporting the framework.&lt;/p&gt;
+
+&lt;h2 id=&#34;papers-i-read:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Papers I Read&lt;/h2&gt;
+
+&lt;p&gt;Another great resource of computer science papers is Adrian Coyler&amp;rsquo;s &lt;a href=&#34;http://blog.acolyer.org/&#34;&gt;the morning paper&lt;/a&gt;. He selects and summarizes &amp;ldquo;an interesting/influential/important paper from the world of CS every weekday morning&amp;rdquo;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cs.put.poznan.pl/dweiss/site/publications/download/fsacomp.pdf&#34;&gt;Smaller Representation of Finite State Automata&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I read this paper when I was trying to figure out how to make the FSAs smaller for the &lt;a href=&#34;https://github.com/surge/xparse/tree/master/etld&#34;&gt;Effective TLD matcher&lt;/a&gt; I created. The FSM I generated is 212,294 lines long. That&amp;rsquo;s just absolutely crazy. This paper seems to present an interesting way of compressing them.&lt;/p&gt;
+
+&lt;p&gt;I am not exactly sure if &lt;a href=&#34;https://godoc.org/golang.org/x/net/publicsuffix&#34;&gt;PublicSuffix&lt;/a&gt; uses a similar representation but it basically represents a FSA as an array of bytes, and then walk the bytes like a binary search tree. It&amp;rsquo;s interesting for sure.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This paper is a follow-up to Jan Daciuk’s experiments on space-efficient finite state automata representation that can be used directly for traversals in main memory [4]. We investigate several techniques of reducing the memory footprint of minimal automata, mainly exploiting the fact that transition labels and transition pointer offset values are not evenly distributed and so are suitable for compression. We achieve a size gain of around 20–30% compared to the original representation given in [4]. This result is comparable to the state-of-the-art dictionary compression techniques like the LZ-trie [12] method, but remains
+memory and CPU efficient during construction.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://arxiv.org/pdf/1409.5942v1.pdf&#34;&gt;IP Tracing and Active Network Response&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This work presents integrated model for active security response model. The proposed model introduces Active Response Mechanism (ARM) for tracing anonymous attacks in the network back to their source. This work is motivated by the increased frequency and sophistication of denial-of-service attacks and by the difficulty in tracing packets with incorrect, or “spoofed”, source addresses. This paper presents within the proposed model two tracing approaches based on:
+• Sleepy Watermark Tracing (SWT) for unauthorized access attacks.
+• Probabilistic Packet Marking (PPM) in the network for Denial of Service
+(DoS) and Distributed Denial of Service (DDoS) attacks.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://static.googleusercontent.com/media/research.google.com/en/us/pubs/archive/36356.pdf&#34;&gt;Dapper, a Large-Scale Distributed Systems Tracing Infrastructure&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Here we introduce the design of Dapper, Google’s production distributed systems tracing infrastructure, and describe how our design goals of low overhead, application-level transparency, and ubiquitous deployment on a very large scale system were met. Dapper shares conceptual similarities with other tracing systems, particularly Magpie [3] and X-Trace [12], but certain design
+choices were made that have been key to its success in our environment, such as the use of sampling and restricting the instrumentation to a rather small number of common libraries.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://blog.confluent.io/2015/01/29/making-sense-of-stream-processing/&#34;&gt;STREAM PROCESSING, EVENT SOURCING, REACTIVE, CEP… AND MAKING SENSE OF IT ALL&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Not a paper, but a good write up nonetheless.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Some people call it stream processing. Others call it Event Sourcing or CQRS. Some even call it Complex Event Processing. Sometimes, such self-important buzzwords are just smoke and mirrors, invented by companies who want to sell you stuff. But sometimes, they contain a kernel of wisdom which can really help us design better systems. In this talk, we will go in search of the wisdom behind the buzzwords. We will discuss how event streams can help make your application more scalable, more reliable and more maintainable.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
     
     <item>
       <title>Papers I Read: 2015 Week 6</title>

@@ -33,7 +33,7 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/&#34;&gt;Part 1&lt;/a&gt; is about the high performance parser that can parse 100,000-200,000 MPs.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/&#34;&gt;Part 2&lt;/a&gt; is about automating the process of reducing 100 of 1000&amp;rsquo;s of log messages down to dozens of unique patterns.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/&#34;&gt;Part3&lt;/a&gt; is about optimizing Go to achieve very high performance (200,000 - 500,000 MPS depending on message size and core count) for scanning and tokenizing log messages&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/&#34;&gt;Part 3&lt;/a&gt; is about optimizing Go to achieve very high performance (200,000 - 500,000 MPS depending on message size and core count) for scanning and tokenizing log messages&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;I would love to learn more about the state-of-the-art approaches that log vendors are using. These attempts are about scratching my own itch and trying to realize ideas I&amp;rsquo;ve had in my mind. Given some of these ideas are 5 to 10 years old, they may already be outdated. Personally I just haven&amp;rsquo;t heard of any groundbreaking approaches.&lt;/p&gt;
@@ -354,7 +354,7 @@ BenchmarkTimeStep2   2000000         772 ns/op
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/&#34;&gt;Part 1&lt;/a&gt; is about the high performance parser that can parse 100,000-200,000 MPs.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/&#34;&gt;Part 2&lt;/a&gt; is about automating the process of reducing 100 of 1000&amp;rsquo;s of log messages down to dozens of unique patterns.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/&#34;&gt;Part3&lt;/a&gt; is about optimizing Go to achieve very high performance (200,000 - 500,000 MPS depending on message size) for scanning and tokenizing log messages&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/&#34;&gt;Part 3&lt;/a&gt; is about optimizing Go to achieve very high performance (200,000 - 500,000 MPS depending on message size) for scanning and tokenizing log messages&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;hr /&gt;

@@ -79,6 +79,85 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="http://zhen.org/blog/papers-i-read-2015-week-7/">
+        Papers I Read: 2015 Week 7
+      </a>
+    </h1>
+
+    <span class="post-date">Sun, Feb 15, 2015</span>
+
+    
+
+<h2 id="random-ramblings:10248ddcf524aa32198bc5cded1aa098">Random Ramblings</h2>
+
+<p>Well, another week, <a href="http://www.nytimes.com/2015/02/05/business/hackers-breached-data-of-millions-insurer-says.html">another big data breach</a>. This time is Anthem, one of the nation’s largest health insurers. Ok, maybe it was last week that it happend. But this week they revealed that <a href="http://consumerist.com/2015/02/13/anthem-says-data-from-as-far-back-as-2004-exposed-during-hack-offering-free-identity-theft-protection/">hackers had access &hellip; going back as far as 2004</a>. WSJ blamed Anthem for <a href="http://www.wsj.com/articles/investigators-eye-china-in-anthem-hack-1423167560">not encrypting the data</a>. Though I have to agree with Rich Mogull over at Securosis that &ldquo;<a href="https://securosis.com/blog/even-if-anthem-encrypted-it-probably-wouldnt-have-mattered">even if Anthem had encrypted, it probably wouldn’t have helped</a>&rdquo;.</p>
+
+<p>I feel bad for saying this but there&rsquo;s one positive side effect from all these data breaches. Security is now officially a boardroom topic. Anthem&rsquo;s CEO, Joseph Swedish, is now <a href="http://www.latimes.com/business/la-fi-anthem-hack-ceo-20150213-story.html#page=1">under the gun</a> because top level executives are no longer immune to major security breaches that affect the company&rsquo;s top line. Just ask <a href="http://www.forbes.com/sites/ericbasu/2014/06/15/target-ceo-fired-can-you-be-fired-if-your-company-is-hacked/">Target’s CEO Gregg Steinhafel</a>, or <a href="http://abcnews.go.com/Entertainment/wireStory/sony-chief-amy-pascal-acknowledges-fired-28918607">Sony&rsquo;s Co-Chairwoman Amy Pascal</a>.</p>
+
+<p>Brian Krebs wrote a <a href="http://krebsonsecurity.com/2015/02/anthem-breach-may-have-started-in-april-2014/">detailed piece</a> analyzing the various pieces of information available relating to the Anthem hack. Quite an interesting read.</p>
+
+<p>One chart in the artile that Brian referred to is the time difference between the “time to compromise” and the “time to discovery&rdquo;, taken from <a href="http://www.verizonenterprise.com/DBIR/2014/">Verizon’s 2014 Data Breach Investigations Report</a>. As Brian summaries, &ldquo;TL;DR: That gap is not improving, but instead is widening.&rdquo;</p>
+
+<p>What this really says is that, <strong>you will get hacked</strong>. So how do you shorten the time between getting hacked, and finding out that you are hacked so you can quickly remediate the problem before worse things happen?</p>
+
+<p><img src="http://krebsonsecurity.com/wp-content/uploads/2015/02/timetocompromise.png" alt="The time difference between the “time to compromise” and the “time to discovery.”" />
+</p>
+
+<p>With all these data breaches as backdrop, this week we also saw &ldquo;President Barack Obama signed an executive order on Friday designed to spur businesses and the Federal Government to share with each other information related to cybersecurity, hacking and data breaches for the purpose of safeguarding U.S. infrastructure, economics and citizens from cyber attacks.&rdquo; (<a href="https://gigaom.com/2015/02/13/obamas-executive-order-calls-for-sharing-of-security-data/">Gigaom</a>)</p>
+
+<p>In general I don&rsquo;t really think government mandates like this will work. The industry has to feel the pain enough that they are willing to participate, otherwise it&rsquo;s just a waste of paper and ink. Facebook seems to be taking a lead in security information sharing and <a href="https://www.facebook.com/notes/protect-the-graph/threatexchange-sharing-for-a-safer-internet/1566584370248375">launched their ThreatExchange security framework</a> this week. along with Pinterest, Tumblr, Twitter, and Yahoo. Good for them! I hope this is not a temporary PR thing, and that they keep funding and supporting the framework.</p>
+
+<h2 id="papers-i-read:10248ddcf524aa32198bc5cded1aa098">Papers I Read</h2>
+
+<p>Another great resource of computer science papers is Adrian Coyler&rsquo;s <a href="http://blog.acolyer.org/">the morning paper</a>. He selects and summarizes &ldquo;an interesting/influential/important paper from the world of CS every weekday morning&rdquo;.</p>
+
+<ul>
+<li><a href="http://www.cs.put.poznan.pl/dweiss/site/publications/download/fsacomp.pdf">Smaller Representation of Finite State Automata</a></li>
+</ul>
+
+<p>I read this paper when I was trying to figure out how to make the FSAs smaller for the <a href="https://github.com/surge/xparse/tree/master/etld">Effective TLD matcher</a> I created. The FSM I generated is 212,294 lines long. That&rsquo;s just absolutely crazy. This paper seems to present an interesting way of compressing them.</p>
+
+<p>I am not exactly sure if <a href="https://godoc.org/golang.org/x/net/publicsuffix">PublicSuffix</a> uses a similar representation but it basically represents a FSA as an array of bytes, and then walk the bytes like a binary search tree. It&rsquo;s interesting for sure.</p>
+
+<blockquote>
+<p>This paper is a follow-up to Jan Daciuk’s experiments on space-efficient finite state automata representation that can be used directly for traversals in main memory [4]. We investigate several techniques of reducing the memory footprint of minimal automata, mainly exploiting the fact that transition labels and transition pointer offset values are not evenly distributed and so are suitable for compression. We achieve a size gain of around 20–30% compared to the original representation given in [4]. This result is comparable to the state-of-the-art dictionary compression techniques like the LZ-trie [12] method, but remains
+memory and CPU efficient during construction.</p>
+</blockquote>
+
+<ul>
+<li><a href="http://arxiv.org/pdf/1409.5942v1.pdf">IP Tracing and Active Network Response</a></li>
+</ul>
+
+<blockquote>
+<p>This work presents integrated model for active security response model. The proposed model introduces Active Response Mechanism (ARM) for tracing anonymous attacks in the network back to their source. This work is motivated by the increased frequency and sophistication of denial-of-service attacks and by the difficulty in tracing packets with incorrect, or “spoofed”, source addresses. This paper presents within the proposed model two tracing approaches based on:
+• Sleepy Watermark Tracing (SWT) for unauthorized access attacks.
+• Probabilistic Packet Marking (PPM) in the network for Denial of Service
+(DoS) and Distributed Denial of Service (DDoS) attacks.</p>
+</blockquote>
+
+<ul>
+<li><a href="http://static.googleusercontent.com/media/research.google.com/en/us/pubs/archive/36356.pdf">Dapper, a Large-Scale Distributed Systems Tracing Infrastructure</a></li>
+</ul>
+
+<blockquote>
+<p>Here we introduce the design of Dapper, Google’s production distributed systems tracing infrastructure, and describe how our design goals of low overhead, application-level transparency, and ubiquitous deployment on a very large scale system were met. Dapper shares conceptual similarities with other tracing systems, particularly Magpie [3] and X-Trace [12], but certain design
+choices were made that have been key to its success in our environment, such as the use of sampling and restricting the instrumentation to a rather small number of common libraries.</p>
+</blockquote>
+
+<ul>
+<li><a href="http://blog.confluent.io/2015/01/29/making-sense-of-stream-processing/">STREAM PROCESSING, EVENT SOURCING, REACTIVE, CEP… AND MAKING SENSE OF IT ALL</a></li>
+</ul>
+
+<p>Not a paper, but a good write up nonetheless.</p>
+
+<blockquote>
+<p>Some people call it stream processing. Others call it Event Sourcing or CQRS. Some even call it Complex Event Processing. Sometimes, such self-important buzzwords are just smoke and mirrors, invented by companies who want to sell you stuff. But sometimes, they contain a kernel of wisdom which can really help us design better systems. In this talk, we will go in search of the wisdom behind the buzzwords. We will discuss how event streams can help make your application more scalable, more reliable and more maintainable.</p>
+</blockquote>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/">
         Sequence: Optimizing Go For the High Performance Log Scanner
       </a>
@@ -101,7 +180,7 @@
 <ul>
 <li><a href="http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/">Part 1</a> is about the high performance parser that can parse 100,000-200,000 MPs.</li>
 <li><a href="http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/">Part 2</a> is about automating the process of reducing 100 of 1000&rsquo;s of log messages down to dozens of unique patterns.</li>
-<li><a href="http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/">Part3</a> is about optimizing Go to achieve very high performance (200,000 - 500,000 MPS depending on message size and core count) for scanning and tokenizing log messages</li>
+<li><a href="http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/">Part 3</a> is about optimizing Go to achieve very high performance (200,000 - 500,000 MPS depending on message size and core count) for scanning and tokenizing log messages</li>
 </ul>
 
 <p>I would love to learn more about the state-of-the-art approaches that log vendors are using. These attempts are about scratching my own itch and trying to realize ideas I&rsquo;ve had in my mind. Given some of these ideas are 5 to 10 years old, they may already be outdated. Personally I just haven&rsquo;t heard of any groundbreaking approaches.</p>
@@ -425,7 +504,7 @@ BenchmarkTimeStep2   2000000         772 ns/op
 <ul>
 <li><a href="http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/">Part 1</a> is about the high performance parser that can parse 100,000-200,000 MPs.</li>
 <li><a href="http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/">Part 2</a> is about automating the process of reducing 100 of 1000&rsquo;s of log messages down to dozens of unique patterns.</li>
-<li><a href="http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/">Part3</a> is about optimizing Go to achieve very high performance (200,000 - 500,000 MPS depending on message size) for scanning and tokenizing log messages</li>
+<li><a href="http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/">Part 3</a> is about optimizing Go to achieve very high performance (200,000 - 500,000 MPS depending on message size) for scanning and tokenizing log messages</li>
 </ul>
 
 <h2 id="background:61b1adc09fb9bc31a28d4faabfef3631">Background</h2>
@@ -644,105 +723,13 @@ object = [
 
   </div>
   
-  <div class="post">
-    <h1 class="post-title">
-      <a href="http://zhen.org/blog/papers-i-read-2015-week-6/">
-        Papers I Read: 2015 Week 6
-      </a>
-    </h1>
-
-    <span class="post-date">Sun, Feb 8, 2015</span>
-
-    
-
-<p><a href="http://paperswelove.org/">Papers We Love</a> has been making rounds lately and a lot of people are excited about it. I also think it&rsquo;s kind of cool since I&rsquo;ve been reading a lot of research papers over the past year or so. I have been killing some trees because of that.</p>
-
-<p>My interests have been mostly around data analytics, but the specific focus areas have changed a few times. I have read papers on data structures (bloom filters, skiplist, bitmap compression, etc), security analytics, consumer behavioral analysis, loyalty analytics, and now back to security analytics. In fact, recently I started reading a few security research papers that I found on <a href="http://www.covert.io/">covert.io</a>, put together by Jason Trost.</p>
-
-<p>In any case, I thought it might be an interesting idea to share some of the papers I read/scan/skim on weekly basis. This way I can also track what I read over time.</p>
-
-<h3 id="random-ramblings:e2137c343047358d9912399632750231">Random Ramblings</h3>
-
-<p>This week has been a disaster. I was the last one in the family to catch the cold, but probably lasted the longest. In fact I am still only about 50%. This whole week I have been having headaches, body aches, and haven&rsquo;t been able to concentrate. My body must be trying to catch up on sleep or something. For a couple days I actually slept for almost 12 hours a night!</p>
-
-<p>I&rsquo;ve been meaning to work on <a href="https://github.com/strace/sequence">sequence</a> and finish updating the analyzer, but really had a hard time concentrating. Any non-working hours are basically spent in bed if I could.</p>
-
-<p>So this is probably the worst week to start the &ldquo;Papers I Read&rdquo; series since I only technically read 1 paper. But I am going to cheat a little, and list the papers I read over the past couple of weeks, pretty much all in my spare time.</p>
-
-<p>This week we also saw Sony&rsquo;s accouncement that last year&rsquo;s hack cost them <a href="http://www.sony.net/SonyInfo/IR/financial/fr/150204_sony.pdf">$15 million</a> to investigate and remediate. It&rsquo;s pretty crazy if you think about it.</p>
-
-<p>Let&rsquo;s assume that they hired a bunch of high-priced consultants, say $250/hour, to help comb through the logs and clean the systems. And let&rsquo;s say <sup>2</sup>&frasl;<sub>3</sub> of the $15m is spent on these consultants. That&rsquo;s <code>$10m / $250 = 40,000 hours</code>.</p>
-
-<p>Let&rsquo;s say these consultants worked full time, non-stop, no weekends, no breaks, for 2 months since the announcement on Nov 24, 2014, that would be a team of 56 people (<code>40,000 hours / 60 days / 12 hours/day = 56</code>) working 12 hour days!</p>
-
-<p>I&rsquo;ll tell ya, these security guys are raking it in. They make money upfront by selling products/services to protect the company, then they make money in the back by selling forensic services to clean up after the hack.</p>
-
-<p>[Disclaimer: any mistake in my calculations/assumptions I blame on my drugged brain cells.]</p>
-
-<h3 id="papers-i-read:e2137c343047358d9912399632750231">Papers I Read</h3>
-
-<ul>
-<li><a href="http://www.covert.io/research-papers/security/Beehive%20-%20Large-Scale%20Log%20Analysis%20for%20Detecting%20Suspicious%20Activity%20in%20Enterprise%20Networks.pdf">Beehive: Large-Scale Log Analysis for Detecting Suspicious Activity in Enterprise Networks</a></li>
-</ul>
-
-<blockquote>
-<p>We present a novel system, Beehive, that attacks the problem of automatically mining and extracting knowledge from the dirty log data produced by a wide variety of security products in a large enterprise. We improve on signature-based approaches to detecting security incidents and instead identify suspicious host behaviors that Beehive reports as potential security incidents.</p>
-</blockquote>
-
-<ul>
-<li><a href="http://minds.cs.umn.edu/publications/chapter.pdf">Data Mining for Cyber Security</a></li>
-</ul>
-
-<blockquote>
-<p>This chapter provides an overview of the Minnesota Intrusion Detection System (MINDS), which uses a suite of data mining based algorithms to address different aspects of cyber security. The various components of MINDS such as the scan detector, anomaly detector and the profiling module detect different types of attacks
-and intrusions on a computer network.</p>
-</blockquote>
-
-<ul>
-<li><a href="http://www.covert.io/research-papers/security/VAST-%20Network%20Visibility%20Across%20Space%20and%20Time.pdf">VAST: Network Visibility Across Space and Time</a></li>
-</ul>
-
-<blockquote>
-<p>Key operational networking tasks, such as troubleshooting and defending against attacks, greatly benefit from attaining views of network activity that are unified across space and time. This means that data from heterogeneous devices and systems is treated in a uniformfashion, and that analyzing past activity and detecting future instances follow the same procedures. Based on previous ideas that formulated principles for comprehensive
-network visibility [AKP+08], we present the design and architecture of Visibility Across Space and Time (VAST), an intelligent database that serves as a single vantage point into the network. The system is based on a generic event model to handle network data from disparate sources and provides a query architecture that allows operators or remote applications to extract events matching a given condition. We implemented a proof-of-principle prototype that can archive and index events from a wide range of sources. Moreover, we conducted a preliminary performance evaluation to verify that our implementation works efficient and as expected.</p>
-</blockquote>
-
-<ul>
-<li><a href="http://www.covert.io/research-papers/security/Finding%20The%20Needle-%20Suppression%20of%20False%20Alarms%20in%20Large%20Intrusion%20Detection%20Data%20Sets.pdf">Finding The Needle: Suppression of False Alarms in Large Intrusion Detection Data Sets</a></li>
-</ul>
-
-<blockquote>
-<p>Managed security service providers (MSSPs) must manage and monitor thousands of intrusion detection sensors.
-The sensors often vary by manufacturer and software version, making the problem of creating generalized tools to separate true attacks from false positives particularly difficult. Often times it is useful from an operations perspective to know if a particular sensor is acting out of character. We propose a solution to this problem using anomaly detection techniques over the set of alarms produced by the sensors. Similar to the manner in which an anomaly based sensor detects deviations from normal user or system behavior, we establish the baseline
-behavior of a sensor and detect deviations from this baseline. We show that departures from this profile by a sensor have a high probability of being artifacts of genuine attacks. We evaluate a set of time-based Markovian heuristics against a simple compression algorithm and show that we are able to detect the existence of all attacks which were manually identified by security personnel, drastically reduce the number of false positives, and identify attacks which were overlooked during manual evaluation.</p>
-</blockquote>
-
-<ul>
-<li><a href="http://user.informatik.uni-goettingen.de/~krieck/docs/2013a-aisec.pdf">A Close Look on n-Grams in Intrusion Detection: Anomaly Detection vs. Classification</a></li>
-</ul>
-
-<blockquote>
-<p>Detection methods based on n-gram models have been widely studied for the identification of attacks and malicious software. These methods usually build on one of two learning schemes: anomaly detection, where a model of normality is constructed from n-grams, or classification, where a discrimination between benign and malicious n-grams is learned. Although successful in many security domains, previous work falls short of explaining why a particular scheme is used and more importantly what renders one favorable over the other for a given type of data. In this paper we provide a close look on n-gram models for intrusion detection. We specifically study anomaly detection and classification using n-grams and develop criteria for data being used in one or the other
-scheme. Furthermore, we apply these criteria in the scope of web intrusion detection and empirically validate their effectiveness with different learning-based detection methods for client-side and service-side attacks.</p>
-</blockquote>
-
-<ul>
-<li><a href="http://blog.scalyr.com/2014/05/searching-20-gbsec-systems-engineering-before-algorithms/">Searching 20 GB/sec: Systems Engineering Before Algorithms</a></li>
-</ul>
-
-<p>Ok, this is a blog post, not a research paper, but it&rsquo;s somewhat interesting nonetheless.</p>
-
-<blockquote>
-<p>This article describes how we met that challenge using an “old school”, brute-force approach, by eliminating layers and avoiding complex data structures. There are lessons here that you can apply to your own engineering challenges.</p>
-</blockquote>
-
-  </div>
-  
 </div>
 
 <div class="posts">
   <h1 class="post-title">Archive</h1>
   <ul class="posts">
+      
+      <li><span><a href="http://zhen.org/blog/papers-i-read-2015-week-7/">Papers I Read: 2015 Week 7</a> - <time class="pull-right post-list">Sun, Feb 15, 2015</h4></time></span></li>
       
       <li><span><a href="http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/">Sequence: Optimizing Go For the High Performance Log Scanner</a> - <time class="pull-right post-list">Fri, Feb 13, 2015</h4></time></span></li>
       
@@ -761,8 +748,6 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
       <li><span><a href="http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/">SurgeMQ: High Performance MQTT Server and Client Libraries in Go</a> - <time class="pull-right post-list">Wed, Dec 24, 2014</h4></time></span></li>
       
       <li><span><a href="http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/">SurgeMQ: MQTT Message Queue @ 750,000 MPS</a> - <time class="pull-right post-list">Thu, Dec 4, 2014</h4></time></span></li>
-      
-      <li><span><a href="http://zhen.org/blog/graceful-shutdown-of-go-net-dot-listeners/">Graceful Shutdown of Go net.Listeners</a> - <time class="pull-right post-list">Thu, Dec 12, 2013</h4></time></span></li>
       
   </ul>
 </div>

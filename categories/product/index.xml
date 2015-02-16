@@ -33,7 +33,7 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/&#34;&gt;Part 1&lt;/a&gt; is about the high performance parser that can parse 100,000-200,000 MPs.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/&#34;&gt;Part 2&lt;/a&gt; is about automating the process of reducing 100 of 1000&amp;rsquo;s of log messages down to dozens of unique patterns.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/&#34;&gt;Part3&lt;/a&gt; is about optimizing Go to achieve very high performance (200,000 - 500,000 MPS depending on message size) for scanning and tokenizing log messages&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/&#34;&gt;Part 3&lt;/a&gt; is about optimizing Go to achieve very high performance (200,000 - 500,000 MPS depending on message size) for scanning and tokenizing log messages&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&#34;background:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Background&lt;/h2&gt;
