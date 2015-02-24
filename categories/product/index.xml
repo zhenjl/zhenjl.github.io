@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Product on Zen 3.1</title>
-    <link>http://localhost:1313/categories/product/</link>
+    <link>http://zhen.org/categories/product/</link>
     <description>Recent content in Product on Zen 3.1</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
     <lastBuildDate>Tue, 10 Feb 2015 06:40:20 -0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/product/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://zhen.org/categories/product/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Sequence: Automated Analyzer for Reducing 100,000&#39;s of Log Messages to 10&#39;s of Patterns</title>
-      <link>http://localhost:1313/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</link>
+      <link>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</link>
       <pubDate>Tue, 10 Feb 2015 06:40:20 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</guid>
+      <guid>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;http://godoc.org/github.com/strace/sequence&#34;&gt;&lt;img src=&#34;http://godoc.org/github.com/strace/sequence?status.svg&#34; alt=&#34;GoDoc&#34; /&gt;

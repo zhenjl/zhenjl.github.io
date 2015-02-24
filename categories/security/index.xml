@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Security on Zen 3.1</title>
-    <link>http://localhost:1313/categories/security/</link>
+    <link>http://zhen.org/categories/security/</link>
     <description>Recent content in Security on Zen 3.1</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
     <lastBuildDate>Sun, 22 Feb 2015 19:57:56 -0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/security/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://zhen.org/categories/security/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Papers I Read: 2015 Week 8</title>
-      <link>http://localhost:1313/blog/papers-i-read-2015-week-8/</link>
+      <link>http://zhen.org/blog/papers-i-read-2015-week-8/</link>
       <pubDate>Sun, 22 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/papers-i-read-2015-week-8/</guid>
+      <guid>http://zhen.org/blog/papers-i-read-2015-week-8/</guid>
       <description>
 
 &lt;h3 id=&#34;random-ramblings:29724b4ec2d333ad12e89fd98257dccd&#34;&gt;Random Ramblings&lt;/h3&gt;
@@ -27,6 +27,8 @@
 &lt;p&gt;I didn&amp;rsquo;t make much progress this week on either &lt;a href=&#34;https://github.com/strace/sequence&#34;&gt;sequence&lt;/a&gt; or &lt;a href=&#34;https://github.com/surgemq/surgemq&#34;&gt;surgemq&lt;/a&gt; because of busy work schedule and my son getting sick AGAIN!! But I did merge the few surgemq &lt;a href=&#34;https://github.com/surgemq/surgemq/pulls?q=is%3Apr+is%3Aclosed&#34;&gt;pull requests&lt;/a&gt; that the community has graciously contributed. One of them actually got it tested on Raspberry! That&amp;rsquo;s pretty cool.&lt;/p&gt;
 
 &lt;p&gt;I also did manage to finish up the &lt;a href=&#34;https://github.com/strace/sequence/commit/713979f70d6025308e434205973249aa3138e58e&#34;&gt;experimental json scanner&lt;/a&gt; that I&amp;rsquo;ve been working on for the past couple of weeks. I will write more about it in the next &lt;a href=&#34;http://strace.io/sequence&#34;&gt;sequence&lt;/a&gt; article.&lt;/p&gt;
+
+&lt;p&gt;Actually I am starting to feel a bit overwhelmed by having both projects. Both of them are very interesting and I can see both move forward in very positive ways. Lots of ideas in my head but not enough time to do them. Now that I am getting feature requests, issues and pull requests, I feel even worse because I haven&amp;rsquo;t spent enough time on them. &amp;lt;sigh&amp;gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;papers-i-read:29724b4ec2d333ad12e89fd98257dccd&#34;&gt;Papers I Read&lt;/h3&gt;
 
@@ -67,10 +69,10 @@ insights, to make online changes to job functions to adapt to new requirements o
     
     <item>
       <title>Papers I Read: 2015 Week 7</title>
-      <link>http://localhost:1313/blog/papers-i-read-2015-week-7/</link>
+      <link>http://zhen.org/blog/papers-i-read-2015-week-7/</link>
       <pubDate>Sun, 15 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/papers-i-read-2015-week-7/</guid>
+      <guid>http://zhen.org/blog/papers-i-read-2015-week-7/</guid>
       <description>
 
 &lt;h2 id=&#34;random-ramblings:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Random Ramblings&lt;/h2&gt;
@@ -143,10 +145,10 @@ choices were made that have been key to its success in our environment, such as 
     
     <item>
       <title>Papers I Read: 2015 Week 6</title>
-      <link>http://localhost:1313/blog/papers-i-read-2015-week-6/</link>
+      <link>http://zhen.org/blog/papers-i-read-2015-week-6/</link>
       <pubDate>Sun, 08 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/papers-i-read-2015-week-6/</guid>
+      <guid>http://zhen.org/blog/papers-i-read-2015-week-6/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;http://paperswelove.org/&#34;&gt;Papers We Love&lt;/a&gt; has been making rounds lately and a lot of people are excited about it. I also think it&amp;rsquo;s kind of cool since I&amp;rsquo;ve been reading a lot of research papers over the past year or so. I have been killing some trees because of that.&lt;/p&gt;
@@ -234,10 +236,10 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
     
     <item>
       <title>Response to &#34;Assessing the Security Benefits of Cloud Computing&#34;</title>
-      <link>http://localhost:1313/blog/response-to-assessing-the-security-benefits-of-cloud-computing/</link>
+      <link>http://zhen.org/blog/response-to-assessing-the-security-benefits-of-cloud-computing/</link>
       <pubDate>Thu, 28 Aug 2008 01:58:22 +0000</pubDate>
       
-      <guid>http://localhost:1313/blog/response-to-assessing-the-security-benefits-of-cloud-computing/</guid>
+      <guid>http://zhen.org/blog/response-to-assessing-the-security-benefits-of-cloud-computing/</guid>
       <description>
 
 &lt;p&gt;Craig Balding from &lt;a href=&#34;http://cloudsecurity.org&#34;&gt;Cloud Security&lt;/a&gt; wrote an interesting piece on the &lt;a href=&#34;http://cloudsecurity.org/2008/07/21/assessing-the-security-benefits-of-cloud-computing/&#34;&gt;security benefits of cloud computing&lt;/a&gt; back in July (that I just now got to read.) Craig qualified the post as &lt;strong&gt;potential security benefits&lt;/strong&gt; of Cloud Computing.&lt;/p&gt;
