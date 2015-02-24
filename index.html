@@ -10,9 +10,9 @@
   <title> Zen 3.1 &middot; Zen 3.1 </title>
 
   
-  <link rel="stylesheet" href="http://zhen.org/css/poole.css">
-  <link rel="stylesheet" href="http://zhen.org/css/syntax.css">
-  <link rel="stylesheet" href="http://zhen.org/css/hyde.css">
+  <link rel="stylesheet" href="http://localhost:1313//css/poole.css">
+  <link rel="stylesheet" href="http://localhost:1313//css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:1313//css/hyde.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   
@@ -20,7 +20,7 @@
   <link rel="shortcut icon" href="/favicon.ico">
 
   
-  <link href="http://zhen.org/index.xml" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+  <link href="http://localhost:1313/index.xml" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
 
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
@@ -40,14 +40,14 @@
 <div class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <h1 class="brand"><a href="http://zhen.org">Zen 3.1</a></h1>
+      <h1 class="brand"><a href="http://localhost:1313/">Zen 3.1</a></h1>
       <p class="lead">
        Product. Data. Code 
       </p>
     </div>
 
     <ul class="sidebar-nav">
-      <li><a href="http://zhen.org/blog">Archive</a></li>
+      <li><a href="http://localhost:1313//blog">Archive</a></li>
       <br/>
       <li>Projects</li>
       
@@ -79,7 +79,65 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="http://zhen.org/blog/papers-i-read-2015-week-7/">
+      <a href="http://localhost:1313/blog/papers-i-read-2015-week-8/">
+        Papers I Read: 2015 Week 8
+      </a>
+    </h1>
+
+    <span class="post-date">Sun, Feb 22, 2015</span>
+
+    
+
+<h3 id="random-ramblings:29724b4ec2d333ad12e89fd98257dccd">Random Ramblings</h3>
+
+<p>Another week, another report of hacks. This time, <a href="http://securelist.com/blog/research/68732/the-great-bank-robbery-the-carbanak-apt/">The Great Bank Robbery</a>, where up to 100 financial institutions have been hit.Total financial losses could be as a high as $1bn. You can download the <a href="http://25zbkz3k00wn2tp5092n6di7b5k.wpengine.netdna-cdn.com/files/2015/02/Carbanak_APT_eng.pdf">full report</a> and learn all about it.</p>
+
+<p>Sony spent $15M to clean up and remediate their hack. I wonder how much these banks are going to spend on tracing the footsteps of their intruders and trying to figure out exactly where they have gone, what they have done and what they have taken.</p>
+
+<p>I didn&rsquo;t make much progress this week on either <a href="https://github.com/strace/sequence">sequence</a> or <a href="https://github.com/surgemq/surgemq">surgemq</a> because of busy work schedule and my son getting sick AGAIN!! But I did merge the few surgemq <a href="https://github.com/surgemq/surgemq/pulls?q=is%3Apr+is%3Aclosed">pull requests</a> that the community has graciously contributed. One of them actually got it tested on Raspberry! That&rsquo;s pretty cool.</p>
+
+<p>I also did manage to finish up the <a href="https://github.com/strace/sequence/commit/713979f70d6025308e434205973249aa3138e58e">experimental json scanner</a> that I&rsquo;ve been working on for the past couple of weeks. I will write more about it in the next <a href="http://strace.io/sequence">sequence</a> article.</p>
+
+<h3 id="papers-i-read:29724b4ec2d333ad12e89fd98257dccd">Papers I Read</h3>
+
+<ul>
+<li><a href="http://www.pdl.cmu.edu/PDL-FTP/HECStorage/git-cercs-12-08.pdf">Memory-Efficient GroupBy-Aggregate using Compressed Buffer Trees</a></li>
+</ul>
+
+<blockquote>
+<p>Memory is rapidly becoming a precious resource in many data processing environments. This paper introduces
+a new data structure called a Compressed Buffer Tree (CBT). Using a combination of buffering, compression,
+and lazy aggregation, CBTs can improve the memoryefficiency of the GroupBy-Aggregate abstraction which
+forms the basis of many data processing models like MapReduce and databases. We evaluate CBTs in the
+context of MapReduce aggregation, and show that CBTs can provide significant advantages over existing hashbased
+aggregation techniques: up to 2× less memory and 1.5× the throughput, at the cost of 2.5× CPU.</p>
+</blockquote>
+
+<ul>
+<li><a href="https://www.usenix.org/system/files/conference/atc14/atc14-paper-hu.pdf">ELF: Efficient Lightweight Fast Stream Processing at Scale</a></li>
+</ul>
+
+<blockquote>
+<p>Stream processing has become a key means for gaining rapid insights from webserver-captured data. Challenges
+include how to scale to numerous, concurrently running streaming jobs, to coordinate across those jobs to share
+insights, to make online changes to job functions to adapt to new requirements or data characteristics, and for each job, to efficiently operate over different time windows. The ELF stream processing system addresses these new challenges. Implemented over a set of agents enriching the web tier of datacenter systems, ELF obtains scalability by using a decentralized “many masters” architecture where for each job, live data is extracted directly from webservers, and placed into memory-efficient compressed buffer trees (CBTs) for local parsing and temporary storage, followed by subsequent aggregation using shared reducer trees (SRTs) mapped to sets of worker processes. Job masters at the roots of SRTs can dynamically customize worker actions, obtain aggregated results for end user delivery and/or coordinate with other jobs.</p>
+</blockquote>
+
+<ul>
+<li><a href="https://www.kernel.org/pub/linux/kernel/people/paulmck/perfbook/perfbook.html">Is Parallel Programming Hard, And, If So, What Can You Do About It?</a></li>
+</ul>
+
+<p>Not just a paper, it&rsquo;s a whole book w/ 800+ pages.</p>
+
+<blockquote>
+<p>The purpose of this book is to help you program shared-memory parallel machines without risking your sanity.1 We hope that this book’s design principles will help you avoid at least some parallel-programming pitfalls. That said, you should think of this book as a foundation on which to build, rather than as a completed cathedral. Your mission, if you choose to accept, is to help make further progress in the exciting field of parallel programming—progress that will in time render this book obsolete. Parallel programming is not as hard as some say, and we hope that this book makes your parallel-programming projects easier and more fun.</p>
+</blockquote>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="http://localhost:1313/blog/papers-i-read-2015-week-7/">
         Papers I Read: 2015 Week 7
       </a>
     </h1>
@@ -158,7 +216,7 @@ choices were made that have been key to its success in our environment, such as 
   
   <div class="post">
     <h1 class="post-title">
-      <a href="http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/">
+      <a href="http://localhost:1313/blog/sequence-optimizing-go-for-high-performance-log-scanner/">
         Sequence: Optimizing Go For the High Performance Log Scanner
       </a>
     </h1>
@@ -480,274 +538,31 @@ BenchmarkTimeStep2   2000000         772 ns/op
 
   </div>
   
-  <div class="post">
-    <h1 class="post-title">
-      <a href="http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/">
-        Sequence: Automated Analyzer for Reducing 100,000&#39;s of Log Messages to 10&#39;s of Patterns
-      </a>
-    </h1>
-
-    <span class="post-date">Tue, Feb 10, 2015</span>
-
-    
-
-<p><a href="http://godoc.org/github.com/strace/sequence"><img src="http://godoc.org/github.com/strace/sequence?status.svg" alt="GoDoc" />
-</a></p>
-
-<p><a href="http://godoc.org/github.com/strace/sequence/cmd/sequence"><img src="http://godoc.org/github.com/strace/sequence/cmd/sequence?status.svg" alt="GoDoc" />
-</a></p>
-
-<p><a href="https://github.com/strace/sequence">github repo</a></p>
-
-<p>This is part 2 of the <code>sequence</code> series. [</p>
-
-<ul>
-<li><a href="http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/">Part 1</a> is about the high performance parser that can parse 100,000-200,000 MPs.</li>
-<li><a href="http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/">Part 2</a> is about automating the process of reducing 100 of 1000&rsquo;s of log messages down to dozens of unique patterns.</li>
-<li><a href="http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/">Part 3</a> is about optimizing Go to achieve very high performance (200,000 - 500,000 MPS depending on message size) for scanning and tokenizing log messages</li>
-</ul>
-
-<h2 id="background:61b1adc09fb9bc31a28d4faabfef3631">Background</h2>
-
-<p>This post really takes me down the memory lane. Back in 2005, while I was at LogLogic, we envisioned an automated approach to tagging, or labeling, log messages. More specifically, we wanted to automatically tag specific components within the log messages with their semantic label, such as a source IP address, or a target user.</p>
-
-<p>At the time, much like it is still today, the message parsing process is performed manually. This means someone has to manually look at the object and decided that the object should be labeled “user” or “targetUser.” An  analyst has to go through the log data, create a regular expression that extracts the useful strings out, and then finally assigning these to a specific label. This is extremely time consuming and error-prone.</p>
-
-<p>At that time, the vision was to provide an automated approach to universally parse and analyze ANY log data. The key phrase being “automated approach.” This means the users should only need to provide minimum guidance to the system, if any, for the platforms to be able to analyze the log data. LogLogic never did much with this, unfortunately.</p>
-
-<p>However, the tagging concept was later on adopted by (and I know how this got into CEE :) the <a href="http://cee.mitre.org/">Common Event Expression, or CEE</a> effort by Mitre. This idea of tags also inspired <a href="http://www.liblognorm.com/">liblognorm</a> to develop their <a href="http://www.libee.org/">libee</a> library and <a href="http://www.liblognorm.com/news/log-classification-with-liblognorm/">tagging system</a>. Rsyslog&rsquo;s <a href="http://www.rsyslog.com/doc/mmnormalize.html">mmnormalize</a> module is based on liblognorm.</p>
-
-<p>And then there&rsquo;s Fedora&rsquo;s <a href="https://fedorahosted.org/lumberjack/">Project Lumberjack</a>, which &ldquo;is an open-source project to update and enhance the event log architecture&rdquo; and &ldquo;aims to improve the creation and standardize the content of event logs by implementing the concepts and specifications proposed by the ​Common Event Expression (CEE).&rdquo;</p>
-
-<p>Then finally <a href="http://logstash.net/">logstash</a> has their <a href="http://logstash.net/docs/1.4.2/filters/grok">grok filter</a> that basically does similar extraction of unstructured data into a structured and queryable format. However, it seems like there might be some <a href="http://ghost.frodux.in/logstash-grok-speeds/">performance bottlenecks</a>.</p>
-
-<p>However, none of these efforts attempted to solve the automated tagging/labeling problem. They mostly just try to provide a parser for log messages.</p>
-
-<p>Also, it looks like many of these efforts have all been abandoned or put in hibernation, and haven&rsquo;t been updated since 2012 or 2013. liblognrom did put out <a href="http://www.liblognorm.com/news/">a couple of updates</a> in the past couple of years. Logstash&rsquo;s grok obviously is being maintained and developed with the <a href="http://www.elasticsearch.com/">Elasticsearch</a> backing.</p>
-
-<p>It is understandable, unfortunately. Log parsing is <strong>BORING</strong>. I mean, who wants to sit there and stare at logs all day and try to come up with regular expressions or other types of parsing rules? LogLogic used to have a team of LogLabs analysts that did that, and I have to say I truly appreciated their effort and patience, because I cannot do that.</p>
-
-<h3 id="the-end-result:61b1adc09fb9bc31a28d4faabfef3631">The End Result</h3>
-
-<p>So instead of writing rules all day long, I decided to create an analyzer that can help us get at least 75% of the way there. The end result is the <code>Analyzer</code>, written in <a href="http://golang.org">Go</a>, in the <a href="https://github.com/strace/sequence">sequence</a> project I created. Here are some preliminary results. Below, we analyzed 2 files. The first is a file with over 200,000 sshd messages. The second is a file with a mixture of ASA, sshd, sudo and su log messages. It contains almost 450,000 messages.</p>
-
-<p>By running the analyzer over these logs, the pure sshd log file returned 45 individual patterns, and the second returned 103 unique patterns.</p>
-
-<pre><code>$ go run sequence.go analyze -i ../../data/sshd.all -o sshd.analyze
-Analyzed 212897 messages, found 45 unique patterns, 45 are new.
-
-$ go run sequence.go analyze -i ../../data/asasshsudo.log -o asasshsudo.analyze
-Analyzed 447745 messages, found 103 unique patterns, 103 are new.
-</code></pre>
-
-<p>And the output file has entries such as:</p>
-
-<pre><code>%msgtime% %apphost% %appname% [ %sessionid% ] : %status% %method% for %srcuser% from %srcipv4% port %srcport% ssh2
-# Jan 15 19:39:26 irc sshd[7778]: Accepted password for jlz from 108.61.8.124 port 57630 ssh2
-
-%msgtime% %appipv4% %appname% : %action% outbound %protocol% connection %sessionid% for %string% : %srcipv4% / %srcport% ( %ipv4% / %integer% ) to %string% : %dstipv4% / %dstport% ( %ipv4% / %integer% )
-# 2012-04-05 18:46:18   172.23.0.1  %ASA-6-302013: Built outbound TCP connection 1424575 for outside:10.32.0.100/80 (10.32.0.100/80) to inside:172.23.73.72/2522 (10.32.0.1/54702)
-
-%msgtime% %apphost% %appname% : %string% : tty = %string% ; pwd = %string% ; user = %srcuser% ; command = %command% - %string%
-# Jan 15 14:09:11 irc sudo:    jlz : TTY=pts/1 ; PWD=/home/jlz ; USER=root ; COMMAND=/bin/su - irc
-</code></pre>
-
-<p>As you can see, the output is not 100%, but it gets us pretty close. Once the analyst goes through and updates the rules, he/she can re-run the analyzer anytime with any file to determine if there&rsquo;s new patterns. For example, below, we ran the sshd log file with an existing pattern file, and got 4 new log patterns.</p>
-
-<pre><code>$ go run sequence.go analyze -i ../../data/sshd.all -p ../../patterns/sshd.txt -o sshd.analyze
-Analyzed 212897 messages, found 39 unique patterns, 4 are new.
-</code></pre>
-
-<h3 id="parser-quick-review:61b1adc09fb9bc31a28d4faabfef3631">Parser - Quick Review</h3>
-
-<p>I wrote about the <a href="http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/">sequence parser</a> a couple of weeks back. It is a <em>high performance sequential log parser</em>. It <em>sequentially</em> goes through a log message, <em>parses</em> out the meaningful parts, without the use regular expressions. It can achieve <em>high performance</em> parsing of <strong>100,000 - 200,000 messages per second (MPS)</strong> without the need to separate parsing rules by log source type. Underneath the hood, the <code>sequence</code> parser basically constructs a tree based on the sequential rules, walks the tree to identify all the possible paths, and returns the path that has the best match (highest weight) for the message.</p>
-
-<p>While the analyzer is about reducing a large corupus of raw log messages down to a small set of unique patterns, the parser is all about matching log messages to an existing set of patters and determining whether a specific pattern has matched. Based on the pattern, it returns a sequence of tokens that basically extracts out the important pieces of information from the logs. The analysts can then take this sequence and perform other types of analysis.</p>
-
-<p>The approach taken by the <code>sequence</code> parser is pretty much the same as liblognorm or other tree-based approaches.</p>
-
-<h2 id="sequence-analyzer:61b1adc09fb9bc31a28d4faabfef3631">Sequence Analyzer</h2>
-
-<p>In the following section I will go through additional details of how the <code>sequence</code> analyzer reduces 100 of 1000&rsquo;s of raw log messages down to just 10&rsquo;s of unique patterns, and then determining how to label the individual tokens.</p>
-
-<h3 id="identifying-unique-patterns:61b1adc09fb9bc31a28d4faabfef3631">Identifying Unique Patterns</h3>
-
-<p>Analyzer builds an analysis tree that represents all the Sequences from messages. It can be used to determine all of the unique patterns for a large body of messages.</p>
-
-<p>It&rsquo;s based on a single basic concept, that for multiple log messages, if tokens in the same position shares one same parent and one same child, then the tokens in that position is likely variable string, which means it&rsquo;s something we can extract. For example, take a look at the following two messages:</p>
-
-<pre><code>Jan 12 06:49:42 irc sshd[7034]: Accepted password for root from 218.161.81.238 port 4228 ssh2
-Jan 12 14:44:48 jlz sshd[11084]: Accepted publickey for jlz from 76.21.0.16 port 36609 ssh2
-</code></pre>
-
-<p>The first token of each message is a timestamp, and the 3rd token of each message is the literal &ldquo;sshd&rdquo;. For the literals &ldquo;irc&rdquo; and &ldquo;jlz&rdquo;, they both share a common parent, which is a timestamp. They also both share a common child, which is &ldquo;sshd&rdquo;. This means token in between these, the 2nd token in each message, likely represents a variable token in this message type. In this case, &ldquo;irc&rdquo; and &ldquo;jlz&rdquo; happens to
-represent the syslog host.</p>
-
-<p>Looking further down the message, the literals &ldquo;password&rdquo; and &ldquo;publickey&rdquo; also share a common parent, &ldquo;Accepted&rdquo;, and a common child, &ldquo;for&rdquo;. So that means the token in this position is also a variable token (of type TokenString).</p>
-
-<p>You can find several tokens that share common parent and child in these two messages, which means each of these tokens can be extracted. And finally, we can determine that the single pattern that will match both is:</p>
-
-<pre><code>%time% %string% sshd [ %integer% ] : Accepted %string% for %string% from %ipv4% port %integer% ssh2
-</code></pre>
-
-<p>If later we add another message to this mix:</p>
-
-<pre><code>Jan 12 06:49:42 irc sshd[7034]: Failed password for root from 218.161.81.238 port 4228 ssh2
-</code></pre>
-
-<p>The Analyzer will determine that the literals &ldquo;Accepted&rdquo; in the 1st message, and &ldquo;Failed&rdquo; in the 3rd message share a common parent &ldquo;:&rdquo; and a common child &ldquo;password&rdquo;, so it will determine that the token in this position is also a variable token. After all three messages are analyzed, the final pattern that will match all three
-messages is:</p>
-
-<pre><code>%time% %string% sshd [ %integer% ] : %string% %string% for %string% from %ipv4% port %integer% ssh2
-</code></pre>
-
-<p>By applying this concept, we can effectively identify all the unique patterns in a log file.</p>
-
-<h3 id="determining-the-correct-labels:61b1adc09fb9bc31a28d4faabfef3631">Determining the Correct Labels</h3>
-
-<p>Now that we have the unique patterns, we will scan the tokens to determine which labels we should apply to them.</p>
-
-<p>System and network logs are mostly free form text. There&rsquo;s no specific patterns to any of them. So it&rsquo;s really difficult to determine how to label specific parts of the log message automatically. However, over the years, after looking at so many system and network log messages, some patterns will start to emerge.</p>
-
-<p>There&rsquo;s no &ldquo;machine learning&rdquo; here. This section is all about codifying these human learnings. I&rsquo;ve created the following 6 rules to help label tokens in the log messages. By no means are these rules perfect. They are at best just guesses on how to label. But hopefully they can get us 75% of the way there and we human can just take it the rest of the way.</p>
-
-<p><strong>0. Parsing Email and Hostname Formats</strong></p>
-
-<p>This is technically not a labeling step. Before we actually start the labeling process, we wanted to first parse out a couple more formats like email and host names. The message tokenizer doesn&rsquo;t recognize these because they are difficult to parse and will slow down the tokenizer. These specific formats are also not needed by the parser. So because the analyzer doesn&rsquo;t care about performance as much, we can do this as post-processing step.</p>
-
-<p>To recognize the hostname, we try to match the &ldquo;effective TLD&rdquo; using the <a href="https://github.com/surge/xparse/tree/master/etld">xparse/etld</a> package. It is an effective TLD matcher that returns the length of the effective domain name for the given string. It uses the data set from <a href="https://www.publicsuffix.org/list/effective_tld_names.dat">https://www.publicsuffix.org/list/effective_tld_names.dat</a>.</p>
-
-<p><strong>1. Recognizing Syslog Headers</strong></p>
-
-<p>First we will try to see if we can regonize the syslog headers. We try to recogize both RFC5424 and RFC3164 syslog headers:</p>
-
-<pre><code>	// RFC5424
-	// - &quot;1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 ...&quot;
-	// - &quot;1 2003-08-24T05:14:15.000003-07:00 192.0.2.1 myproc 8710 - ...&quot;
-	// - &quot;1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 ...&quot;
-	// RFC3164
-	// - &quot;Oct 11 22:14:15 mymachine su: ...&quot;
-	// - &quot;Aug 24 05:34:00 CST 1987 mymachine myproc[10]: ...&quot;
-	// - &quot;jan 12 06:49:56 irc last message repeated 6 times&quot;
-</code></pre>
-
-<p>If the sequence pattern matches any of the above sequence, then we assume the first few tokens belong to the syslog header.</p>
-
-<p><strong>2. Marking Key and Value Pairs</strong></p>
-
-<p>The next step we perform is to mark known &ldquo;keys&rdquo;. There are two types of keys. First, we identify any token before the &ldquo;=&rdquo; as a key. For example, the message <code>fw=TOPSEC priv=6 recorder=kernel type=conn</code> contains 4 keys: <code>fw</code>, <code>priv</code>, <code>recorder</code> and <code>type</code>. These keys should be considered string literals, and should not be extracted. However, they can be used to determine how the value part should be labeled.</p>
-
-<p>The second types of keys are determined by keywords that often appear in front of other tokens, I call these <strong>prekeys</strong>. For example, we know that the prekey <code>from</code> usually appears in front of any source host or IP address, and the prekey <code>to</code> usually appears in front of any destination host or IP address. Below are some examples of these prekeys.</p>
-
-<pre><code>from 		= [ &quot;%srchost%&quot;, &quot;%srcipv4%&quot; ]
-port 		= [ &quot;%srcport%&quot;, &quot;%dstport%&quot; ]
-proto		= [ &quot;%protocol%&quot; ]
-sport		= [ &quot;%srcport%&quot; ]
-src 		= [ &quot;%srchost%&quot;, &quot;%srcipv4%&quot; ]
-to 			= [ &quot;%dsthost%&quot;, &quot;%dstipv4%&quot;, &quot;%dstuser%&quot; ]
-</code></pre>
-
-<p>To help identify these prekeys, I wrote a quick program that goes through many of the logs I have to help identify what keywords appears before IP address, mac addresses, and other non-literal tokens. The result is put into the <a href="https://github.com/strace/sequence/blob/master/keymaps.go">keymaps.go</a> file. It&rsquo;s not comprehensive, but it&rsquo;s also not meant to be. We just need enough hints to help with labeling.</p>
-
-<p><strong>3. Labeling &ldquo;Values&rdquo; by Their Keys</strong></p>
-
-<p>Once the keys are labeled, we can label the values based on the mapping described above. For key/value pairs, we try to recognize both <code>key=value</code> or <code>key=&quot;value&quot;</code> formats (or other quote characters like &lsquo; or &lt;).</p>
-
-<p>For the prekeys, we try to find the value token within 2 tokens of the key token. That means sequences such as <code>from 192.168.1.1</code> and <code>from ip 192.168.1.1</code> will identify <code>192.168.1.1</code> as the <code>%srcipv4%</code> based on the above mapping, but we will miss <code>from ip address 192.168.1.1</code>.</p>
-
-<p><strong>4. Identifying Known Keywords</strong></p>
-
-<p>Within most log messages, there are certain keywords that would indicate what actions were performed, what the state/status of the action was, and what objects the actions were performed on. CEE had a list that it identified, so I copied the list and added some of my own.</p>
-
-<pre><code>action = [
-	&quot;access&quot;,
-	&quot;alert&quot;,
-	&quot;allocate&quot;,
-	&quot;allow&quot;,
-	.
-	.
-	.
-]
-
-status = [
-	&quot;accept&quot;,
-	&quot;error&quot;,
-	&quot;fail&quot;,
-	&quot;failure&quot;,
-	&quot;success&quot;
-]
-
-object = [
-	&quot;account&quot;,
-	&quot;app&quot;,
-	&quot;bios&quot;,
-	&quot;driver&quot;,
-	.
-	.
-	.
-]
-</code></pre>
-
-<p>In our labeling process, we basically goes through and identify all the string literals that are NOT marked as keys, and perform a <a href="https://github.com/surge/porter2">porter2 stemming operation</a> on the literal, then compare to the above list (which is also porter2 stemmed).</p>
-
-<p>If a literal matches one of the above lists, then the corresponding label (<code>action</code>, <code>status</code>, <code>object</code>, <code>srcuser</code>, <code>method</code>, or <code>protocol</code>) is applied.</p>
-
-<p><strong>5. Determining Positions of Specific Types</strong></p>
-
-<p>In this next step, we are basically looking at the position of where some of the token types appear. Specifically, we are looking for <code>%time%</code>, <code>%url%</code>, <code>%mac%</code>, <code>%ipv4%</code>, <code>%host%</code>, and <code>%email%</code> tokens. Assuming the labels have not already been taken with the previous rules, the rules are as follows:</p>
-
-<ul>
-<li>The first %time% token is labeled as %msgtime%</li>
-<li>The first %url% token is labeled as %object%</li>
-<li>The first %mac% token is labeled as %srcmac% and the second is labeld as %dstmac%</li>
-<li>The first %ipv4% token is labeled as %srcipv4% and the second is labeld as %dstipv4%</li>
-<li>The first %host% token is labeled as %srchost% and the second is labeld as %dsthost%</li>
-<li>The first %email% token is labeled as %srcemail% and the second is labeld as %dstemail%</li>
-</ul>
-
-<p><strong>6. Scanning for ip/port or ip:port Pairs</strong></p>
-
-<p>Finally, after all that, we scan through the sequence again, and identify any numbers that follow an IP address, but separated by either a &ldquo;/&rdquo; or &ldquo;:&ldquo;. Then we label these numbers as either <code>%srcport%</code> or <code>%dstport%</code> based on how the previous IP address is labeled.</p>
-
-<h3 id="summary:61b1adc09fb9bc31a28d4faabfef3631">Summary</h3>
-
-<p>There are some limitations to the <code>sequence</code> parser and analyzer. For example, currently <code>sequence</code> does not handle multi-line logs. Each log message must appear as a single line. So if there&rsquo;s multi-line logs, they must be first be converted into a single line. Also, <code>sequence</code> has been only tested with a limited set of system (Linux, AIX, sudo, ssh, su, dhcp, etc etc), network (ASA, PIX, Neoteris, CheckPoint, Juniper Firewall) and infrastructure application (apache, bluecoat, etc) logs.</p>
-
-<p>Documentation is available at godoc: <a href="http://godoc.org/github.com/strace/sequence">package</a>, <a href="http://godoc.org/github.com/strace/sequence/cmd/sequence">command</a>.</p>
-
-<p>There are some pattern files developed for ASA, Sudo and SSH in the <code>patterns</code> directory. The goal is to continue to develop a set of patterns for the various log messages, and along the way add additional features to the parser that can help make it even easier to parse log messages.</p>
-
-<p>If you have a set of logs you would like me to test out, please feel free to <a href="https://github.com/strace/sequence/issues">open an issue</a> and we can arrange a way for me to download and test your logs.</p>
-
-<p>Stay tuned for more log patterns&hellip;</p>
-
-  </div>
-  
 </div>
 
 <div class="posts">
   <h1 class="post-title">Archive</h1>
   <ul class="posts">
       
-      <li><span><a href="http://zhen.org/blog/papers-i-read-2015-week-7/">Papers I Read: 2015 Week 7</a> - <time class="pull-right post-list">Sun, Feb 15, 2015</h4></time></span></li>
+      <li><span><a href="http://localhost:1313/blog/papers-i-read-2015-week-8/">Papers I Read: 2015 Week 8</a> - <time class="pull-right post-list">Sun, Feb 22, 2015</h4></time></span></li>
       
-      <li><span><a href="http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/">Sequence: Optimizing Go For the High Performance Log Scanner</a> - <time class="pull-right post-list">Fri, Feb 13, 2015</h4></time></span></li>
+      <li><span><a href="http://localhost:1313/blog/papers-i-read-2015-week-7/">Papers I Read: 2015 Week 7</a> - <time class="pull-right post-list">Sun, Feb 15, 2015</h4></time></span></li>
       
-      <li><span><a href="http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/">Sequence: Automated Analyzer for Reducing 100,000&#39;s of Log Messages to 10&#39;s of Patterns</a> - <time class="pull-right post-list">Tue, Feb 10, 2015</h4></time></span></li>
+      <li><span><a href="http://localhost:1313/blog/sequence-optimizing-go-for-high-performance-log-scanner/">Sequence: Optimizing Go For the High Performance Log Scanner</a> - <time class="pull-right post-list">Fri, Feb 13, 2015</h4></time></span></li>
       
-      <li><span><a href="http://zhen.org/blog/papers-i-read-2015-week-6/">Papers I Read: 2015 Week 6</a> - <time class="pull-right post-list">Sun, Feb 8, 2015</h4></time></span></li>
+      <li><span><a href="http://localhost:1313/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/">Sequence: Automated Analyzer for Reducing 100,000&#39;s of Log Messages to 10&#39;s of Patterns</a> - <time class="pull-right post-list">Tue, Feb 10, 2015</h4></time></span></li>
       
-      <li><span><a href="http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/">Sequence: A High Performance Sequential Semantic Log Parser at 175,000 MPS</a> - <time class="pull-right post-list">Sun, Feb 1, 2015</h4></time></span></li>
+      <li><span><a href="http://localhost:1313/blog/papers-i-read-2015-week-6/">Papers I Read: 2015 Week 6</a> - <time class="pull-right post-list">Sun, Feb 8, 2015</h4></time></span></li>
       
-      <li><span><a href="http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/">Generating Porter2 FSM For Fun and Performance in Go</a> - <time class="pull-right post-list">Wed, Jan 21, 2015</h4></time></span></li>
+      <li><span><a href="http://localhost:1313/blog/sequence-high-performance-sequential-semantic-log--parser/">Sequence: A High Performance Sequential Semantic Log Parser at 175,000 MPS</a> - <time class="pull-right post-list">Sun, Feb 1, 2015</h4></time></span></li>
       
-      <li><span><a href="http://zhen.org/blog/golang-from-a-non-programmers-perspective/">Go: From a Non-Programmer&#39;s Perspective</a> - <time class="pull-right post-list">Tue, Jan 13, 2015</h4></time></span></li>
+      <li><span><a href="http://localhost:1313/blog/generating-porter2-fsm-for-fun-and-performance/">Generating Porter2 FSM For Fun and Performance in Go</a> - <time class="pull-right post-list">Wed, Jan 21, 2015</h4></time></span></li>
       
-      <li><span><a href="http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/">PingMQ: A SurgeMQ-based ICMP Monitoring Tool</a> - <time class="pull-right post-list">Thu, Dec 25, 2014</h4></time></span></li>
+      <li><span><a href="http://localhost:1313/blog/golang-from-a-non-programmers-perspective/">Go: From a Non-Programmer&#39;s Perspective</a> - <time class="pull-right post-list">Tue, Jan 13, 2015</h4></time></span></li>
       
-      <li><span><a href="http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/">SurgeMQ: High Performance MQTT Server and Client Libraries in Go</a> - <time class="pull-right post-list">Wed, Dec 24, 2014</h4></time></span></li>
+      <li><span><a href="http://localhost:1313/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/">PingMQ: A SurgeMQ-based ICMP Monitoring Tool</a> - <time class="pull-right post-list">Thu, Dec 25, 2014</h4></time></span></li>
       
-      <li><span><a href="http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/">SurgeMQ: MQTT Message Queue @ 750,000 MPS</a> - <time class="pull-right post-list">Thu, Dec 4, 2014</h4></time></span></li>
+      <li><span><a href="http://localhost:1313/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/">SurgeMQ: High Performance MQTT Server and Client Libraries in Go</a> - <time class="pull-right post-list">Wed, Dec 24, 2014</h4></time></span></li>
       
   </ul>
 </div>

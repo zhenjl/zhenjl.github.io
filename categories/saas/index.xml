@@ -2,22 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Saas on Zen 3.1</title>
-    <link>http://zhen.org/categories/saas/</link>
+    <link>http://localhost:1313/categories/saas/</link>
     <description>Recent content in Saas on Zen 3.1</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    
-    
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
-    <lastBuildDate>Fri, 27 Jun 2008 13:15:18 &#43;0000</lastBuildDate>
-    <atom:link href="http://zhen.org/categories/saas/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 27 Jun 2008 13:15:18 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/saas/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Is SaaS Cloud Computing?</title>
-      <link>http://zhen.org/blog/is-saas-cloud-computing/</link>
-      <pubDate>Fri, 27 Jun 2008 13:15:18 &#43;0000</pubDate>
+      <link>http://localhost:1313/blog/is-saas-cloud-computing/</link>
+      <pubDate>Fri, 27 Jun 2008 13:15:18 +0000</pubDate>
       
-      <guid>http://zhen.org/blog/is-saas-cloud-computing/</guid>
+      <guid>http://localhost:1313/blog/is-saas-cloud-computing/</guid>
       <description>
 
 &lt;p&gt;Throughout the CloudCamp sessions, most people discussed cloud computing as infrastructure in the cloud. People talk about the advantage of not having to procure and configure physical servers. People talk about the &lt;em&gt;elasticity&lt;/em&gt; and &lt;em&gt;utility&lt;/em&gt; factors of the cloud. People talk about scalability of the cloud. But not once, at least in my conversations, did people talk about the applications in the cloud. The one time that I raised the question that related SaaS to cloud computing, I was immediately told that SaaS is not cloud computing. Some even questioned wether Google App Engine is considered to be a cloud.&lt;/p&gt;
@@ -71,10 +69,10 @@ capabilities are delivered &amp;lsquo;as a service&amp;rsquo; to multiple custom
     
     <item>
       <title>Tough security questions for SaaS providers</title>
-      <link>http://zhen.org/blog/tough-security-questions-for-saas-providers/</link>
-      <pubDate>Tue, 10 Jun 2008 13:06:31 &#43;0000</pubDate>
+      <link>http://localhost:1313/blog/tough-security-questions-for-saas-providers/</link>
+      <pubDate>Tue, 10 Jun 2008 13:06:31 +0000</pubDate>
       
-      <guid>http://zhen.org/blog/tough-security-questions-for-saas-providers/</guid>
+      <guid>http://localhost:1313/blog/tough-security-questions-for-saas-providers/</guid>
       <description>
 
 &lt;p&gt;We will be writing a series of blog posts on the tough questions that SaaS providers can expect to get from customers or they should ask themselves. The questions will span many different areas including security, compliance, sales, marketing and operations. This is Part 1 of the security questions.&lt;/p&gt;

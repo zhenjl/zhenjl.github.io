@@ -2,22 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Message Queue on Zen 3.1</title>
-    <link>http://zhen.org/categories/message-queue/</link>
+    <link>http://localhost:1313/categories/message-queue/</link>
     <description>Recent content in Message Queue on Zen 3.1</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    
-    
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
-    <lastBuildDate>Thu, 25 Dec 2014 00:00:33 PST</lastBuildDate>
-    <atom:link href="http://zhen.org/categories/message-queue/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Dec 2014 00:00:33 -0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/message-queue/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>PingMQ: A SurgeMQ-based ICMP Monitoring Tool</title>
-      <link>http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</link>
-      <pubDate>Thu, 25 Dec 2014 00:00:33 PST</pubDate>
+      <link>http://localhost:1313/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</link>
+      <pubDate>Thu, 25 Dec 2014 00:00:33 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</guid>
+      <guid>http://localhost:1313/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/surge/surgemq/tree/master/cmd/pingmq&#34;&gt;pingmq&lt;/a&gt; is developed to demonstrate the different use cases one can use &lt;a href=&#34;//surgemq.com&#34;&gt;SurgeMQ&lt;/a&gt;, a high performance MQTT server and client library. In this simplified use case, a network administrator can setup server uptime monitoring system by periodically sending ICMP ECHO_REQUEST to all the IPs in their network, and send the results to SurgeMQ.&lt;/p&gt;
@@ -136,10 +134,10 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
     
     <item>
       <title>SurgeMQ: High Performance MQTT Server and Client Libraries in Go</title>
-      <link>http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</link>
-      <pubDate>Wed, 24 Dec 2014 19:20:40 PST</pubDate>
+      <link>http://localhost:1313/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</link>
+      <pubDate>Wed, 24 Dec 2014 19:20:40 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</guid>
+      <guid>http://localhost:1313/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</guid>
       <description>
 
 &lt;p&gt;&lt;strong&gt;Happy Holidays!&lt;/strong&gt;&lt;/p&gt;
@@ -330,10 +328,10 @@ c.Disconnect()
     
     <item>
       <title>SurgeMQ: MQTT Message Queue @ 750,000 MPS</title>
-      <link>http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/</link>
-      <pubDate>Thu, 04 Dec 2014 22:44:07 PST</pubDate>
+      <link>http://localhost:1313/blog/surgemq-mqtt-message-queue-750k-mps/</link>
+      <pubDate>Thu, 04 Dec 2014 22:44:07 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/</guid>
+      <guid>http://localhost:1313/blog/surgemq-mqtt-message-queue-750k-mps/</guid>
       <description>
 
 &lt;ul&gt;
@@ -421,7 +419,7 @@ c.Disconnect()
 
 &lt;h3 id=&#34;architecture:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Architecture&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/surgemq-mqtt-message-queue-750k-mps/smqfailedarch.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/surgemq-mqtt-message-queue-750k-mps/smqfailedarch.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The above image showed a couple of the architecture approaches I attempted. In them, R is the receiver, which reads from net.Conn, P is the processor, which processes the messages and determines what to do or where to send them, and S is the sender, which sends any messages out to net.Conn. Each R, P, and S are their own goroutines.&lt;/p&gt;
 
@@ -448,7 +446,7 @@ c.Disconnect()
 1000000 messages, 44297366818 ns, 44297.366818 ns/msg, 22574 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;After profiling and looking at the &lt;a href=&#34;/images/surgemq-mqtt-message-queue-750k-mps/2ndfailcpuprof.svg&#34;&gt;CPU profile&lt;/a&gt;, I realized there are a lot of memory copying (io.Copy and io.CopyN), as well as there are still quite a bit GC activities (scanblock). On the memory copying front, there&amp;rsquo;s copying from net.Conn into bufio, then more copying from bufio to the MQTT messages internal buffer, then more copying from MQTT message internal buffers to the outgoing bufio, then to the net.Conn. So lots and lots of memory copying, not a good thing.&lt;/p&gt;
+&lt;p&gt;After profiling and looking at the &lt;a href=&#34;http://localhost:1313/images/surgemq-mqtt-message-queue-750k-mps/2ndfailcpuprof.svg&#34;&gt;CPU profile&lt;/a&gt;, I realized there are a lot of memory copying (io.Copy and io.CopyN), as well as there are still quite a bit GC activities (scanblock). On the memory copying front, there&amp;rsquo;s copying from net.Conn into bufio, then more copying from bufio to the MQTT messages internal buffer, then more copying from MQTT message internal buffers to the outgoing bufio, then to the net.Conn. So lots and lots of memory copying, not a good thing.&lt;/p&gt;
 
 &lt;h4 id=&#34;buffered-network-io:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Buffered Network IO&lt;/h4&gt;
 
@@ -459,7 +457,7 @@ c.Disconnect()
 &lt;li&gt;I needed something I can access the bytes directly so I can remove majority of the memory copying.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;At this point I decided to try a new technique I learned while doing Go Learn Project #7 - &lt;a href=&#34;/blog/ring-buffer-variable-length-low-latency-disruptor-style/&#34;&gt;Ring Buffer&lt;/a&gt;. The basic idea is that instead of using bufio to read and write to net.Conn, I will implement my own version of that.&lt;/p&gt;
+&lt;p&gt;At this point I decided to try a new technique I learned while doing Go Learn Project #7 - &lt;a href=&#34;http://localhost:1313/blog/ring-buffer-variable-length-low-latency-disruptor-style/&#34;&gt;Ring Buffer&lt;/a&gt;. The basic idea is that instead of using bufio to read and write to net.Conn, I will implement my own version of that.&lt;/p&gt;
 
 &lt;p&gt;The ring buffer will implement the interfaces ReadFrom(), WriteTo(), Read() and Write().&lt;/p&gt;
 
@@ -496,7 +494,7 @@ c.Disconnect()
 
 &lt;p&gt;There&amp;rsquo;s very few memory copy operations going on, nor is there much memory allocation. So a good outcome overall.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/surgemq-mqtt-message-queue-750k-mps/finalarch.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/surgemq-mqtt-message-queue-750k-mps/finalarch.png&#34;&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;race-conditions:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Race Conditions&lt;/h3&gt;
 

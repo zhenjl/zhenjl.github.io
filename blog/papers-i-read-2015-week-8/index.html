@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Papers I Read: 2015 Week 8 &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://localhost:1313//css/poole.css">
+  <link rel="stylesheet" href="http://localhost:1313//css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:1313//css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-681691-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://localhost:1313/">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="http://localhost:1313//blog">Archive</a></li>
+      <br/>
+      <li>Projects</li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/strace/sequence">sequence</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surgemq/surgemq">surgemq</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surge">zhenjl/others</a></li>
+      
+    </ul>
+
+    <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+    <a href="http://linkedin.com/in/zhenjl"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
+    
+    
+    
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2015 Jian Zhen. All Rights Reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Papers I Read: 2015 Week 8</h1>
+  <span class="post-date">Sun, Feb 22, 2015</span>
+      
+
+<h3 id="random-ramblings:29724b4ec2d333ad12e89fd98257dccd">Random Ramblings</h3>
+
+<p>Another week, another report of hacks. This time, <a href="http://securelist.com/blog/research/68732/the-great-bank-robbery-the-carbanak-apt/">The Great Bank Robbery</a>, where up to 100 financial institutions have been hit.Total financial losses could be as a high as $1bn. You can download the <a href="http://25zbkz3k00wn2tp5092n6di7b5k.wpengine.netdna-cdn.com/files/2015/02/Carbanak_APT_eng.pdf">full report</a> and learn all about it.</p>
+
+<p>Sony spent $15M to clean up and remediate their hack. I wonder how much these banks are going to spend on tracing the footsteps of their intruders and trying to figure out exactly where they have gone, what they have done and what they have taken.</p>
+
+<p>I didn&rsquo;t make much progress this week on either <a href="https://github.com/strace/sequence">sequence</a> or <a href="https://github.com/surgemq/surgemq">surgemq</a> because of busy work schedule and my son getting sick AGAIN!! But I did merge the few surgemq <a href="https://github.com/surgemq/surgemq/pulls?q=is%3Apr+is%3Aclosed">pull requests</a> that the community has graciously contributed. One of them actually got it tested on Raspberry! That&rsquo;s pretty cool.</p>
+
+<p>I also did manage to finish up the <a href="https://github.com/strace/sequence/commit/713979f70d6025308e434205973249aa3138e58e">experimental json scanner</a> that I&rsquo;ve been working on for the past couple of weeks. I will write more about it in the next <a href="http://strace.io/sequence">sequence</a> article.</p>
+
+<h3 id="papers-i-read:29724b4ec2d333ad12e89fd98257dccd">Papers I Read</h3>
+
+<ul>
+<li><a href="http://www.pdl.cmu.edu/PDL-FTP/HECStorage/git-cercs-12-08.pdf">Memory-Efficient GroupBy-Aggregate using Compressed Buffer Trees</a></li>
+</ul>
+
+<blockquote>
+<p>Memory is rapidly becoming a precious resource in many data processing environments. This paper introduces
+a new data structure called a Compressed Buffer Tree (CBT). Using a combination of buffering, compression,
+and lazy aggregation, CBTs can improve the memoryefficiency of the GroupBy-Aggregate abstraction which
+forms the basis of many data processing models like MapReduce and databases. We evaluate CBTs in the
+context of MapReduce aggregation, and show that CBTs can provide significant advantages over existing hashbased
+aggregation techniques: up to 2× less memory and 1.5× the throughput, at the cost of 2.5× CPU.</p>
+</blockquote>
+
+<ul>
+<li><a href="https://www.usenix.org/system/files/conference/atc14/atc14-paper-hu.pdf">ELF: Efficient Lightweight Fast Stream Processing at Scale</a></li>
+</ul>
+
+<blockquote>
+<p>Stream processing has become a key means for gaining rapid insights from webserver-captured data. Challenges
+include how to scale to numerous, concurrently running streaming jobs, to coordinate across those jobs to share
+insights, to make online changes to job functions to adapt to new requirements or data characteristics, and for each job, to efficiently operate over different time windows. The ELF stream processing system addresses these new challenges. Implemented over a set of agents enriching the web tier of datacenter systems, ELF obtains scalability by using a decentralized “many masters” architecture where for each job, live data is extracted directly from webservers, and placed into memory-efficient compressed buffer trees (CBTs) for local parsing and temporary storage, followed by subsequent aggregation using shared reducer trees (SRTs) mapped to sets of worker processes. Job masters at the roots of SRTs can dynamically customize worker actions, obtain aggregated results for end user delivery and/or coordinate with other jobs.</p>
+</blockquote>
+
+<ul>
+<li><a href="https://www.kernel.org/pub/linux/kernel/people/paulmck/perfbook/perfbook.html">Is Parallel Programming Hard, And, If So, What Can You Do About It?</a></li>
+</ul>
+
+<p>Not just a paper, it&rsquo;s a whole book w/ 800+ pages.</p>
+
+<blockquote>
+<p>The purpose of this book is to help you program shared-memory parallel machines without risking your sanity.1 We hope that this book’s design principles will help you avoid at least some parallel-programming pitfalls. That said, you should think of this book as a foundation on which to build, rather than as a completed cathedral. Your mission, if you choose to accept, is to help make further progress in the exciting field of parallel programming—progress that will in time render this book obsolete. Parallel programming is not as hard as some say, and we hope that this book makes your parallel-programming projects easier and more fun.</p>
+</blockquote>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>
