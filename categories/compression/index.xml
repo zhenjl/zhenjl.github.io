@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Compression on Zen 3.1</title>
-    <link>http://localhost:1313/categories/compression/</link>
+    <link>http://zhen.org/categories/compression/</link>
     <description>Recent content in Compression on Zen 3.1</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
     <lastBuildDate>Thu, 14 Nov 2013 19:40:22 -0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/compression/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://zhen.org/categories/compression/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Go vs Java: Decoding Billions of Integers Per Second</title>
-      <link>http://localhost:1313/blog/go-vs-java-decoding-billions-of-integers-per-second/</link>
+      <link>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</link>
       <pubDate>Thu, 14 Nov 2013 19:40:22 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/go-vs-java-decoding-billions-of-integers-per-second/</guid>
+      <guid>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</guid>
       <description>
 
 &lt;p&gt;Comments/feedbacks on &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1qquqz/go_vs_java_decoding_billions_of_integers_per/&#34;&gt;reddit&lt;/a&gt;, &lt;a href=&#34;https://news.ycombinator.com/item?id=6743821&#34;&gt;hacker news&lt;/a&gt;&lt;/p&gt;
@@ -36,7 +36,7 @@
 
 &lt;p&gt;The following chart shows how much (%) faster Java is compare to Go in decoding integers that are encoded using different codecs. It shows results from processing two different files. See below for more details.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Daniel Lemire&amp;rsquo;s &lt;a href=&#34;https://github.com/lemire/JavaFastPFOR&#34;&gt;Java version&lt;/a&gt; is anywhere from 12% to 180% faster than my &lt;a href=&#34;https://github.com/reducedb/encoding&#34;&gt;Go version&lt;/a&gt; for decoding integers. I didn&amp;rsquo;t compare the &lt;a href=&#34;https://github.com/lemire/fastpfor&#34;&gt;C++ version&lt;/a&gt; but given that the C++ version has access to SIMD operations, it can be much faster.&lt;/li&gt;
@@ -137,7 +137,7 @@ for i, _ := range tmp {
 
 &lt;p&gt;However, if I disabled bound checking AND unrolled even more loops, we saw decoding performance increase anywhere from 10-40%. Encoding performance didn&amp;rsquo;t see much change. The following chart shows the performance increase (%) from the for-range loops to unrolled some additional loops when I disabled bound checking. This is comparing to the standard &lt;em&gt;gc&lt;/em&gt; compiler.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/no_bound_checking.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/no_bound_checking.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The question is, is it worth the removal of bound checking? For the raw results, I kept the numbers from the for-range loops.&lt;/p&gt;
 
@@ -272,7 +272,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;p&gt;Lastly, the &lt;em&gt;gccgo-O3&lt;/em&gt; version is the fastest. This is the version that&amp;rsquo;s compiled using &lt;code&gt;-O3&lt;/code&gt; flag for gccgo. We saw that the &lt;em&gt;gccgo-O3&lt;/em&gt; version is anywhere from 10% to 60% faster than the &lt;em&gt;gc&lt;/em&gt; version.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/comparing_go_binaries.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/comparing_go_binaries.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;Above is a chart that shows the decoding performance of the &lt;em&gt;ts.txt&lt;/em&gt; file for the different binaries and codecs.&lt;/p&gt;
 
@@ -280,7 +280,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;h4 id=&#34;bits-per-integer-lower-is-better:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Bits Per Integer (Lower is Better)&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/bits_per_integer.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/bits_per_integer.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;As you can tell, when the integers are sorted (ts.txt), the compression ratio is VERY good. Delta BP32 achieved 0.25 bits per 32-bit integer, and Delta FastPFOR is even better at 0.13 bits per integer. This is also because there are a lot of repeats in ts.txt.&lt;/p&gt;
 
@@ -296,15 +296,15 @@ gcc version 4.8.2 (GCC)
 
 &lt;p&gt;The following chart shows how much (%) faster Java is compare to Go in decoding integers that are encoded using different codecs. It shows results from processing two different files. See below for more details.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The following chart shows the decoding performance while processing &lt;em&gt;ts.txt&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_tstxt.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_tstxt.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The following chart shows the decoding performance while processing &lt;em&gt;latency.txt&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_latency.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_latency.png&#34;&gt;&lt;/p&gt;
 
 &lt;h4 id=&#34;raw-results:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Raw Results&lt;/h4&gt;
 
@@ -318,10 +318,10 @@ gcc version 4.8.2 (GCC)
     
     <item>
       <title>Benchmarking Integer Compression in Go</title>
-      <link>http://localhost:1313/blog/benchmarking-integer-compression-in-go/</link>
+      <link>http://zhen.org/blog/benchmarking-integer-compression-in-go/</link>
       <pubDate>Fri, 11 Oct 2013 22:39:22 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/benchmarking-integer-compression-in-go/</guid>
+      <guid>http://zhen.org/blog/benchmarking-integer-compression-in-go/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=6537688&#34;&gt;comments/feedback&lt;/a&gt;&lt;/p&gt;
@@ -418,7 +418,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;h4 id=&#34;compression-ratio-lower-is-better:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;Compression Ratio (Lower is Better)&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Compression-Ratio.png&#34; alt=&#34;Compression Ratio&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Compression-Ratio.png&#34; alt=&#34;Compression Ratio&#34; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;Compression ratio is measured in bits/integer. Before compression, the integers we are compressing are all 32-bit integers. This chart shows us how many bits are used for each integer after compression.&lt;/p&gt;
@@ -434,7 +434,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;h4 id=&#34;compression-speed-higher-is-better:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;Compression Speed (Higher is Better)&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Compression-Speed.png&#34; alt=&#34;Compression Speed&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Compression-Speed.png&#34; alt=&#34;Compression Speed&#34; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;Compression speed is measured in millions of integers per second (MiS). Note that:&lt;/p&gt;
@@ -447,7 +447,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;h4 id=&#34;decompression-speed:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;Decompression Speed&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Decompression-Speed.png&#34; alt=&#34;Decompression Ratio&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Decompression-Speed.png&#34; alt=&#34;Decompression Ratio&#34; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;Decompression speed is measured in millions of integers per second (MiS). Note that:&lt;/p&gt;

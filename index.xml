@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Zen 3.1</title>
-    <link>http://localhost:1313/</link>
+    <link>http://zhen.org/</link>
     <description>Recent content on Zen 3.1</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
     <lastBuildDate>Sun, 22 Mar 2015 09:57:56 -0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://zhen.org/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Analyzing Security Trends Using RSA Exhibitor Descriptions</title>
-      <link>http://localhost:1313/blog/analyzing-security-trends-using-rsa-exhibitor-descriptions/</link>
+      <link>http://zhen.org/blog/analyzing-security-trends-using-rsa-exhibitor-descriptions/</link>
       <pubDate>Sun, 22 Mar 2015 09:57:56 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/analyzing-security-trends-using-rsa-exhibitor-descriptions/</guid>
+      <guid>http://zhen.org/blog/analyzing-security-trends-using-rsa-exhibitor-descriptions/</guid>
       <description>
 
 &lt;p&gt;&lt;strong&gt;The data used for this post is available &lt;a href=&#34;https://github.com/topclouds/rsaconf&#34;&gt;here&lt;/a&gt;. A word of warning, I only have complete data set for 2014 and 2015. For 2008-2013, I have what I consider to be representative samples. So please take the result set with a big bucket of salt.&lt;/strong&gt;&lt;/p&gt;
@@ -185,7 +185,7 @@
 &lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2013.png&#34;&gt;2013&lt;/a&gt;,
 &lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2014.png&#34;&gt;2014&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/rsa2015.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/rsa2015.png&#34;&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;compliance-down-threats-up:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Compliance Down, Threats Up&lt;/h3&gt;
 
@@ -197,7 +197,7 @@
 
 &lt;p&gt;&lt;em&gt;Compliance&lt;/em&gt; was a big use case in security for many years, and many vendors have leveraged the need for compliance to build their company and revenue pipeline since the mid-2000s. However, use cases can only remain in fashion for so long before customers get sick of hearing about them, and vendors need new ways of selling their wares to customers. So it looks like &lt;em&gt;compliance&lt;/em&gt; is finally out of fashion around 2011 and started declining in exhibitor descriptions.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/compliance-threat.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/compliance-threat.png&#34;&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;mobile-and-cloud-up:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Mobile and Cloud Up&lt;/h3&gt;
 
@@ -209,7 +209,7 @@
 
 &lt;p&gt;About the same time (2010, 2011 or so), more and more corporations are providing their employees smartphones, and workers are becoming more and more mobile. The need for mobile security became a major requirement, and a whole slueth of mobile security startup came into the scene. So natually the &lt;em&gt;mobile&lt;/em&gt; word rose in rankings.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/mobile-cloud.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/mobile-cloud.png&#34;&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;virtual-and-real-time-regaining-ground:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Virtual and Real-Time Regaining Ground&lt;/h3&gt;
 
@@ -220,17 +220,17 @@
 &lt;li&gt;The drop in rankings for &lt;em&gt;real-time&lt;/em&gt; is potentially due to the peak of &lt;em&gt;compliance&lt;/em&gt; use case, which is usually report-based and does not have &lt;em&gt;real-time&lt;/em&gt; requirements. Also, I suspect another reason is that SIEM, which &lt;em&gt;real-time&lt;/em&gt; is critical, is going out of fashion somewhat due to the high cost of ownership and lack of trust in the tools. However, given the recent rise of &lt;em&gt;threats&lt;/em&gt;, natually &lt;em&gt;real-time&lt;/em&gt; becomes critical again.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/virtual-real-time.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/virtual-real-time.png&#34;&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;other-findings:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Other Findings&lt;/h3&gt;
 
 &lt;p&gt;The word &lt;em&gt;cyber&lt;/em&gt; gained huge popularity in the past 3 years, likely due to the U.S. government&amp;rsquo;s focus on &lt;em&gt;cyber&lt;/em&gt; security. The word &lt;em&gt;malware&lt;/em&gt; has been fairly consistently at the top 100 words since 2010.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/cyber-malware.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/cyber-malware.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The words &lt;em&gt;product&lt;/em&gt; and &lt;em&gt;service&lt;/em&gt; switched places in 2013, likely due to the increase in number of security software-as-a-service plays.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/product-service.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/product-service.png&#34;&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;credits:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Credits&lt;/h3&gt;
 
@@ -244,10 +244,10 @@
     
     <item>
       <title>Papers I Read: 2015 Week 8</title>
-      <link>http://localhost:1313/blog/papers-i-read-2015-week-8/</link>
+      <link>http://zhen.org/blog/papers-i-read-2015-week-8/</link>
       <pubDate>Sun, 22 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/papers-i-read-2015-week-8/</guid>
+      <guid>http://zhen.org/blog/papers-i-read-2015-week-8/</guid>
       <description>
 
 &lt;h3 id=&#34;random-ramblings:29724b4ec2d333ad12e89fd98257dccd&#34;&gt;Random Ramblings&lt;/h3&gt;
@@ -301,10 +301,10 @@ insights, to make online changes to job functions to adapt to new requirements o
     
     <item>
       <title>Papers I Read: 2015 Week 7</title>
-      <link>http://localhost:1313/blog/papers-i-read-2015-week-7/</link>
+      <link>http://zhen.org/blog/papers-i-read-2015-week-7/</link>
       <pubDate>Sun, 15 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/papers-i-read-2015-week-7/</guid>
+      <guid>http://zhen.org/blog/papers-i-read-2015-week-7/</guid>
       <description>
 
 &lt;h2 id=&#34;random-ramblings:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Random Ramblings&lt;/h2&gt;
@@ -377,10 +377,10 @@ choices were made that have been key to its success in our environment, such as 
     
     <item>
       <title>Sequence: Optimizing Go For the High Performance Log Scanner</title>
-      <link>http://localhost:1313/blog/sequence-optimizing-go-for-high-performance-log-scanner/</link>
+      <link>http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/</link>
       <pubDate>Fri, 13 Feb 2015 01:03:08 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/sequence-optimizing-go-for-high-performance-log-scanner/</guid>
+      <guid>http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/</guid>
       <description>
 
 &lt;p&gt;Information here maybe outdated. Please visit &lt;a href=&#34;http://sequence.trustpath.com&#34;&gt;http://sequence.trustpath.com&lt;/a&gt; for latest.&lt;/p&gt;
@@ -694,10 +694,10 @@ BenchmarkTimeStep2   2000000         772 ns/op
     
     <item>
       <title>Sequence: Automated Analyzer for Reducing 100,000&#39;s of Log Messages to 10&#39;s of Patterns</title>
-      <link>http://localhost:1313/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</link>
+      <link>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</link>
       <pubDate>Tue, 10 Feb 2015 06:40:20 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</guid>
+      <guid>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</guid>
       <description>
 
 &lt;p&gt;Information here maybe outdated. Please visit &lt;a href=&#34;http://sequence.trustpath.com&#34;&gt;http://sequence.trustpath.com&lt;/a&gt; for latest.&lt;/p&gt;
@@ -930,10 +930,10 @@ object = [
     
     <item>
       <title>Papers I Read: 2015 Week 6</title>
-      <link>http://localhost:1313/blog/papers-i-read-2015-week-6/</link>
+      <link>http://zhen.org/blog/papers-i-read-2015-week-6/</link>
       <pubDate>Sun, 08 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/papers-i-read-2015-week-6/</guid>
+      <guid>http://zhen.org/blog/papers-i-read-2015-week-6/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;http://paperswelove.org/&#34;&gt;Papers We Love&lt;/a&gt; has been making rounds lately and a lot of people are excited about it. I also think it&amp;rsquo;s kind of cool since I&amp;rsquo;ve been reading a lot of research papers over the past year or so. I have been killing some trees because of that.&lt;/p&gt;
@@ -1021,10 +1021,10 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
     
     <item>
       <title>Sequence: A High Performance Sequential Semantic Log Parser at 175,000 MPS</title>
-      <link>http://localhost:1313/blog/sequence-high-performance-sequential-semantic-log--parser/</link>
+      <link>http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/</link>
       <pubDate>Sun, 01 Feb 2015 10:40:20 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/sequence-high-performance-sequential-semantic-log--parser/</guid>
+      <guid>http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/</guid>
       <description>
 
 &lt;p&gt;Information here maybe outdated. Please visit &lt;a href=&#34;http://sequence.trustpath.com&#34;&gt;http://sequence.trustpath.com&lt;/a&gt; for latest.&lt;/p&gt;
@@ -1276,10 +1276,10 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
     
     <item>
       <title>Generating Porter2 FSM For Fun and Performance in Go</title>
-      <link>http://localhost:1313/blog/generating-porter2-fsm-for-fun-and-performance/</link>
+      <link>http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/</link>
       <pubDate>Wed, 21 Jan 2015 20:48:44 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/generating-porter2-fsm-for-fun-and-performance/</guid>
+      <guid>http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;http://godoc.org/github.com/surgebase/porter2&#34;&gt;&lt;img src=&#34;http://godoc.org/github.com/surgebase/porter2?status.svg&#34; alt=&#34;GoDoc&#34; /&gt;
@@ -1502,10 +1502,10 @@ loop:
     
     <item>
       <title>Go: From a Non-Programmer&#39;s Perspective</title>
-      <link>http://localhost:1313/blog/golang-from-a-non-programmers-perspective/</link>
+      <link>http://zhen.org/blog/golang-from-a-non-programmers-perspective/</link>
       <pubDate>Tue, 13 Jan 2015 13:30:00 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/golang-from-a-non-programmers-perspective/</guid>
+      <guid>http://zhen.org/blog/golang-from-a-non-programmers-perspective/</guid>
       <description>
 
 &lt;p&gt;&lt;em&gt;Warning: Long Post. Over 3900 words according to &lt;code&gt;wc&lt;/code&gt;. So read at your own risk. :)&lt;/em&gt;&lt;/p&gt;
@@ -1516,7 +1516,7 @@ loop:
 
 &lt;p&gt;This post is my perspective of Go, how I picked it up, and what I think of it after using it for a while. It is not a post about why Go is better or worse than other languages.&lt;/p&gt;
 
-&lt;p&gt;In short, I like Go. It&amp;rsquo;s the first programming language I&amp;rsquo;ve used in recent years that I can actually build some interesting projects, e.g., &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt; (&lt;a href=&#34;http://localhost:1313/blog/surgemq-mqtt-message-queue-750k-mps/&#34;&gt;detailed post&lt;/a&gt;), in my limited spare time.&lt;/p&gt;
+&lt;p&gt;In short, I like Go. It&amp;rsquo;s the first programming language I&amp;rsquo;ve used in recent years that I can actually build some interesting projects, e.g., &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt; (&lt;a href=&#34;http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/&#34;&gt;detailed post&lt;/a&gt;), in my limited spare time.&lt;/p&gt;
 
 &lt;h2 id=&#34;my-background:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;My Background&lt;/h2&gt;
 
@@ -1678,10 +1678,10 @@ loop:
     
     <item>
       <title>PingMQ: A SurgeMQ-based ICMP Monitoring Tool</title>
-      <link>http://localhost:1313/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</link>
+      <link>http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</link>
       <pubDate>Thu, 25 Dec 2014 00:00:33 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</guid>
+      <guid>http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/surge/surgemq/tree/master/cmd/pingmq&#34;&gt;pingmq&lt;/a&gt; is developed to demonstrate the different use cases one can use &lt;a href=&#34;//surgemq.com&#34;&gt;SurgeMQ&lt;/a&gt;, a high performance MQTT server and client library. In this simplified use case, a network administrator can setup server uptime monitoring system by periodically sending ICMP ECHO_REQUEST to all the IPs in their network, and send the results to SurgeMQ.&lt;/p&gt;
@@ -1800,10 +1800,10 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
     
     <item>
       <title>SurgeMQ: High Performance MQTT Server and Client Libraries in Go</title>
-      <link>http://localhost:1313/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</link>
+      <link>http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</link>
       <pubDate>Wed, 24 Dec 2014 19:20:40 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</guid>
+      <guid>http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</guid>
       <description>
 
 &lt;p&gt;&lt;strong&gt;Happy Holidays!&lt;/strong&gt;&lt;/p&gt;
@@ -1994,10 +1994,10 @@ c.Disconnect()
     
     <item>
       <title>SurgeMQ: MQTT Message Queue @ 750,000 MPS</title>
-      <link>http://localhost:1313/blog/surgemq-mqtt-message-queue-750k-mps/</link>
+      <link>http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/</link>
       <pubDate>Thu, 04 Dec 2014 22:44:07 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/surgemq-mqtt-message-queue-750k-mps/</guid>
+      <guid>http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/</guid>
       <description>
 
 &lt;ul&gt;
@@ -2085,7 +2085,7 @@ c.Disconnect()
 
 &lt;h3 id=&#34;architecture:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Architecture&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/surgemq-mqtt-message-queue-750k-mps/smqfailedarch.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/surgemq-mqtt-message-queue-750k-mps/smqfailedarch.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The above image showed a couple of the architecture approaches I attempted. In them, R is the receiver, which reads from net.Conn, P is the processor, which processes the messages and determines what to do or where to send them, and S is the sender, which sends any messages out to net.Conn. Each R, P, and S are their own goroutines.&lt;/p&gt;
 
@@ -2112,7 +2112,7 @@ c.Disconnect()
 1000000 messages, 44297366818 ns, 44297.366818 ns/msg, 22574 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;After profiling and looking at the &lt;a href=&#34;http://localhost:1313/images/surgemq-mqtt-message-queue-750k-mps/2ndfailcpuprof.svg&#34;&gt;CPU profile&lt;/a&gt;, I realized there are a lot of memory copying (io.Copy and io.CopyN), as well as there are still quite a bit GC activities (scanblock). On the memory copying front, there&amp;rsquo;s copying from net.Conn into bufio, then more copying from bufio to the MQTT messages internal buffer, then more copying from MQTT message internal buffers to the outgoing bufio, then to the net.Conn. So lots and lots of memory copying, not a good thing.&lt;/p&gt;
+&lt;p&gt;After profiling and looking at the &lt;a href=&#34;http://zhen.org/images/surgemq-mqtt-message-queue-750k-mps/2ndfailcpuprof.svg&#34;&gt;CPU profile&lt;/a&gt;, I realized there are a lot of memory copying (io.Copy and io.CopyN), as well as there are still quite a bit GC activities (scanblock). On the memory copying front, there&amp;rsquo;s copying from net.Conn into bufio, then more copying from bufio to the MQTT messages internal buffer, then more copying from MQTT message internal buffers to the outgoing bufio, then to the net.Conn. So lots and lots of memory copying, not a good thing.&lt;/p&gt;
 
 &lt;h4 id=&#34;buffered-network-io:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Buffered Network IO&lt;/h4&gt;
 
@@ -2123,7 +2123,7 @@ c.Disconnect()
 &lt;li&gt;I needed something I can access the bytes directly so I can remove majority of the memory copying.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;At this point I decided to try a new technique I learned while doing Go Learn Project #7 - &lt;a href=&#34;http://localhost:1313/blog/ring-buffer-variable-length-low-latency-disruptor-style/&#34;&gt;Ring Buffer&lt;/a&gt;. The basic idea is that instead of using bufio to read and write to net.Conn, I will implement my own version of that.&lt;/p&gt;
+&lt;p&gt;At this point I decided to try a new technique I learned while doing Go Learn Project #7 - &lt;a href=&#34;http://zhen.org/blog/ring-buffer-variable-length-low-latency-disruptor-style/&#34;&gt;Ring Buffer&lt;/a&gt;. The basic idea is that instead of using bufio to read and write to net.Conn, I will implement my own version of that.&lt;/p&gt;
 
 &lt;p&gt;The ring buffer will implement the interfaces ReadFrom(), WriteTo(), Read() and Write().&lt;/p&gt;
 
@@ -2160,7 +2160,7 @@ c.Disconnect()
 
 &lt;p&gt;There&amp;rsquo;s very few memory copy operations going on, nor is there much memory allocation. So a good outcome overall.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/surgemq-mqtt-message-queue-750k-mps/finalarch.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/surgemq-mqtt-message-queue-750k-mps/finalarch.png&#34;&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;race-conditions:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Race Conditions&lt;/h3&gt;
 
@@ -2308,10 +2308,10 @@ Total Received 40000000 messages in 51420975243 ns, 1285 ns/msg, 777892 msgs/sec
     
     <item>
       <title>Graceful Shutdown of Go net.Listeners</title>
-      <link>http://localhost:1313/blog/graceful-shutdown-of-go-net-dot-listeners/</link>
+      <link>http://zhen.org/blog/graceful-shutdown-of-go-net-dot-listeners/</link>
       <pubDate>Thu, 12 Dec 2013 23:33:22 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/graceful-shutdown-of-go-net-dot-listeners/</guid>
+      <guid>http://zhen.org/blog/graceful-shutdown-of-go-net-dot-listeners/</guid>
       <description>&lt;p&gt;Comments/Feedbacks at &lt;a href=&#34;https://news.ycombinator.com/item?id=6899568&#34;&gt;Hacker News&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1ss929/graceful_shutdown_of_go_netlisteners/&#34;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;The past few evenings I&amp;rsquo;ve been working on a Go program that listens on a TCP socket, accepts new connections, processes some data and then return some data to the client. This is actually fairly simple in Go. The &lt;a href=&#34;http://golang.org/pkg/net&#34;&gt;top&lt;/a&gt; of the &lt;em&gt;net&lt;/em&gt; package has some fairly simple examples of how to do that. Another example can be found about &lt;a href=&#34;http://golang.org/pkg/net/#example_Listener&#34;&gt;mid-section&lt;/a&gt; of the page. You can also find a TON of examples online that shows you how to build a simple TCP listener.&lt;/p&gt;
@@ -2338,10 +2338,10 @@ Total Received 40000000 messages in 51420975243 ns, 1285 ns/msg, 777892 msgs/sec
     
     <item>
       <title>Ring Buffer - Variable-Length, Low-Latency, Lock-Free, Disruptor-Style</title>
-      <link>http://localhost:1313/blog/ring-buffer-variable-length-low-latency-disruptor-style/</link>
+      <link>http://zhen.org/blog/ring-buffer-variable-length-low-latency-disruptor-style/</link>
       <pubDate>Sat, 30 Nov 2013 23:20:22 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/ring-buffer-variable-length-low-latency-disruptor-style/</guid>
+      <guid>http://zhen.org/blog/ring-buffer-variable-length-low-latency-disruptor-style/</guid>
       <description>
 
 &lt;p&gt;Comments/feedbacks on &lt;a href=&#34;https://news.ycombinator.com/item?id=6831293&#34;&gt;Hacker News&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1rvvb6/ring_buffer_variablelength_lowlatency_lockfree/&#34;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
@@ -2560,10 +2560,10 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
     
     <item>
       <title>Go vs Java: Decoding Billions of Integers Per Second</title>
-      <link>http://localhost:1313/blog/go-vs-java-decoding-billions-of-integers-per-second/</link>
+      <link>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</link>
       <pubDate>Thu, 14 Nov 2013 19:40:22 -0800</pubDate>
       
-      <guid>http://localhost:1313/blog/go-vs-java-decoding-billions-of-integers-per-second/</guid>
+      <guid>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</guid>
       <description>
 
 &lt;p&gt;Comments/feedbacks on &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1qquqz/go_vs_java_decoding_billions_of_integers_per/&#34;&gt;reddit&lt;/a&gt;, &lt;a href=&#34;https://news.ycombinator.com/item?id=6743821&#34;&gt;hacker news&lt;/a&gt;&lt;/p&gt;
@@ -2584,7 +2584,7 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
 
 &lt;p&gt;The following chart shows how much (%) faster Java is compare to Go in decoding integers that are encoded using different codecs. It shows results from processing two different files. See below for more details.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Daniel Lemire&amp;rsquo;s &lt;a href=&#34;https://github.com/lemire/JavaFastPFOR&#34;&gt;Java version&lt;/a&gt; is anywhere from 12% to 180% faster than my &lt;a href=&#34;https://github.com/reducedb/encoding&#34;&gt;Go version&lt;/a&gt; for decoding integers. I didn&amp;rsquo;t compare the &lt;a href=&#34;https://github.com/lemire/fastpfor&#34;&gt;C++ version&lt;/a&gt; but given that the C++ version has access to SIMD operations, it can be much faster.&lt;/li&gt;
@@ -2685,7 +2685,7 @@ for i, _ := range tmp {
 
 &lt;p&gt;However, if I disabled bound checking AND unrolled even more loops, we saw decoding performance increase anywhere from 10-40%. Encoding performance didn&amp;rsquo;t see much change. The following chart shows the performance increase (%) from the for-range loops to unrolled some additional loops when I disabled bound checking. This is comparing to the standard &lt;em&gt;gc&lt;/em&gt; compiler.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/no_bound_checking.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/no_bound_checking.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The question is, is it worth the removal of bound checking? For the raw results, I kept the numbers from the for-range loops.&lt;/p&gt;
 
@@ -2820,7 +2820,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;p&gt;Lastly, the &lt;em&gt;gccgo-O3&lt;/em&gt; version is the fastest. This is the version that&amp;rsquo;s compiled using &lt;code&gt;-O3&lt;/code&gt; flag for gccgo. We saw that the &lt;em&gt;gccgo-O3&lt;/em&gt; version is anywhere from 10% to 60% faster than the &lt;em&gt;gc&lt;/em&gt; version.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/comparing_go_binaries.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/comparing_go_binaries.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;Above is a chart that shows the decoding performance of the &lt;em&gt;ts.txt&lt;/em&gt; file for the different binaries and codecs.&lt;/p&gt;
 
@@ -2828,7 +2828,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;h4 id=&#34;bits-per-integer-lower-is-better:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Bits Per Integer (Lower is Better)&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/bits_per_integer.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/bits_per_integer.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;As you can tell, when the integers are sorted (ts.txt), the compression ratio is VERY good. Delta BP32 achieved 0.25 bits per 32-bit integer, and Delta FastPFOR is even better at 0.13 bits per integer. This is also because there are a lot of repeats in ts.txt.&lt;/p&gt;
 
@@ -2844,15 +2844,15 @@ gcc version 4.8.2 (GCC)
 
 &lt;p&gt;The following chart shows how much (%) faster Java is compare to Go in decoding integers that are encoded using different codecs. It shows results from processing two different files. See below for more details.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The following chart shows the decoding performance while processing &lt;em&gt;ts.txt&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_tstxt.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_tstxt.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The following chart shows the decoding performance while processing &lt;em&gt;latency.txt&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_latency.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_latency.png&#34;&gt;&lt;/p&gt;
 
 &lt;h4 id=&#34;raw-results:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Raw Results&lt;/h4&gt;
 
