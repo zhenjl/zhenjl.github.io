@@ -2,20 +2,252 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Security on Zen 3.1</title>
-    <link>http://zhen.org/categories/security/</link>
+    <link>http://localhost:1313/categories/security/</link>
     <description>Recent content in Security on Zen 3.1</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
-    <lastBuildDate>Sun, 22 Feb 2015 19:57:56 -0800</lastBuildDate>
-    <atom:link href="http://zhen.org/categories/security/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 22 Mar 2015 09:57:56 -0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/security/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Analyzing Security Trends Using RSA Exhibitor Descriptions</title>
+      <link>http://localhost:1313/blog/analyzing-security-trends-using-rsa-exhibitor-descriptions/</link>
+      <pubDate>Sun, 22 Mar 2015 09:57:56 -0800</pubDate>
+      
+      <guid>http://localhost:1313/blog/analyzing-security-trends-using-rsa-exhibitor-descriptions/</guid>
+      <description>
+
+&lt;p&gt;&lt;strong&gt;The data used for this post is available &lt;a href=&#34;https://github.com/topclouds/rsaconf&#34;&gt;here&lt;/a&gt;. A word of warning, I only have complete data set for 2014 and 2015. For 2008-2013, I have what I consider to be representative samples. So please take the result set with a big bucket of salt.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;After going through this analysis, the big question I wonder out loud is:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;How can vendors differentiate from each other and stand above the crowd when everyone is using the same words to describe themselves?&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;The annual security conference, &lt;a href=&#34;http://www.rsaconference.com/events/us15&#34;&gt;RSA 2015&lt;/a&gt;, is right around the corner. Close to 30,000 attendees will descend into &lt;a href=&#34;http://moscone.com&#34;&gt;San Francisco Moscone Center&lt;/a&gt; to attend 400+ sessions, listen to 600+ speakers and talk to close to 600 vendors and exhibitors.&lt;/p&gt;
+
+&lt;p&gt;For me, the most interesting aspect of RSA is walking the expo floor, and listening to how vendors describe their products. Intuitively, the vendor marketing messages should have a high degree of correlation to what customers care about, even if the messages trail the actual pain points slightly.&lt;/p&gt;
+
+&lt;p&gt;This post highlights some of the unsurprising findings from analyzing 8 years worth of RSA Conference exihibitor descriptions.&lt;/p&gt;
+
+&lt;p&gt;It is interesting how almost all vendor descriptions use the same set of words to describe themselves, and these words mostly haven&amp;rsquo;t changed over the past 8 years. For example, the following table shows the top 10 words used in RSA conference exhibitor descriptions for the past 8 years. You can find the complete word list at &amp;hellip;&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;right&#34;&gt;#&lt;/th&gt;
+&lt;th&gt;2008&lt;/th&gt;
+&lt;th&gt;2009&lt;/th&gt;
+&lt;th&gt;2010&lt;/th&gt;
+&lt;th&gt;2011&lt;/th&gt;
+&lt;th&gt;2012&lt;/th&gt;
+&lt;th&gt;2013&lt;/th&gt;
+&lt;th&gt;2014&lt;/th&gt;
+&lt;th&gt;2015&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;protect&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;service&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;information&lt;/td&gt;
+&lt;td&gt;more&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;protect&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;7&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;company&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;information&lt;/td&gt;
+&lt;td&gt;software&lt;/td&gt;
+&lt;td&gt;software&lt;/td&gt;
+&lt;td&gt;protect&lt;/td&gt;
+&lt;td&gt;threat&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;8&lt;/td&gt;
+&lt;td&gt;product&lt;/td&gt;
+&lt;td&gt;service&lt;/td&gt;
+&lt;td&gt;organization&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;information&lt;/td&gt;
+&lt;td&gt;threat&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;9&lt;/td&gt;
+&lt;td&gt;technology&lt;/td&gt;
+&lt;td&gt;software&lt;/td&gt;
+&lt;td&gt;information&lt;/td&gt;
+&lt;td&gt;technology&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;service&lt;/td&gt;
+&lt;td&gt;service&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;10&lt;/td&gt;
+&lt;td&gt;application&lt;/td&gt;
+&lt;td&gt;busy&lt;/td&gt;
+&lt;td&gt;risk&lt;/td&gt;
+&lt;td&gt;product&lt;/td&gt;
+&lt;td&gt;more&lt;/td&gt;
+&lt;td&gt;customer&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Here&amp;rsquo;s a word cloud that shows the &lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2015.png&#34;&gt;2015&lt;/a&gt; top words. You can also find word clouds for
+&lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2008.png&#34;&gt;2008&lt;/a&gt;,
+&lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2009.png&#34;&gt;2009&lt;/a&gt;,
+&lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2010.png&#34;&gt;2010&lt;/a&gt;,
+&lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2011.png&#34;&gt;2011&lt;/a&gt;,
+&lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2012.png&#34;&gt;2012&lt;/a&gt;,
+&lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2013.png&#34;&gt;2013&lt;/a&gt;,
+&lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2014.png&#34;&gt;2014&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/rsa2015.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;compliance-down-threats-up:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Compliance Down, Threats Up&lt;/h3&gt;
+
+&lt;p&gt;While the macro trend has not changed dramatically for the exhibitor descriptions, there have been some micro trends. Here are a couple of examples.&lt;/p&gt;
+
+&lt;p&gt;First, the use of the word &lt;em&gt;compliance&lt;/em&gt; has gone down over the years, while the word &lt;em&gt;threat&lt;/em&gt; has gone up. After 2013, they changed places with each other.&lt;/p&gt;
+
+&lt;p&gt;This finding is probably not surprising. At the end of 2013, one of the biggest breaches, Target, happened. And over the next two years we&amp;rsquo;ve seen major breaches of Sony, Anthem, Home Depot, Premera and many others. Threats to both the corporate infrastructure as well as top executive jobs (just ask &lt;a href=&#34;http://www.forbes.com/sites/ericbasu/2014/06/15/target-ceo-fired-can-you-be-fired-if-your-company-is-hacked/&#34;&gt;Target’s CEO Gregg Steinhafel&lt;/a&gt;, or &lt;a href=&#34;http://abcnews.go.com/Entertainment/wireStory/sony-chief-amy-pascal-acknowledges-fired-28918607&#34;&gt;Sony&amp;rsquo;s Co-Chairwoman Amy Pascal&lt;/a&gt;) are becoming real. So it seems natural for the marketers to start using the word &lt;em&gt;threat&lt;/em&gt; to highlight their solutions.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Compliance&lt;/em&gt; was a big use case in security for many years, and many vendors have leveraged the need for compliance to build their company and revenue pipeline since the mid-2000s. However, use cases can only remain in fashion for so long before customers get sick of hearing about them, and vendors need new ways of selling their wares to customers. So it looks like &lt;em&gt;compliance&lt;/em&gt; is finally out of fashion around 2011 and started declining in exhibitor descriptions.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/compliance-threat.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;mobile-and-cloud-up:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Mobile and Cloud Up&lt;/h3&gt;
+
+&lt;p&gt;The words &lt;em&gt;mobile&lt;/em&gt; and &lt;em&gt;cloud&lt;/em&gt; has gained dramatically in rankings over past 8 years. In fact, it&amp;rsquo;s been consistently one of the top words used in the last 4. For anyone who hasn&amp;rsquo;t been hiding under a rock in the past few years, this is completely unsurprising.&lt;/p&gt;
+
+&lt;p&gt;The &lt;em&gt;cloud&lt;/em&gt; war started to heat up back in 2009 when most major service providers have felt the Amazon Web Services threat and all wanted to build their own clouds. In fact, I joined VMware in 2009 to build out their emerging cloud infrastructure group to specifically help service providers build their cloud infrastructures. Eventually, in 2011, VMware decided to get into the game and I built the initial product and engineering team that developed what it&amp;rsquo;s now known as vCloud Air (still have no idea why this name is chosen).&lt;/p&gt;
+
+&lt;p&gt;As more and more workloads move to the cloud, requirements for protecting cloud workloads quickly appeared, and vendors natually started to position their products for the cloud. So the rise in &lt;em&gt;cloud&lt;/em&gt; rankings matches what I&amp;rsquo;ve experiened.&lt;/p&gt;
+
+&lt;p&gt;About the same time (2010, 2011 or so), more and more corporations are providing their employees smartphones, and workers are becoming more and more mobile. The need for mobile security became a major requirement, and a whole slueth of mobile security startup came into the scene. So natually the &lt;em&gt;mobile&lt;/em&gt; word rose in rankings.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/mobile-cloud.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;virtual-and-real-time-regaining-ground:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Virtual and Real-Time Regaining Ground&lt;/h3&gt;
+
+&lt;p&gt;The words &lt;em&gt;virtual&lt;/em&gt; and &lt;em&gt;real-time&lt;/em&gt; dropped dramatically in rankings for a couple of years (2010, 2011) but have since regained all the lost ground and more. I have no precise reasons on why that&amp;rsquo;s the case but I have some theories. These theories are probably completely wrong, and if you have better explanations I would love to hear from you.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Virtual&lt;/em&gt; lost to &lt;em&gt;cloud&lt;/em&gt; during that timeframe as every vendor is trying to position their products for the cloud era. However, &lt;em&gt;virtual&lt;/em&gt; infrastructures haven&amp;rsquo;t gone away and in fact continue to experience strong growth. So in the past couple of years, marketers are covering their basis and starting to message both &lt;em&gt;virtual&lt;/em&gt; and &lt;em&gt;cloud&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;The drop in rankings for &lt;em&gt;real-time&lt;/em&gt; is potentially due to the peak of &lt;em&gt;compliance&lt;/em&gt; use case, which is usually report-based and does not have &lt;em&gt;real-time&lt;/em&gt; requirements. Also, I suspect another reason is that SIEM, which &lt;em&gt;real-time&lt;/em&gt; is critical, is going out of fashion somewhat due to the high cost of ownership and lack of trust in the tools. However, given the recent rise of &lt;em&gt;threats&lt;/em&gt;, natually &lt;em&gt;real-time&lt;/em&gt; becomes critical again.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/virtual-real-time.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;other-findings:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Other Findings&lt;/h3&gt;
+
+&lt;p&gt;The word &lt;em&gt;cyber&lt;/em&gt; gained huge popularity in the past 3 years, likely due to the U.S. government&amp;rsquo;s focus on &lt;em&gt;cyber&lt;/em&gt; security. The word &lt;em&gt;malware&lt;/em&gt; has been fairly consistently at the top 100 words since 2010.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/cyber-malware.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;The words &lt;em&gt;product&lt;/em&gt; and &lt;em&gt;service&lt;/em&gt; switched places in 2013, likely due to the increase in number of security software-as-a-service plays.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/product-service.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;credits:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Credits&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The word clouds and word rankings are generated using &lt;a href=&#34;http://timdream.org/wordcloud&#34;&gt;Word Cloud&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;The actual vendor descriptions are gathered from the RSA web site as well as press releases from Business Wire and others.&lt;/li&gt;
+&lt;li&gt;Charts are generated using Excel, which continues to be one of the best friends for data analysts (not that I consider myself one).&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Papers I Read: 2015 Week 8</title>
-      <link>http://zhen.org/blog/papers-i-read-2015-week-8/</link>
+      <link>http://localhost:1313/blog/papers-i-read-2015-week-8/</link>
       <pubDate>Sun, 22 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/papers-i-read-2015-week-8/</guid>
+      <guid>http://localhost:1313/blog/papers-i-read-2015-week-8/</guid>
       <description>
 
 &lt;h3 id=&#34;random-ramblings:29724b4ec2d333ad12e89fd98257dccd&#34;&gt;Random Ramblings&lt;/h3&gt;
@@ -69,10 +301,10 @@ insights, to make online changes to job functions to adapt to new requirements o
     
     <item>
       <title>Papers I Read: 2015 Week 7</title>
-      <link>http://zhen.org/blog/papers-i-read-2015-week-7/</link>
+      <link>http://localhost:1313/blog/papers-i-read-2015-week-7/</link>
       <pubDate>Sun, 15 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/papers-i-read-2015-week-7/</guid>
+      <guid>http://localhost:1313/blog/papers-i-read-2015-week-7/</guid>
       <description>
 
 &lt;h2 id=&#34;random-ramblings:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Random Ramblings&lt;/h2&gt;
@@ -145,10 +377,10 @@ choices were made that have been key to its success in our environment, such as 
     
     <item>
       <title>Papers I Read: 2015 Week 6</title>
-      <link>http://zhen.org/blog/papers-i-read-2015-week-6/</link>
+      <link>http://localhost:1313/blog/papers-i-read-2015-week-6/</link>
       <pubDate>Sun, 08 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/papers-i-read-2015-week-6/</guid>
+      <guid>http://localhost:1313/blog/papers-i-read-2015-week-6/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;http://paperswelove.org/&#34;&gt;Papers We Love&lt;/a&gt; has been making rounds lately and a lot of people are excited about it. I also think it&amp;rsquo;s kind of cool since I&amp;rsquo;ve been reading a lot of research papers over the past year or so. I have been killing some trees because of that.&lt;/p&gt;
@@ -236,10 +468,10 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
     
     <item>
       <title>Response to &#34;Assessing the Security Benefits of Cloud Computing&#34;</title>
-      <link>http://zhen.org/blog/response-to-assessing-the-security-benefits-of-cloud-computing/</link>
+      <link>http://localhost:1313/blog/response-to-assessing-the-security-benefits-of-cloud-computing/</link>
       <pubDate>Thu, 28 Aug 2008 01:58:22 +0000</pubDate>
       
-      <guid>http://zhen.org/blog/response-to-assessing-the-security-benefits-of-cloud-computing/</guid>
+      <guid>http://localhost:1313/blog/response-to-assessing-the-security-benefits-of-cloud-computing/</guid>
       <description>
 
 &lt;p&gt;Craig Balding from &lt;a href=&#34;http://cloudsecurity.org&#34;&gt;Cloud Security&lt;/a&gt; wrote an interesting piece on the &lt;a href=&#34;http://cloudsecurity.org/2008/07/21/assessing-the-security-benefits-of-cloud-computing/&#34;&gt;security benefits of cloud computing&lt;/a&gt; back in July (that I just now got to read.) Craig qualified the post as &lt;strong&gt;potential security benefits&lt;/strong&gt; of Cloud Computing.&lt;/p&gt;

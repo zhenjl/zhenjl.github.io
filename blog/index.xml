@@ -2,20 +2,252 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blogs on Zen 3.1</title>
-    <link>http://zhen.org/blog/</link>
+    <link>http://localhost:1313/blog/</link>
     <description>Recent content in Blogs on Zen 3.1</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
-    <lastBuildDate>Sun, 22 Feb 2015 19:57:56 -0800</lastBuildDate>
-    <atom:link href="http://zhen.org/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 22 Mar 2015 09:57:56 -0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Analyzing Security Trends Using RSA Exhibitor Descriptions</title>
+      <link>http://localhost:1313/blog/analyzing-security-trends-using-rsa-exhibitor-descriptions/</link>
+      <pubDate>Sun, 22 Mar 2015 09:57:56 -0800</pubDate>
+      
+      <guid>http://localhost:1313/blog/analyzing-security-trends-using-rsa-exhibitor-descriptions/</guid>
+      <description>
+
+&lt;p&gt;&lt;strong&gt;The data used for this post is available &lt;a href=&#34;https://github.com/topclouds/rsaconf&#34;&gt;here&lt;/a&gt;. A word of warning, I only have complete data set for 2014 and 2015. For 2008-2013, I have what I consider to be representative samples. So please take the result set with a big bucket of salt.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;After going through this analysis, the big question I wonder out loud is:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;How can vendors differentiate from each other and stand above the crowd when everyone is using the same words to describe themselves?&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;The annual security conference, &lt;a href=&#34;http://www.rsaconference.com/events/us15&#34;&gt;RSA 2015&lt;/a&gt;, is right around the corner. Close to 30,000 attendees will descend into &lt;a href=&#34;http://moscone.com&#34;&gt;San Francisco Moscone Center&lt;/a&gt; to attend 400+ sessions, listen to 600+ speakers and talk to close to 600 vendors and exhibitors.&lt;/p&gt;
+
+&lt;p&gt;For me, the most interesting aspect of RSA is walking the expo floor, and listening to how vendors describe their products. Intuitively, the vendor marketing messages should have a high degree of correlation to what customers care about, even if the messages trail the actual pain points slightly.&lt;/p&gt;
+
+&lt;p&gt;This post highlights some of the unsurprising findings from analyzing 8 years worth of RSA Conference exihibitor descriptions.&lt;/p&gt;
+
+&lt;p&gt;It is interesting how almost all vendor descriptions use the same set of words to describe themselves, and these words mostly haven&amp;rsquo;t changed over the past 8 years. For example, the following table shows the top 10 words used in RSA conference exhibitor descriptions for the past 8 years. You can find the complete word list at &amp;hellip;&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;right&#34;&gt;#&lt;/th&gt;
+&lt;th&gt;2008&lt;/th&gt;
+&lt;th&gt;2009&lt;/th&gt;
+&lt;th&gt;2010&lt;/th&gt;
+&lt;th&gt;2011&lt;/th&gt;
+&lt;th&gt;2012&lt;/th&gt;
+&lt;th&gt;2013&lt;/th&gt;
+&lt;th&gt;2014&lt;/th&gt;
+&lt;th&gt;2015&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;protect&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;service&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;information&lt;/td&gt;
+&lt;td&gt;more&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;protect&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;7&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;company&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;information&lt;/td&gt;
+&lt;td&gt;software&lt;/td&gt;
+&lt;td&gt;software&lt;/td&gt;
+&lt;td&gt;protect&lt;/td&gt;
+&lt;td&gt;threat&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;8&lt;/td&gt;
+&lt;td&gt;product&lt;/td&gt;
+&lt;td&gt;service&lt;/td&gt;
+&lt;td&gt;organization&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;information&lt;/td&gt;
+&lt;td&gt;threat&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;9&lt;/td&gt;
+&lt;td&gt;technology&lt;/td&gt;
+&lt;td&gt;software&lt;/td&gt;
+&lt;td&gt;information&lt;/td&gt;
+&lt;td&gt;technology&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;service&lt;/td&gt;
+&lt;td&gt;service&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;10&lt;/td&gt;
+&lt;td&gt;application&lt;/td&gt;
+&lt;td&gt;busy&lt;/td&gt;
+&lt;td&gt;risk&lt;/td&gt;
+&lt;td&gt;product&lt;/td&gt;
+&lt;td&gt;more&lt;/td&gt;
+&lt;td&gt;customer&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Here&amp;rsquo;s a word cloud that shows the &lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2015.png&#34;&gt;2015&lt;/a&gt; top words. You can also find word clouds for
+&lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2008.png&#34;&gt;2008&lt;/a&gt;,
+&lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2009.png&#34;&gt;2009&lt;/a&gt;,
+&lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2010.png&#34;&gt;2010&lt;/a&gt;,
+&lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2011.png&#34;&gt;2011&lt;/a&gt;,
+&lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2012.png&#34;&gt;2012&lt;/a&gt;,
+&lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2013.png&#34;&gt;2013&lt;/a&gt;,
+&lt;a href=&#34;https://github.com/topclouds/rsaconf/blob/master/rsa2014.png&#34;&gt;2014&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/rsa2015.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;compliance-down-threats-up:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Compliance Down, Threats Up&lt;/h3&gt;
+
+&lt;p&gt;While the macro trend has not changed dramatically for the exhibitor descriptions, there have been some micro trends. Here are a couple of examples.&lt;/p&gt;
+
+&lt;p&gt;First, the use of the word &lt;em&gt;compliance&lt;/em&gt; has gone down over the years, while the word &lt;em&gt;threat&lt;/em&gt; has gone up. After 2013, they changed places with each other.&lt;/p&gt;
+
+&lt;p&gt;This finding is probably not surprising. At the end of 2013, one of the biggest breaches, Target, happened. And over the next two years we&amp;rsquo;ve seen major breaches of Sony, Anthem, Home Depot, Premera and many others. Threats to both the corporate infrastructure as well as top executive jobs (just ask &lt;a href=&#34;http://www.forbes.com/sites/ericbasu/2014/06/15/target-ceo-fired-can-you-be-fired-if-your-company-is-hacked/&#34;&gt;Target’s CEO Gregg Steinhafel&lt;/a&gt;, or &lt;a href=&#34;http://abcnews.go.com/Entertainment/wireStory/sony-chief-amy-pascal-acknowledges-fired-28918607&#34;&gt;Sony&amp;rsquo;s Co-Chairwoman Amy Pascal&lt;/a&gt;) are becoming real. So it seems natural for the marketers to start using the word &lt;em&gt;threat&lt;/em&gt; to highlight their solutions.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Compliance&lt;/em&gt; was a big use case in security for many years, and many vendors have leveraged the need for compliance to build their company and revenue pipeline since the mid-2000s. However, use cases can only remain in fashion for so long before customers get sick of hearing about them, and vendors need new ways of selling their wares to customers. So it looks like &lt;em&gt;compliance&lt;/em&gt; is finally out of fashion around 2011 and started declining in exhibitor descriptions.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/compliance-threat.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;mobile-and-cloud-up:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Mobile and Cloud Up&lt;/h3&gt;
+
+&lt;p&gt;The words &lt;em&gt;mobile&lt;/em&gt; and &lt;em&gt;cloud&lt;/em&gt; has gained dramatically in rankings over past 8 years. In fact, it&amp;rsquo;s been consistently one of the top words used in the last 4. For anyone who hasn&amp;rsquo;t been hiding under a rock in the past few years, this is completely unsurprising.&lt;/p&gt;
+
+&lt;p&gt;The &lt;em&gt;cloud&lt;/em&gt; war started to heat up back in 2009 when most major service providers have felt the Amazon Web Services threat and all wanted to build their own clouds. In fact, I joined VMware in 2009 to build out their emerging cloud infrastructure group to specifically help service providers build their cloud infrastructures. Eventually, in 2011, VMware decided to get into the game and I built the initial product and engineering team that developed what it&amp;rsquo;s now known as vCloud Air (still have no idea why this name is chosen).&lt;/p&gt;
+
+&lt;p&gt;As more and more workloads move to the cloud, requirements for protecting cloud workloads quickly appeared, and vendors natually started to position their products for the cloud. So the rise in &lt;em&gt;cloud&lt;/em&gt; rankings matches what I&amp;rsquo;ve experiened.&lt;/p&gt;
+
+&lt;p&gt;About the same time (2010, 2011 or so), more and more corporations are providing their employees smartphones, and workers are becoming more and more mobile. The need for mobile security became a major requirement, and a whole slueth of mobile security startup came into the scene. So natually the &lt;em&gt;mobile&lt;/em&gt; word rose in rankings.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/mobile-cloud.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;virtual-and-real-time-regaining-ground:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Virtual and Real-Time Regaining Ground&lt;/h3&gt;
+
+&lt;p&gt;The words &lt;em&gt;virtual&lt;/em&gt; and &lt;em&gt;real-time&lt;/em&gt; dropped dramatically in rankings for a couple of years (2010, 2011) but have since regained all the lost ground and more. I have no precise reasons on why that&amp;rsquo;s the case but I have some theories. These theories are probably completely wrong, and if you have better explanations I would love to hear from you.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Virtual&lt;/em&gt; lost to &lt;em&gt;cloud&lt;/em&gt; during that timeframe as every vendor is trying to position their products for the cloud era. However, &lt;em&gt;virtual&lt;/em&gt; infrastructures haven&amp;rsquo;t gone away and in fact continue to experience strong growth. So in the past couple of years, marketers are covering their basis and starting to message both &lt;em&gt;virtual&lt;/em&gt; and &lt;em&gt;cloud&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;The drop in rankings for &lt;em&gt;real-time&lt;/em&gt; is potentially due to the peak of &lt;em&gt;compliance&lt;/em&gt; use case, which is usually report-based and does not have &lt;em&gt;real-time&lt;/em&gt; requirements. Also, I suspect another reason is that SIEM, which &lt;em&gt;real-time&lt;/em&gt; is critical, is going out of fashion somewhat due to the high cost of ownership and lack of trust in the tools. However, given the recent rise of &lt;em&gt;threats&lt;/em&gt;, natually &lt;em&gt;real-time&lt;/em&gt; becomes critical again.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/virtual-real-time.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;other-findings:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Other Findings&lt;/h3&gt;
+
+&lt;p&gt;The word &lt;em&gt;cyber&lt;/em&gt; gained huge popularity in the past 3 years, likely due to the U.S. government&amp;rsquo;s focus on &lt;em&gt;cyber&lt;/em&gt; security. The word &lt;em&gt;malware&lt;/em&gt; has been fairly consistently at the top 100 words since 2010.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/cyber-malware.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;The words &lt;em&gt;product&lt;/em&gt; and &lt;em&gt;service&lt;/em&gt; switched places in 2013, likely due to the increase in number of security software-as-a-service plays.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/rsaconf/product-service.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;credits:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Credits&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The word clouds and word rankings are generated using &lt;a href=&#34;http://timdream.org/wordcloud&#34;&gt;Word Cloud&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;The actual vendor descriptions are gathered from the RSA web site as well as press releases from Business Wire and others.&lt;/li&gt;
+&lt;li&gt;Charts are generated using Excel, which continues to be one of the best friends for data analysts (not that I consider myself one).&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Papers I Read: 2015 Week 8</title>
-      <link>http://zhen.org/blog/papers-i-read-2015-week-8/</link>
+      <link>http://localhost:1313/blog/papers-i-read-2015-week-8/</link>
       <pubDate>Sun, 22 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/papers-i-read-2015-week-8/</guid>
+      <guid>http://localhost:1313/blog/papers-i-read-2015-week-8/</guid>
       <description>
 
 &lt;h3 id=&#34;random-ramblings:29724b4ec2d333ad12e89fd98257dccd&#34;&gt;Random Ramblings&lt;/h3&gt;
@@ -69,10 +301,10 @@ insights, to make online changes to job functions to adapt to new requirements o
     
     <item>
       <title>Papers I Read: 2015 Week 7</title>
-      <link>http://zhen.org/blog/papers-i-read-2015-week-7/</link>
+      <link>http://localhost:1313/blog/papers-i-read-2015-week-7/</link>
       <pubDate>Sun, 15 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/papers-i-read-2015-week-7/</guid>
+      <guid>http://localhost:1313/blog/papers-i-read-2015-week-7/</guid>
       <description>
 
 &lt;h2 id=&#34;random-ramblings:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Random Ramblings&lt;/h2&gt;
@@ -145,10 +377,10 @@ choices were made that have been key to its success in our environment, such as 
     
     <item>
       <title>Sequence: Optimizing Go For the High Performance Log Scanner</title>
-      <link>http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/</link>
+      <link>http://localhost:1313/blog/sequence-optimizing-go-for-high-performance-log-scanner/</link>
       <pubDate>Fri, 13 Feb 2015 01:03:08 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/</guid>
+      <guid>http://localhost:1313/blog/sequence-optimizing-go-for-high-performance-log-scanner/</guid>
       <description>
 
 &lt;p&gt;Information here maybe outdated. Please visit &lt;a href=&#34;http://sequence.trustpath.com&#34;&gt;http://sequence.trustpath.com&lt;/a&gt; for latest.&lt;/p&gt;
@@ -462,10 +694,10 @@ BenchmarkTimeStep2   2000000         772 ns/op
     
     <item>
       <title>Sequence: Automated Analyzer for Reducing 100,000&#39;s of Log Messages to 10&#39;s of Patterns</title>
-      <link>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</link>
+      <link>http://localhost:1313/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</link>
       <pubDate>Tue, 10 Feb 2015 06:40:20 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</guid>
+      <guid>http://localhost:1313/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</guid>
       <description>
 
 &lt;p&gt;Information here maybe outdated. Please visit &lt;a href=&#34;http://sequence.trustpath.com&#34;&gt;http://sequence.trustpath.com&lt;/a&gt; for latest.&lt;/p&gt;
@@ -698,10 +930,10 @@ object = [
     
     <item>
       <title>Papers I Read: 2015 Week 6</title>
-      <link>http://zhen.org/blog/papers-i-read-2015-week-6/</link>
+      <link>http://localhost:1313/blog/papers-i-read-2015-week-6/</link>
       <pubDate>Sun, 08 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/papers-i-read-2015-week-6/</guid>
+      <guid>http://localhost:1313/blog/papers-i-read-2015-week-6/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;http://paperswelove.org/&#34;&gt;Papers We Love&lt;/a&gt; has been making rounds lately and a lot of people are excited about it. I also think it&amp;rsquo;s kind of cool since I&amp;rsquo;ve been reading a lot of research papers over the past year or so. I have been killing some trees because of that.&lt;/p&gt;
@@ -789,10 +1021,10 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
     
     <item>
       <title>Sequence: A High Performance Sequential Semantic Log Parser at 175,000 MPS</title>
-      <link>http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/</link>
+      <link>http://localhost:1313/blog/sequence-high-performance-sequential-semantic-log--parser/</link>
       <pubDate>Sun, 01 Feb 2015 10:40:20 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/</guid>
+      <guid>http://localhost:1313/blog/sequence-high-performance-sequential-semantic-log--parser/</guid>
       <description>
 
 &lt;p&gt;Information here maybe outdated. Please visit &lt;a href=&#34;http://sequence.trustpath.com&#34;&gt;http://sequence.trustpath.com&lt;/a&gt; for latest.&lt;/p&gt;
@@ -1044,10 +1276,10 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
     
     <item>
       <title>Generating Porter2 FSM For Fun and Performance in Go</title>
-      <link>http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/</link>
+      <link>http://localhost:1313/blog/generating-porter2-fsm-for-fun-and-performance/</link>
       <pubDate>Wed, 21 Jan 2015 20:48:44 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/</guid>
+      <guid>http://localhost:1313/blog/generating-porter2-fsm-for-fun-and-performance/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;http://godoc.org/github.com/surgebase/porter2&#34;&gt;&lt;img src=&#34;http://godoc.org/github.com/surgebase/porter2?status.svg&#34; alt=&#34;GoDoc&#34; /&gt;
@@ -1270,10 +1502,10 @@ loop:
     
     <item>
       <title>Go: From a Non-Programmer&#39;s Perspective</title>
-      <link>http://zhen.org/blog/golang-from-a-non-programmers-perspective/</link>
+      <link>http://localhost:1313/blog/golang-from-a-non-programmers-perspective/</link>
       <pubDate>Tue, 13 Jan 2015 13:30:00 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/golang-from-a-non-programmers-perspective/</guid>
+      <guid>http://localhost:1313/blog/golang-from-a-non-programmers-perspective/</guid>
       <description>
 
 &lt;p&gt;&lt;em&gt;Warning: Long Post. Over 3900 words according to &lt;code&gt;wc&lt;/code&gt;. So read at your own risk. :)&lt;/em&gt;&lt;/p&gt;
@@ -1284,7 +1516,7 @@ loop:
 
 &lt;p&gt;This post is my perspective of Go, how I picked it up, and what I think of it after using it for a while. It is not a post about why Go is better or worse than other languages.&lt;/p&gt;
 
-&lt;p&gt;In short, I like Go. It&amp;rsquo;s the first programming language I&amp;rsquo;ve used in recent years that I can actually build some interesting projects, e.g., &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt; (&lt;a href=&#34;http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/&#34;&gt;detailed post&lt;/a&gt;), in my limited spare time.&lt;/p&gt;
+&lt;p&gt;In short, I like Go. It&amp;rsquo;s the first programming language I&amp;rsquo;ve used in recent years that I can actually build some interesting projects, e.g., &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt; (&lt;a href=&#34;http://localhost:1313/blog/surgemq-mqtt-message-queue-750k-mps/&#34;&gt;detailed post&lt;/a&gt;), in my limited spare time.&lt;/p&gt;
 
 &lt;h2 id=&#34;my-background:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;My Background&lt;/h2&gt;
 
@@ -1446,10 +1678,10 @@ loop:
     
     <item>
       <title>PingMQ: A SurgeMQ-based ICMP Monitoring Tool</title>
-      <link>http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</link>
+      <link>http://localhost:1313/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</link>
       <pubDate>Thu, 25 Dec 2014 00:00:33 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</guid>
+      <guid>http://localhost:1313/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/surge/surgemq/tree/master/cmd/pingmq&#34;&gt;pingmq&lt;/a&gt; is developed to demonstrate the different use cases one can use &lt;a href=&#34;//surgemq.com&#34;&gt;SurgeMQ&lt;/a&gt;, a high performance MQTT server and client library. In this simplified use case, a network administrator can setup server uptime monitoring system by periodically sending ICMP ECHO_REQUEST to all the IPs in their network, and send the results to SurgeMQ.&lt;/p&gt;
@@ -1568,10 +1800,10 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
     
     <item>
       <title>SurgeMQ: High Performance MQTT Server and Client Libraries in Go</title>
-      <link>http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</link>
+      <link>http://localhost:1313/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</link>
       <pubDate>Wed, 24 Dec 2014 19:20:40 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</guid>
+      <guid>http://localhost:1313/blog/surgemq-high-performance-mqtt-server-and-client-libraries-in-go/</guid>
       <description>
 
 &lt;p&gt;&lt;strong&gt;Happy Holidays!&lt;/strong&gt;&lt;/p&gt;
@@ -1762,10 +1994,10 @@ c.Disconnect()
     
     <item>
       <title>SurgeMQ: MQTT Message Queue @ 750,000 MPS</title>
-      <link>http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/</link>
+      <link>http://localhost:1313/blog/surgemq-mqtt-message-queue-750k-mps/</link>
       <pubDate>Thu, 04 Dec 2014 22:44:07 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/</guid>
+      <guid>http://localhost:1313/blog/surgemq-mqtt-message-queue-750k-mps/</guid>
       <description>
 
 &lt;ul&gt;
@@ -1853,7 +2085,7 @@ c.Disconnect()
 
 &lt;h3 id=&#34;architecture:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Architecture&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/surgemq-mqtt-message-queue-750k-mps/smqfailedarch.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/surgemq-mqtt-message-queue-750k-mps/smqfailedarch.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The above image showed a couple of the architecture approaches I attempted. In them, R is the receiver, which reads from net.Conn, P is the processor, which processes the messages and determines what to do or where to send them, and S is the sender, which sends any messages out to net.Conn. Each R, P, and S are their own goroutines.&lt;/p&gt;
 
@@ -1880,7 +2112,7 @@ c.Disconnect()
 1000000 messages, 44297366818 ns, 44297.366818 ns/msg, 22574 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;After profiling and looking at the &lt;a href=&#34;http://zhen.org/images/surgemq-mqtt-message-queue-750k-mps/2ndfailcpuprof.svg&#34;&gt;CPU profile&lt;/a&gt;, I realized there are a lot of memory copying (io.Copy and io.CopyN), as well as there are still quite a bit GC activities (scanblock). On the memory copying front, there&amp;rsquo;s copying from net.Conn into bufio, then more copying from bufio to the MQTT messages internal buffer, then more copying from MQTT message internal buffers to the outgoing bufio, then to the net.Conn. So lots and lots of memory copying, not a good thing.&lt;/p&gt;
+&lt;p&gt;After profiling and looking at the &lt;a href=&#34;http://localhost:1313/images/surgemq-mqtt-message-queue-750k-mps/2ndfailcpuprof.svg&#34;&gt;CPU profile&lt;/a&gt;, I realized there are a lot of memory copying (io.Copy and io.CopyN), as well as there are still quite a bit GC activities (scanblock). On the memory copying front, there&amp;rsquo;s copying from net.Conn into bufio, then more copying from bufio to the MQTT messages internal buffer, then more copying from MQTT message internal buffers to the outgoing bufio, then to the net.Conn. So lots and lots of memory copying, not a good thing.&lt;/p&gt;
 
 &lt;h4 id=&#34;buffered-network-io:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Buffered Network IO&lt;/h4&gt;
 
@@ -1891,7 +2123,7 @@ c.Disconnect()
 &lt;li&gt;I needed something I can access the bytes directly so I can remove majority of the memory copying.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;At this point I decided to try a new technique I learned while doing Go Learn Project #7 - &lt;a href=&#34;http://zhen.org/blog/ring-buffer-variable-length-low-latency-disruptor-style/&#34;&gt;Ring Buffer&lt;/a&gt;. The basic idea is that instead of using bufio to read and write to net.Conn, I will implement my own version of that.&lt;/p&gt;
+&lt;p&gt;At this point I decided to try a new technique I learned while doing Go Learn Project #7 - &lt;a href=&#34;http://localhost:1313/blog/ring-buffer-variable-length-low-latency-disruptor-style/&#34;&gt;Ring Buffer&lt;/a&gt;. The basic idea is that instead of using bufio to read and write to net.Conn, I will implement my own version of that.&lt;/p&gt;
 
 &lt;p&gt;The ring buffer will implement the interfaces ReadFrom(), WriteTo(), Read() and Write().&lt;/p&gt;
 
@@ -1928,7 +2160,7 @@ c.Disconnect()
 
 &lt;p&gt;There&amp;rsquo;s very few memory copy operations going on, nor is there much memory allocation. So a good outcome overall.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/surgemq-mqtt-message-queue-750k-mps/finalarch.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/surgemq-mqtt-message-queue-750k-mps/finalarch.png&#34;&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;race-conditions:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Race Conditions&lt;/h3&gt;
 
@@ -2076,10 +2308,10 @@ Total Received 40000000 messages in 51420975243 ns, 1285 ns/msg, 777892 msgs/sec
     
     <item>
       <title>Graceful Shutdown of Go net.Listeners</title>
-      <link>http://zhen.org/blog/graceful-shutdown-of-go-net-dot-listeners/</link>
+      <link>http://localhost:1313/blog/graceful-shutdown-of-go-net-dot-listeners/</link>
       <pubDate>Thu, 12 Dec 2013 23:33:22 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/graceful-shutdown-of-go-net-dot-listeners/</guid>
+      <guid>http://localhost:1313/blog/graceful-shutdown-of-go-net-dot-listeners/</guid>
       <description>&lt;p&gt;Comments/Feedbacks at &lt;a href=&#34;https://news.ycombinator.com/item?id=6899568&#34;&gt;Hacker News&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1ss929/graceful_shutdown_of_go_netlisteners/&#34;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;The past few evenings I&amp;rsquo;ve been working on a Go program that listens on a TCP socket, accepts new connections, processes some data and then return some data to the client. This is actually fairly simple in Go. The &lt;a href=&#34;http://golang.org/pkg/net&#34;&gt;top&lt;/a&gt; of the &lt;em&gt;net&lt;/em&gt; package has some fairly simple examples of how to do that. Another example can be found about &lt;a href=&#34;http://golang.org/pkg/net/#example_Listener&#34;&gt;mid-section&lt;/a&gt; of the page. You can also find a TON of examples online that shows you how to build a simple TCP listener.&lt;/p&gt;
@@ -2106,10 +2338,10 @@ Total Received 40000000 messages in 51420975243 ns, 1285 ns/msg, 777892 msgs/sec
     
     <item>
       <title>Ring Buffer - Variable-Length, Low-Latency, Lock-Free, Disruptor-Style</title>
-      <link>http://zhen.org/blog/ring-buffer-variable-length-low-latency-disruptor-style/</link>
+      <link>http://localhost:1313/blog/ring-buffer-variable-length-low-latency-disruptor-style/</link>
       <pubDate>Sat, 30 Nov 2013 23:20:22 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/ring-buffer-variable-length-low-latency-disruptor-style/</guid>
+      <guid>http://localhost:1313/blog/ring-buffer-variable-length-low-latency-disruptor-style/</guid>
       <description>
 
 &lt;p&gt;Comments/feedbacks on &lt;a href=&#34;https://news.ycombinator.com/item?id=6831293&#34;&gt;Hacker News&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1rvvb6/ring_buffer_variablelength_lowlatency_lockfree/&#34;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
@@ -2328,10 +2560,10 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
     
     <item>
       <title>Go vs Java: Decoding Billions of Integers Per Second</title>
-      <link>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</link>
+      <link>http://localhost:1313/blog/go-vs-java-decoding-billions-of-integers-per-second/</link>
       <pubDate>Thu, 14 Nov 2013 19:40:22 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</guid>
+      <guid>http://localhost:1313/blog/go-vs-java-decoding-billions-of-integers-per-second/</guid>
       <description>
 
 &lt;p&gt;Comments/feedbacks on &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1qquqz/go_vs_java_decoding_billions_of_integers_per/&#34;&gt;reddit&lt;/a&gt;, &lt;a href=&#34;https://news.ycombinator.com/item?id=6743821&#34;&gt;hacker news&lt;/a&gt;&lt;/p&gt;
@@ -2352,7 +2584,7 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
 
 &lt;p&gt;The following chart shows how much (%) faster Java is compare to Go in decoding integers that are encoded using different codecs. It shows results from processing two different files. See below for more details.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Daniel Lemire&amp;rsquo;s &lt;a href=&#34;https://github.com/lemire/JavaFastPFOR&#34;&gt;Java version&lt;/a&gt; is anywhere from 12% to 180% faster than my &lt;a href=&#34;https://github.com/reducedb/encoding&#34;&gt;Go version&lt;/a&gt; for decoding integers. I didn&amp;rsquo;t compare the &lt;a href=&#34;https://github.com/lemire/fastpfor&#34;&gt;C++ version&lt;/a&gt; but given that the C++ version has access to SIMD operations, it can be much faster.&lt;/li&gt;
@@ -2453,7 +2685,7 @@ for i, _ := range tmp {
 
 &lt;p&gt;However, if I disabled bound checking AND unrolled even more loops, we saw decoding performance increase anywhere from 10-40%. Encoding performance didn&amp;rsquo;t see much change. The following chart shows the performance increase (%) from the for-range loops to unrolled some additional loops when I disabled bound checking. This is comparing to the standard &lt;em&gt;gc&lt;/em&gt; compiler.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/no_bound_checking.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/no_bound_checking.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The question is, is it worth the removal of bound checking? For the raw results, I kept the numbers from the for-range loops.&lt;/p&gt;
 
@@ -2588,7 +2820,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;p&gt;Lastly, the &lt;em&gt;gccgo-O3&lt;/em&gt; version is the fastest. This is the version that&amp;rsquo;s compiled using &lt;code&gt;-O3&lt;/code&gt; flag for gccgo. We saw that the &lt;em&gt;gccgo-O3&lt;/em&gt; version is anywhere from 10% to 60% faster than the &lt;em&gt;gc&lt;/em&gt; version.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/comparing_go_binaries.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/comparing_go_binaries.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;Above is a chart that shows the decoding performance of the &lt;em&gt;ts.txt&lt;/em&gt; file for the different binaries and codecs.&lt;/p&gt;
 
@@ -2596,7 +2828,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;h4 id=&#34;bits-per-integer-lower-is-better:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Bits Per Integer (Lower is Better)&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/bits_per_integer.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/bits_per_integer.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;As you can tell, when the integers are sorted (ts.txt), the compression ratio is VERY good. Delta BP32 achieved 0.25 bits per 32-bit integer, and Delta FastPFOR is even better at 0.13 bits per integer. This is also because there are a lot of repeats in ts.txt.&lt;/p&gt;
 
@@ -2612,15 +2844,15 @@ gcc version 4.8.2 (GCC)
 
 &lt;p&gt;The following chart shows how much (%) faster Java is compare to Go in decoding integers that are encoded using different codecs. It shows results from processing two different files. See below for more details.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The following chart shows the decoding performance while processing &lt;em&gt;ts.txt&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_tstxt.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_tstxt.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;The following chart shows the decoding performance while processing &lt;em&gt;latency.txt&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_latency.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_latency.png&#34;&gt;&lt;/p&gt;
 
 &lt;h4 id=&#34;raw-results:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Raw Results&lt;/h4&gt;
 
@@ -2629,116 +2861,6 @@ gcc version 4.8.2 (GCC)
 &lt;iframe width=&#39;800&#39; height=&#39;500&#39; frameborder=&#39;0&#39; src=&#39;https://docs.google.com/spreadsheet/pub?key=0ApDLtJuUH-1rdDRyNEhPWUlqMHZzMG5FWFQzX1ZoZ1E&amp;output=html&amp;widget=true&#39;&gt;&lt;/iframe&gt;
 
 &lt;p&gt;Comments/feedbacks on &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1qquqz/go_vs_java_decoding_billions_of_integers_per/&#34;&gt;reddit&lt;/a&gt;, &lt;a href=&#34;https://news.ycombinator.com/item?id=6743821&#34;&gt;hacker news&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Improving Cityhash Performance by Go Profiling</title>
-      <link>http://zhen.org/blog/improving-cityhash-performance-by-go-profiling/</link>
-      <pubDate>Sun, 10 Nov 2013 15:04:22 -0800</pubDate>
-      
-      <guid>http://zhen.org/blog/improving-cityhash-performance-by-go-profiling/</guid>
-      <description>
-
-&lt;p&gt;Comments/Feedback on &lt;a href=&#34;https://news.ycombinator.com/item?id=6710115&#34;&gt;Hacker News&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1qcygc/improving_cityhash_performance_by_go_profiling/&#34;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;2013-11-19 Update #1: After more profiling (see &lt;em&gt;top&lt;/em&gt; output in the &amp;ldquo;After modification&amp;rdquo; section), I&amp;rsquo;ve found that these 3 functions, unalignedLoad64, fetch64, and uint64InExpectedOrder,  add up to quite a bit of execution time. I looked at the &lt;a href=&#34;https://code.google.com/p/cityhash/source/browse/trunk/src/city.cc&#34;&gt;original cityhash implementation&lt;/a&gt; and realized that the combination of these functions is basically geting a LittleEndian uint64, which we can read by doing LittleEndian.Uint64(). So I updated fetch64 to do just that. Performance increased by ~20% just because of that. Also, the bloom filter test showed that cityhash is now faster than both FNV64 and CRC64.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Another month has gone by since the last post. This month has been extremely busy at work in an extraordinary good way. We had a huge POC that went quite succesfully at a large customer site. I also got a chance to visit Lisbon, Portugal as part of this POC. So things overall went pretty well.&lt;/p&gt;
-
-&lt;p&gt;However, since family and work pretty much occupied most of my waking hours over the past few weeks, I haven&amp;rsquo;t made much progress on the &amp;ldquo;Go Learn&amp;rdquo; projects. To keep myself going, I picked a smaller task over the weekend and decided to go back to &amp;ldquo;Go Learn Project #1&amp;rdquo;, my &lt;a href=&#34;https://github.com/reducedb/cityhash&#34;&gt;cityhash&lt;/a&gt; Go implementation.&lt;/p&gt;
-
-&lt;h3 id=&#34;go-learn-project-1:c82123e7d16007176a816d99942a250f&#34;&gt;Go Learn Project #1&lt;/h3&gt;
-
-&lt;p&gt;When I first decided to learn Go, I struggled quite a bit to find a project that I can sink my teeth into. I am not sure if others are the same way, for me to learn a new language, I have to have something meaningful to work on. I can&amp;rsquo;t just write hello world programs or follow tutorials. I can read books and articles, but I will also procrastinate for weeks if I can&amp;rsquo;t find a relevant project.&lt;/p&gt;
-
-&lt;p&gt;Luckily, I was thinking about creating a data generator at work and wanted to write that in Go. But in order to write the data generator in Go, I first have to have a cityhash implementation in Go because our backend (C/C++) is using cityhash.&lt;/p&gt;
-
-&lt;p&gt;Surprisingly, I looked around but couldn&amp;rsquo;t find any Go implementation of cityhash. I would have thunk that given Go and Cityhash are both from Google, some Googler would have already ported cityhash over to Go. But no such luck, or maybe I just didn&amp;rsquo;t look hard enough. In any case, I decided to port cityhash over to Go.&lt;/p&gt;
-
-&lt;p&gt;Porting an existing project in C over to Go has a big advantage in that I don&amp;rsquo;t have to invent any new data structures or algorithms. It will allow me to focus on learning the Go syntax and the standard libraries. Many many moons ago (before I converted to the dark side) I was pretty proficient in C and reading cityhash wasn&amp;rsquo;t too difficult, so porting cityhash over to Go should be relatively straightforward.&lt;/p&gt;
-
-&lt;p&gt;In any case, the porting process wasn&amp;rsquo;t too difficult, as it turned out. Overall I was able to do that over a weekend. I was also able to port the test program (city-test.cc) over as well (vim substitution FTW) to validate that my implementation was functionally correct.&lt;/p&gt;
-
-&lt;h3 id=&#34;performance-sucked:c82123e7d16007176a816d99942a250f&#34;&gt;Performance Sucked&lt;/h3&gt;
-
-&lt;p&gt;I had always suspected that my Go cityhash implementation wasn&amp;rsquo;t great performance wise. At the time I hadn&amp;rsquo;t learned how to benchmark or profile Go programs, so I didn&amp;rsquo;t do a whole lot except ensuring functionally the results are correct. Also my data generator at work was working fine so I left the implementation as is.&lt;/p&gt;
-
-&lt;p&gt;In September, I implemented a &lt;a href=&#34;https://github.com/reducedb/bloom&#34;&gt;Bloom Filter package&lt;/a&gt; which required a hash function as part of the implementation. For that package, I &lt;a href=&#34;http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/&#34;&gt;tested different hash functions&lt;/a&gt; to see how they affect the performance of the bloom filter. As you can see from those benchmarks, Cityhash is consistently 3x slower compare to the others. At the time I knew it was because of my implementation but didn&amp;rsquo;t look into it further.&lt;/p&gt;
-
-&lt;h3 id=&#34;profiling-go-cityhash:c82123e7d16007176a816d99942a250f&#34;&gt;Profiling Go Cityhash&lt;/h3&gt;
-
-&lt;p&gt;Since that first project, I have learned quite a bit more about benchmarking and profiling. So this weekend I finally took time to profile the Go implementation and found some interesting results. Now Go experts probably will read this and say &amp;ldquo;of course, you had no idea what you were doing.&amp;rdquo; And that would be true. I had no idea at the time. Hopefully this post will make up for it.&lt;/p&gt;
-
-&lt;p&gt;If you haven&amp;rsquo;t read &lt;a href=&#34;http://blog.golang.org/profiling-go-programs&#34;&gt;this blog post on Go profiling&lt;/a&gt;, you should go read it now before continuing.&lt;/p&gt;
-
-&lt;p&gt;In any case, I wrote a &lt;a href=&#34;https://gist.github.com/zhenjl/7405913&#34;&gt;short program&lt;/a&gt; to test cityhash with a big file. This way it can collect enough samples to tell me where the bottleneck is.&lt;/p&gt;
-
-&lt;p&gt;The original implementation took 45 seconds to hash a 1.1G file. Below is the cpu profile output.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;duration = 45401991546ns
-Total: 4295 samples
-    2766  64.4%  64.4%     2766  64.4% runtime.memmove
-     374   8.7%  73.1%      463  10.8% sweepspan
-     259   6.0%  79.1%      383   8.9% MHeap_AllocLocked
-     123   2.9%  82.0%      123   2.9% runtime.markspan
-      95   2.2%  84.2%     1223  28.5% runtime.mallocgc
-      74   1.7%  85.9%       74   1.7% runtime.MSpan_Init
-      43   1.0%  86.9%     4234  98.6% github.com/reducedb/cityhash.unalignedLoad64
-      40   0.9%  87.9%      595  13.9% runtime.MCache_Alloc
-      32   0.7%  88.6%       32   0.7% runtime.markallocated
-      31   0.7%  89.3%       56   1.3% MHeap_FreeLocked
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;As you can see, most of the time were spent copying memory (64.4%). And also the sweepspan (part of GC) is also running quite often (8.7%).&lt;/p&gt;
-
-&lt;p&gt;Before this, I had no idea that there&amp;rsquo;s that much memory being copied. So this is definitely interesting. I then looked the &lt;a href=&#34;http://zhen.org/images/2013-11-10-improving-cithhash-performance-by-go-profiling/before.svg&#34;&gt;graph of the profile data&lt;/a&gt; using the &amp;ldquo;web&amp;rdquo; command.&lt;/p&gt;
-
-&lt;p&gt;It shows clearly that unalignedLoad64, a function that loads a uint64 from the buffer, is causing most of the memmove. Technically, it&amp;rsquo;s calling binary.Read(), which creates an array of 8 bytes, and passes to another function which eventually calls runtime.copy to copy a few bytes of data from the original buffer into the array.&lt;/p&gt;
-
-&lt;p&gt;So now the reason for the large amount of time spent in memmove is clear. Basically, every time I call binary.Read(), it creates an 8 byte array. Up to 8 bytes of data are copied into it. Then the data in the array gets converted into an uint64. After that, the array is thrown away. And this is done over and over again for the whole 1.1G file, which means 1.1G of memory is being created in tiny 8-byte chunks, copied, and thrown away. It&amp;rsquo;s no wonder the program is slow!&lt;/p&gt;
-
-&lt;p&gt;By this time, some of the readers are probably wondering why the heck I am using binary.Read() if I knew that I will be reading a uint64 from a slice. And they would be right again. Only excuse I have is that I had no clue and that was the first thing I found to work a few months back, so I just used it.&lt;/p&gt;
-
-&lt;h3 id=&#34;modifying-the-implementation:c82123e7d16007176a816d99942a250f&#34;&gt;Modifying the Implementation&lt;/h3&gt;
-
-&lt;p&gt;The change turned out to be relatively simple. Instead of using binary.Read(), I used LittleEndian.Uint64() to read the uint64. After the change, I ran the same program again.&lt;/p&gt;
-
-&lt;p&gt;Here are the results from the post-change run. The time it took to hash the 1.1G file is only 2.8 seconds. That&amp;rsquo;s 16X faster than before the change. The &amp;ldquo;top&amp;rdquo; profile output is also a lot more reasonable.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;duration = 2718339693ns
-Total: 245 samples
-      57  23.3%  23.3%       57  23.3% encoding/binary.littleEndian.Uint64
-      50  20.4%  43.7%      227  92.7% github.com/reducedb/cityhash.CityHash128WithSeed
-      40  16.3%  60.0%       97  39.6% github.com/reducedb/cityhash.unalignedLoad64
-      35  14.3%  74.3%      146  59.6% github.com/reducedb/cityhash.fetch64
-      28  11.4%  85.7%       28  11.4% github.com/reducedb/cityhash.uint64InExpectedOrder
-      27  11.0%  96.7%      132  53.9% github.com/reducedb/cityhash.weakHashLen32WithSeeds_3
-       8   3.3% 100.0%        8   3.3% github.com/reducedb/cityhash.weakHashLen32WithSeeds
-       0   0.0% 100.0%        1   0.4% MHeap_AllocLarge
-       0   0.0% 100.0%      227  92.7% _/Users/jian/Projects/cityhash_test.TestLatencyIntegers
-       0   0.0% 100.0%      227  92.7% github.com/reducedb/cityhash.CityHash128
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Also, nothing really jumps out when looking at the &lt;a href=&#34;http://zhen.org/images/2013-11-10-improving-cithhash-performance-by-go-profiling/after.svg&#34;&gt;post-change profile data graph&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;bloom-filter-benchmarks:c82123e7d16007176a816d99942a250f&#34;&gt;Bloom Filter Benchmarks&lt;/h3&gt;
-
-&lt;p&gt;Now that the changes are in, I went back and re-ran some of the bloom filter benchmarks. They look a lot more reasonable as well. Below is a comparison of the Scalable Bloom Filter. The post-change run is almost 2.5x faster than the pre-change run. Also, the post-change number (1442 ns/op) is a lot closer to some of the other hash functions (~1100 ns/op).&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Scalable Bloom Filter
----------------------
-BenchmarkBloomCityHash   1000000              1442 ns/op (after cityhash change)
-BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;summary:c82123e7d16007176a816d99942a250f&#34;&gt;Summary&lt;/h3&gt;
-
-&lt;p&gt;The Go authors have made it extermely simple to test, benchmark and profile Go programs so there&amp;rsquo;s really reason for anyone not to do that often. It helps you see how your program works and where the bottlenecks are. It can also help you identify surprises that you may not have though of. A good example is in my case, I had no idea binary.Read() works the way it works until I profiled my program.&lt;/p&gt;
-
-&lt;p&gt;Comments/Feedback on &lt;a href=&#34;https://news.ycombinator.com/item?id=6710115&#34;&gt;Hacker News&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1qcygc/improving_cityhash_performance_by_go_profiling/&#34;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

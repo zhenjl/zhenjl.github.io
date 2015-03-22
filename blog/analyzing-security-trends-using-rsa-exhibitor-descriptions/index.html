@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Analyzing Security Trends Using RSA Exhibitor Descriptions &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://localhost:1313//css/poole.css">
+  <link rel="stylesheet" href="http://localhost:1313//css/syntax.css">
+  <link rel="stylesheet" href="http://localhost:1313//css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-681691-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://localhost:1313/">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="http://localhost:1313//blog">Archive</a></li>
+      <br/>
+      <li>Projects</li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="http://sequence.trustpath.com">sequence</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surgemq/surgemq">surgemq</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surge">others</a></li>
+      
+    </ul>
+
+    <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+    <a href="http://linkedin.com/in/zhenjl"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
+    
+    
+    
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2015 Jian Zhen. All Rights Reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Analyzing Security Trends Using RSA Exhibitor Descriptions</h1>
+  <span class="post-date">Sun, Mar 22, 2015</span>
+      
+
+<p><strong>The data used for this post is available <a href="https://github.com/topclouds/rsaconf">here</a>. A word of warning, I only have complete data set for 2014 and 2015. For 2008-2013, I have what I consider to be representative samples. So please take the result set with a big bucket of salt.</strong></p>
+
+<hr />
+
+<p>After going through this analysis, the big question I wonder out loud is:</p>
+
+<blockquote>
+<p><em>How can vendors differentiate from each other and stand above the crowd when everyone is using the same words to describe themselves?</em></p>
+</blockquote>
+
+<hr />
+
+<p>The annual security conference, <a href="http://www.rsaconference.com/events/us15">RSA 2015</a>, is right around the corner. Close to 30,000 attendees will descend into <a href="http://moscone.com">San Francisco Moscone Center</a> to attend 400+ sessions, listen to 600+ speakers and talk to close to 600 vendors and exhibitors.</p>
+
+<p>For me, the most interesting aspect of RSA is walking the expo floor, and listening to how vendors describe their products. Intuitively, the vendor marketing messages should have a high degree of correlation to what customers care about, even if the messages trail the actual pain points slightly.</p>
+
+<p>This post highlights some of the unsurprising findings from analyzing 8 years worth of RSA Conference exihibitor descriptions.</p>
+
+<p>It is interesting how almost all vendor descriptions use the same set of words to describe themselves, and these words mostly haven&rsquo;t changed over the past 8 years. For example, the following table shows the top 10 words used in RSA conference exhibitor descriptions for the past 8 years. You can find the complete word list at &hellip;</p>
+
+<table>
+<thead>
+<tr>
+<th align="right">#</th>
+<th>2008</th>
+<th>2009</th>
+<th>2010</th>
+<th>2011</th>
+<th>2012</th>
+<th>2013</th>
+<th>2014</th>
+<th>2015</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right">1</td>
+<td>secure</td>
+<td>secure</td>
+<td>secure</td>
+<td>secure</td>
+<td>secure</td>
+<td>secure</td>
+<td>secure</td>
+<td>secure</td>
+</tr>
+
+<tr>
+<td align="right">2</td>
+<td>solution</td>
+<td>solution</td>
+<td>solution</td>
+<td>solution</td>
+<td>solution</td>
+<td>solution</td>
+<td>solution</td>
+<td>solution</td>
+</tr>
+
+<tr>
+<td align="right">3</td>
+<td>network</td>
+<td>manage</td>
+<td>manage</td>
+<td>network</td>
+<td>provide</td>
+<td>provide</td>
+<td>provide</td>
+<td>provide</td>
+</tr>
+
+<tr>
+<td align="right">4</td>
+<td>provide</td>
+<td>provide</td>
+<td>network</td>
+<td>provide</td>
+<td>manage</td>
+<td>manage</td>
+<td>network</td>
+<td>data</td>
+</tr>
+
+<tr>
+<td align="right">5</td>
+<td>manage</td>
+<td>data</td>
+<td>protect</td>
+<td>manage</td>
+<td>network</td>
+<td>service</td>
+<td>manage</td>
+<td>network</td>
+</tr>
+
+<tr>
+<td align="right">6</td>
+<td>enterprise</td>
+<td>network</td>
+<td>provide</td>
+<td>data</td>
+<td>information</td>
+<td>more</td>
+<td>data</td>
+<td>protect</td>
+</tr>
+
+<tr>
+<td align="right">7</td>
+<td>data</td>
+<td>company</td>
+<td>data</td>
+<td>information</td>
+<td>software</td>
+<td>software</td>
+<td>protect</td>
+<td>threat</td>
+</tr>
+
+<tr>
+<td align="right">8</td>
+<td>product</td>
+<td>service</td>
+<td>organization</td>
+<td>enterprise</td>
+<td>enterprise</td>
+<td>information</td>
+<td>threat</td>
+<td>manage</td>
+</tr>
+
+<tr>
+<td align="right">9</td>
+<td>technology</td>
+<td>software</td>
+<td>information</td>
+<td>technology</td>
+<td>data</td>
+<td>enterprise</td>
+<td>service</td>
+<td>service</td>
+</tr>
+
+<tr>
+<td align="right">10</td>
+<td>application</td>
+<td>busy</td>
+<td>risk</td>
+<td>product</td>
+<td>more</td>
+<td>customer</td>
+<td>enterprise</td>
+<td>enterprise</td>
+</tr>
+</tbody>
+</table>
+
+<p>Here&rsquo;s a word cloud that shows the <a href="https://github.com/topclouds/rsaconf/blob/master/rsa2015.png">2015</a> top words. You can also find word clouds for
+<a href="https://github.com/topclouds/rsaconf/blob/master/rsa2008.png">2008</a>,
+<a href="https://github.com/topclouds/rsaconf/blob/master/rsa2009.png">2009</a>,
+<a href="https://github.com/topclouds/rsaconf/blob/master/rsa2010.png">2010</a>,
+<a href="https://github.com/topclouds/rsaconf/blob/master/rsa2011.png">2011</a>,
+<a href="https://github.com/topclouds/rsaconf/blob/master/rsa2012.png">2012</a>,
+<a href="https://github.com/topclouds/rsaconf/blob/master/rsa2013.png">2013</a>,
+<a href="https://github.com/topclouds/rsaconf/blob/master/rsa2014.png">2014</a>.</p>
+
+<p><img src="/images/rsaconf/rsa2015.png"></p>
+
+<h3 id="compliance-down-threats-up:b082a5c20b5449f4372a8955a4b5d0dd">Compliance Down, Threats Up</h3>
+
+<p>While the macro trend has not changed dramatically for the exhibitor descriptions, there have been some micro trends. Here are a couple of examples.</p>
+
+<p>First, the use of the word <em>compliance</em> has gone down over the years, while the word <em>threat</em> has gone up. After 2013, they changed places with each other.</p>
+
+<p>This finding is probably not surprising. At the end of 2013, one of the biggest breaches, Target, happened. And over the next two years we&rsquo;ve seen major breaches of Sony, Anthem, Home Depot, Premera and many others. Threats to both the corporate infrastructure as well as top executive jobs (just ask <a href="http://www.forbes.com/sites/ericbasu/2014/06/15/target-ceo-fired-can-you-be-fired-if-your-company-is-hacked/">Target’s CEO Gregg Steinhafel</a>, or <a href="http://abcnews.go.com/Entertainment/wireStory/sony-chief-amy-pascal-acknowledges-fired-28918607">Sony&rsquo;s Co-Chairwoman Amy Pascal</a>) are becoming real. So it seems natural for the marketers to start using the word <em>threat</em> to highlight their solutions.</p>
+
+<p><em>Compliance</em> was a big use case in security for many years, and many vendors have leveraged the need for compliance to build their company and revenue pipeline since the mid-2000s. However, use cases can only remain in fashion for so long before customers get sick of hearing about them, and vendors need new ways of selling their wares to customers. So it looks like <em>compliance</em> is finally out of fashion around 2011 and started declining in exhibitor descriptions.</p>
+
+<p><img src="/images/rsaconf/compliance-threat.png"></p>
+
+<h3 id="mobile-and-cloud-up:b082a5c20b5449f4372a8955a4b5d0dd">Mobile and Cloud Up</h3>
+
+<p>The words <em>mobile</em> and <em>cloud</em> has gained dramatically in rankings over past 8 years. In fact, it&rsquo;s been consistently one of the top words used in the last 4. For anyone who hasn&rsquo;t been hiding under a rock in the past few years, this is completely unsurprising.</p>
+
+<p>The <em>cloud</em> war started to heat up back in 2009 when most major service providers have felt the Amazon Web Services threat and all wanted to build their own clouds. In fact, I joined VMware in 2009 to build out their emerging cloud infrastructure group to specifically help service providers build their cloud infrastructures. Eventually, in 2011, VMware decided to get into the game and I built the initial product and engineering team that developed what it&rsquo;s now known as vCloud Air (still have no idea why this name is chosen).</p>
+
+<p>As more and more workloads move to the cloud, requirements for protecting cloud workloads quickly appeared, and vendors natually started to position their products for the cloud. So the rise in <em>cloud</em> rankings matches what I&rsquo;ve experiened.</p>
+
+<p>About the same time (2010, 2011 or so), more and more corporations are providing their employees smartphones, and workers are becoming more and more mobile. The need for mobile security became a major requirement, and a whole slueth of mobile security startup came into the scene. So natually the <em>mobile</em> word rose in rankings.</p>
+
+<p><img src="/images/rsaconf/mobile-cloud.png"></p>
+
+<h3 id="virtual-and-real-time-regaining-ground:b082a5c20b5449f4372a8955a4b5d0dd">Virtual and Real-Time Regaining Ground</h3>
+
+<p>The words <em>virtual</em> and <em>real-time</em> dropped dramatically in rankings for a couple of years (2010, 2011) but have since regained all the lost ground and more. I have no precise reasons on why that&rsquo;s the case but I have some theories. These theories are probably completely wrong, and if you have better explanations I would love to hear from you.</p>
+
+<ul>
+<li><em>Virtual</em> lost to <em>cloud</em> during that timeframe as every vendor is trying to position their products for the cloud era. However, <em>virtual</em> infrastructures haven&rsquo;t gone away and in fact continue to experience strong growth. So in the past couple of years, marketers are covering their basis and starting to message both <em>virtual</em> and <em>cloud</em>.</li>
+<li>The drop in rankings for <em>real-time</em> is potentially due to the peak of <em>compliance</em> use case, which is usually report-based and does not have <em>real-time</em> requirements. Also, I suspect another reason is that SIEM, which <em>real-time</em> is critical, is going out of fashion somewhat due to the high cost of ownership and lack of trust in the tools. However, given the recent rise of <em>threats</em>, natually <em>real-time</em> becomes critical again.</li>
+</ul>
+
+<p><img src="/images/rsaconf/virtual-real-time.png"></p>
+
+<h3 id="other-findings:b082a5c20b5449f4372a8955a4b5d0dd">Other Findings</h3>
+
+<p>The word <em>cyber</em> gained huge popularity in the past 3 years, likely due to the U.S. government&rsquo;s focus on <em>cyber</em> security. The word <em>malware</em> has been fairly consistently at the top 100 words since 2010.</p>
+
+<p><img src="/images/rsaconf/cyber-malware.png"></p>
+
+<p>The words <em>product</em> and <em>service</em> switched places in 2013, likely due to the increase in number of security software-as-a-service plays.</p>
+
+<p><img src="/images/rsaconf/product-service.png"></p>
+
+<h3 id="credits:b082a5c20b5449f4372a8955a4b5d0dd">Credits</h3>
+
+<ul>
+<li>The word clouds and word rankings are generated using <a href="http://timdream.org/wordcloud">Word Cloud</a>.</li>
+<li>The actual vendor descriptions are gathered from the RSA web site as well as press releases from Business Wire and others.</li>
+<li>Charts are generated using Excel, which continues to be one of the best friends for data analysts (not that I consider myself one).</li>
+</ul>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  <script>document.write('<script src="http://'
+        + (location.host || 'localhost').split(':')[0]
+		+ ':1313/livereload.js?mindelay=10"></'
+        + 'script>')</script></body>
+</html>

@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Json on Zen 3.1</title>
-    <link>http://zhen.org/categories/json/</link>
+    <link>http://localhost:1313/categories/json/</link>
     <description>Recent content in Json on Zen 3.1</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
     <lastBuildDate>Wed, 28 Aug 2013 14:20:22 -0800</lastBuildDate>
-    <atom:link href="http://zhen.org/categories/json/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/categories/json/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Testing MsgPack and BSON</title>
-      <link>http://zhen.org/blog/testing-msgpack-and-bson/</link>
+      <link>http://localhost:1313/blog/testing-msgpack-and-bson/</link>
       <pubDate>Wed, 28 Aug 2013 14:20:22 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/testing-msgpack-and-bson/</guid>
+      <guid>http://localhost:1313/blog/testing-msgpack-and-bson/</guid>
       <description>&lt;p&gt;In one of the projects I am working on we are trying to select a message encoding scheme. The use case is pretty simple. We have a server that accepts data records from different clients, and our goal is support 100K messages per second per node. Our selection criteria are pretty simple as well:&lt;/p&gt;
 
 &lt;ul&gt;

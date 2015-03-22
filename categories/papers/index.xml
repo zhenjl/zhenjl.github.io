@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Papers on Zen 3.1</title>
-    <link>http://zhen.org/categories/papers/</link>
+    <link>http://localhost:1313/categories/papers/</link>
     <description>Recent content in Papers on Zen 3.1</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
     <lastBuildDate>Sun, 22 Feb 2015 19:57:56 -0800</lastBuildDate>
-    <atom:link href="http://zhen.org/categories/papers/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/categories/papers/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Papers I Read: 2015 Week 8</title>
-      <link>http://zhen.org/blog/papers-i-read-2015-week-8/</link>
+      <link>http://localhost:1313/blog/papers-i-read-2015-week-8/</link>
       <pubDate>Sun, 22 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/papers-i-read-2015-week-8/</guid>
+      <guid>http://localhost:1313/blog/papers-i-read-2015-week-8/</guid>
       <description>
 
 &lt;h3 id=&#34;random-ramblings:29724b4ec2d333ad12e89fd98257dccd&#34;&gt;Random Ramblings&lt;/h3&gt;
@@ -69,10 +69,10 @@ insights, to make online changes to job functions to adapt to new requirements o
     
     <item>
       <title>Papers I Read: 2015 Week 7</title>
-      <link>http://zhen.org/blog/papers-i-read-2015-week-7/</link>
+      <link>http://localhost:1313/blog/papers-i-read-2015-week-7/</link>
       <pubDate>Sun, 15 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/papers-i-read-2015-week-7/</guid>
+      <guid>http://localhost:1313/blog/papers-i-read-2015-week-7/</guid>
       <description>
 
 &lt;h2 id=&#34;random-ramblings:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Random Ramblings&lt;/h2&gt;
@@ -145,10 +145,10 @@ choices were made that have been key to its success in our environment, such as 
     
     <item>
       <title>Papers I Read: 2015 Week 6</title>
-      <link>http://zhen.org/blog/papers-i-read-2015-week-6/</link>
+      <link>http://localhost:1313/blog/papers-i-read-2015-week-6/</link>
       <pubDate>Sun, 08 Feb 2015 19:57:56 -0800</pubDate>
       
-      <guid>http://zhen.org/blog/papers-i-read-2015-week-6/</guid>
+      <guid>http://localhost:1313/blog/papers-i-read-2015-week-6/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;http://paperswelove.org/&#34;&gt;Papers We Love&lt;/a&gt; has been making rounds lately and a lot of people are excited about it. I also think it&amp;rsquo;s kind of cool since I&amp;rsquo;ve been reading a lot of research papers over the past year or so. I have been killing some trees because of that.&lt;/p&gt;
