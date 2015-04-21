@@ -7,8 +7,58 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
-    <lastBuildDate>Sun, 22 Mar 2015 09:57:56 -0800</lastBuildDate>
+    <lastBuildDate>Mon, 20 Apr 2015 21:32:57 -0700</lastBuildDate>
     <atom:link href="http://zhen.org/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Installing Windows 7 on Macbook Late 2008</title>
+      <link>http://zhen.org/blog/installing-windows7-on-macbook-late-2008/</link>
+      <pubDate>Mon, 20 Apr 2015 21:32:57 -0700</pubDate>
+      
+      <guid>http://zhen.org/blog/installing-windows7-on-macbook-late-2008/</guid>
+      <description>&lt;p&gt;Over the weekend I wanted to install Windows in a bootcamp partition so the kids can use it to do their Chinese homework. The Chinese homework CD unfortunately only works in Windows so I had no choice!! I guess I could have taken other routes, like installing Windows in a VM or something, but I figure that Mac has this awesome tool called bootcamp, why not use that?&lt;/p&gt;
+
+&lt;p&gt;Well, how wrong I was! I went through a whole day of head-scratching, temper-inducing, word-cussing, USB-swapping and machine-rebooting exercise of getting Windows installed in the bootcamp partition. I almost went as far as buying a replacement superdrive for the macbook, but at the end I finally was able to get Windows 7 onto the Macbook.&lt;/p&gt;
+
+&lt;p&gt;To start, my laptop is a Macbook, Aluminum, Late 2008 (MB467LL/A) with a busted optical drive (superdrive). I originally had Mavericks running on it but before this exercise I wiped it clean and installed Yosemite on it. Because the optical drive is busted, I cannot use the Windows 7 DVD, so I had to do this using a USB flash drive.&lt;/p&gt;
+
+&lt;p&gt;Below are the steps I took to make this work. I can&amp;rsquo;t guarantee that these steps will work for you, but it&amp;rsquo;s probably good as a reference. Having seen a ton of articles on the problems people had with bootcamp, I hope no one has to go through the troubles I went through.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;It took me a while to figure this out (after reading numerous online posts), if your Mac has an optical drive, Boot Camp Assistant will NOT create a USB flash drive-based install disk. The only way to trick the system to do that is to do the following: (Though it turns out at the end that this step is quite useless, since the USB install disk created by Boot Camp Assistant couldn&amp;rsquo;t boot! So you could really skip this step.)
+
+&lt;ol&gt;
+&lt;li&gt;Modify Boot Camp Assistant&amp;rsquo;s Info.plist as described &lt;a href=&#34;http://forums.macrumors.com/showthread.php?t=1488322&#34;&gt;here&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;After the modification, you need to resign Boot Camp Assistant, or else it will keep crashing. To do that, following the instructions &lt;a href=&#34;https://discussions.apple.com/thread/5479879?start=30&#34;&gt;here&lt;/a&gt;. For the impatient, run the command &lt;code&gt;sudo codesign -fs - /Applications/Utilities/Boot\ Camp\ Assistant.app&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;Start &amp;ldquo;Boot Camp Assistant&amp;rdquo;, and select the options &amp;ldquo;Download the latest Windows Support&amp;rdquo;, and &amp;ldquo;Install Windows 7 or later versions&amp;rdquo;.
+
+&lt;ul&gt;
+&lt;li&gt;Note I am not selecting the option to create a Windows install disk. It turned out the USB install disk didn&amp;rsquo;t boot. I keep getting the &amp;ldquo;non-system disk, press any key to continue&amp;rdquo; error, and basically that&amp;rsquo;s the end.&lt;/li&gt;
+&lt;li&gt;In any case, these two tasks should download the bootcamp drivers onto a USB drive, and also partition the Mac&amp;rsquo;s HD into two partitions. One of the parititions is the BOOTCAMP partition, which will be used to install Windows 7.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Once that&amp;rsquo;s done, I needed to create a bootable Windows 7 USB Flash drive.
+
+&lt;ul&gt;
+&lt;li&gt;If you search the web, you will find that most people run into two problems. The first is the bootcamp-created flash drive giving the &amp;ldquo;non-system disk&amp;rdquo; error, and the second is the boot up hangs with a blank screen and a flash underscore cursor at the top left corner. I&amp;rsquo;ve ran into both. You will also find some articles that explain how to make the flash drives bootable using fdisk, but that didn&amp;rsquo;t work for me either.&lt;/li&gt;
+&lt;li&gt;Finally I found a post online that pointed to the &lt;a href=&#34;http://wudt.codeplex.com/&#34;&gt;Windows USB/DVD Download Tool&lt;/a&gt;. It&amp;rsquo;s a Windows program that can create a bootable USB flash drive from a Windows 7 or 8 ISO file.&lt;/li&gt;
+&lt;li&gt;Note though, not all the USB flash drives are created equal. The PNY 16GB drive I used didn&amp;rsquo;t work. WUDT ended with an error that says it couldn&amp;rsquo;t run bootsect to create the boot sectors on the flash drive. The one that worked for me was Kingston Data Traveler 4GB.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Now that I have the bootable USB flash drive, I plugged that into the Mac and started it up. This time the installation process got started.&lt;/li&gt;
+&lt;li&gt;When Boot Camp Assistant created the BOOTCAMP partition, it did not format it to NTFS. So the first thing I noticed was that when I select the BOOTCAMP partition, the installer said it cannot be used because it&amp;rsquo;s not NTFS.
+
+&lt;ul&gt;
+&lt;li&gt;The option to format the partition is not immediately obvious, but I had to click on &amp;ldquo;Drive options (advanced)&amp;rdquo; and select the option to format the partition.&lt;/li&gt;
+&lt;li&gt;Once that&amp;rsquo;s done, I encountered another error that says the drive may not be bootable and I need to change the BIOS setting. Yeah at this point I was pretty ticked and the computer heard a few choice words from me. Doesn&amp;rsquo;t matter what I do it doesn&amp;rsquo;t seem to let me pass this point.&lt;/li&gt;
+&lt;li&gt;I did a bunch more readings and research, but nothing seem to have worked. I finally decided to turn the computer off and come back to it. Magically it worked the second time I tried to install it. I was no longer getting the non-bootable disk error. My guess is that after the NTFS formatting, the installer needs to be completely restarted.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;In any case, at this point, it was fairly smooth sailing. The installation process took a bit of time but overall everything seemed to have worked.&lt;/li&gt;
+&lt;li&gt;After the installation, I plugged int the bootcamp flash drive with the WindowsSupport files, and installed them.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I am still not a 100% yet. The trackpad still doesn&amp;rsquo;t behave like when it&amp;rsquo;s on the Mac. For example, I can&amp;rsquo;t use the two finger drag to scroll the windows, and for the life of me, I cannot figure out how to easily (and correctly) set the brightness of display. But at least now I have a working Windows 7 laptop!&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Analyzing Security Trends Using RSA Exhibitor Descriptions</title>
@@ -2555,312 +2605,6 @@ BenchmarkChannels2Consumers-3    5000000               570 ns/op
 &lt;p&gt;See tl;dr on top.&lt;/p&gt;
 
 &lt;p&gt;Comments/feedbacks on &lt;a href=&#34;https://news.ycombinator.com/item?id=6831293&#34;&gt;Hacker News&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1rvvb6/ring_buffer_variablelength_lowlatency_lockfree/&#34;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Go vs Java: Decoding Billions of Integers Per Second</title>
-      <link>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</link>
-      <pubDate>Thu, 14 Nov 2013 19:40:22 -0800</pubDate>
-      
-      <guid>http://zhen.org/blog/go-vs-java-decoding-billions-of-integers-per-second/</guid>
-      <description>
-
-&lt;p&gt;Comments/feedbacks on &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1qquqz/go_vs_java_decoding_billions_of_integers_per/&#34;&gt;reddit&lt;/a&gt;, &lt;a href=&#34;https://news.ycombinator.com/item?id=6743821&#34;&gt;hacker news&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;2013-11-17 Update #2: Tried another new trick. This time I updated the leading bit position function, when using the gccgo compiler, &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/bitlen_gccgo.go&#34;&gt;to use libgcc&amp;rsquo;s &lt;code&gt;__clzdi2&lt;/code&gt; routine&lt;/a&gt;. This had the same effect as the update #1 except it&amp;rsquo;s for when gccgo is used. Performance increase ranged from 0% to 20% for encoding only. Thanks dgryski on reddit and minux on the golang-nuts mailing list.&lt;/p&gt;
-
-&lt;p&gt;2013-11-16 Update #1: Tried a new trick, which is to use an &lt;a href=&#34;https://github.com/reducedb/encoding/commit/ea080c479fb4994e400ebba021d13f10c4f3fecc&#34;&gt;assembly version of bitlen&lt;/a&gt; to calculate the leading bit position. See the section below on &amp;ldquo;Use Some Assembly&amp;rdquo;.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;So, before you crucify me for benchmarking Go vs Java, let me just say that I am not trying to discredit Go. I like Go and will use it for more projects. I am simply trying to show the results as objectively as I can, and hope that the community can help me improve my skills as well as the performance of the libraries.&lt;/p&gt;
-
-&lt;p&gt;I don&amp;rsquo;t consider myself a Go expert. I&amp;rsquo;ve been using Go for a few months and have been documenting the projects as I go in this blog. I&amp;rsquo;ve learned a ton and have applied many of the things I learned in optimizing this project. However, I cannot claim that I have done everything possible, so the performance numbers &amp;ldquo;could&amp;rdquo; still be better.&lt;/p&gt;
-
-&lt;p&gt;I would like to ask for your help, if you can spare the time, to share some of your optimization tips and secrets. I would love to make this library even faster if possible.&lt;/p&gt;
-
-&lt;h3 id=&#34;tl-dr:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;tl;dr&lt;/h3&gt;
-
-&lt;p&gt;The following chart shows how much (%) faster Java is compare to Go in decoding integers that are encoded using different codecs. It shows results from processing two different files. See below for more details.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Daniel Lemire&amp;rsquo;s &lt;a href=&#34;https://github.com/lemire/JavaFastPFOR&#34;&gt;Java version&lt;/a&gt; is anywhere from 12% to 180% faster than my &lt;a href=&#34;https://github.com/reducedb/encoding&#34;&gt;Go version&lt;/a&gt; for decoding integers. I didn&amp;rsquo;t compare the &lt;a href=&#34;https://github.com/lemire/fastpfor&#34;&gt;C++ version&lt;/a&gt; but given that the C++ version has access to SIMD operations, it can be much faster.&lt;/li&gt;
-&lt;li&gt;I tried many different ways to optimize my Go code for this projects, including using range for looping through slices, inlining simple functions, unrolling simple loops, unrolling even more loops, disabling bound checking (not generally recommended), using &lt;em&gt;gccgo&lt;/em&gt; to compile, and used some assembly.&lt;/li&gt;
-&lt;li&gt;Using &lt;em&gt;gccgo -O3&lt;/em&gt; resulted in the highest performance. I tested using standard gc compiler, gc -B, gccgo, and gccgo -O3. The comparison above uses the &lt;em&gt;gccgo -O3&lt;/em&gt; numbers.&lt;/li&gt;
-&lt;li&gt;Using a range loop instead of unrolling a loop in one of the often used functions, AND compiling using &lt;em&gt;gccgo -O3&lt;/em&gt;, I was able to get within 6% of Java version for Delta BP32 decoding. However, all of the other Go binaries suffered greatly.&lt;/li&gt;
-&lt;li&gt;This benchmark is purely a CPU benchmark. The test environment has enough memory to keep all the arrays in memory without causing swap, and there&amp;rsquo;s no disk IO involved in the actual encoding/decoding functions.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;project-review:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Project Review&lt;/h3&gt;
-
-&lt;p&gt;A month ago I wrote about my &amp;ldquo;Go Learn&amp;rdquo; project #6: &lt;a href=&#34;http://zhen.org/blog/benchmarking-integer-compression-in-go/&#34;&gt;Benchmarking Integer Compression in Go&lt;/a&gt; &lt;a href=&#34;https://github.com/reducedb/encoding&#34;&gt;(github)&lt;/a&gt;. In that project I ported 6 different codecs for encoding and decoding 32-bit integers. Since then, I have ported a couple more codecs, cleaned up the directories, and performed a ton of profiling and optimization to increase performance.&lt;/p&gt;
-
-&lt;p&gt;There are now a total of 8 codecs available:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Binary Packing (BP32), FastPFOR, Variable Byte (varint) (top level directories)
-
-&lt;ul&gt;
-&lt;li&gt;Standard codec that encodes/decodes the integers as they are&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Delta BP32, Delta FastPFOR (&lt;strong&gt;new&lt;/strong&gt;), Delta Variable Byte (under &lt;em&gt;delta/&lt;/em&gt;)
-
-&lt;ul&gt;
-&lt;li&gt;Encodes/decodes the deltas of the integers&lt;/li&gt;
-&lt;li&gt;These codecs generally produce much more compact representations if the integers are sorted&lt;/li&gt;
-&lt;li&gt;These codecs generally perform much faster, but there are some exceptions&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;ZigZag BP32, ZigZag FastPFOR (&lt;strong&gt;new&lt;/strong&gt;) (under &lt;em&gt;zigzag/&lt;/em&gt;)
-
-&lt;ul&gt;
-&lt;li&gt;Encode/decodes the deltas of the integers, where the deltas themselves are encoded using Google&amp;rsquo;s zigzag encoding&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;In addition, the &lt;em&gt;benchmark&lt;/em&gt; program under &lt;em&gt;benchmark/&lt;/em&gt; is provided to let users easily test different integer lists and codecs.&lt;/p&gt;
-
-&lt;h3 id=&#34;techniques-tried:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Techniques Tried&lt;/h3&gt;
-
-&lt;p&gt;I cannot say this enough: &lt;strong&gt;benchmark, profile, optimize, rinse, repeat&lt;/strong&gt;. Go has made testing, benchmarking, and profiling extremely simple. You owe it to yourself to optimize your code using these tools. Previously I have written about how I was able to &lt;a href=&#34;http://zhen.org/blog/improving-cityhash-performance-by-go-profiling/&#34;&gt;improve the cityhash Go implementation performance by 3-16X by Go profiling&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;To optimize the integer encoding library, I followed the same techniques to profile each codec, and try as much as I can to optimzie the hot spots.&lt;/p&gt;
-
-&lt;p&gt;Below are some of the optimizations I&amp;rsquo;ve tried. Some helped, some didn&amp;rsquo;t.&lt;/p&gt;
-
-&lt;h4 id=&#34;for-range-through-slices:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;For-Range Through Slices&lt;/h4&gt;
-
-&lt;p&gt;I learned this when Ian Taylor from Google (and others) helped me optimize one of the functions using range to loop through the slices instead of &lt;code&gt;for i := 0; i &amp;lt; b; i++ {}&lt;/code&gt; loops. The for-range method can be 4-7 times faster than the other way. You can see the difference between BenchmarkOffset and BenchmarkRange &lt;a href=&#34;https://gist.github.com/zhenjl/7495442&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;I also found that &lt;em&gt;gccgo -O3&lt;/em&gt; can do some really good optimizations with simple range loops. You can see the difference with this &lt;a href=&#34;https://gist.github.com/zhenjl/7495442&#34;&gt;gist&lt;/a&gt;. When using &lt;em&gt;gc&lt;/em&gt; the standard Go compiler, BenchmarkRange (31.3 ns/op) is 56% slower than BenchmarkUnrolled (13.9 ns/op). However, then reverse is true when using &lt;em&gt;gccgo -O3&lt;/em&gt;. BenchmarkUnrolled (8.92 ns/op) is 100% slower than BenchmarkRange (4.46 ns/op).&lt;/p&gt;
-
-&lt;p&gt;Side note: this set of benchmarks are courtesy of DisposaBoy and Athiwat in the #go-nuts IRC channel. Thanks for your help guys.&lt;/p&gt;
-
-&lt;h4 id=&#34;unroll-simple-loops:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Unroll Simple Loops&lt;/h4&gt;
-
-&lt;p&gt;For some simple, known-size, loops, such as initializing a slice with the same initial non-zero value, unrolling the loop makes a big difference. The caveat is that &lt;em&gt;gccgo -O3&lt;/em&gt; does an amazing job of optimizing these simple range loops, so in that case unrolling the loop is actually slower.&lt;/p&gt;
-
-&lt;p&gt;As an example, the &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/bitpacking/delta_bitpacking.go#L242&#34;&gt;following function&lt;/a&gt; is unrolled as&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;func deltaunpack0(initoffset int32, in []int32, inpos int, out []int32, outpos int) {
-    out[outpos+0] = initoffset
-    out[outpos+1] = initoffset
-    out[outpos+2] = initoffset
-    .
-    .
-    .
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It was originally written as&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;tmp := out[outpos:outpos+32]
-for i, _ := range tmp {
-    tmp[i] = initoffset
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;When unrolled, AND using the standard &lt;em&gt;gc&lt;/em&gt; compiler, we saw performance increase by almost 45% if this function is called often. However, as we mentioned above, when using &lt;em&gt;gccgo -O3&lt;/em&gt;, the for-range loop is 33% faster than the unrolled method.&lt;/p&gt;
-
-&lt;p&gt;For now, I am keeping the unrolled version of the function.&lt;/p&gt;
-
-&lt;h4 id=&#34;unroll-even-more-loops:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Unroll Even More Loops&lt;/h4&gt;
-
-&lt;p&gt;Given the success of unrolling the above simple loop, I thought I try unrolling &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/util.go#L150&#34;&gt;even&lt;/a&gt; . &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/util.go#L281&#34;&gt;more&lt;/a&gt; . &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/util.go#L412&#34;&gt;loops&lt;/a&gt; to see if it helps.&lt;/p&gt;
-
-&lt;p&gt;It turns out performance actually suffered in some cases. I speculated that the reason may have to do with the bound checking when accessing slices. It turns out I might be right. After I disabled bound checking, performance increased when unrolling these loops. See below regarding disable bound checking.&lt;/p&gt;
-
-&lt;h4 id=&#34;inline-simple-functions:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Inline Simple Functions&lt;/h4&gt;
-
-&lt;p&gt;There are &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/util.go#L53&#34;&gt;several&lt;/a&gt; . &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/util.go#L60&#34;&gt;small&lt;/a&gt; functions that gets called quite often in this encoding library. During profiling I see these functions being on top all the time.&lt;/p&gt;
-
-&lt;p&gt;I decided to try and inline these functions to see if the reduced function call overhead will help. In general I didn&amp;rsquo;t see much performance improvements using this technique. The most I saw was a 1% increase in performance. I contribute that to noise.&lt;/p&gt;
-
-&lt;h4 id=&#34;disable-bound-checking-generally-not-recommended:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Disable Bound Checking (Generally NOT Recommended)&lt;/h4&gt;
-
-&lt;p&gt;This integer encoding library operates on large slices of data. There&amp;rsquo;s a TON of slice access using index. Knowing the every slice access using index requires bound checking, I decided to try disabling bound checking using &lt;code&gt;-gcflags -B&lt;/code&gt; to compile the code.&lt;/p&gt;
-
-&lt;p&gt;Disabling the bound checking for the Go compiler didn&amp;rsquo;t help as much as I hoped. For &lt;em&gt;ts.txt&lt;/em&gt;, disabling bound checking increased performance by 10% for Delta BP32 encoding only.&lt;/p&gt;
-
-&lt;p&gt;However, if I disabled bound checking AND unrolled even more loops, we saw decoding performance increase anywhere from 10-40%. Encoding performance didn&amp;rsquo;t see much change. The following chart shows the performance increase (%) from the for-range loops to unrolled some additional loops when I disabled bound checking. This is comparing to the standard &lt;em&gt;gc&lt;/em&gt; compiler.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/no_bound_checking.png&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;The question is, is it worth the removal of bound checking? For the raw results, I kept the numbers from the for-range loops.&lt;/p&gt;
-
-&lt;h4 id=&#34;using-gccgo:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Using gccgo&lt;/h4&gt;
-
-&lt;p&gt;When I was looking around for Go optimization techniques, I saw several posts on StackOverflow as well as the Go mailing list suggesting people try &lt;em&gt;gccgo&lt;/em&gt; as the compiler if they wanted more performance. So I thought I give it a shot as well. After downloading gcc 4.8.2 and letting it compile overnight, I was finally able to test it out.&lt;/p&gt;
-
-&lt;p&gt;Compiling with &lt;em&gt;gccgo&lt;/em&gt; without any optimization flags actually saw performance drop by 50-60%. The best performance result was achieved when I compiled using &lt;em&gt;gccgo -O3&lt;/em&gt;. The comparison to Java uses the numbers from that binary.&lt;/p&gt;
-
-&lt;p&gt;As mentioned above, &lt;em&gt;gccgo -O3&lt;/em&gt; seems to do a pretty amazing job of optimizing simple range loops. I was able to achieve 33% performance increase using for-range with &lt;em&gt;gccgo -O3&lt;/em&gt; instead of unrolling the simple loop. The final result was within 6% of the Java version for Delta BP32 decoding.&lt;/p&gt;
-
-&lt;h4 id=&#34;use-some-assembly:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Use Some Assembly&lt;/h4&gt;
-
-&lt;p&gt;The final trick I tried is to convert one of the often used functions to assembly language. This was suggested to me almost 6 weeks ago by Dave Andersen on the golang-nuts Google group. He suggested that I steal the bitLen function in the math/big/arith files. That&amp;rsquo;s &lt;a href=&#34;https://github.com/reducedb/encoding/commit/ea080c479fb4994e400ebba021d13f10c4f3fecc&#34;&gt;exactly what I did&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;The bitlen function returns the position of the most significant bit that&amp;rsquo;s set to 1. It is most often called by encoding methods to determine how many bits are required to store that integers. So natually one would expect only the encoding functions will be improved.&lt;/p&gt;
-
-&lt;p&gt;That&amp;rsquo;s exactly what happened. Using the new bitlen assembly function, I was able to improve encoding performance by anywhere from 3% to 40%, depending on the codec. The most significant improvement was saw when Delta FastPFOR encoding was applied on &lt;em&gt;latency.txt&lt;/em&gt;. It consistently saw ~40% performance increase.&lt;/p&gt;
-
-&lt;p&gt;As such, the &lt;a href=&#34;https://github.com/reducedb/encoding&#34;&gt;code&lt;/a&gt; has been updated to use the assembly version of the bitlen.&lt;/p&gt;
-
-&lt;h3 id=&#34;benchmark-environment:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Benchmark Environment&lt;/h3&gt;
-
-&lt;p&gt;The system I used to run the benchmarks was graciously provided by Dr. Daniel Lemire. Here are the CPU and memory information at the time I ran the benchmarks. As you can see, we have plenty of memory to load the large integer arrays and should cause no swap. (I had this issue running these tests on my little MBA with 4GB of memory. :)&lt;/p&gt;
-
-&lt;p&gt;No disk IO is involved in this benchmark.&lt;/p&gt;
-
-&lt;h4 id=&#34;os:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;OS&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code&gt;NAME=&amp;quot;Ubuntu&amp;quot;
-VERSION=&amp;quot;12.10, Quantal Quetzal&amp;quot;
-ID=ubuntu
-ID_LIKE=debian
-PRETTY_NAME=&amp;quot;Ubuntu quantal (12.10)&amp;quot;
-VERSION_ID=&amp;quot;12.10&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;cpu:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;CPU&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code&gt;model name      : Intel(R) Xeon(R) CPU E5-1620 0 @ 3.60GHz
-cpu MHz         : 3591.566
-cache size      : 10240 KB
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;memory:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Memory&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code&gt;             total       used       free     shared    buffers     cached
-Mem:      32872068   13548960   19323108          0     209416   11517476
--/+ buffers/cache:    1822068   31050000
-Swap:     33476604          0   33476604
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;java:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;java&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code&gt;java version &amp;quot;1.7.0_25&amp;quot;
-OpenJDK Runtime Environment (IcedTea 2.3.10) (7u25-2.3.10-1ubuntu0.12.10.2)
-OpenJDK 64-Bit Server VM (build 23.7-b01, mixed mode)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;go-and-gccgo:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;go and gccgo&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code&gt;go version go1.2rc4 linux/amd64
-gcc version 4.8.2 (GCC)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;files:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Files&lt;/h4&gt;
-
-&lt;p&gt;There are two files used in this benchmark:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;File 1: &lt;em&gt;&lt;a href=&#34;https://github.com/reducedb/encoding/tree/master/benchmark/data&#34;&gt;ts.txt&lt;/a&gt;&lt;/em&gt; contains 144285498 sorted integers. They are timestamps at 1 second precision. There are a lot of repeats as multiple events are recorded for that second.&lt;/li&gt;
-&lt;li&gt;File 2: &lt;em&gt;latency.txt&lt;/em&gt; contains 144285498 &lt;strong&gt;unsorted&lt;/strong&gt; integers. An example, lat.txt.gz, can be seen &lt;a href=&#34;https://github.com/reducedb/encoding/tree/master/benchmark/data&#34;&gt;here&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;codecs:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Codecs&lt;/h4&gt;
-
-&lt;p&gt;For this benchmark, I used 4 different codecs:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Delta Binary Packing (BP32) (&lt;a href=&#34;https://github.com/lemire/JavaFastPFOR/blob/master/src/main/java/me/lemire/integercompression/IntegratedBinaryPacking.java&#34;&gt;Java&lt;/a&gt;, &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/delta/bp32/bp32.go&#34;&gt;Go&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;Delta FastPFOR (&lt;a href=&#34;https://github.com/lemire/JavaFastPFOR/blob/master/src/main/java/me/lemire/integercompression/IntegratedFastPFOR.java&#34;&gt;Java&lt;/a&gt;, &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/delta/fastpfor/fastpfor.go&#34;&gt;Go&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;Binary Packing (BP32) (&lt;a href=&#34;https://github.com/lemire/JavaFastPFOR/blob/master/src/main/java/me/lemire/integercompression/BinaryPacking.java&#34;&gt;Java&lt;/a&gt;, &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/bp32/bp32.go&#34;&gt;Go&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;FastPFOR (&lt;a href=&#34;https://github.com/lemire/JavaFastPFOR/blob/master/src/main/java/me/lemire/integercompression/FastPFOR.java&#34;&gt;Java&lt;/a&gt;, &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/fastpfor/fastpfor.go&#34;&gt;Go&lt;/a&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Because both BP32 and FastPFOR work on 128 integer blocks, the 58 remaining integers from the test files are encoded using Delta VariableByte and Variable Byte codecs, respectively. This is achieved using a &lt;strong&gt;Composition&lt;/strong&gt; (&lt;a href=&#34;https://github.com/lemire/JavaFastPFOR/blob/master/src/main/java/me/lemire/integercompression/IntegratedComposition.java&#34;&gt;Java&lt;/a&gt;, &lt;a href=&#34;https://github.com/reducedb/encoding/blob/master/composition/composition.go&#34;&gt;Go&lt;/a&gt;) codec.&lt;/p&gt;
-
-&lt;p&gt;The Java and Go versions of the codecs are almost identical, logic-wise, aside from language differences. These codecs operate on arrays (or slices in Go) of integers. There are a lot of bitwise and shift operations, and lots of loops.&lt;/p&gt;
-
-&lt;h3 id=&#34;benchmark-results:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Benchmark Results&lt;/h3&gt;
-
-&lt;p&gt;The &lt;a href=&#34;https://docs.google.com/spreadsheet/pub?key=0ApDLtJuUH-1rdDRyNEhPWUlqMHZzMG5FWFQzX1ZoZ1E&amp;amp;output=html&#34;&gt;raw results&lt;/a&gt; from running different Go compilers (and flags) and codes are in the Google spreadsheet at the bottom of the post.&lt;/p&gt;
-
-&lt;p&gt;To be consistent, all the percentage numbers presented below are based on dividing the difference between the larger number (A) and the smaller number (B) by the smaller number (B).&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;(A - B) / B&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;So you can say that A is faster than B by X%.&lt;/p&gt;
-
-&lt;h4 id=&#34;go-fastest:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Go Fastest&lt;/h4&gt;
-
-&lt;p&gt;I compiled 4 different versions of Go binary for this benchmark:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;benchmark.gc&lt;/em&gt;
-
-&lt;ul&gt;
-&lt;li&gt;This is built using the standard Go compiler, &lt;em&gt;gc&lt;/em&gt;. The command is &lt;code&gt;go build benchmark.o&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;benchmark.gc-B&lt;/em&gt;
-
-&lt;ul&gt;
-&lt;li&gt;This is built using the standard Go compiler, &lt;em&gt;gc&lt;/em&gt;, and I turned off bound checking for this version since the codecs deals with slices a lot. The command is &lt;code&gt;go build -gcflags -B benchmark.o&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;benchmark.gccgo&lt;/em&gt;
-
-&lt;ul&gt;
-&lt;li&gt;This is built using the &lt;em&gt;gccgo&lt;/em&gt; compiler with no additional flags. The command is &lt;code&gt;go build -compiler gccgo benchmark.o&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;benchmark.gccgo-O3&lt;/em&gt;
-
-&lt;ul&gt;
-&lt;li&gt;This is built using the &lt;em&gt;gccgo&lt;/em&gt; compiler with the &lt;em&gt;-O3&lt;/em&gt; flag. The command is &lt;code&gt;go build -compiler gccgo -gccgoflags &#39;-O3 -static&#39; benchmark.o&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Surprisingly, disabling the bound checking for the Go compiler didn&amp;rsquo;t help as much as I hoped. For &lt;em&gt;ts.txt&lt;/em&gt;, disabling bound checking increased performance by 10-40% for encoding only. For &lt;em&gt;ts.txt&lt;/em&gt; decoding and &lt;em&gt;latency.txt&lt;/em&gt;, it didn&amp;rsquo;t help at all.&lt;/p&gt;
-
-&lt;p&gt;Using the &lt;em&gt;gccgo&lt;/em&gt; compiler with no flags had the worst performance. In general we saw that &lt;em&gt;benchmark.gc&lt;/em&gt; (standard Go version) is about 110%-130% faster than the &lt;em&gt;gccgo&lt;/em&gt; version.&lt;/p&gt;
-
-&lt;p&gt;Lastly, the &lt;em&gt;gccgo-O3&lt;/em&gt; version is the fastest. This is the version that&amp;rsquo;s compiled using &lt;code&gt;-O3&lt;/code&gt; flag for gccgo. We saw that the &lt;em&gt;gccgo-O3&lt;/em&gt; version is anywhere from 10% to 60% faster than the &lt;em&gt;gc&lt;/em&gt; version.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/comparing_go_binaries.png&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;Above is a chart that shows the decoding performance of the &lt;em&gt;ts.txt&lt;/em&gt; file for the different binaries and codecs.&lt;/p&gt;
-
-&lt;p&gt;For the comparison with Java, I am using the &lt;em&gt;gccgo-O3&lt;/em&gt; numbers.&lt;/p&gt;
-
-&lt;h4 id=&#34;bits-per-integer-lower-is-better:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Bits Per Integer (Lower is Better)&lt;/h4&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/bits_per_integer.png&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;As you can tell, when the integers are sorted (ts.txt), the compression ratio is VERY good. Delta BP32 achieved 0.25 bits per 32-bit integer, and Delta FastPFOR is even better at 0.13 bits per integer. This is also because there are a lot of repeats in ts.txt.&lt;/p&gt;
-
-&lt;p&gt;Because the timestamps are rather large numbers, e.g., 1375228800, when the non-delta codecs are used, they did not achieve very good compression ratio. We achieved ~31 bits per 32-bit integer using standard FastPFOR and BP32 codecs.&lt;/p&gt;
-
-&lt;p&gt;When the integers are NOT sorted, then we run into trouble. When delta codecs are used, a lot of deltas are negative numbers, which means the MSB for most of the deltas is 1. In this case, it&amp;rsquo;s actually better to use the standard codecs instead of the delta codecs. The standard codecs achieved ~24 bits per 32-bit integer, and the delta codecs were ~32 bits per 32-bit integer.&lt;/p&gt;
-
-&lt;p&gt;I also tested the latency file against the &lt;a href=&#34;https://developers.google.com/protocol-buffers/docs/encoding#varints&#34;&gt;zigzag&lt;/a&gt; delta codecs and achieved ~25 bits per 32-bit integer. So it&amp;rsquo;s not much better than the standard codecs. However, zigzag delta comes in extremely handy when the negative numbers are smaller.&lt;/p&gt;
-
-&lt;h4 id=&#34;java-vs-go:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Java vs. Go&lt;/h4&gt;
-
-&lt;p&gt;For this section, we are comparing the decoding speed between the fastest Go version and Java. As you saw at the beginning of this post. Daniel Lemire&amp;rsquo;s &lt;a href=&#34;https://github.com/lemire/JavaFastPFOR&#34;&gt;Java version&lt;/a&gt; is anywhere from 12% to 180% faster than my &lt;a href=&#34;https://github.com/reducedb/encoding&#34;&gt;Go version&lt;/a&gt; for decoding integers.&lt;/p&gt;
-
-&lt;p&gt;The following chart shows how much (%) faster Java is compare to Go in decoding integers that are encoded using different codecs. It shows results from processing two different files. See below for more details.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_faster.png&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;The following chart shows the decoding performance while processing &lt;em&gt;ts.txt&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_tstxt.png&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;The following chart shows the decoding performance while processing &lt;em&gt;latency.txt&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-11-14-go-vs-java-decoding-billions-of-integers-per-second/java_vs_go_latency.png&#34;&gt;&lt;/p&gt;
-
-&lt;h4 id=&#34;raw-results:2c8d0496131f181c56ff2ef05dc70d5e&#34;&gt;Raw Results&lt;/h4&gt;
-
-&lt;p&gt;The &lt;a href=&#34;https://docs.google.com/spreadsheet/pub?key=0ApDLtJuUH-1rdDRyNEhPWUlqMHZzMG5FWFQzX1ZoZ1E&amp;amp;output=html&#34;&gt;raw results&lt;/a&gt; are in the following Google spreadsheet.&lt;/p&gt;
-
-&lt;iframe width=&#39;800&#39; height=&#39;500&#39; frameborder=&#39;0&#39; src=&#39;https://docs.google.com/spreadsheet/pub?key=0ApDLtJuUH-1rdDRyNEhPWUlqMHZzMG5FWFQzX1ZoZ1E&amp;output=html&amp;widget=true&#39;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;Comments/feedbacks on &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1qquqz/go_vs_java_decoding_billions_of_integers_per/&#34;&gt;reddit&lt;/a&gt;, &lt;a href=&#34;https://news.ycombinator.com/item?id=6743821&#34;&gt;hacker news&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

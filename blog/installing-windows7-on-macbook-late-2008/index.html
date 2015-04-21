@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Installing Windows 7 on Macbook Late 2008 &middot; Zen 3.1 </title>
+
+  
+  <link rel="stylesheet" href="http://zhen.org//css/poole.css">
+  <link rel="stylesheet" href="http://zhen.org//css/syntax.css">
+  <link rel="stylesheet" href="http://zhen.org//css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Zen 3.1" />
+
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-681691-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1 class="brand"><a href="http://zhen.org/">Zen 3.1</a></h1>
+      <p class="lead">
+       Product. Data. Code 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="http://zhen.org//blog">Archive</a></li>
+      <br/>
+      <li>Projects</li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="http://sequence.trustpath.com">sequence</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surgemq/surgemq">surgemq</a></li>
+      
+        <li><i class='fa fa-github-square'></i>&nbsp;&nbsp;<a href="https://github.com/surge">others</a></li>
+      
+    </ul>
+
+    <a href="https://twitter.com/zhenjl"><i class="fa fa-twitter-square"></i></a>&nbsp;&nbsp;
+    <a href="http://linkedin.com/in/zhenjl"><i class="fa fa-linkedin-square"></i></a>&nbsp;&nbsp;
+    
+    
+    
+
+    <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
+    Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
+    Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
+    &copy; 2015 Jian Zhen. All Rights Reserved.</p>
+    
+  </div>
+</div>
+
+    <div class="content container">
+<div class="post">
+  <h1>Installing Windows 7 on Macbook Late 2008</h1>
+  <span class="post-date">Mon, Apr 20, 2015</span>
+      <p>Over the weekend I wanted to install Windows in a bootcamp partition so the kids can use it to do their Chinese homework. The Chinese homework CD unfortunately only works in Windows so I had no choice!! I guess I could have taken other routes, like installing Windows in a VM or something, but I figure that Mac has this awesome tool called bootcamp, why not use that?</p>
+
+<p>Well, how wrong I was! I went through a whole day of head-scratching, temper-inducing, word-cussing, USB-swapping and machine-rebooting exercise of getting Windows installed in the bootcamp partition. I almost went as far as buying a replacement superdrive for the macbook, but at the end I finally was able to get Windows 7 onto the Macbook.</p>
+
+<p>To start, my laptop is a Macbook, Aluminum, Late 2008 (MB467LL/A) with a busted optical drive (superdrive). I originally had Mavericks running on it but before this exercise I wiped it clean and installed Yosemite on it. Because the optical drive is busted, I cannot use the Windows 7 DVD, so I had to do this using a USB flash drive.</p>
+
+<p>Below are the steps I took to make this work. I can&rsquo;t guarantee that these steps will work for you, but it&rsquo;s probably good as a reference. Having seen a ton of articles on the problems people had with bootcamp, I hope no one has to go through the troubles I went through.</p>
+
+<ol>
+<li>It took me a while to figure this out (after reading numerous online posts), if your Mac has an optical drive, Boot Camp Assistant will NOT create a USB flash drive-based install disk. The only way to trick the system to do that is to do the following: (Though it turns out at the end that this step is quite useless, since the USB install disk created by Boot Camp Assistant couldn&rsquo;t boot! So you could really skip this step.)
+
+<ol>
+<li>Modify Boot Camp Assistant&rsquo;s Info.plist as described <a href="http://forums.macrumors.com/showthread.php?t=1488322">here</a>.</li>
+<li>After the modification, you need to resign Boot Camp Assistant, or else it will keep crashing. To do that, following the instructions <a href="https://discussions.apple.com/thread/5479879?start=30">here</a>. For the impatient, run the command <code>sudo codesign -fs - /Applications/Utilities/Boot\ Camp\ Assistant.app</code>.</li>
+</ol></li>
+<li>Start &ldquo;Boot Camp Assistant&rdquo;, and select the options &ldquo;Download the latest Windows Support&rdquo;, and &ldquo;Install Windows 7 or later versions&rdquo;.
+
+<ul>
+<li>Note I am not selecting the option to create a Windows install disk. It turned out the USB install disk didn&rsquo;t boot. I keep getting the &ldquo;non-system disk, press any key to continue&rdquo; error, and basically that&rsquo;s the end.</li>
+<li>In any case, these two tasks should download the bootcamp drivers onto a USB drive, and also partition the Mac&rsquo;s HD into two partitions. One of the parititions is the BOOTCAMP partition, which will be used to install Windows 7.</li>
+</ul></li>
+<li>Once that&rsquo;s done, I needed to create a bootable Windows 7 USB Flash drive.
+
+<ul>
+<li>If you search the web, you will find that most people run into two problems. The first is the bootcamp-created flash drive giving the &ldquo;non-system disk&rdquo; error, and the second is the boot up hangs with a blank screen and a flash underscore cursor at the top left corner. I&rsquo;ve ran into both. You will also find some articles that explain how to make the flash drives bootable using fdisk, but that didn&rsquo;t work for me either.</li>
+<li>Finally I found a post online that pointed to the <a href="http://wudt.codeplex.com/">Windows USB/DVD Download Tool</a>. It&rsquo;s a Windows program that can create a bootable USB flash drive from a Windows 7 or 8 ISO file.</li>
+<li>Note though, not all the USB flash drives are created equal. The PNY 16GB drive I used didn&rsquo;t work. WUDT ended with an error that says it couldn&rsquo;t run bootsect to create the boot sectors on the flash drive. The one that worked for me was Kingston Data Traveler 4GB.</li>
+</ul></li>
+<li>Now that I have the bootable USB flash drive, I plugged that into the Mac and started it up. This time the installation process got started.</li>
+<li>When Boot Camp Assistant created the BOOTCAMP partition, it did not format it to NTFS. So the first thing I noticed was that when I select the BOOTCAMP partition, the installer said it cannot be used because it&rsquo;s not NTFS.
+
+<ul>
+<li>The option to format the partition is not immediately obvious, but I had to click on &ldquo;Drive options (advanced)&rdquo; and select the option to format the partition.</li>
+<li>Once that&rsquo;s done, I encountered another error that says the drive may not be bootable and I need to change the BIOS setting. Yeah at this point I was pretty ticked and the computer heard a few choice words from me. Doesn&rsquo;t matter what I do it doesn&rsquo;t seem to let me pass this point.</li>
+<li>I did a bunch more readings and research, but nothing seem to have worked. I finally decided to turn the computer off and come back to it. Magically it worked the second time I tried to install it. I was no longer getting the non-bootable disk error. My guess is that after the NTFS formatting, the installer needs to be completely restarted.</li>
+</ul></li>
+<li>In any case, at this point, it was fairly smooth sailing. The installation process took a bit of time but overall everything seemed to have worked.</li>
+<li>After the installation, I plugged int the bootcamp flash drive with the WindowsSupport files, and installed them.</li>
+</ol>
+
+<p>I am still not a 100% yet. The trackpad still doesn&rsquo;t behave like when it&rsquo;s on the Mac. For example, I can&rsquo;t use the two finger drag to scroll the windows, and for the life of me, I cannot figure out how to easily (and correctly) set the brightness of display. But at least now I have a working Windows 7 laptop!</p>
+
+
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'zen30';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+</div>
+
+  </body>
+</html>

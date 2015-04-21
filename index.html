@@ -79,6 +79,59 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="http://zhen.org/blog/installing-windows7-on-macbook-late-2008/">
+        Installing Windows 7 on Macbook Late 2008
+      </a>
+    </h1>
+
+    <span class="post-date">Mon, Apr 20, 2015</span>
+
+    <p>Over the weekend I wanted to install Windows in a bootcamp partition so the kids can use it to do their Chinese homework. The Chinese homework CD unfortunately only works in Windows so I had no choice!! I guess I could have taken other routes, like installing Windows in a VM or something, but I figure that Mac has this awesome tool called bootcamp, why not use that?</p>
+
+<p>Well, how wrong I was! I went through a whole day of head-scratching, temper-inducing, word-cussing, USB-swapping and machine-rebooting exercise of getting Windows installed in the bootcamp partition. I almost went as far as buying a replacement superdrive for the macbook, but at the end I finally was able to get Windows 7 onto the Macbook.</p>
+
+<p>To start, my laptop is a Macbook, Aluminum, Late 2008 (MB467LL/A) with a busted optical drive (superdrive). I originally had Mavericks running on it but before this exercise I wiped it clean and installed Yosemite on it. Because the optical drive is busted, I cannot use the Windows 7 DVD, so I had to do this using a USB flash drive.</p>
+
+<p>Below are the steps I took to make this work. I can&rsquo;t guarantee that these steps will work for you, but it&rsquo;s probably good as a reference. Having seen a ton of articles on the problems people had with bootcamp, I hope no one has to go through the troubles I went through.</p>
+
+<ol>
+<li>It took me a while to figure this out (after reading numerous online posts), if your Mac has an optical drive, Boot Camp Assistant will NOT create a USB flash drive-based install disk. The only way to trick the system to do that is to do the following: (Though it turns out at the end that this step is quite useless, since the USB install disk created by Boot Camp Assistant couldn&rsquo;t boot! So you could really skip this step.)
+
+<ol>
+<li>Modify Boot Camp Assistant&rsquo;s Info.plist as described <a href="http://forums.macrumors.com/showthread.php?t=1488322">here</a>.</li>
+<li>After the modification, you need to resign Boot Camp Assistant, or else it will keep crashing. To do that, following the instructions <a href="https://discussions.apple.com/thread/5479879?start=30">here</a>. For the impatient, run the command <code>sudo codesign -fs - /Applications/Utilities/Boot\ Camp\ Assistant.app</code>.</li>
+</ol></li>
+<li>Start &ldquo;Boot Camp Assistant&rdquo;, and select the options &ldquo;Download the latest Windows Support&rdquo;, and &ldquo;Install Windows 7 or later versions&rdquo;.
+
+<ul>
+<li>Note I am not selecting the option to create a Windows install disk. It turned out the USB install disk didn&rsquo;t boot. I keep getting the &ldquo;non-system disk, press any key to continue&rdquo; error, and basically that&rsquo;s the end.</li>
+<li>In any case, these two tasks should download the bootcamp drivers onto a USB drive, and also partition the Mac&rsquo;s HD into two partitions. One of the parititions is the BOOTCAMP partition, which will be used to install Windows 7.</li>
+</ul></li>
+<li>Once that&rsquo;s done, I needed to create a bootable Windows 7 USB Flash drive.
+
+<ul>
+<li>If you search the web, you will find that most people run into two problems. The first is the bootcamp-created flash drive giving the &ldquo;non-system disk&rdquo; error, and the second is the boot up hangs with a blank screen and a flash underscore cursor at the top left corner. I&rsquo;ve ran into both. You will also find some articles that explain how to make the flash drives bootable using fdisk, but that didn&rsquo;t work for me either.</li>
+<li>Finally I found a post online that pointed to the <a href="http://wudt.codeplex.com/">Windows USB/DVD Download Tool</a>. It&rsquo;s a Windows program that can create a bootable USB flash drive from a Windows 7 or 8 ISO file.</li>
+<li>Note though, not all the USB flash drives are created equal. The PNY 16GB drive I used didn&rsquo;t work. WUDT ended with an error that says it couldn&rsquo;t run bootsect to create the boot sectors on the flash drive. The one that worked for me was Kingston Data Traveler 4GB.</li>
+</ul></li>
+<li>Now that I have the bootable USB flash drive, I plugged that into the Mac and started it up. This time the installation process got started.</li>
+<li>When Boot Camp Assistant created the BOOTCAMP partition, it did not format it to NTFS. So the first thing I noticed was that when I select the BOOTCAMP partition, the installer said it cannot be used because it&rsquo;s not NTFS.
+
+<ul>
+<li>The option to format the partition is not immediately obvious, but I had to click on &ldquo;Drive options (advanced)&rdquo; and select the option to format the partition.</li>
+<li>Once that&rsquo;s done, I encountered another error that says the drive may not be bootable and I need to change the BIOS setting. Yeah at this point I was pretty ticked and the computer heard a few choice words from me. Doesn&rsquo;t matter what I do it doesn&rsquo;t seem to let me pass this point.</li>
+<li>I did a bunch more readings and research, but nothing seem to have worked. I finally decided to turn the computer off and come back to it. Magically it worked the second time I tried to install it. I was no longer getting the non-bootable disk error. My guess is that after the NTFS formatting, the installer needs to be completely restarted.</li>
+</ul></li>
+<li>In any case, at this point, it was fairly smooth sailing. The installation process took a bit of time but overall everything seemed to have worked.</li>
+<li>After the installation, I plugged int the bootcamp flash drive with the WindowsSupport files, and installed them.</li>
+</ol>
+
+<p>I am still not a 100% yet. The trackpad still doesn&rsquo;t behave like when it&rsquo;s on the Mac. For example, I can&rsquo;t use the two finger drag to scroll the windows, and for the life of me, I cannot figure out how to easily (and correctly) set the brightness of display. But at least now I have a working Windows 7 laptop!</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="http://zhen.org/blog/analyzing-security-trends-using-rsa-exhibitor-descriptions/">
         Analyzing Security Trends Using RSA Exhibitor Descriptions
       </a>
@@ -372,90 +425,13 @@ insights, to make online changes to job functions to adapt to new requirements o
 
   </div>
   
-  <div class="post">
-    <h1 class="post-title">
-      <a href="http://zhen.org/blog/papers-i-read-2015-week-7/">
-        Papers I Read: 2015 Week 7
-      </a>
-    </h1>
-
-    <span class="post-date">Sun, Feb 15, 2015</span>
-
-    
-
-<h2 id="random-ramblings:10248ddcf524aa32198bc5cded1aa098">Random Ramblings</h2>
-
-<p>Well, another week, <a href="http://www.nytimes.com/2015/02/05/business/hackers-breached-data-of-millions-insurer-says.html">another big data breach</a>. This time is Anthem, one of the nation’s largest health insurers. Ok, maybe it was last week that it happend. But this week they revealed that <a href="http://consumerist.com/2015/02/13/anthem-says-data-from-as-far-back-as-2004-exposed-during-hack-offering-free-identity-theft-protection/">hackers had access &hellip; going back as far as 2004</a>. WSJ blamed Anthem for <a href="http://www.wsj.com/articles/investigators-eye-china-in-anthem-hack-1423167560">not encrypting the data</a>. Though I have to agree with Rich Mogull over at Securosis that &ldquo;<a href="https://securosis.com/blog/even-if-anthem-encrypted-it-probably-wouldnt-have-mattered">even if Anthem had encrypted, it probably wouldn’t have helped</a>&rdquo;.</p>
-
-<p>I feel bad for saying this but there&rsquo;s one positive side effect from all these data breaches. Security is now officially a boardroom topic. Anthem&rsquo;s CEO, Joseph Swedish, is now <a href="http://www.latimes.com/business/la-fi-anthem-hack-ceo-20150213-story.html#page=1">under the gun</a> because top level executives are no longer immune to major security breaches that affect the company&rsquo;s top line. Just ask <a href="http://www.forbes.com/sites/ericbasu/2014/06/15/target-ceo-fired-can-you-be-fired-if-your-company-is-hacked/">Target’s CEO Gregg Steinhafel</a>, or <a href="http://abcnews.go.com/Entertainment/wireStory/sony-chief-amy-pascal-acknowledges-fired-28918607">Sony&rsquo;s Co-Chairwoman Amy Pascal</a>.</p>
-
-<p>Brian Krebs wrote a <a href="http://krebsonsecurity.com/2015/02/anthem-breach-may-have-started-in-april-2014/">detailed piece</a> analyzing the various pieces of information available relating to the Anthem hack. Quite an interesting read.</p>
-
-<p>One chart in the artile that Brian referred to is the time difference between the “time to compromise” and the “time to discovery&rdquo;, taken from <a href="http://www.verizonenterprise.com/DBIR/2014/">Verizon’s 2014 Data Breach Investigations Report</a>. As Brian summaries, &ldquo;TL;DR: That gap is not improving, but instead is widening.&rdquo;</p>
-
-<p>What this really says is that, <strong>you will get hacked</strong>. So how do you shorten the time between getting hacked, and finding out that you are hacked so you can quickly remediate the problem before worse things happen?</p>
-
-<p><img src="http://krebsonsecurity.com/wp-content/uploads/2015/02/timetocompromise.png" alt="The time difference between the “time to compromise” and the “time to discovery.”" />
-</p>
-
-<p>With all these data breaches as backdrop, this week we also saw &ldquo;President Barack Obama signed an executive order on Friday designed to spur businesses and the Federal Government to share with each other information related to cybersecurity, hacking and data breaches for the purpose of safeguarding U.S. infrastructure, economics and citizens from cyber attacks.&rdquo; (<a href="https://gigaom.com/2015/02/13/obamas-executive-order-calls-for-sharing-of-security-data/">Gigaom</a>)</p>
-
-<p>In general I don&rsquo;t really think government mandates like this will work. The industry has to feel the pain enough that they are willing to participate, otherwise it&rsquo;s just a waste of paper and ink. Facebook seems to be taking a lead in security information sharing and <a href="https://www.facebook.com/notes/protect-the-graph/threatexchange-sharing-for-a-safer-internet/1566584370248375">launched their ThreatExchange security framework</a> this week. along with Pinterest, Tumblr, Twitter, and Yahoo. Good for them! I hope this is not a temporary PR thing, and that they keep funding and supporting the framework.</p>
-
-<h2 id="papers-i-read:10248ddcf524aa32198bc5cded1aa098">Papers I Read</h2>
-
-<p>Another great resource of computer science papers is Adrian Coyler&rsquo;s <a href="http://blog.acolyer.org/">the morning paper</a>. He selects and summarizes &ldquo;an interesting/influential/important paper from the world of CS every weekday morning&rdquo;.</p>
-
-<ul>
-<li><a href="http://www.cs.put.poznan.pl/dweiss/site/publications/download/fsacomp.pdf">Smaller Representation of Finite State Automata</a></li>
-</ul>
-
-<p>I read this paper when I was trying to figure out how to make the FSAs smaller for the <a href="https://github.com/surge/xparse/tree/master/etld">Effective TLD matcher</a> I created. The FSM I generated is 212,294 lines long. That&rsquo;s just absolutely crazy. This paper seems to present an interesting way of compressing them.</p>
-
-<p>I am not exactly sure if <a href="https://godoc.org/golang.org/x/net/publicsuffix">PublicSuffix</a> uses a similar representation but it basically represents a FSA as an array of bytes, and then walk the bytes like a binary search tree. It&rsquo;s interesting for sure.</p>
-
-<blockquote>
-<p>This paper is a follow-up to Jan Daciuk’s experiments on space-efficient finite state automata representation that can be used directly for traversals in main memory [4]. We investigate several techniques of reducing the memory footprint of minimal automata, mainly exploiting the fact that transition labels and transition pointer offset values are not evenly distributed and so are suitable for compression. We achieve a size gain of around 20–30% compared to the original representation given in [4]. This result is comparable to the state-of-the-art dictionary compression techniques like the LZ-trie [12] method, but remains
-memory and CPU efficient during construction.</p>
-</blockquote>
-
-<ul>
-<li><a href="http://arxiv.org/pdf/1409.5942v1.pdf">IP Tracing and Active Network Response</a></li>
-</ul>
-
-<blockquote>
-<p>This work presents integrated model for active security response model. The proposed model introduces Active Response Mechanism (ARM) for tracing anonymous attacks in the network back to their source. This work is motivated by the increased frequency and sophistication of denial-of-service attacks and by the difficulty in tracing packets with incorrect, or “spoofed”, source addresses. This paper presents within the proposed model two tracing approaches based on:
-• Sleepy Watermark Tracing (SWT) for unauthorized access attacks.
-• Probabilistic Packet Marking (PPM) in the network for Denial of Service
-(DoS) and Distributed Denial of Service (DDoS) attacks.</p>
-</blockquote>
-
-<ul>
-<li><a href="http://static.googleusercontent.com/media/research.google.com/en/us/pubs/archive/36356.pdf">Dapper, a Large-Scale Distributed Systems Tracing Infrastructure</a></li>
-</ul>
-
-<blockquote>
-<p>Here we introduce the design of Dapper, Google’s production distributed systems tracing infrastructure, and describe how our design goals of low overhead, application-level transparency, and ubiquitous deployment on a very large scale system were met. Dapper shares conceptual similarities with other tracing systems, particularly Magpie [3] and X-Trace [12], but certain design
-choices were made that have been key to its success in our environment, such as the use of sampling and restricting the instrumentation to a rather small number of common libraries.</p>
-</blockquote>
-
-<ul>
-<li><a href="http://blog.confluent.io/2015/01/29/making-sense-of-stream-processing/">STREAM PROCESSING, EVENT SOURCING, REACTIVE, CEP… AND MAKING SENSE OF IT ALL</a></li>
-</ul>
-
-<p>Not a paper, but a good write up nonetheless.</p>
-
-<blockquote>
-<p>Some people call it stream processing. Others call it Event Sourcing or CQRS. Some even call it Complex Event Processing. Sometimes, such self-important buzzwords are just smoke and mirrors, invented by companies who want to sell you stuff. But sometimes, they contain a kernel of wisdom which can really help us design better systems. In this talk, we will go in search of the wisdom behind the buzzwords. We will discuss how event streams can help make your application more scalable, more reliable and more maintainable.</p>
-</blockquote>
-
-  </div>
-  
 </div>
 
 <div class="posts">
   <h1 class="post-title">Archive</h1>
   <ul class="posts">
+      
+      <li><span><a href="http://zhen.org/blog/installing-windows7-on-macbook-late-2008/">Installing Windows 7 on Macbook Late 2008</a> - <time class="pull-right post-list">Mon, Apr 20, 2015</h4></time></span></li>
       
       <li><span><a href="http://zhen.org/blog/analyzing-security-trends-using-rsa-exhibitor-descriptions/">Analyzing Security Trends Using RSA Exhibitor Descriptions</a> - <time class="pull-right post-list">Sun, Mar 22, 2015</h4></time></span></li>
       
@@ -474,8 +450,6 @@ choices were made that have been key to its success in our environment, such as 
       <li><span><a href="http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/">Generating Porter2 FSM For Fun and Performance in Go</a> - <time class="pull-right post-list">Wed, Jan 21, 2015</h4></time></span></li>
       
       <li><span><a href="http://zhen.org/blog/golang-from-a-non-programmers-perspective/">Go: From a Non-Programmer&#39;s Perspective</a> - <time class="pull-right post-list">Tue, Jan 13, 2015</h4></time></span></li>
-      
-      <li><span><a href="http://zhen.org/blog/pingmq-a-surgemq-based-icmp-monitoring-tool/">PingMQ: A SurgeMQ-based ICMP Monitoring Tool</a> - <time class="pull-right post-list">Thu, Dec 25, 2014</h4></time></span></li>
       
   </ul>
 </div>
