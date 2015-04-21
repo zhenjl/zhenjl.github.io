@@ -41,7 +41,7 @@
 
 &lt;ul&gt;
 &lt;li&gt;If you search the web, you will find that most people run into two problems. The first is the bootcamp-created flash drive giving the &amp;ldquo;non-system disk&amp;rdquo; error, and the second is the boot up hangs with a blank screen and a flash underscore cursor at the top left corner. I&amp;rsquo;ve ran into both. You will also find some articles that explain how to make the flash drives bootable using fdisk, but that didn&amp;rsquo;t work for me either.&lt;/li&gt;
-&lt;li&gt;Finally I found a post online that pointed to the &lt;a href=&#34;http://wudt.codeplex.com/&#34;&gt;Windows USB/DVD Download Tool&lt;/a&gt;. It&amp;rsquo;s a Windows program that can create a bootable USB flash drive from a Windows 7 or 8 ISO file.&lt;/li&gt;
+&lt;li&gt;Finally I found &lt;a href=&#34;http://www.tonymacx86.com/windows/97075-windows-7-usb-install-stuck-black-screen.html&#34;&gt;a post online&lt;/a&gt; that pointed to the &lt;a href=&#34;http://wudt.codeplex.com/&#34;&gt;Windows USB/DVD Download Tool&lt;/a&gt;. It&amp;rsquo;s a Windows program that can create a bootable USB flash drive from a Windows 7 or 8 ISO file.&lt;/li&gt;
 &lt;li&gt;Note though, not all the USB flash drives are created equal. The PNY 16GB drive I used didn&amp;rsquo;t work. WUDT ended with an error that says it couldn&amp;rsquo;t run bootsect to create the boot sectors on the flash drive. The one that worked for me was Kingston Data Traveler 4GB.&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;Now that I have the bootable USB flash drive, I plugged that into the Mac and started it up. This time the installation process got started.&lt;/li&gt;
