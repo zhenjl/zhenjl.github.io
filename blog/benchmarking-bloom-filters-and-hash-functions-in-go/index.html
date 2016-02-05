@@ -68,7 +68,7 @@
     <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
     Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
     Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
-    &copy; 2015 Jian Zhen. All Rights Reserved.</p>
+    &copy; 2016 Jian Zhen. All Rights Reserved.</p>
     
   </div>
 </div>
@@ -113,7 +113,7 @@
 
 <p>To add an element, bloom filters hashes the element using <em>k</em> hashing functions, identifying <em>k</em> positions in the bit array, and setting those bits to 1. To check for an element, you essentially do the same thing (hash the element with <em>k</em> hash functions) and then check to see if all the bits at those positions are set. If all set, then most likely the element is available. If any of them are not set, then the element is definitely not avaiable. So bloom filters can have false positives, but not false negatives.</p>
 
-<p>However, actually running <em>k</em> hash functions is quite expensive. So <a href="http://www.eecs.harvard.edu/~kirsch/pubs/bbbf/rsa.pdf">Kirsch and Mitzenmacher</a> determined that by using a single hash function, but using the formula, <em>gi(x) = h1(x) + i * h2(x)</em>, to calculate <em>k</em> hash values, the performance is actually similar. So this is what I used here.</p>
+<p>However, actually running <em>k</em> hash functions is quite expensive. So <a href="http://www.eecs.harvard.edu/~kirsch/pubs/bbbf/rsa.pdf">Kirsch and Mitzenmacher</a> determined that by using a single hash function, but using the formula, *gi(x) = h1(x) + i * h2(x)*, to calculate <em>k</em> hash values, the performance is actually similar. So this is what I used here.</p>
 
 <p>For the values <em>h1</em> and <em>h2</em>, we used the first 4 bytes returned from each hash function for <em>h1</em>, and second 4 bytes for <em>h2</em>.</p>
 

@@ -7,8 +7,240 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
-    <lastBuildDate>Sun, 22 Mar 2015 09:57:56 -0800</lastBuildDate>
+    <lastBuildDate>Fri, 05 Feb 2016 10:57:56 -0800</lastBuildDate>
     <atom:link href="http://zhen.org/categories/market/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>2016: Analyzing Security Trends Using RSA Exhibitor Descriptions</title>
+      <link>http://zhen.org/blog/2016-analyzing-security-trends-using-rsa-exhibitor-descriptions/</link>
+      <pubDate>Fri, 05 Feb 2016 10:57:56 -0800</pubDate>
+      
+      <guid>http://zhen.org/blog/2016-analyzing-security-trends-using-rsa-exhibitor-descriptions/</guid>
+      <description>
+
+&lt;p&gt;&lt;strong&gt;The data used for this post is available &lt;a href=&#34;https://github.com/zhenjl/rsaconf&#34;&gt;here&lt;/a&gt;. A word of warning, I only have complete data set for 2014-2016. For 2008-2013, I have what I consider to be representative samples. So please take the result set with a big bucket of salt.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Continuing my &lt;a href=&#34;http://zhen.org/blog/analyzing-security-trends-using-rsa-exhibitor-descriptions/&#34;&gt;analysis from last year&lt;/a&gt;, this post analyzes the exhibitors&amp;rsquo; descriptions from the annual security conference, &lt;a href=&#34;http://www.rsaconference.com/events/us16&#34;&gt;RSA 2016&lt;/a&gt;. Intuitively, the vendor marketing messages should have a high degree of correlation to what customers care about, even if the messages trail the actual pain points slightly.&lt;/p&gt;
+
+&lt;p&gt;Some interesting findings:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The word &lt;em&gt;hunt&lt;/em&gt; has appeared for the first time since 2008. It only appeard 6 times and ranked pretty low, but that&amp;rsquo;s a first nonetheless.&lt;/li&gt;
+&lt;li&gt;The word &lt;em&gt;iot&lt;/em&gt; jumped 881 spots to 192 in 2016, after showing up for the first time in 2015. This may indicate the strong interest in IOT security.&lt;/li&gt;
+&lt;li&gt;There&amp;rsquo;s no mention of &lt;em&gt;docker&lt;/em&gt; in any of the years, and only 5 mentions of container in 2016. This is a bit of a surprise given the noise docker/container is making. This is likely due to most customers care more about management for new technologies than security.&lt;/li&gt;
+&lt;li&gt;The word &lt;em&gt;firewall&lt;/em&gt; dropped 151 spots in 2016. I want to speculate that it is due to the dissolving of perimeters, but I can&amp;rsquo;t be sure of that.&lt;/li&gt;
+&lt;li&gt;As much as noise as &lt;em&gt;blockchain&lt;/em&gt; is making, there&amp;rsquo;s no mention of the word.&lt;/li&gt;
+&lt;li&gt;See other findings below.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;top-words:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Top Words&lt;/h3&gt;
+
+&lt;p&gt;The top words that vendors use to describe themselves haven&amp;rsquo;t changed much. The following table shows the top 10 words used in RSA conference exhibitor descriptions since 2008. You can find the complete word list &lt;a href=&#34;https://github.com/zhenjl/rsaconf&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;right&#34;&gt;#&lt;/th&gt;
+&lt;th&gt;2008&lt;/th&gt;
+&lt;th&gt;2009&lt;/th&gt;
+&lt;th&gt;2010&lt;/th&gt;
+&lt;th&gt;2011&lt;/th&gt;
+&lt;th&gt;2012&lt;/th&gt;
+&lt;th&gt;2013&lt;/th&gt;
+&lt;th&gt;2014&lt;/th&gt;
+&lt;th&gt;2015&lt;/th&gt;
+&lt;th&gt;2016&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;td&gt;secure&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;td&gt;solution&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;protect&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;service&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;threat&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;td&gt;provide&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;information&lt;/td&gt;
+&lt;td&gt;more&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;protect&lt;/td&gt;
+&lt;td&gt;network&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;7&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;company&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;information&lt;/td&gt;
+&lt;td&gt;software&lt;/td&gt;
+&lt;td&gt;software&lt;/td&gt;
+&lt;td&gt;protect&lt;/td&gt;
+&lt;td&gt;threat&lt;/td&gt;
+&lt;td&gt;protect&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;8&lt;/td&gt;
+&lt;td&gt;product&lt;/td&gt;
+&lt;td&gt;service&lt;/td&gt;
+&lt;td&gt;organization&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;information&lt;/td&gt;
+&lt;td&gt;threat&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;td&gt;manage&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;9&lt;/td&gt;
+&lt;td&gt;technology&lt;/td&gt;
+&lt;td&gt;software&lt;/td&gt;
+&lt;td&gt;information&lt;/td&gt;
+&lt;td&gt;technology&lt;/td&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;service&lt;/td&gt;
+&lt;td&gt;service&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;right&#34;&gt;10&lt;/td&gt;
+&lt;td&gt;application&lt;/td&gt;
+&lt;td&gt;busy&lt;/td&gt;
+&lt;td&gt;risk&lt;/td&gt;
+&lt;td&gt;product&lt;/td&gt;
+&lt;td&gt;more&lt;/td&gt;
+&lt;td&gt;customer&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;enterprise&lt;/td&gt;
+&lt;td&gt;service&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Here&amp;rsquo;s a word cloud that shows the &lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2016.png&#34;&gt;2016&lt;/a&gt; top words. You can also find word clouds for
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2008.png&#34;&gt;2008&lt;/a&gt;.
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2009.png&#34;&gt;2009&lt;/a&gt;.
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2010.png&#34;&gt;2010&lt;/a&gt;.
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2011.png&#34;&gt;2011&lt;/a&gt;.
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2012.png&#34;&gt;2012&lt;/a&gt;.
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2013.png&#34;&gt;2013&lt;/a&gt;.
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2014.png&#34;&gt;2014&lt;/a&gt;.
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2015.png&#34;&gt;2015&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/rsa2016.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;endpoint-vs-network:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Endpoint vs. Network&lt;/h3&gt;
+
+&lt;p&gt;While the word &lt;em&gt;network&lt;/em&gt; has maintained its top 10 position (except 2013 when it fell to #11), the big gainer is the word &lt;em&gt;endpoint&lt;/em&gt;, which improved drastically from #266 in 2012 to 2016&amp;rsquo;s #50. This may indicate that enterprises are much more accepting of endpoint technologies.&lt;/p&gt;
+
+&lt;p&gt;I also speculate that there might be a correlation between the increase in &lt;em&gt;cloud&lt;/em&gt; and the increase in &lt;em&gt;endpoint&lt;/em&gt;. As the perimeters get dissolved due to the move to cloud, it&amp;rsquo;s much more difficult to use network security technologies. So enterprises are looking at &lt;em&gt;endpoint&lt;/em&gt; technologies to secure their critical assets.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/endpoint-network.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;compliance-vs-threat:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Compliance vs. Threat&lt;/h3&gt;
+
+&lt;p&gt;Not surprisingly, the use of the word &lt;em&gt;compliance&lt;/em&gt; continues to go down, and the word &lt;em&gt;threat&lt;/em&gt; continues to go up.&lt;/p&gt;
+
+&lt;p&gt;The number of mentions for &lt;em&gt;threat intelligence&lt;/em&gt; remained at 22 for both 2015 and 2016, after jumping from 12 in 2014.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/compliance-threat.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;mobile-cloud-virtual-and-iot:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Mobile, Cloud, Virtual and IoT&lt;/h3&gt;
+
+&lt;p&gt;While the words &lt;em&gt;mobile&lt;/em&gt; and &lt;em&gt;cloud&lt;/em&gt; maintained their relative positioning in 2016, we can also see &lt;em&gt;virtual&lt;/em&gt; continues its slight downward trend.&lt;/p&gt;
+
+&lt;p&gt;Interestingly, the word &lt;em&gt;iot&lt;/em&gt; made a big jump, going from position #1073 in 2015 to #193 in 2016. This potentially indicates a strong interest in security for internet of things. In general, the IoT space has seen some major activities, including &lt;a href=&#34;http://techcrunch.com/2016/02/03/cisco-buys-jasper-technologies-for-1-4-billion/&#34;&gt;Cisco&amp;rsquo;s recent acquisition of Jasper&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/mobile-cloud.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;cyber-malware-and-phishing:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Cyber, Malware and Phishing&lt;/h3&gt;
+
+&lt;p&gt;The word &lt;em&gt;cyber&lt;/em&gt; continues to gain popularity in the past 4 years; however, the word &lt;em&gt;malware&lt;/em&gt; has fell below the top 100, a position it maintained since 2010.&lt;/p&gt;
+
+&lt;p&gt;The word &lt;em&gt;phishing&lt;/em&gt; made drastic gains since 2014, jumping from #807 to #193 in 2016. This may indicate that enterprises are seeing more attacks from phishing, and vendors are targeting that specific attack vector.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/cyber-malware.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;credits:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Credits&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The word clouds and word rankings are generated using &lt;a href=&#34;http://timdream.org/wordcloud&#34;&gt;Word Cloud&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;The actual vendor descriptions are gathered from the RSA web site as well as press releases from Business Wire and others.&lt;/li&gt;
+&lt;li&gt;Charts are generated using Excel, which continues to be one of the best friends for data analysts (not that I consider myself one).&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Analyzing Security Trends Using RSA Exhibitor Descriptions</title>

@@ -418,8 +418,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;h4 id=&#34;compression-ratio-lower-is-better:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;Compression Ratio (Lower is Better)&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Compression-Ratio.png&#34; alt=&#34;Compression Ratio&#34; /&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Compression-Ratio.png&#34; alt=&#34;Compression Ratio&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Compression ratio is measured in bits/integer. Before compression, the integers we are compressing are all 32-bit integers. This chart shows us how many bits are used for each integer after compression.&lt;/p&gt;
 
@@ -434,8 +433,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;h4 id=&#34;compression-speed-higher-is-better:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;Compression Speed (Higher is Better)&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Compression-Speed.png&#34; alt=&#34;Compression Speed&#34; /&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Compression-Speed.png&#34; alt=&#34;Compression Speed&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Compression speed is measured in millions of integers per second (MiS). Note that:&lt;/p&gt;
 
@@ -447,8 +445,7 @@ gcc version 4.8.2 (GCC)
 
 &lt;h4 id=&#34;decompression-speed:ad2daf3d178d8f9966c0393ee356be7e&#34;&gt;Decompression Speed&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Decompression-Speed.png&#34; alt=&#34;Decompression Ratio&#34; /&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/2013-10-11-benchmarking-integer-compression-in-go/Integer-Decompression-Speed.png&#34; alt=&#34;Decompression Ratio&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Decompression speed is measured in millions of integers per second (MiS). Note that:&lt;/p&gt;
 

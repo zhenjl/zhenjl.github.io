@@ -68,7 +68,7 @@
     <p class="footnote">Powered by <a href="http://hugo.spf13.com">Hugo</a> <br/>
     Theme originally made by <a href="http://twitter.com/mdo">@mdo</a> <br/>
     Theme modified by <a href="http://npf.io">Nate Finch</a> <br/>
-    &copy; 2015 Jian Zhen. All Rights Reserved.</p>
+    &copy; 2016 Jian Zhen. All Rights Reserved.</p>
     
   </div>
 </div>
@@ -76,6 +76,241 @@
     <div class="content container">
 <div class="posts">
 
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="http://zhen.org/blog/2016-analyzing-security-trends-using-rsa-exhibitor-descriptions/">
+        2016: Analyzing Security Trends Using RSA Exhibitor Descriptions
+      </a>
+    </h1>
+
+    <span class="post-date">Fri, Feb 5, 2016</span>
+
+    
+
+<p><strong>The data used for this post is available <a href="https://github.com/zhenjl/rsaconf">here</a>. A word of warning, I only have complete data set for 2014-2016. For 2008-2013, I have what I consider to be representative samples. So please take the result set with a big bucket of salt.</strong></p>
+
+<hr />
+
+<p>Continuing my <a href="http://zhen.org/blog/analyzing-security-trends-using-rsa-exhibitor-descriptions/">analysis from last year</a>, this post analyzes the exhibitors&rsquo; descriptions from the annual security conference, <a href="http://www.rsaconference.com/events/us16">RSA 2016</a>. Intuitively, the vendor marketing messages should have a high degree of correlation to what customers care about, even if the messages trail the actual pain points slightly.</p>
+
+<p>Some interesting findings:</p>
+
+<ul>
+<li>The word <em>hunt</em> has appeared for the first time since 2008. It only appeard 6 times and ranked pretty low, but that&rsquo;s a first nonetheless.</li>
+<li>The word <em>iot</em> jumped 881 spots to 192 in 2016, after showing up for the first time in 2015. This may indicate the strong interest in IOT security.</li>
+<li>There&rsquo;s no mention of <em>docker</em> in any of the years, and only 5 mentions of container in 2016. This is a bit of a surprise given the noise docker/container is making. This is likely due to most customers care more about management for new technologies than security.</li>
+<li>The word <em>firewall</em> dropped 151 spots in 2016. I want to speculate that it is due to the dissolving of perimeters, but I can&rsquo;t be sure of that.</li>
+<li>As much as noise as <em>blockchain</em> is making, there&rsquo;s no mention of the word.</li>
+<li>See other findings below.</li>
+</ul>
+
+<h3 id="top-words:bb7656c12180a6a78a8c54c60f6a51ce">Top Words</h3>
+
+<p>The top words that vendors use to describe themselves haven&rsquo;t changed much. The following table shows the top 10 words used in RSA conference exhibitor descriptions since 2008. You can find the complete word list <a href="https://github.com/zhenjl/rsaconf">here</a>.</p>
+
+<table>
+<thead>
+<tr>
+<th align="right">#</th>
+<th>2008</th>
+<th>2009</th>
+<th>2010</th>
+<th>2011</th>
+<th>2012</th>
+<th>2013</th>
+<th>2014</th>
+<th>2015</th>
+<th>2016</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right">1</td>
+<td>secure</td>
+<td>secure</td>
+<td>secure</td>
+<td>secure</td>
+<td>secure</td>
+<td>secure</td>
+<td>secure</td>
+<td>secure</td>
+<td>secure</td>
+</tr>
+
+<tr>
+<td align="right">2</td>
+<td>solution</td>
+<td>solution</td>
+<td>solution</td>
+<td>solution</td>
+<td>solution</td>
+<td>solution</td>
+<td>solution</td>
+<td>solution</td>
+<td>solution</td>
+</tr>
+
+<tr>
+<td align="right">3</td>
+<td>network</td>
+<td>manage</td>
+<td>manage</td>
+<td>network</td>
+<td>provide</td>
+<td>provide</td>
+<td>provide</td>
+<td>provide</td>
+<td>provide</td>
+</tr>
+
+<tr>
+<td align="right">4</td>
+<td>provide</td>
+<td>provide</td>
+<td>network</td>
+<td>provide</td>
+<td>manage</td>
+<td>manage</td>
+<td>network</td>
+<td>data</td>
+<td>data</td>
+</tr>
+
+<tr>
+<td align="right">5</td>
+<td>manage</td>
+<td>data</td>
+<td>protect</td>
+<td>manage</td>
+<td>network</td>
+<td>service</td>
+<td>manage</td>
+<td>network</td>
+<td>threat</td>
+</tr>
+
+<tr>
+<td align="right">6</td>
+<td>enterprise</td>
+<td>network</td>
+<td>provide</td>
+<td>data</td>
+<td>information</td>
+<td>more</td>
+<td>data</td>
+<td>protect</td>
+<td>network</td>
+</tr>
+
+<tr>
+<td align="right">7</td>
+<td>data</td>
+<td>company</td>
+<td>data</td>
+<td>information</td>
+<td>software</td>
+<td>software</td>
+<td>protect</td>
+<td>threat</td>
+<td>protect</td>
+</tr>
+
+<tr>
+<td align="right">8</td>
+<td>product</td>
+<td>service</td>
+<td>organization</td>
+<td>enterprise</td>
+<td>enterprise</td>
+<td>information</td>
+<td>threat</td>
+<td>manage</td>
+<td>manage</td>
+</tr>
+
+<tr>
+<td align="right">9</td>
+<td>technology</td>
+<td>software</td>
+<td>information</td>
+<td>technology</td>
+<td>data</td>
+<td>enterprise</td>
+<td>service</td>
+<td>service</td>
+<td>enterprise</td>
+</tr>
+
+<tr>
+<td align="right">10</td>
+<td>application</td>
+<td>busy</td>
+<td>risk</td>
+<td>product</td>
+<td>more</td>
+<td>customer</td>
+<td>enterprise</td>
+<td>enterprise</td>
+<td>service</td>
+</tr>
+</tbody>
+</table>
+
+<p>Here&rsquo;s a word cloud that shows the <a href="/images/rsaconf/rsa2016.png">2016</a> top words. You can also find word clouds for
+<a href="/images/rsaconf/rsa2008.png">2008</a>.
+<a href="/images/rsaconf/rsa2009.png">2009</a>.
+<a href="/images/rsaconf/rsa2010.png">2010</a>.
+<a href="/images/rsaconf/rsa2011.png">2011</a>.
+<a href="/images/rsaconf/rsa2012.png">2012</a>.
+<a href="/images/rsaconf/rsa2013.png">2013</a>.
+<a href="/images/rsaconf/rsa2014.png">2014</a>.
+<a href="/images/rsaconf/rsa2015.png">2015</a>.</p>
+
+<p><img src="/images/rsaconf/rsa2016.png"></p>
+
+<h3 id="endpoint-vs-network:bb7656c12180a6a78a8c54c60f6a51ce">Endpoint vs. Network</h3>
+
+<p>While the word <em>network</em> has maintained its top 10 position (except 2013 when it fell to #11), the big gainer is the word <em>endpoint</em>, which improved drastically from #266 in 2012 to 2016&rsquo;s #50. This may indicate that enterprises are much more accepting of endpoint technologies.</p>
+
+<p>I also speculate that there might be a correlation between the increase in <em>cloud</em> and the increase in <em>endpoint</em>. As the perimeters get dissolved due to the move to cloud, it&rsquo;s much more difficult to use network security technologies. So enterprises are looking at <em>endpoint</em> technologies to secure their critical assets.</p>
+
+<p><img src="/images/rsaconf/2016/endpoint-network.png"></p>
+
+<h3 id="compliance-vs-threat:bb7656c12180a6a78a8c54c60f6a51ce">Compliance vs. Threat</h3>
+
+<p>Not surprisingly, the use of the word <em>compliance</em> continues to go down, and the word <em>threat</em> continues to go up.</p>
+
+<p>The number of mentions for <em>threat intelligence</em> remained at 22 for both 2015 and 2016, after jumping from 12 in 2014.</p>
+
+<p><img src="/images/rsaconf/2016/compliance-threat.png"></p>
+
+<h3 id="mobile-cloud-virtual-and-iot:bb7656c12180a6a78a8c54c60f6a51ce">Mobile, Cloud, Virtual and IoT</h3>
+
+<p>While the words <em>mobile</em> and <em>cloud</em> maintained their relative positioning in 2016, we can also see <em>virtual</em> continues its slight downward trend.</p>
+
+<p>Interestingly, the word <em>iot</em> made a big jump, going from position #1073 in 2015 to #193 in 2016. This potentially indicates a strong interest in security for internet of things. In general, the IoT space has seen some major activities, including <a href="http://techcrunch.com/2016/02/03/cisco-buys-jasper-technologies-for-1-4-billion/">Cisco&rsquo;s recent acquisition of Jasper</a>.</p>
+
+<p><img src="/images/rsaconf/2016/mobile-cloud.png"></p>
+
+<h3 id="cyber-malware-and-phishing:bb7656c12180a6a78a8c54c60f6a51ce">Cyber, Malware and Phishing</h3>
+
+<p>The word <em>cyber</em> continues to gain popularity in the past 4 years; however, the word <em>malware</em> has fell below the top 100, a position it maintained since 2010.</p>
+
+<p>The word <em>phishing</em> made drastic gains since 2014, jumping from #807 to #193 in 2016. This may indicate that enterprises are seeing more attacks from phishing, and vendors are targeting that specific attack vector.</p>
+
+<p><img src="/images/rsaconf/2016/cyber-malware.png"></p>
+
+<h3 id="credits:bb7656c12180a6a78a8c54c60f6a51ce">Credits</h3>
+
+<ul>
+<li>The word clouds and word rankings are generated using <a href="http://timdream.org/wordcloud">Word Cloud</a>.</li>
+<li>The actual vendor descriptions are gathered from the RSA web site as well as press releases from Business Wire and others.</li>
+<li>Charts are generated using Excel, which continues to be one of the best friends for data analysts (not that I consider myself one).</li>
+</ul>
+
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -365,71 +600,13 @@
 
   </div>
   
-  <div class="post">
-    <h1 class="post-title">
-      <a href="http://zhen.org/blog/papers-i-read-2015-week-8/">
-        Papers I Read: 2015 Week 8
-      </a>
-    </h1>
-
-    <span class="post-date">Sun, Feb 22, 2015</span>
-
-    
-
-<h3 id="random-ramblings:29724b4ec2d333ad12e89fd98257dccd">Random Ramblings</h3>
-
-<p>Another week, another report of hacks. This time, <a href="http://securelist.com/blog/research/68732/the-great-bank-robbery-the-carbanak-apt/">The Great Bank Robbery</a>, where up to 100 financial institutions have been hit.Total financial losses could be as a high as $1bn. You can download the <a href="http://25zbkz3k00wn2tp5092n6di7b5k.wpengine.netdna-cdn.com/files/2015/02/Carbanak_APT_eng.pdf">full report</a> and learn all about it.</p>
-
-<p>Sony spent $15M to clean up and remediate their hack. I wonder how much these banks are going to spend on tracing the footsteps of their intruders and trying to figure out exactly where they have gone, what they have done and what they have taken.</p>
-
-<p>I didn&rsquo;t make much progress this week on either <a href="https://github.com/strace/sequence">sequence</a> or <a href="https://github.com/surgemq/surgemq">surgemq</a> because of busy work schedule and my son getting sick AGAIN!! But I did merge the few surgemq <a href="https://github.com/surgemq/surgemq/pulls?q=is%3Apr+is%3Aclosed">pull requests</a> that the community has graciously contributed. One of them actually got it tested on Raspberry! That&rsquo;s pretty cool.</p>
-
-<p>I also did manage to finish up the <a href="https://github.com/strace/sequence/commit/713979f70d6025308e434205973249aa3138e58e">experimental json scanner</a> that I&rsquo;ve been working on for the past couple of weeks. I will write more about it in the next <a href="http://strace.io/sequence">sequence</a> article.</p>
-
-<p>Actually I am starting to feel a bit overwhelmed by having both projects. Both of them are very interesting and I can see both move forward in very positive ways. Lots of ideas in my head but not enough time to do them. Now that I am getting feature requests, issues and pull requests, I feel even worse because I haven&rsquo;t spent enough time on them. &lt;sigh&gt;</p>
-
-<h3 id="papers-i-read:29724b4ec2d333ad12e89fd98257dccd">Papers I Read</h3>
-
-<ul>
-<li><a href="http://www.pdl.cmu.edu/PDL-FTP/HECStorage/git-cercs-12-08.pdf">Memory-Efficient GroupBy-Aggregate using Compressed Buffer Trees</a></li>
-</ul>
-
-<blockquote>
-<p>Memory is rapidly becoming a precious resource in many data processing environments. This paper introduces
-a new data structure called a Compressed Buffer Tree (CBT). Using a combination of buffering, compression,
-and lazy aggregation, CBTs can improve the memoryefficiency of the GroupBy-Aggregate abstraction which
-forms the basis of many data processing models like MapReduce and databases. We evaluate CBTs in the
-context of MapReduce aggregation, and show that CBTs can provide significant advantages over existing hashbased
-aggregation techniques: up to 2× less memory and 1.5× the throughput, at the cost of 2.5× CPU.</p>
-</blockquote>
-
-<ul>
-<li><a href="https://www.usenix.org/system/files/conference/atc14/atc14-paper-hu.pdf">ELF: Efficient Lightweight Fast Stream Processing at Scale</a></li>
-</ul>
-
-<blockquote>
-<p>Stream processing has become a key means for gaining rapid insights from webserver-captured data. Challenges
-include how to scale to numerous, concurrently running streaming jobs, to coordinate across those jobs to share
-insights, to make online changes to job functions to adapt to new requirements or data characteristics, and for each job, to efficiently operate over different time windows. The ELF stream processing system addresses these new challenges. Implemented over a set of agents enriching the web tier of datacenter systems, ELF obtains scalability by using a decentralized “many masters” architecture where for each job, live data is extracted directly from webservers, and placed into memory-efficient compressed buffer trees (CBTs) for local parsing and temporary storage, followed by subsequent aggregation using shared reducer trees (SRTs) mapped to sets of worker processes. Job masters at the roots of SRTs can dynamically customize worker actions, obtain aggregated results for end user delivery and/or coordinate with other jobs.</p>
-</blockquote>
-
-<ul>
-<li><a href="https://www.kernel.org/pub/linux/kernel/people/paulmck/perfbook/perfbook.html">Is Parallel Programming Hard, And, If So, What Can You Do About It?</a></li>
-</ul>
-
-<p>Not just a paper, it&rsquo;s a whole book w/ 800+ pages.</p>
-
-<blockquote>
-<p>The purpose of this book is to help you program shared-memory parallel machines without risking your sanity.1 We hope that this book’s design principles will help you avoid at least some parallel-programming pitfalls. That said, you should think of this book as a foundation on which to build, rather than as a completed cathedral. Your mission, if you choose to accept, is to help make further progress in the exciting field of parallel programming—progress that will in time render this book obsolete. Parallel programming is not as hard as some say, and we hope that this book makes your parallel-programming projects easier and more fun.</p>
-</blockquote>
-
-  </div>
-  
 </div>
 
 <div class="posts">
   <h1 class="post-title">Archive</h1>
   <ul class="posts">
+      
+      <li><span><a href="http://zhen.org/blog/2016-analyzing-security-trends-using-rsa-exhibitor-descriptions/">2016: Analyzing Security Trends Using RSA Exhibitor Descriptions</a> - <time class="pull-right post-list">Fri, Feb 5, 2016</h4></time></span></li>
       
       <li><span><a href="http://zhen.org/blog/installing-windows7-on-macbook-late-2008/">Installing Windows 7 on Macbook Late 2008</a> - <time class="pull-right post-list">Mon, Apr 20, 2015</h4></time></span></li>
       
@@ -448,8 +625,6 @@ insights, to make online changes to job functions to adapt to new requirements o
       <li><span><a href="http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/">Sequence: A High Performance Sequential Semantic Log Parser at 175,000 MPS</a> - <time class="pull-right post-list">Sun, Feb 1, 2015</h4></time></span></li>
       
       <li><span><a href="http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/">Generating Porter2 FSM For Fun and Performance in Go</a> - <time class="pull-right post-list">Wed, Jan 21, 2015</h4></time></span></li>
-      
-      <li><span><a href="http://zhen.org/blog/golang-from-a-non-programmers-perspective/">Go: From a Non-Programmer&#39;s Perspective</a> - <time class="pull-right post-list">Tue, Jan 13, 2015</h4></time></span></li>
       
   </ul>
 </div>
