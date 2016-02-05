@@ -27,8 +27,8 @@
 &lt;p&gt;Some interesting findings:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;The word &lt;em&gt;hunt&lt;/em&gt; has appeared for the first time since 2008. It only appeard 6 times and ranked pretty low, but that&amp;rsquo;s a first nonetheless.&lt;/li&gt;
-&lt;li&gt;The word &lt;em&gt;iot&lt;/em&gt; jumped 881 spots to 192 in 2016, after showing up for the first time in 2015. This may indicate the strong interest in IOT security.&lt;/li&gt;
+&lt;li&gt;The word &lt;em&gt;hunt&lt;/em&gt; has appeared for the first time since 2008. It only appeared 6 times and ranked pretty low, but that&amp;rsquo;s a first nonetheless.&lt;/li&gt;
+&lt;li&gt;The word &lt;em&gt;iot&lt;/em&gt; jumped 881 spots to 192 in 2016, after showing up for the first time in 2015. This may indicate the strong interest in IoT security.&lt;/li&gt;
 &lt;li&gt;There&amp;rsquo;s no mention of &lt;em&gt;docker&lt;/em&gt; in any of the years, and only 5 mentions of container in 2016. This is a bit of a surprise given the noise docker/container is making. This is likely due to most customers care more about management for new technologies than security.&lt;/li&gt;
 &lt;li&gt;The word &lt;em&gt;firewall&lt;/em&gt; dropped 151 spots in 2016. I want to speculate that it is due to the dissolving of perimeters, but I can&amp;rsquo;t be sure of that.&lt;/li&gt;
 &lt;li&gt;As much as noise as &lt;em&gt;blockchain&lt;/em&gt; is making, there&amp;rsquo;s no mention of the word.&lt;/li&gt;
@@ -189,20 +189,20 @@
 &lt;/table&gt;
 
 &lt;p&gt;Here&amp;rsquo;s a word cloud that shows the &lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2016.png&#34;&gt;2016&lt;/a&gt; top words. You can also find word clouds for
-&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2008.png&#34;&gt;2008&lt;/a&gt;.
-&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2009.png&#34;&gt;2009&lt;/a&gt;.
-&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2010.png&#34;&gt;2010&lt;/a&gt;.
-&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2011.png&#34;&gt;2011&lt;/a&gt;.
-&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2012.png&#34;&gt;2012&lt;/a&gt;.
-&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2013.png&#34;&gt;2013&lt;/a&gt;.
-&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2014.png&#34;&gt;2014&lt;/a&gt;.
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2008.png&#34;&gt;2008&lt;/a&gt;,
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2009.png&#34;&gt;2009&lt;/a&gt;,
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2010.png&#34;&gt;2010&lt;/a&gt;,
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2011.png&#34;&gt;2011&lt;/a&gt;,
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2012.png&#34;&gt;2012&lt;/a&gt;,
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2013.png&#34;&gt;2013&lt;/a&gt;,
+&lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2014.png&#34;&gt;2014&lt;/a&gt;,
 &lt;a href=&#34;http://zhen.org/images/rsaconf/rsa2015.png&#34;&gt;2015&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/rsa2016.png&#34;&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;endpoint-vs-network:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Endpoint vs. Network&lt;/h3&gt;
 
-&lt;p&gt;While the word &lt;em&gt;network&lt;/em&gt; has maintained its top 10 position (except 2013 when it fell to #11), the big gainer is the word &lt;em&gt;endpoint&lt;/em&gt;, which improved drastically from #266 in 2012 to 2016&amp;rsquo;s #50. This may indicate that enterprises are much more accepting of endpoint technologies.&lt;/p&gt;
+&lt;p&gt;While the word &lt;em&gt;network&lt;/em&gt; has mostly maintained its top 10 position (except 2013 when it fell to #11), the big gainer is the word &lt;em&gt;endpoint&lt;/em&gt;, which improved drastically from #266 in 2012 to 2016&amp;rsquo;s #50. This may indicate that enterprises are much more accepting of endpoint technologies.&lt;/p&gt;
 
 &lt;p&gt;I also speculate that there might be a correlation between the increase in &lt;em&gt;cloud&lt;/em&gt; and the increase in &lt;em&gt;endpoint&lt;/em&gt;. As the perimeters get dissolved due to the move to cloud, it&amp;rsquo;s much more difficult to use network security technologies. So enterprises are looking at &lt;em&gt;endpoint&lt;/em&gt; technologies to secure their critical assets.&lt;/p&gt;
 
