@@ -32,6 +32,7 @@
 &lt;li&gt;There&amp;rsquo;s no mention of &lt;em&gt;docker&lt;/em&gt; in any of the years, and only 5 mentions of container in 2016. This is a bit of a surprise given the noise docker/container is making. This is likely due to most customers care more about management for new technologies than security.&lt;/li&gt;
 &lt;li&gt;The word &lt;em&gt;firewall&lt;/em&gt; dropped 151 spots in 2016. I want to speculate that it is due to the dissolving of perimeters, but I can&amp;rsquo;t be sure of that.&lt;/li&gt;
 &lt;li&gt;As much as noise as &lt;em&gt;blockchain&lt;/em&gt; is making, there&amp;rsquo;s no mention of the word.&lt;/li&gt;
+&lt;li&gt;The word &lt;em&gt;behavior&lt;/em&gt; (as in behavioral analysis) has also gained drastically over the past few years, going from #370 in 2012 to #78 in 2016.&lt;/li&gt;
 &lt;li&gt;See other findings below.&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -231,6 +232,12 @@
 &lt;p&gt;The word &lt;em&gt;phishing&lt;/em&gt; made drastic gains since 2014, jumping from #807 to #193 in 2016. This may indicate that enterprises are seeing more attacks from phishing, and vendors are targeting that specific attack vector.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/cyber-malware.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;it-s-all-about-behavior:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;It&amp;rsquo;s all about Behavior!&lt;/h3&gt;
+
+&lt;p&gt;The word &lt;em&gt;behavior&lt;/em&gt; (as in behavioral analysis) has also gained drastically over the past few years, going from #370 in 2012 to #78 in 2016.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/behavior.png&#34;&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;credits:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Credits&lt;/h3&gt;
 
