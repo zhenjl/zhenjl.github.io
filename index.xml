@@ -7,8 +7,266 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Jian Zhen. All Rights Reserved.</copyright>
-    <lastBuildDate>Fri, 05 Feb 2016 10:57:56 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 14 Feb 2016 10:57:56 -0800</lastBuildDate>
     <atom:link href="http://zhen.org/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>A Modern App Developer and An Old-Timer System Developer Walk Into a Bar</title>
+      <link>http://zhen.org/blog/two-developers-walk-into-a-bar/</link>
+      <pubDate>Sun, 14 Feb 2016 10:57:56 -0800</pubDate>
+      
+      <guid>http://zhen.org/blog/two-developers-walk-into-a-bar/</guid>
+      <description>
+
+&lt;p&gt;&lt;i class=&#34;fa fa-heart&#34;&gt;&lt;/i&gt; &lt;i class=&#34;fa fa-heart&#34;&gt;&lt;/i&gt; Happy Valentine&amp;rsquo;s Day! &lt;i class=&#34;fa fa-heart&#34;&gt;&lt;/i&gt; &lt;i class=&#34;fa fa-heart&#34;&gt;&lt;/i&gt;&lt;/p&gt;
+
+&lt;p&gt;A modern app developer and an old-timer system developer walk into a bar. They had a couple drinks and started talking about the current state of security on the Internet. In a flash of genius, they both decided it would be useful to map the Internet and see what IPs have vulnerable ports open. After some discussion, they decided on the following&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;They will port scan all of the IPv4 address (2^32=4,294,967,296) on a monthly basis&lt;/li&gt;
+&lt;li&gt;They will focus on a total of 20 ports including some well-known ports such as FTP (20, 21), telnet (23), ssh (22), SMTP (25), etc&lt;/li&gt;
+&lt;li&gt;They will use nmap to scan the IPs and ports&lt;/li&gt;
+&lt;li&gt;They need to store the port states as &lt;a href=&#34;https://nmap.org/book/man-port-scanning-basics.html&#34;&gt;open, closed, filtered, unfiltered, openfiltered and closedfiltered&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;They also need to store whether the host is up or down. One of the following two conditions must be met for a host to be &amp;ldquo;up&amp;rdquo;:
+
+&lt;ul&gt;
+&lt;li&gt;If the host has any of the ports open, it would be considered up&lt;/li&gt;
+&lt;li&gt;If the host responds to ping, it would be considered up&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;They will store the results so they can post process to generate reports, e.g.,
+
+&lt;ul&gt;
+&lt;li&gt;Count the Number of &amp;ldquo;Up&amp;rdquo; Hosts&lt;/li&gt;
+&lt;li&gt;Determine the Up/Down State of a Specific Host&lt;/li&gt;
+&lt;li&gt;Determine Which Hosts are &amp;ldquo;Up&amp;rdquo; in a Particular /24 Subnet&lt;/li&gt;
+&lt;li&gt;Count the Number of Hosts That Have Each of the Ports Open&lt;/li&gt;
+&lt;li&gt;How Many Total Hosts Were Seen as &amp;ldquo;Up&amp;rdquo; in the Past 3 Months?&lt;/li&gt;
+&lt;li&gt;How Many Hosts Changed State This Month (was &amp;ldquo;up&amp;rdquo; but now &amp;ldquo;down&amp;rdquo;, or was &amp;ldquo;down&amp;rdquo; but now &amp;ldquo;up&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;How Many Hosts Were &amp;ldquo;Down&amp;rdquo; Last Month But Now It&amp;rsquo;s &amp;ldquo;Up&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;How Many Hosts Were &amp;ldquo;Up&amp;rdquo; Last Month But Now It&amp;rsquo;s &amp;ldquo;Down&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;modern-app-developer-vs-old-timer-developer:81495eb0cd198863461f6e4666c91616&#34;&gt;Modern App Developer vs Old-Timer Developer&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s assume 300 million IPs are up, and has an average of 3 ports open.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;How would you architect this?&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Which approach is faster for each of these tasks?&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Which approach is easier to extend, e.g., add more ports?&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Which approach is more resource (cpu, memory, disk) intensive?&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Disclaimer: I don&amp;rsquo;t know ElasticSearch all that well, so feel free to correct me on any of the following.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;choose-a-language:81495eb0cd198863461f6e4666c91616&#34;&gt;Choose a Language&lt;/h3&gt;
+
+&lt;p&gt;Modern App Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I will use Python. It&amp;rsquo;s quick to get started and easy to understaind/maintain.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Old-Timer Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I will use Go. It&amp;rsquo;s fast, performant, and easy to understand/maintain!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;store-the-host-and-port-states:81495eb0cd198863461f6e4666c91616&#34;&gt;Store the Host and Port States&lt;/h3&gt;
+
+&lt;p&gt;Modern App Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I will use JSON! It&amp;rsquo;s human-readable, easy to parse (i.e., built in libraries), and everyone knows it!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+	&amp;quot;ip&amp;quot;: &amp;quot;10.1.1.1&amp;quot;,
+	&amp;quot;state&amp;quot;: &amp;quot;up&amp;quot;,
+	&amp;quot;ports&amp;quot;: {
+		&amp;quot;20&amp;quot;: &amp;quot;closed&amp;quot;,
+		&amp;quot;21&amp;quot;: &amp;quot;closed&amp;quot;,
+		&amp;quot;22&amp;quot;: &amp;quot;open&amp;quot;,
+		&amp;quot;23&amp;quot;: &amp;quot;closed&amp;quot;,
+		.
+		.
+		.
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;For each host, I will need approximately 400 bytes to represent the host, the up/down state and the 20 port states.&lt;/p&gt;
+
+&lt;p&gt;For 300 million IPs, it will take me about 112GB of space to store all host and port states.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I will use one bit array (memory mapped file) to store the host state, with 1 bit per host. If the bit is 1, then the host up; if it&amp;rsquo;s 0, then the host is down.&lt;/p&gt;
+
+&lt;p&gt;Given there are 2^32 IPv4 addresses, the bit array will be 2^32 / 8=536,870,912 or 512MBs&lt;/p&gt;
+
+&lt;p&gt;I don&amp;rsquo;t need to store the IP address separately since the IPv4 address will convert into a number, which can then be used to index into the bit array.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;I will then use a second bit array (memory mapped file) to store the port states. Given there are 6 port states, I will use 3 bits to represent each port state, and 60 bits to represent the 20 port states. I will basically use one uint64 to represent the port states for each host.&lt;/p&gt;
+
+&lt;p&gt;For all 4B IPs, I will need approximately 32GB of space to store the port states. Together, it will take me about 33GB of space to store all host and port states.&lt;/p&gt;
+
+&lt;p&gt;I can probably use &lt;a href=&#34;http://localhost:1313/blog/bitmap-compression-using-ewah-in-go/&#34;&gt;EWAH bitmap compression&lt;/a&gt;
+ to gain some space efficiency, but let&amp;rsquo;s assume we are not compressing for now. Also if I do EWAH bitmap compression, I may lose out on the ability to do population counting (see below).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;count-the-number-of-up-hosts:81495eb0cd198863461f6e4666c91616&#34;&gt;Count the Number of &amp;ldquo;Up&amp;rdquo; Hosts&lt;/h3&gt;
+
+&lt;p&gt;Modern App Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This is a big data problem. Let&amp;rsquo;s use Hadoop!&lt;/p&gt;
+
+&lt;p&gt;I will write a map/reduce hadoop job to process all 300 million host JSON results (documents), and count all the IPs that are &amp;ldquo;up&amp;rdquo;.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Maybe this is a search problem. Let&amp;rsquo;s use ElasticSearch!&lt;/p&gt;
+
+&lt;p&gt;I will index all 300M JSON documents with ElasticSearch (ES) on the &amp;ldquo;state&amp;rdquo; field. Then I can just run a query that counts the results of the search where &amp;ldquo;state&amp;rdquo; is &amp;ldquo;up&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;I do realize there&amp;rsquo;s additional storage required for the ES index. Let&amp;rsquo;s assume it&amp;rsquo;s &lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;8&lt;/sub&gt; of the original document sizes. This means there&amp;rsquo;s possibly another 14GB of index data, bringing the total to 126GB.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This is a &lt;a href=&#34;https://github.com/zhenjl/bitmap/blob/master/ewah/bitcounter.go#L69&#34;&gt;bit counting&lt;/a&gt;, or &lt;em&gt;popcount()&lt;/em&gt;, problem. It&amp;rsquo;s just simple math. I can iterate through the array of uint64&amp;rsquo;s (~8.4M uint64&amp;rsquo;s), count the bits for each, and add them up!&lt;/p&gt;
+
+&lt;p&gt;I can also split the work by creating multiple goroutines (assuming Go), similar to map/reduce, to gain faster calculation.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;determine-the-up-down-state-of-a-specific-host:81495eb0cd198863461f6e4666c91616&#34;&gt;Determine the Up/Down State of a Specific Host&lt;/h3&gt;
+
+&lt;p&gt;Modern App Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I know, this is a search problem. Let&amp;rsquo;s use ElasticSearch!&lt;/p&gt;
+
+&lt;p&gt;I will have ElasticSearch index the &amp;ldquo;ip&amp;rdquo; field, in addition to the &amp;ldquo;state&amp;rdquo; field from earlier. Then for any IP, I can search for the document where &amp;ldquo;ip&amp;rdquo; equals the requested IP. From that document, I can then find the value of the &amp;ldquo;state&amp;rdquo;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This should be easy. I just need to index into the bit array using the integer value of the IPv4, and find out if the bit value is 1 or 0.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;determine-which-hosts-are-up-in-a-particular-24-subnet:81495eb0cd198863461f6e4666c91616&#34;&gt;Determine Which Hosts are &amp;ldquo;Up&amp;rdquo; in a Particular /24 Subnet&lt;/h3&gt;
+
+&lt;p&gt;Modern App Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This is similar to searching for a single IP. I will search for documents where IP is in the subnet (using CIDR notation search in ES) AND the &amp;ldquo;state&amp;rdquo; is &amp;ldquo;up&amp;rdquo;. This will return a list of search results which I can then iterate and retrieve the host IP.&lt;/p&gt;
+
+&lt;p&gt;Or&lt;/p&gt;
+
+&lt;p&gt;This is a map reduce job that I can write to process the 300 million JSON documents and return all the host IPs that are &amp;ldquo;up&amp;rdquo; in that /24 subnet.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This is just another bit iteration problem. I will use the first IP address of the subnet to determine where in the bit array I should start. Then I calculate the number of IPs in that subnet. From there, I just iterate through the bit array and for every bit that&amp;rsquo;s 1, I convert the index of that bit into an IPv4 address and add to the list of &amp;ldquo;Up&amp;rdquo; hosts.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;count-the-number-of-hosts-that-have-each-of-the-ports-open:81495eb0cd198863461f6e4666c91616&#34;&gt;Count the Number of Hosts That Have Each of the Ports Open&lt;/h3&gt;
+
+&lt;p&gt;For example, the report could simply be:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;20: 3,023
+21: 3,023
+22: 1,203,840
+.
+.
+.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Modern App Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This is a big data problem. I will use Hadoop and write a map/reduce job. The job will return the host count for each of the port.&lt;/p&gt;
+
+&lt;p&gt;This can probably also be done with ElasticSearch. It would require the port state to be index, which will increase the index size. I can then count the results for the search for ports 22 = &amp;ldquo;open&amp;rdquo;, and repeat for each port.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This is a simple counting problem. I will walk through the host state bit array, and for every host that&amp;rsquo;s up, I will use the bit index to index into the port state uint64 array and get the uint64 that represents all the port states for that host. I will then walk through each of the 3-bit bundles for the ports, and add up the counts if the port is &amp;ldquo;open&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;Again, this can easily be paralleized by creating multiple goroutines (assuming Go).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;how-many-total-hosts-were-seen-as-up-in-the-past-3-months:81495eb0cd198863461f6e4666c91616&#34;&gt;How Many Total Hosts Were Seen as &amp;ldquo;Up&amp;rdquo; in the Past 3 Months&lt;/h3&gt;
+
+&lt;p&gt;Modern App Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I can retrieve the &amp;ldquo;Up&amp;rdquo; host list for each month, and then go through all 3 lists and dedup into a single list. This would require quite a bit of processing and iteration.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I can perform a simple AND operation on the 3 monthly bit arrays, and then count the number of &amp;ldquo;1&amp;rdquo; bits.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;how-many-hosts-changed-state-this-month-was-up-but-now-down-or-was-down-but-now-up:81495eb0cd198863461f6e4666c91616&#34;&gt;How Many Hosts Changed State This Month (was &amp;ldquo;up&amp;rdquo; but now &amp;ldquo;down&amp;rdquo;, or was &amp;ldquo;down&amp;rdquo; but now &amp;ldquo;up&amp;rdquo;)&lt;/h3&gt;
+
+&lt;p&gt;Modern App Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Hm&amp;hellip;I am not sure how to do that easily. I guess I can just iterate through last month&amp;rsquo;s hosts, and for each host check to see if it changed state this month. Then for each host that I haven&amp;rsquo;t checked this month, iterate and check that list against last month&amp;rsquo;s result.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I can perform a simple XOR operation on the bit arrays from this and last month. Then count the number of &amp;ldquo;1&amp;rdquo; bits of the resulting bit array.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;how-many-hosts-were-up-last-month-but-now-it-s-down:81495eb0cd198863461f6e4666c91616&#34;&gt;How Many Hosts Were &amp;ldquo;Up&amp;rdquo; Last Month But Now It&amp;rsquo;s &amp;ldquo;Down&amp;rdquo;&lt;/h3&gt;
+
+&lt;p&gt;Modern App Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I can retrieve the &amp;ldquo;Up&amp;rdquo; hosts from last month from ES, then for each &amp;ldquo;Up&amp;rdquo; host, search for it with the state equals to &amp;ldquo;Down&amp;rdquo; this month, and accumulate the results.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I can perform this opeartion: &lt;code&gt;(this_month XOR last_month) XOR last_month&lt;/code&gt;. This will return a bit array that has the bit set if the host was &amp;ldquo;up&amp;rdquo; last month but now it&amp;rsquo;s &amp;ldquo;down&amp;rdquo;. Then count the number of &amp;ldquo;1&amp;rdquo; bits of the resulting bit array.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;how-many-hosts-were-down-last-month-but-now-it-s-up:81495eb0cd198863461f6e4666c91616&#34;&gt;How Many Hosts Were &amp;ldquo;Down&amp;rdquo; Last Month But Now It&amp;rsquo;s &amp;ldquo;Up&amp;rdquo;&lt;/h3&gt;
+
+&lt;p&gt;Modern App Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I can retrieve the &amp;ldquo;Down&amp;rdquo; hosts from last month from ES, then for each &amp;ldquo;Down&amp;rdquo; host, search for it with the state equals to &amp;ldquo;Up&amp;rdquo; this month, and accumulate the results.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I can perform this opeartion: &lt;code&gt;(this_month XOR last_month) XOR this_month&lt;/code&gt;. This will return a bit array that has the bit set if the host was &amp;ldquo;down&amp;rdquo; last month but now it&amp;rsquo;s &amp;ldquo;up&amp;rdquo;. Then count the number of &amp;ldquo;1&amp;rdquo; bits of the resulting bit array.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
     
     <item>
       <title>2016: Analyzing Security Trends Using RSA Exhibitor Descriptions</title>
@@ -2590,36 +2848,6 @@ Total Received 40000000 messages in 51420975243 ns, 1285 ns/msg, 777892 msgs/sec
 &lt;h3 id=&#34;next-steps:6ef28047216284b846a43eee6e7c23b5&#34;&gt;Next Steps&lt;/h3&gt;
 
 &lt;p&gt;There&amp;rsquo;s a lot more to do with SurgeMQ. Given the limited time I have, I expect it will take me a while to get to full compliant with the MQTT spec. But that will be my focus, now that performance is out of the way, as I get time.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Graceful Shutdown of Go net.Listeners</title>
-      <link>http://zhen.org/blog/graceful-shutdown-of-go-net-dot-listeners/</link>
-      <pubDate>Thu, 12 Dec 2013 23:33:22 -0800</pubDate>
-      
-      <guid>http://zhen.org/blog/graceful-shutdown-of-go-net-dot-listeners/</guid>
-      <description>&lt;p&gt;Comments/Feedbacks at &lt;a href=&#34;https://news.ycombinator.com/item?id=6899568&#34;&gt;Hacker News&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1ss929/graceful_shutdown_of_go_netlisteners/&#34;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;The past few evenings I&amp;rsquo;ve been working on a Go program that listens on a TCP socket, accepts new connections, processes some data and then return some data to the client. This is actually fairly simple in Go. The &lt;a href=&#34;http://golang.org/pkg/net&#34;&gt;top&lt;/a&gt; of the &lt;em&gt;net&lt;/em&gt; package has some fairly simple examples of how to do that. Another example can be found about &lt;a href=&#34;http://golang.org/pkg/net/#example_Listener&#34;&gt;mid-section&lt;/a&gt; of the page. You can also find a TON of examples online that shows you how to build a simple TCP listener.&lt;/p&gt;
-
-&lt;p&gt;However, one thing I noticed in all these examples is that none of them shows you how to gracefully shutdown the TCP listener. Most of the examples expect to program to exit so there&amp;rsquo;s no need to clean up anything. However, if you have a program that&amp;rsquo;s a long-running server, and need to, for whatever reason, need to shutdown the TCP listener, you will need to clean up after yourself. Otherwise you may leave a bunch of goroutines behind unintentionally.&lt;/p&gt;
-
-&lt;p&gt;Another reason I wanted a way to shutdown the TCP listener is I want to be able to start a listener in my tests, then start up a bunch of clients, test some stuff, then afterwards shutdown the server. Then I can start another listener in another test for some other tests.&lt;/p&gt;
-
-&lt;p&gt;After some help from jhoto and foobaz on the #go-nuts IRC channel, I wrote the following example to demonstrate the graceful shutdown approach.&lt;/p&gt;
-
-&lt;p&gt;The basic idea is to leverage a quit channel to tell the Accept() goroutine that it&amp;rsquo;s time to quit. Using quit channel is a fairly common practice in Go. However, in this case, the Accept() call is blocking waiting for new connections, so closing the quit channel won&amp;rsquo;t have any effect unless the goroutine actually checks it. So to force Accept() to return from blocking, we can close the net.Listener.&lt;/p&gt;
-
-&lt;p&gt;The order of the operation matters somewhat. We will want to first close the quit channel, then close the net.Listener. If we reverse the order, you will likely see a few more errors from the Accept() call.&lt;/p&gt;
-
-&lt;p&gt;The netgrace_test.go file below shows an example of how to use the quit channel to help gracefully shutdown net.Listeners.&lt;/p&gt;
-
-&lt;p&gt;Hopefully you will find this tip useful. You can find it as a &lt;a href=&#34;https://gist.github.com/zhenjl/7940977&#34;&gt;gist&lt;/a&gt; as well.&lt;/p&gt;
-
-&lt;script src=&#34;https://gist.github.com/zhenjl/7940977.js&#34;&gt;&lt;/script&gt;
-
-&lt;p&gt;Comments/Feedbacks at &lt;a href=&#34;https://news.ycombinator.com/item?id=6899568&#34;&gt;Hacker News&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/comments/1ss929/graceful_shutdown_of_go_netlisteners/&#34;&gt;Reddit&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

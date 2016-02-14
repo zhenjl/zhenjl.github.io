@@ -79,6 +79,267 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="http://zhen.org/blog/two-developers-walk-into-a-bar/">
+        A Modern App Developer and An Old-Timer System Developer Walk Into a Bar
+      </a>
+    </h1>
+
+    <span class="post-date">Sun, Feb 14, 2016</span>
+
+    
+
+<p><i class="fa fa-heart"></i> <i class="fa fa-heart"></i> Happy Valentine&rsquo;s Day! <i class="fa fa-heart"></i> <i class="fa fa-heart"></i></p>
+
+<p>A modern app developer and an old-timer system developer walk into a bar. They had a couple drinks and started talking about the current state of security on the Internet. In a flash of genius, they both decided it would be useful to map the Internet and see what IPs have vulnerable ports open. After some discussion, they decided on the following</p>
+
+<ul>
+<li>They will port scan all of the IPv4 address (2^32=4,294,967,296) on a monthly basis</li>
+<li>They will focus on a total of 20 ports including some well-known ports such as FTP (20, 21), telnet (23), ssh (22), SMTP (25), etc</li>
+<li>They will use nmap to scan the IPs and ports</li>
+<li>They need to store the port states as <a href="https://nmap.org/book/man-port-scanning-basics.html">open, closed, filtered, unfiltered, openfiltered and closedfiltered</a></li>
+<li>They also need to store whether the host is up or down. One of the following two conditions must be met for a host to be &ldquo;up&rdquo;:
+
+<ul>
+<li>If the host has any of the ports open, it would be considered up</li>
+<li>If the host responds to ping, it would be considered up</li>
+</ul></li>
+<li>They will store the results so they can post process to generate reports, e.g.,
+
+<ul>
+<li>Count the Number of &ldquo;Up&rdquo; Hosts</li>
+<li>Determine the Up/Down State of a Specific Host</li>
+<li>Determine Which Hosts are &ldquo;Up&rdquo; in a Particular /24 Subnet</li>
+<li>Count the Number of Hosts That Have Each of the Ports Open</li>
+<li>How Many Total Hosts Were Seen as &ldquo;Up&rdquo; in the Past 3 Months?</li>
+<li>How Many Hosts Changed State This Month (was &ldquo;up&rdquo; but now &ldquo;down&rdquo;, or was &ldquo;down&rdquo; but now &ldquo;up&rdquo;)</li>
+<li>How Many Hosts Were &ldquo;Down&rdquo; Last Month But Now It&rsquo;s &ldquo;Up&rdquo;</li>
+<li>How Many Hosts Were &ldquo;Up&rdquo; Last Month But Now It&rsquo;s &ldquo;Down&rdquo;</li>
+</ul></li>
+</ul>
+
+<h2 id="modern-app-developer-vs-old-timer-developer:81495eb0cd198863461f6e4666c91616">Modern App Developer vs Old-Timer Developer</h2>
+
+<p>Let&rsquo;s assume 300 million IPs are up, and has an average of 3 ports open.</p>
+
+<ul>
+<li><em><strong>How would you architect this?</strong></em></li>
+<li><em><strong>Which approach is faster for each of these tasks?</strong></em></li>
+<li><em><strong>Which approach is easier to extend, e.g., add more ports?</strong></em></li>
+<li><em><strong>Which approach is more resource (cpu, memory, disk) intensive?</strong></em></li>
+</ul>
+
+<p><em>Disclaimer: I don&rsquo;t know ElasticSearch all that well, so feel free to correct me on any of the following.</em></p>
+
+<h3 id="choose-a-language:81495eb0cd198863461f6e4666c91616">Choose a Language</h3>
+
+<p>Modern App Developer:</p>
+
+<blockquote>
+<p>I will use Python. It&rsquo;s quick to get started and easy to understaind/maintain.</p>
+</blockquote>
+
+<p>Old-Timer Developer:</p>
+
+<blockquote>
+<p>I will use Go. It&rsquo;s fast, performant, and easy to understand/maintain!</p>
+</blockquote>
+
+<h3 id="store-the-host-and-port-states:81495eb0cd198863461f6e4666c91616">Store the Host and Port States</h3>
+
+<p>Modern App Developer:</p>
+
+<blockquote>
+<p>I will use JSON! It&rsquo;s human-readable, easy to parse (i.e., built in libraries), and everyone knows it!</p>
+</blockquote>
+
+<pre><code>{
+	&quot;ip&quot;: &quot;10.1.1.1&quot;,
+	&quot;state&quot;: &quot;up&quot;,
+	&quot;ports&quot;: {
+		&quot;20&quot;: &quot;closed&quot;,
+		&quot;21&quot;: &quot;closed&quot;,
+		&quot;22&quot;: &quot;open&quot;,
+		&quot;23&quot;: &quot;closed&quot;,
+		.
+		.
+		.
+	}
+}
+</code></pre>
+
+<blockquote>
+<p>For each host, I will need approximately 400 bytes to represent the host, the up/down state and the 20 port states.</p>
+
+<p>For 300 million IPs, it will take me about 112GB of space to store all host and port states.</p>
+</blockquote>
+
+<p>Old-Timer System Developer:</p>
+
+<blockquote>
+<p>I will use one bit array (memory mapped file) to store the host state, with 1 bit per host. If the bit is 1, then the host up; if it&rsquo;s 0, then the host is down.</p>
+
+<p>Given there are 2^32 IPv4 addresses, the bit array will be 2^32 / 8=536,870,912 or 512MBs</p>
+
+<p>I don&rsquo;t need to store the IP address separately since the IPv4 address will convert into a number, which can then be used to index into the bit array.</p>
+
+<hr />
+
+<p>I will then use a second bit array (memory mapped file) to store the port states. Given there are 6 port states, I will use 3 bits to represent each port state, and 60 bits to represent the 20 port states. I will basically use one uint64 to represent the port states for each host.</p>
+
+<p>For all 4B IPs, I will need approximately 32GB of space to store the port states. Together, it will take me about 33GB of space to store all host and port states.</p>
+
+<p>I can probably use <a href="http://localhost:1313/blog/bitmap-compression-using-ewah-in-go/">EWAH bitmap compression</a>
+ to gain some space efficiency, but let&rsquo;s assume we are not compressing for now. Also if I do EWAH bitmap compression, I may lose out on the ability to do population counting (see below).</p>
+</blockquote>
+
+<h3 id="count-the-number-of-up-hosts:81495eb0cd198863461f6e4666c91616">Count the Number of &ldquo;Up&rdquo; Hosts</h3>
+
+<p>Modern App Developer:</p>
+
+<blockquote>
+<p>This is a big data problem. Let&rsquo;s use Hadoop!</p>
+
+<p>I will write a map/reduce hadoop job to process all 300 million host JSON results (documents), and count all the IPs that are &ldquo;up&rdquo;.</p>
+
+<hr />
+
+<p>Maybe this is a search problem. Let&rsquo;s use ElasticSearch!</p>
+
+<p>I will index all 300M JSON documents with ElasticSearch (ES) on the &ldquo;state&rdquo; field. Then I can just run a query that counts the results of the search where &ldquo;state&rdquo; is &ldquo;up&rdquo;.</p>
+
+<p>I do realize there&rsquo;s additional storage required for the ES index. Let&rsquo;s assume it&rsquo;s <sup>1</sup>&frasl;<sub>8</sub> of the original document sizes. This means there&rsquo;s possibly another 14GB of index data, bringing the total to 126GB.</p>
+</blockquote>
+
+<p>Old-Timer System Developer:</p>
+
+<blockquote>
+<p>This is a <a href="https://github.com/zhenjl/bitmap/blob/master/ewah/bitcounter.go#L69">bit counting</a>, or <em>popcount()</em>, problem. It&rsquo;s just simple math. I can iterate through the array of uint64&rsquo;s (~8.4M uint64&rsquo;s), count the bits for each, and add them up!</p>
+
+<p>I can also split the work by creating multiple goroutines (assuming Go), similar to map/reduce, to gain faster calculation.</p>
+</blockquote>
+
+<h3 id="determine-the-up-down-state-of-a-specific-host:81495eb0cd198863461f6e4666c91616">Determine the Up/Down State of a Specific Host</h3>
+
+<p>Modern App Developer:</p>
+
+<blockquote>
+<p>I know, this is a search problem. Let&rsquo;s use ElasticSearch!</p>
+
+<p>I will have ElasticSearch index the &ldquo;ip&rdquo; field, in addition to the &ldquo;state&rdquo; field from earlier. Then for any IP, I can search for the document where &ldquo;ip&rdquo; equals the requested IP. From that document, I can then find the value of the &ldquo;state&rdquo;.</p>
+</blockquote>
+
+<p>Old-Timer System Developer:</p>
+
+<blockquote>
+<p>This should be easy. I just need to index into the bit array using the integer value of the IPv4, and find out if the bit value is 1 or 0.</p>
+</blockquote>
+
+<h3 id="determine-which-hosts-are-up-in-a-particular-24-subnet:81495eb0cd198863461f6e4666c91616">Determine Which Hosts are &ldquo;Up&rdquo; in a Particular /24 Subnet</h3>
+
+<p>Modern App Developer:</p>
+
+<blockquote>
+<p>This is similar to searching for a single IP. I will search for documents where IP is in the subnet (using CIDR notation search in ES) AND the &ldquo;state&rdquo; is &ldquo;up&rdquo;. This will return a list of search results which I can then iterate and retrieve the host IP.</p>
+
+<p>Or</p>
+
+<p>This is a map reduce job that I can write to process the 300 million JSON documents and return all the host IPs that are &ldquo;up&rdquo; in that /24 subnet.</p>
+</blockquote>
+
+<p>Old-Timer System Developer:</p>
+
+<blockquote>
+<p>This is just another bit iteration problem. I will use the first IP address of the subnet to determine where in the bit array I should start. Then I calculate the number of IPs in that subnet. From there, I just iterate through the bit array and for every bit that&rsquo;s 1, I convert the index of that bit into an IPv4 address and add to the list of &ldquo;Up&rdquo; hosts.</p>
+</blockquote>
+
+<h3 id="count-the-number-of-hosts-that-have-each-of-the-ports-open:81495eb0cd198863461f6e4666c91616">Count the Number of Hosts That Have Each of the Ports Open</h3>
+
+<p>For example, the report could simply be:</p>
+
+<pre><code>20: 3,023
+21: 3,023
+22: 1,203,840
+.
+.
+.
+</code></pre>
+
+<p>Modern App Developer:</p>
+
+<blockquote>
+<p>This is a big data problem. I will use Hadoop and write a map/reduce job. The job will return the host count for each of the port.</p>
+
+<p>This can probably also be done with ElasticSearch. It would require the port state to be index, which will increase the index size. I can then count the results for the search for ports 22 = &ldquo;open&rdquo;, and repeat for each port.</p>
+</blockquote>
+
+<p>Old-Timer System Developer:</p>
+
+<blockquote>
+<p>This is a simple counting problem. I will walk through the host state bit array, and for every host that&rsquo;s up, I will use the bit index to index into the port state uint64 array and get the uint64 that represents all the port states for that host. I will then walk through each of the 3-bit bundles for the ports, and add up the counts if the port is &ldquo;open&rdquo;.</p>
+
+<p>Again, this can easily be paralleized by creating multiple goroutines (assuming Go).</p>
+</blockquote>
+
+<h3 id="how-many-total-hosts-were-seen-as-up-in-the-past-3-months:81495eb0cd198863461f6e4666c91616">How Many Total Hosts Were Seen as &ldquo;Up&rdquo; in the Past 3 Months</h3>
+
+<p>Modern App Developer:</p>
+
+<blockquote>
+<p>I can retrieve the &ldquo;Up&rdquo; host list for each month, and then go through all 3 lists and dedup into a single list. This would require quite a bit of processing and iteration.</p>
+</blockquote>
+
+<p>Old-Timer System Developer:</p>
+
+<blockquote>
+<p>I can perform a simple AND operation on the 3 monthly bit arrays, and then count the number of &ldquo;1&rdquo; bits.</p>
+</blockquote>
+
+<h3 id="how-many-hosts-changed-state-this-month-was-up-but-now-down-or-was-down-but-now-up:81495eb0cd198863461f6e4666c91616">How Many Hosts Changed State This Month (was &ldquo;up&rdquo; but now &ldquo;down&rdquo;, or was &ldquo;down&rdquo; but now &ldquo;up&rdquo;)</h3>
+
+<p>Modern App Developer:</p>
+
+<blockquote>
+<p>Hm&hellip;I am not sure how to do that easily. I guess I can just iterate through last month&rsquo;s hosts, and for each host check to see if it changed state this month. Then for each host that I haven&rsquo;t checked this month, iterate and check that list against last month&rsquo;s result.</p>
+</blockquote>
+
+<p>Old-Timer System Developer:</p>
+
+<blockquote>
+<p>I can perform a simple XOR operation on the bit arrays from this and last month. Then count the number of &ldquo;1&rdquo; bits of the resulting bit array.</p>
+</blockquote>
+
+<h3 id="how-many-hosts-were-up-last-month-but-now-it-s-down:81495eb0cd198863461f6e4666c91616">How Many Hosts Were &ldquo;Up&rdquo; Last Month But Now It&rsquo;s &ldquo;Down&rdquo;</h3>
+
+<p>Modern App Developer:</p>
+
+<blockquote>
+<p>I can retrieve the &ldquo;Up&rdquo; hosts from last month from ES, then for each &ldquo;Up&rdquo; host, search for it with the state equals to &ldquo;Down&rdquo; this month, and accumulate the results.</p>
+</blockquote>
+
+<p>Old-Timer System Developer:</p>
+
+<blockquote>
+<p>I can perform this opeartion: <code>(this_month XOR last_month) XOR last_month</code>. This will return a bit array that has the bit set if the host was &ldquo;up&rdquo; last month but now it&rsquo;s &ldquo;down&rdquo;. Then count the number of &ldquo;1&rdquo; bits of the resulting bit array.</p>
+</blockquote>
+
+<h3 id="how-many-hosts-were-down-last-month-but-now-it-s-up:81495eb0cd198863461f6e4666c91616">How Many Hosts Were &ldquo;Down&rdquo; Last Month But Now It&rsquo;s &ldquo;Up&rdquo;</h3>
+
+<p>Modern App Developer:</p>
+
+<blockquote>
+<p>I can retrieve the &ldquo;Down&rdquo; hosts from last month from ES, then for each &ldquo;Down&rdquo; host, search for it with the state equals to &ldquo;Up&rdquo; this month, and accumulate the results.</p>
+</blockquote>
+
+<p>Old-Timer System Developer:</p>
+
+<blockquote>
+<p>I can perform this opeartion: <code>(this_month XOR last_month) XOR this_month</code>. This will return a bit array that has the bit set if the host was &ldquo;down&rdquo; last month but now it&rsquo;s &ldquo;up&rdquo;. Then count the number of &ldquo;1&rdquo; bits of the resulting bit array.</p>
+</blockquote>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="http://zhen.org/blog/2016-analyzing-security-trends-using-rsa-exhibitor-descriptions/">
         2016: Analyzing Security Trends Using RSA Exhibitor Descriptions
       </a>
@@ -372,246 +633,13 @@
 
   </div>
   
-  <div class="post">
-    <h1 class="post-title">
-      <a href="http://zhen.org/blog/analyzing-security-trends-using-rsa-exhibitor-descriptions/">
-        Analyzing Security Trends Using RSA Exhibitor Descriptions
-      </a>
-    </h1>
-
-    <span class="post-date">Sun, Mar 22, 2015</span>
-
-    
-
-<p><strong>The data used for this post is available <a href="https://github.com/topclouds/rsaconf">here</a>. A word of warning, I only have complete data set for 2014 and 2015. For 2008-2013, I have what I consider to be representative samples. So please take the result set with a big bucket of salt.</strong></p>
-
-<hr />
-
-<p>After going through this analysis, the big question I wonder out loud is:</p>
-
-<blockquote>
-<p><em>How can vendors differentiate from each other and stand above the crowd when everyone is using the same words to describe themselves?</em></p>
-</blockquote>
-
-<hr />
-
-<p>The annual security conference, <a href="http://www.rsaconference.com/events/us15">RSA 2015</a>, is right around the corner. Close to 30,000 attendees will descend into <a href="http://moscone.com">San Francisco Moscone Center</a> to attend 400+ sessions, listen to 600+ speakers and talk to close to 600 vendors and exhibitors.</p>
-
-<p>For me, the most interesting aspect of RSA is walking the expo floor, and listening to how vendors describe their products. Intuitively, the vendor marketing messages should have a high degree of correlation to what customers care about, even if the messages trail the actual pain points slightly.</p>
-
-<p>This post highlights some of the unsurprising findings from analyzing 8 years worth of RSA Conference exihibitor descriptions.</p>
-
-<p>It is interesting how almost all vendor descriptions use the same set of words to describe themselves, and these words mostly haven&rsquo;t changed over the past 8 years. For example, the following table shows the top 10 words used in RSA conference exhibitor descriptions for the past 8 years. You can find the complete word list at &hellip;</p>
-
-<table>
-<thead>
-<tr>
-<th align="right">#</th>
-<th>2008</th>
-<th>2009</th>
-<th>2010</th>
-<th>2011</th>
-<th>2012</th>
-<th>2013</th>
-<th>2014</th>
-<th>2015</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="right">1</td>
-<td>secure</td>
-<td>secure</td>
-<td>secure</td>
-<td>secure</td>
-<td>secure</td>
-<td>secure</td>
-<td>secure</td>
-<td>secure</td>
-</tr>
-
-<tr>
-<td align="right">2</td>
-<td>solution</td>
-<td>solution</td>
-<td>solution</td>
-<td>solution</td>
-<td>solution</td>
-<td>solution</td>
-<td>solution</td>
-<td>solution</td>
-</tr>
-
-<tr>
-<td align="right">3</td>
-<td>network</td>
-<td>manage</td>
-<td>manage</td>
-<td>network</td>
-<td>provide</td>
-<td>provide</td>
-<td>provide</td>
-<td>provide</td>
-</tr>
-
-<tr>
-<td align="right">4</td>
-<td>provide</td>
-<td>provide</td>
-<td>network</td>
-<td>provide</td>
-<td>manage</td>
-<td>manage</td>
-<td>network</td>
-<td>data</td>
-</tr>
-
-<tr>
-<td align="right">5</td>
-<td>manage</td>
-<td>data</td>
-<td>protect</td>
-<td>manage</td>
-<td>network</td>
-<td>service</td>
-<td>manage</td>
-<td>network</td>
-</tr>
-
-<tr>
-<td align="right">6</td>
-<td>enterprise</td>
-<td>network</td>
-<td>provide</td>
-<td>data</td>
-<td>information</td>
-<td>more</td>
-<td>data</td>
-<td>protect</td>
-</tr>
-
-<tr>
-<td align="right">7</td>
-<td>data</td>
-<td>company</td>
-<td>data</td>
-<td>information</td>
-<td>software</td>
-<td>software</td>
-<td>protect</td>
-<td>threat</td>
-</tr>
-
-<tr>
-<td align="right">8</td>
-<td>product</td>
-<td>service</td>
-<td>organization</td>
-<td>enterprise</td>
-<td>enterprise</td>
-<td>information</td>
-<td>threat</td>
-<td>manage</td>
-</tr>
-
-<tr>
-<td align="right">9</td>
-<td>technology</td>
-<td>software</td>
-<td>information</td>
-<td>technology</td>
-<td>data</td>
-<td>enterprise</td>
-<td>service</td>
-<td>service</td>
-</tr>
-
-<tr>
-<td align="right">10</td>
-<td>application</td>
-<td>busy</td>
-<td>risk</td>
-<td>product</td>
-<td>more</td>
-<td>customer</td>
-<td>enterprise</td>
-<td>enterprise</td>
-</tr>
-</tbody>
-</table>
-
-<p>Here&rsquo;s a word cloud that shows the <a href="https://github.com/topclouds/rsaconf/blob/master/rsa2015.png">2015</a> top words. You can also find word clouds for
-<a href="https://github.com/topclouds/rsaconf/blob/master/rsa2008.png">2008</a>,
-<a href="https://github.com/topclouds/rsaconf/blob/master/rsa2009.png">2009</a>,
-<a href="https://github.com/topclouds/rsaconf/blob/master/rsa2010.png">2010</a>,
-<a href="https://github.com/topclouds/rsaconf/blob/master/rsa2011.png">2011</a>,
-<a href="https://github.com/topclouds/rsaconf/blob/master/rsa2012.png">2012</a>,
-<a href="https://github.com/topclouds/rsaconf/blob/master/rsa2013.png">2013</a>,
-<a href="https://github.com/topclouds/rsaconf/blob/master/rsa2014.png">2014</a>.</p>
-
-<p><img src="/images/rsaconf/rsa2015.png"></p>
-
-<h3 id="compliance-down-threats-up:b082a5c20b5449f4372a8955a4b5d0dd">Compliance Down, Threats Up</h3>
-
-<p>While the macro trend has not changed dramatically for the exhibitor descriptions, there have been some micro trends. Here are a couple of examples.</p>
-
-<p>First, the use of the word <em>compliance</em> has gone down over the years, while the word <em>threat</em> has gone up. After 2013, they changed places with each other.</p>
-
-<p>This finding is probably not surprising. At the end of 2013, one of the biggest breaches, Target, happened. And over the next two years we&rsquo;ve seen major breaches of Sony, Anthem, Home Depot, Premera and many others. Threats to both the corporate infrastructure as well as top executive jobs (just ask <a href="http://www.forbes.com/sites/ericbasu/2014/06/15/target-ceo-fired-can-you-be-fired-if-your-company-is-hacked/">Target’s CEO Gregg Steinhafel</a>, or <a href="http://abcnews.go.com/Entertainment/wireStory/sony-chief-amy-pascal-acknowledges-fired-28918607">Sony&rsquo;s Co-Chairwoman Amy Pascal</a>) are becoming real. So it seems natural for the marketers to start using the word <em>threat</em> to highlight their solutions.</p>
-
-<p><em>Compliance</em> was a big use case in security for many years, and many vendors have leveraged the need for compliance to build their company and revenue pipeline since the mid-2000s. However, use cases can only remain in fashion for so long before customers get sick of hearing about them, and vendors need new ways of selling their wares to customers. So it looks like <em>compliance</em> is finally out of fashion around 2011 and started declining in exhibitor descriptions.</p>
-
-<p><img src="/images/rsaconf/compliance-threat.png"></p>
-
-<h3 id="mobile-and-cloud-up:b082a5c20b5449f4372a8955a4b5d0dd">Mobile and Cloud Up</h3>
-
-<p>The words <em>mobile</em> and <em>cloud</em> has gained dramatically in rankings over past 8 years. In fact, it&rsquo;s been consistently one of the top words used in the last 4. For anyone who hasn&rsquo;t been hiding under a rock in the past few years, this is completely unsurprising.</p>
-
-<p>The <em>cloud</em> war started to heat up back in 2009 when most major service providers have felt the Amazon Web Services threat and all wanted to build their own clouds. In fact, I joined VMware in 2009 to build out their emerging cloud infrastructure group to specifically help service providers build their cloud infrastructures. Eventually, in 2011, VMware decided to get into the game and I built the initial product and engineering team that developed what it&rsquo;s now known as vCloud Air (still have no idea why this name is chosen).</p>
-
-<p>As more and more workloads move to the cloud, requirements for protecting cloud workloads quickly appeared, and vendors natually started to position their products for the cloud. So the rise in <em>cloud</em> rankings matches what I&rsquo;ve experiened.</p>
-
-<p>About the same time (2010, 2011 or so), more and more corporations are providing their employees smartphones, and workers are becoming more and more mobile. The need for mobile security became a major requirement, and a whole slueth of mobile security startup came into the scene. So natually the <em>mobile</em> word rose in rankings.</p>
-
-<p><img src="/images/rsaconf/mobile-cloud.png"></p>
-
-<h3 id="virtual-and-real-time-regaining-ground:b082a5c20b5449f4372a8955a4b5d0dd">Virtual and Real-Time Regaining Ground</h3>
-
-<p>The words <em>virtual</em> and <em>real-time</em> dropped dramatically in rankings for a couple of years (2010, 2011) but have since regained all the lost ground and more. I have no precise reasons on why that&rsquo;s the case but I have some theories. These theories are probably completely wrong, and if you have better explanations I would love to hear from you.</p>
-
-<ul>
-<li><em>Virtual</em> lost to <em>cloud</em> during that timeframe as every vendor is trying to position their products for the cloud era. However, <em>virtual</em> infrastructures haven&rsquo;t gone away and in fact continue to experience strong growth. So in the past couple of years, marketers are covering their basis and starting to message both <em>virtual</em> and <em>cloud</em>.</li>
-<li>The drop in rankings for <em>real-time</em> is potentially due to the peak of <em>compliance</em> use case, which is usually report-based and does not have <em>real-time</em> requirements. Also, I suspect another reason is that SIEM, which <em>real-time</em> is critical, is going out of fashion somewhat due to the high cost of ownership and lack of trust in the tools. However, given the recent rise of <em>threats</em>, natually <em>real-time</em> becomes critical again.</li>
-</ul>
-
-<p><img src="/images/rsaconf/virtual-real-time.png"></p>
-
-<h3 id="other-findings:b082a5c20b5449f4372a8955a4b5d0dd">Other Findings</h3>
-
-<p>The word <em>cyber</em> gained huge popularity in the past 3 years, likely due to the U.S. government&rsquo;s focus on <em>cyber</em> security. The word <em>malware</em> has been fairly consistently at the top 100 words since 2010.</p>
-
-<p><img src="/images/rsaconf/cyber-malware.png"></p>
-
-<p>The words <em>product</em> and <em>service</em> switched places in 2013, likely due to the increase in number of security software-as-a-service plays.</p>
-
-<p><img src="/images/rsaconf/product-service.png"></p>
-
-<h3 id="credits:b082a5c20b5449f4372a8955a4b5d0dd">Credits</h3>
-
-<ul>
-<li>The word clouds and word rankings are generated using <a href="http://timdream.org/wordcloud">Word Cloud</a>.</li>
-<li>The actual vendor descriptions are gathered from the RSA web site as well as press releases from Business Wire and others.</li>
-<li>Charts are generated using Excel, which continues to be one of the best friends for data analysts (not that I consider myself one).</li>
-</ul>
-
-  </div>
-  
 </div>
 
 <div class="posts">
   <h1 class="post-title">Archive</h1>
   <ul class="posts">
+      
+      <li><span><a href="http://zhen.org/blog/two-developers-walk-into-a-bar/">A Modern App Developer and An Old-Timer System Developer Walk Into a Bar</a> - <time class="pull-right post-list">Sun, Feb 14, 2016</h4></time></span></li>
       
       <li><span><a href="http://zhen.org/blog/2016-analyzing-security-trends-using-rsa-exhibitor-descriptions/">2016: Analyzing Security Trends Using RSA Exhibitor Descriptions</a> - <time class="pull-right post-list">Fri, Feb 5, 2016</h4></time></span></li>
       
@@ -630,8 +658,6 @@
       <li><span><a href="http://zhen.org/blog/papers-i-read-2015-week-6/">Papers I Read: 2015 Week 6</a> - <time class="pull-right post-list">Sun, Feb 8, 2015</h4></time></span></li>
       
       <li><span><a href="http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/">Sequence: A High Performance Sequential Semantic Log Parser at 175,000 MPS</a> - <time class="pull-right post-list">Sun, Feb 1, 2015</h4></time></span></li>
-      
-      <li><span><a href="http://zhen.org/blog/generating-porter2-fsm-for-fun-and-performance/">Generating Porter2 FSM For Fun and Performance in Go</a> - <time class="pull-right post-list">Wed, Jan 21, 2015</h4></time></span></li>
       
   </ul>
 </div>
