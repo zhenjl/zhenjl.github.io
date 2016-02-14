@@ -265,7 +265,7 @@
 &lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;I can perform this opeartion: &lt;code&gt;(this_month XOR last_month) AND this_month&lt;/code&gt;. This will return a bit array that has the bit set if the host was &amp;ldquo;down&amp;rdquo; last month but now it&amp;rsquo;s &amp;ldquo;up&amp;rdquo;. Then count the number of &amp;ldquo;1&amp;rdquo; bits of the resulting bit array.&lt;/p&gt;
+&lt;p&gt;I can perform this opeartion: &lt;code&gt;(this_month XOR last_month) XOR this_month&lt;/code&gt;. This will return a bit array that has the bit set if the host was &amp;ldquo;down&amp;rdquo; last month but now it&amp;rsquo;s &amp;ldquo;up&amp;rdquo;. Then count the number of &amp;ldquo;1&amp;rdquo; bits of the resulting bit array.&lt;/p&gt;
 &lt;/blockquote&gt;
 </description>
     </item>
