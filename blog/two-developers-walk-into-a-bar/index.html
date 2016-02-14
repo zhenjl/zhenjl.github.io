@@ -312,7 +312,7 @@
 <p>Old-Timer System Developer:</p>
 
 <blockquote>
-<p>I can perform this opeartion: <code>(this_month XOR last_month) XOR last_month</code>. This will return a bit array that has the bit set if the host was &ldquo;up&rdquo; last month but now it&rsquo;s &ldquo;down&rdquo;. Then count the number of &ldquo;1&rdquo; bits of the resulting bit array.</p>
+<p>I can perform this opeartion: <code>(this_month XOR last_month) AND last_month</code>. This will return a bit array that has the bit set if the host was &ldquo;up&rdquo; last month but now it&rsquo;s &ldquo;down&rdquo;. Then count the number of &ldquo;1&rdquo; bits of the resulting bit array.</p>
 </blockquote>
 
 <h3 id="how-many-hosts-were-down-last-month-but-now-it-s-up:81495eb0cd198863461f6e4666c91616">How Many Hosts Were &ldquo;Down&rdquo; Last Month But Now It&rsquo;s &ldquo;Up&rdquo;</h3>
@@ -326,7 +326,7 @@
 <p>Old-Timer System Developer:</p>
 
 <blockquote>
-<p>I can perform this opeartion: <code>(this_month XOR last_month) XOR this_month</code>. This will return a bit array that has the bit set if the host was &ldquo;down&rdquo; last month but now it&rsquo;s &ldquo;up&rdquo;. Then count the number of &ldquo;1&rdquo; bits of the resulting bit array.</p>
+<p>I can perform this opeartion: <code>(this_month XOR last_month) AND this_month</code>. This will return a bit array that has the bit set if the host was &ldquo;down&rdquo; last month but now it&rsquo;s &ldquo;up&rdquo;. Then count the number of &ldquo;1&rdquo; bits of the resulting bit array.</p>
 </blockquote>
 
 
