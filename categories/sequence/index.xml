@@ -18,11 +18,11 @@
       <guid>http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/</guid>
       <description>
 
-&lt;p&gt;Information here maybe outdated. Please visit &lt;a href=&#34;http://sequence.trustpath.com&#34;&gt;http://sequence.trustpath.com&lt;/a&gt; for latest.&lt;/p&gt;
+&lt;p&gt;Information here maybe outdated. Please visit &lt;a href=&#34;http://sequencer.io&#34;&gt;http://sequencer.io&lt;/a&gt; for latest.&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;p&gt;This is part 3 of the &lt;a href=&#34;http://sequence.trustpath.com&#34;&gt;sequence&lt;/a&gt; series.&lt;/p&gt;
+&lt;p&gt;This is part 3 of the &lt;a href=&#34;http://sequencer.io&#34;&gt;sequence&lt;/a&gt; series.&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/&#34;&gt;Part 1&lt;/a&gt; is about the high performance parser that can parse 100,000-200,000 MPs.&lt;/li&gt;
@@ -335,11 +335,11 @@ BenchmarkTimeStep2   2000000         772 ns/op
       <guid>http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/</guid>
       <description>
 
-&lt;p&gt;Information here maybe outdated. Please visit &lt;a href=&#34;http://sequence.trustpath.com&#34;&gt;http://sequence.trustpath.com&lt;/a&gt; for latest.&lt;/p&gt;
+&lt;p&gt;Information here maybe outdated. Please visit &lt;a href=&#34;http://sequencer.io&#34;&gt;http://sequencer.io&lt;/a&gt; for latest.&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;p&gt;This is part 2 of the &lt;a href=&#34;http://sequence.trustpath.com&#34;&gt;sequence&lt;/a&gt; series.&lt;/p&gt;
+&lt;p&gt;This is part 2 of the &lt;a href=&#34;http://sequencer.io&#34;&gt;sequence&lt;/a&gt; series.&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/&#34;&gt;Part 1&lt;/a&gt; is about the high performance parser that can parse 100,000-200,000 MPs.&lt;/li&gt;
@@ -571,11 +571,11 @@ object = [
       <guid>http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/</guid>
       <description>
 
-&lt;p&gt;Information here maybe outdated. Please visit &lt;a href=&#34;http://sequence.trustpath.com&#34;&gt;http://sequence.trustpath.com&lt;/a&gt; for latest.&lt;/p&gt;
+&lt;p&gt;Information here maybe outdated. Please visit &lt;a href=&#34;http://sequencer.io&#34;&gt;http://sequencer.io&lt;/a&gt; for latest.&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;p&gt;This is part 1 of the &lt;a href=&#34;http://sequence.trustpath.com&#34;&gt;sequence&lt;/a&gt; series.&lt;/p&gt;
+&lt;p&gt;This is part 1 of the &lt;a href=&#34;http://sequencer.io&#34;&gt;sequence&lt;/a&gt; series.&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/&#34;&gt;Part 1&lt;/a&gt; is about the high performance parser that can parse 100,000-200,000 MPs.&lt;/li&gt;
