@@ -11,7 +11,7 @@
     <atom:link href="http://zhen.org/categories/code/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>A Modern App Developer and An Old-Timer System Developer Walk Into a Bar</title>
+      <title>A Modern App Developer and An Old School System Developer Walk Into a Bar</title>
       <link>http://zhen.org/blog/two-developers-walk-into-a-bar/</link>
       <pubDate>Sun, 14 Feb 2016 10:57:56 -0800</pubDate>
       
@@ -22,7 +22,7 @@
 
 &lt;p&gt;&lt;i class=&#34;fa fa-heart&#34;&gt;&lt;/i&gt; &lt;i class=&#34;fa fa-heart&#34;&gt;&lt;/i&gt; Happy Valentine&amp;rsquo;s Day! &lt;i class=&#34;fa fa-heart&#34;&gt;&lt;/i&gt; &lt;i class=&#34;fa fa-heart&#34;&gt;&lt;/i&gt;&lt;/p&gt;
 
-&lt;p&gt;A modern app developer and an old-timer system developer walk into a bar. They had a couple drinks and started talking about the current state of security on the Internet. In a flash of genius, they both decided it would be useful to map the Internet and see what IPs have vulnerable ports open. After some discussion, they decided on the following&lt;/p&gt;
+&lt;p&gt;A modern app developer and an old school system developer walk into a bar. They had a couple drinks and started talking about the current state of security on the Internet. In a flash of genius, they both decided it would be useful to map the Internet and see what IPs have vulnerable ports open. After some discussion, they decided on the following&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;They will port scan all of the IPv4 address (2^32=4,294,967,296) on a monthly basis&lt;/li&gt;
@@ -49,7 +49,7 @@
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;modern-app-developer-vs-old-timer-developer:81495eb0cd198863461f6e4666c91616&#34;&gt;Modern App Developer vs Old-Timer Developer&lt;/h2&gt;
+&lt;h2 id=&#34;modern-app-developer-vs-old-school-developer:81495eb0cd198863461f6e4666c91616&#34;&gt;Modern App Developer vs Old School Developer&lt;/h2&gt;
 
 &lt;p&gt;Let&amp;rsquo;s assume 300 million IPs are up, and has an average of 3 ports open.&lt;/p&gt;
 
@@ -70,7 +70,7 @@
 &lt;p&gt;I will use Python. It&amp;rsquo;s quick to get started and easy to understaind/maintain.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Old-Timer Developer:&lt;/p&gt;
+&lt;p&gt;Old School Developer:&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;I will use Go. It&amp;rsquo;s fast, performant, and easy to understand/maintain!&lt;/p&gt;
@@ -105,7 +105,7 @@
 &lt;p&gt;For 300 million IPs, it will take me about 112GB of space to store all host and port states.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+&lt;p&gt;Old School System Developer:&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;I will use one bit array (memory mapped file) to store the host state, with 1 bit per host. If the bit is 1, then the host up; if it&amp;rsquo;s 0, then the host is down.&lt;/p&gt;
@@ -142,7 +142,7 @@
 &lt;p&gt;I do realize there&amp;rsquo;s additional storage required for the ES index. Let&amp;rsquo;s assume it&amp;rsquo;s &lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;8&lt;/sub&gt; of the original document sizes. This means there&amp;rsquo;s possibly another 14GB of index data, bringing the total to 126GB.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+&lt;p&gt;Old School System Developer:&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;This is a &lt;a href=&#34;https://github.com/zhenjl/bitmap/blob/master/ewah/bitcounter.go#L69&#34;&gt;bit counting&lt;/a&gt;, or &lt;em&gt;popcount()&lt;/em&gt;, problem. It&amp;rsquo;s just simple math. I can iterate through the array of uint64&amp;rsquo;s (~8.4M uint64&amp;rsquo;s), count the bits for each, and add them up!&lt;/p&gt;
@@ -160,7 +160,7 @@
 &lt;p&gt;I will have ElasticSearch index the &amp;ldquo;ip&amp;rdquo; field, in addition to the &amp;ldquo;state&amp;rdquo; field from earlier. Then for any IP, I can search for the document where &amp;ldquo;ip&amp;rdquo; equals the requested IP. From that document, I can then find the value of the &amp;ldquo;state&amp;rdquo;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+&lt;p&gt;Old School System Developer:&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;This should be easy. I just need to index into the bit array using the integer value of the IPv4, and find out if the bit value is 1 or 0.&lt;/p&gt;
@@ -178,7 +178,7 @@
 &lt;p&gt;This is a map reduce job that I can write to process the 300 million JSON documents and return all the host IPs that are &amp;ldquo;up&amp;rdquo; in that /24 subnet.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+&lt;p&gt;Old School System Developer:&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;This is just another bit iteration problem. I will use the first IP address of the subnet to determine where in the bit array I should start. Then I calculate the number of IPs in that subnet. From there, I just iterate through the bit array and for every bit that&amp;rsquo;s 1, I convert the index of that bit into an IPv4 address and add to the list of &amp;ldquo;Up&amp;rdquo; hosts.&lt;/p&gt;
@@ -204,7 +204,7 @@
 &lt;p&gt;This can probably also be done with ElasticSearch. It would require the port state to be index, which will increase the index size. I can then count the results for the search for ports 22 = &amp;ldquo;open&amp;rdquo;, and repeat for each port.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+&lt;p&gt;Old School System Developer:&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;This is a simple counting problem. I will walk through the host state bit array, and for every host that&amp;rsquo;s up, I will use the bit index to index into the port state uint64 array and get the uint64 that represents all the port states for that host. I will then walk through each of the 3-bit bundles for the ports, and add up the counts if the port is &amp;ldquo;open&amp;rdquo;.&lt;/p&gt;
@@ -220,7 +220,7 @@
 &lt;p&gt;I can retrieve the &amp;ldquo;Up&amp;rdquo; host list for each month, and then go through all 3 lists and dedup into a single list. This would require quite a bit of processing and iteration.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+&lt;p&gt;Old School System Developer:&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;I can perform a simple OR operation on the 3 monthly bit arrays, and then count the number of &amp;ldquo;1&amp;rdquo; bits.&lt;/p&gt;
@@ -236,7 +236,7 @@
 &lt;p&gt;Hm&amp;hellip;I am not sure how to do that easily. I guess I can just iterate through last month&amp;rsquo;s hosts, and for each host check to see if it changed state this month. Then for each host that I haven&amp;rsquo;t checked this month, iterate and check that list against last month&amp;rsquo;s result.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+&lt;p&gt;Old School System Developer:&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;I can perform a simple XOR operation on the bit arrays from this and last month. Then count the number of &amp;ldquo;1&amp;rdquo; bits of the resulting bit array.&lt;/p&gt;
@@ -250,7 +250,7 @@
 &lt;p&gt;I can retrieve the &amp;ldquo;Up&amp;rdquo; hosts from last month from ES, then for each &amp;ldquo;Up&amp;rdquo; host, search for it with the state equals to &amp;ldquo;Down&amp;rdquo; this month, and accumulate the results.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+&lt;p&gt;Old School System Developer:&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;I can perform this opeartion: &lt;code&gt;(this_month XOR last_month) AND last_month&lt;/code&gt;. This will return a bit array that has the bit set if the host was &amp;ldquo;up&amp;rdquo; last month but now it&amp;rsquo;s &amp;ldquo;down&amp;rdquo;. Then count the number of &amp;ldquo;1&amp;rdquo; bits of the resulting bit array.&lt;/p&gt;
@@ -264,7 +264,7 @@
 &lt;p&gt;I can retrieve the &amp;ldquo;Down&amp;rdquo; hosts from last month from ES, then for each &amp;ldquo;Down&amp;rdquo; host, search for it with the state equals to &amp;ldquo;Up&amp;rdquo; this month, and accumulate the results.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Old-Timer System Developer:&lt;/p&gt;
+&lt;p&gt;Old School System Developer:&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;I can perform this opeartion: &lt;code&gt;(this_month XOR last_month) XOR this_month&lt;/code&gt;. This will return a bit array that has the bit set if the host was &amp;ldquo;down&amp;rdquo; last month but now it&amp;rsquo;s &amp;ldquo;up&amp;rdquo;. Then count the number of &amp;ldquo;1&amp;rdquo; bits of the resulting bit array.&lt;/p&gt;

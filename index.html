@@ -79,8 +79,23 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="http://zhen.org/blog/security-companies-in-silicon-valley/">
+        Security Companies in Silicon Valley
+      </a>
+    </h1>
+
+    <span class="post-date">Fri, Jun 10, 2016</span>
+
+    <p>Here&rsquo;s a Google map of the security companies in Silicon Valley.</p>
+
+<iframe src="https://www.google.com/maps/d/embed?mid=1fxzcNT38ZFENib2OAtSvO3X0f08" width="1024" height="768"></iframe>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="http://zhen.org/blog/two-developers-walk-into-a-bar/">
-        A Modern App Developer and An Old-Timer System Developer Walk Into a Bar
+        A Modern App Developer and An Old School System Developer Walk Into a Bar
       </a>
     </h1>
 
@@ -92,7 +107,7 @@
 
 <p><i class="fa fa-heart"></i> <i class="fa fa-heart"></i> Happy Valentine&rsquo;s Day! <i class="fa fa-heart"></i> <i class="fa fa-heart"></i></p>
 
-<p>A modern app developer and an old-timer system developer walk into a bar. They had a couple drinks and started talking about the current state of security on the Internet. In a flash of genius, they both decided it would be useful to map the Internet and see what IPs have vulnerable ports open. After some discussion, they decided on the following</p>
+<p>A modern app developer and an old school system developer walk into a bar. They had a couple drinks and started talking about the current state of security on the Internet. In a flash of genius, they both decided it would be useful to map the Internet and see what IPs have vulnerable ports open. After some discussion, they decided on the following</p>
 
 <ul>
 <li>They will port scan all of the IPv4 address (2^32=4,294,967,296) on a monthly basis</li>
@@ -119,7 +134,7 @@
 </ul></li>
 </ul>
 
-<h2 id="modern-app-developer-vs-old-timer-developer:81495eb0cd198863461f6e4666c91616">Modern App Developer vs Old-Timer Developer</h2>
+<h2 id="modern-app-developer-vs-old-school-developer:81495eb0cd198863461f6e4666c91616">Modern App Developer vs Old School Developer</h2>
 
 <p>Let&rsquo;s assume 300 million IPs are up, and has an average of 3 ports open.</p>
 
@@ -140,7 +155,7 @@
 <p>I will use Python. It&rsquo;s quick to get started and easy to understaind/maintain.</p>
 </blockquote>
 
-<p>Old-Timer Developer:</p>
+<p>Old School Developer:</p>
 
 <blockquote>
 <p>I will use Go. It&rsquo;s fast, performant, and easy to understand/maintain!</p>
@@ -175,7 +190,7 @@
 <p>For 300 million IPs, it will take me about 112GB of space to store all host and port states.</p>
 </blockquote>
 
-<p>Old-Timer System Developer:</p>
+<p>Old School System Developer:</p>
 
 <blockquote>
 <p>I will use one bit array (memory mapped file) to store the host state, with 1 bit per host. If the bit is 1, then the host up; if it&rsquo;s 0, then the host is down.</p>
@@ -212,7 +227,7 @@
 <p>I do realize there&rsquo;s additional storage required for the ES index. Let&rsquo;s assume it&rsquo;s <sup>1</sup>&frasl;<sub>8</sub> of the original document sizes. This means there&rsquo;s possibly another 14GB of index data, bringing the total to 126GB.</p>
 </blockquote>
 
-<p>Old-Timer System Developer:</p>
+<p>Old School System Developer:</p>
 
 <blockquote>
 <p>This is a <a href="https://github.com/zhenjl/bitmap/blob/master/ewah/bitcounter.go#L69">bit counting</a>, or <em>popcount()</em>, problem. It&rsquo;s just simple math. I can iterate through the array of uint64&rsquo;s (~8.4M uint64&rsquo;s), count the bits for each, and add them up!</p>
@@ -230,7 +245,7 @@
 <p>I will have ElasticSearch index the &ldquo;ip&rdquo; field, in addition to the &ldquo;state&rdquo; field from earlier. Then for any IP, I can search for the document where &ldquo;ip&rdquo; equals the requested IP. From that document, I can then find the value of the &ldquo;state&rdquo;.</p>
 </blockquote>
 
-<p>Old-Timer System Developer:</p>
+<p>Old School System Developer:</p>
 
 <blockquote>
 <p>This should be easy. I just need to index into the bit array using the integer value of the IPv4, and find out if the bit value is 1 or 0.</p>
@@ -248,7 +263,7 @@
 <p>This is a map reduce job that I can write to process the 300 million JSON documents and return all the host IPs that are &ldquo;up&rdquo; in that /24 subnet.</p>
 </blockquote>
 
-<p>Old-Timer System Developer:</p>
+<p>Old School System Developer:</p>
 
 <blockquote>
 <p>This is just another bit iteration problem. I will use the first IP address of the subnet to determine where in the bit array I should start. Then I calculate the number of IPs in that subnet. From there, I just iterate through the bit array and for every bit that&rsquo;s 1, I convert the index of that bit into an IPv4 address and add to the list of &ldquo;Up&rdquo; hosts.</p>
@@ -274,7 +289,7 @@
 <p>This can probably also be done with ElasticSearch. It would require the port state to be index, which will increase the index size. I can then count the results for the search for ports 22 = &ldquo;open&rdquo;, and repeat for each port.</p>
 </blockquote>
 
-<p>Old-Timer System Developer:</p>
+<p>Old School System Developer:</p>
 
 <blockquote>
 <p>This is a simple counting problem. I will walk through the host state bit array, and for every host that&rsquo;s up, I will use the bit index to index into the port state uint64 array and get the uint64 that represents all the port states for that host. I will then walk through each of the 3-bit bundles for the ports, and add up the counts if the port is &ldquo;open&rdquo;.</p>
@@ -290,7 +305,7 @@
 <p>I can retrieve the &ldquo;Up&rdquo; host list for each month, and then go through all 3 lists and dedup into a single list. This would require quite a bit of processing and iteration.</p>
 </blockquote>
 
-<p>Old-Timer System Developer:</p>
+<p>Old School System Developer:</p>
 
 <blockquote>
 <p>I can perform a simple OR operation on the 3 monthly bit arrays, and then count the number of &ldquo;1&rdquo; bits.</p>
@@ -306,7 +321,7 @@
 <p>Hm&hellip;I am not sure how to do that easily. I guess I can just iterate through last month&rsquo;s hosts, and for each host check to see if it changed state this month. Then for each host that I haven&rsquo;t checked this month, iterate and check that list against last month&rsquo;s result.</p>
 </blockquote>
 
-<p>Old-Timer System Developer:</p>
+<p>Old School System Developer:</p>
 
 <blockquote>
 <p>I can perform a simple XOR operation on the bit arrays from this and last month. Then count the number of &ldquo;1&rdquo; bits of the resulting bit array.</p>
@@ -320,7 +335,7 @@
 <p>I can retrieve the &ldquo;Up&rdquo; hosts from last month from ES, then for each &ldquo;Up&rdquo; host, search for it with the state equals to &ldquo;Down&rdquo; this month, and accumulate the results.</p>
 </blockquote>
 
-<p>Old-Timer System Developer:</p>
+<p>Old School System Developer:</p>
 
 <blockquote>
 <p>I can perform this opeartion: <code>(this_month XOR last_month) AND last_month</code>. This will return a bit array that has the bit set if the host was &ldquo;up&rdquo; last month but now it&rsquo;s &ldquo;down&rdquo;. Then count the number of &ldquo;1&rdquo; bits of the resulting bit array.</p>
@@ -334,7 +349,7 @@
 <p>I can retrieve the &ldquo;Down&rdquo; hosts from last month from ES, then for each &ldquo;Down&rdquo; host, search for it with the state equals to &ldquo;Up&rdquo; this month, and accumulate the results.</p>
 </blockquote>
 
-<p>Old-Timer System Developer:</p>
+<p>Old School System Developer:</p>
 
 <blockquote>
 <p>I can perform this opeartion: <code>(this_month XOR last_month) XOR this_month</code>. This will return a bit array that has the bit set if the host was &ldquo;down&rdquo; last month but now it&rsquo;s &ldquo;up&rdquo;. Then count the number of &ldquo;1&rdquo; bits of the resulting bit array.</p>
@@ -584,66 +599,15 @@
 
   </div>
   
-  <div class="post">
-    <h1 class="post-title">
-      <a href="http://zhen.org/blog/installing-windows7-on-macbook-late-2008/">
-        Installing Windows 7 on Macbook Late 2008
-      </a>
-    </h1>
-
-    <span class="post-date">Mon, Apr 20, 2015</span>
-
-    <p>Over the weekend I wanted to install Windows in a bootcamp partition so the kids can use it to do their Chinese homework. The Chinese homework CD unfortunately only works in Windows so I had no choice!! I guess I could have taken other routes, like installing Windows in a VM or something, but I figure that Mac has this awesome tool called bootcamp, why not use that?</p>
-
-<p>Well, how wrong I was! I went through a whole day of head-scratching, temper-inducing, word-cussing, USB-swapping and machine-rebooting exercise of getting Windows installed in the bootcamp partition. I almost went as far as buying a replacement superdrive for the macbook, but at the end I finally was able to get Windows 7 onto the Macbook.</p>
-
-<p>To start, my laptop is a Macbook, Aluminum, Late 2008 (MB467LL/A) with a busted optical drive (superdrive). I originally had Mavericks running on it but before this exercise I wiped it clean and installed Yosemite on it. Because the optical drive is busted, I cannot use the Windows 7 DVD, so I had to do this using a USB flash drive.</p>
-
-<p>Below are the steps I took to make this work. I can&rsquo;t guarantee that these steps will work for you, but it&rsquo;s probably good as a reference. Having seen a ton of articles on the problems people had with bootcamp, I hope no one has to go through the troubles I went through.</p>
-
-<ol>
-<li>It took me a while to figure this out (after reading numerous online posts), if your Mac has an optical drive, Boot Camp Assistant will NOT create a USB flash drive-based install disk. The only way to trick the system to do that is to do the following: (Though it turns out at the end that this step is quite useless, since the USB install disk created by Boot Camp Assistant couldn&rsquo;t boot! So you could really skip this step.)
-
-<ol>
-<li>Modify Boot Camp Assistant&rsquo;s Info.plist as described <a href="http://forums.macrumors.com/showthread.php?t=1488322">here</a>.</li>
-<li>After the modification, you need to resign Boot Camp Assistant, or else it will keep crashing. To do that, following the instructions <a href="https://discussions.apple.com/thread/5479879?start=30">here</a>. For the impatient, run the command <code>sudo codesign -fs - /Applications/Utilities/Boot\ Camp\ Assistant.app</code>.</li>
-</ol></li>
-<li>Start &ldquo;Boot Camp Assistant&rdquo;, and select the options &ldquo;Download the latest Windows Support&rdquo;, and &ldquo;Install Windows 7 or later versions&rdquo;.
-
-<ul>
-<li>Note I am not selecting the option to create a Windows install disk. It turned out the USB install disk didn&rsquo;t boot. I keep getting the &ldquo;non-system disk, press any key to continue&rdquo; error, and basically that&rsquo;s the end.</li>
-<li>In any case, these two tasks should download the bootcamp drivers onto a USB drive, and also partition the Mac&rsquo;s HD into two partitions. One of the parititions is the BOOTCAMP partition, which will be used to install Windows 7.</li>
-</ul></li>
-<li>Once that&rsquo;s done, I needed to create a bootable Windows 7 USB Flash drive.
-
-<ul>
-<li>If you search the web, you will find that most people run into two problems. The first is the bootcamp-created flash drive giving the &ldquo;non-system disk&rdquo; error, and the second is the boot up hangs with a blank screen and a flash underscore cursor at the top left corner. I&rsquo;ve ran into both. You will also find some articles that explain how to make the flash drives bootable using fdisk, but that didn&rsquo;t work for me either.</li>
-<li>Finally I found <a href="http://www.tonymacx86.com/windows/97075-windows-7-usb-install-stuck-black-screen.html">a post online</a> that pointed to the <a href="http://wudt.codeplex.com/">Windows USB/DVD Download Tool</a>. It&rsquo;s a Windows program that can create a bootable USB flash drive from a Windows 7 or 8 ISO file.</li>
-<li>Note though, not all the USB flash drives are created equal. The PNY 16GB drive I used didn&rsquo;t work. WUDT ended with an error that says it couldn&rsquo;t run bootsect to create the boot sectors on the flash drive. The one that worked for me was Kingston Data Traveler 4GB.</li>
-</ul></li>
-<li>Now that I have the bootable USB flash drive, I plugged that into the Mac and started it up. This time the installation process got started.</li>
-<li>When Boot Camp Assistant created the BOOTCAMP partition, it did not format it to NTFS. So the first thing I noticed was that when I select the BOOTCAMP partition, the installer said it cannot be used because it&rsquo;s not NTFS.
-
-<ul>
-<li>The option to format the partition is not immediately obvious, but I had to click on &ldquo;Drive options (advanced)&rdquo; and select the option to format the partition.</li>
-<li>Once that&rsquo;s done, I encountered another error that says the drive may not be bootable and I need to change the BIOS setting. Yeah at this point I was pretty ticked and the computer heard a few choice words from me. Doesn&rsquo;t matter what I do it doesn&rsquo;t seem to let me pass this point.</li>
-<li>I did a bunch more readings and research, but nothing seem to have worked. I finally decided to turn the computer off and come back to it. Magically it worked the second time I tried to install it. I was no longer getting the non-bootable disk error. My guess is that after the NTFS formatting, the installer needs to be completely restarted.</li>
-</ul></li>
-<li>In any case, at this point, it was fairly smooth sailing. The installation process took a bit of time but overall everything seemed to have worked.</li>
-<li>After the installation, I plugged int the bootcamp flash drive with the WindowsSupport files, and installed them.</li>
-</ol>
-
-<p>I am still not a 100% yet. The trackpad still doesn&rsquo;t behave like when it&rsquo;s on the Mac. For example, I can&rsquo;t use the two finger drag to scroll the windows, and for the life of me, I cannot figure out how to easily (and correctly) set the brightness of display. But at least now I have a working Windows 7 laptop!</p>
-
-  </div>
-  
 </div>
 
 <div class="posts">
   <h1 class="post-title">Archive</h1>
   <ul class="posts">
       
-      <li><span><a href="http://zhen.org/blog/two-developers-walk-into-a-bar/">A Modern App Developer and An Old-Timer System Developer Walk Into a Bar</a> - <time class="pull-right post-list">Sun, Feb 14, 2016</h4></time></span></li>
+      <li><span><a href="http://zhen.org/blog/security-companies-in-silicon-valley/">Security Companies in Silicon Valley</a> - <time class="pull-right post-list">Fri, Jun 10, 2016</h4></time></span></li>
+      
+      <li><span><a href="http://zhen.org/blog/two-developers-walk-into-a-bar/">A Modern App Developer and An Old School System Developer Walk Into a Bar</a> - <time class="pull-right post-list">Sun, Feb 14, 2016</h4></time></span></li>
       
       <li><span><a href="http://zhen.org/blog/2016-analyzing-security-trends-using-rsa-exhibitor-descriptions/">2016: Analyzing Security Trends Using RSA Exhibitor Descriptions</a> - <time class="pull-right post-list">Fri, Feb 5, 2016</h4></time></span></li>
       
@@ -660,8 +624,6 @@
       <li><span><a href="http://zhen.org/blog/sequence-automated-analyzer-for-reducing-100k-messages-to-10s-of-patterns/">Sequence: Automated Analyzer for Reducing 100,000&#39;s of Log Messages to 10&#39;s of Patterns</a> - <time class="pull-right post-list">Tue, Feb 10, 2015</h4></time></span></li>
       
       <li><span><a href="http://zhen.org/blog/papers-i-read-2015-week-6/">Papers I Read: 2015 Week 6</a> - <time class="pull-right post-list">Sun, Feb 8, 2015</h4></time></span></li>
-      
-      <li><span><a href="http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/">Sequence: A High Performance Sequential Semantic Log Parser at 175,000 MPS</a> - <time class="pull-right post-list">Sun, Feb 1, 2015</h4></time></span></li>
       
   </ul>
 </div>
