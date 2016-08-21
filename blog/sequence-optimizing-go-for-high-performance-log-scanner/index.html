@@ -95,7 +95,7 @@
 
 <p>In any case, if you know of some of the more innovative ways people are approaching these problems, please please please comment below as I would love to hear from you.</p>
 
-<h3 id="tl-dr:cb54f18a9944e1962d3fe8e3f09ea809">tl;dr</h3>
+<h3 id="tl-dr">tl;dr</h3>
 
 <ul>
 <li>The <code>sequence</code> scanner is designed to tokenize free-form log messages.
@@ -118,7 +118,7 @@
 </ol></li>
 </ul>
 
-<h2 id="background:cb54f18a9944e1962d3fe8e3f09ea809">Background</h2>
+<h2 id="background">Background</h2>
 
 <blockquote>
 <p>In computer science, lexical analysis is the process of converting a sequence of characters into a sequence of tokens, i.e. meaningful character strings. A program or function that performs lexical analysis is called a lexical analyzer, lexer, tokenizer, or scanner. - <a href="http://en.wikipedia.org/wiki/Lexical_analysis">Wikipedia</a></p>
@@ -126,7 +126,7 @@
 
 <p>One of the most critical functions in the <code>sequence</code> parser is the message tokenization. At a very high level, message tokenization means taking a single log message and breaking it into a list of tokens.</p>
 
-<h3 id="functional-requirements:cb54f18a9944e1962d3fe8e3f09ea809">Functional Requirements</h3>
+<h3 id="functional-requirements">Functional Requirements</h3>
 
 <p>The challenge is knowing where the token break points are. Most log messages are free-form text, which means there&rsquo;s no common structure to them.</p>
 
@@ -161,7 +161,7 @@
 
 <p>So a log message <em>scanner</em> or <em>tokenizer</em> (we will use these terms interchangeably) must understand common components such as timestamp, URL, hex strings, IP addresses (v4 or v6), and mac addresses, so it can break the messages into <em>meaningful components</em>.</p>
 
-<h3 id="performance-requirements:cb54f18a9944e1962d3fe8e3f09ea809">Performance Requirements</h3>
+<h3 id="performance-requirements">Performance Requirements</h3>
 
 <p>From a performance requirements perspective, I really didn&rsquo;t start out with any expectations. However, after achieving 100-200K MPS for parsing (not just tokenizing), I have a strong desire to keep the performance at that level. So the more I can optimize the scanner to tokenize faster, the more head room I have for parsing.</p>
 
@@ -177,7 +177,7 @@
 
 <p>Yes, go ahead and tell me I shouldn&rsquo;t worry about micro-optimization, because this post is all about that. :)</p>
 
-<h2 id="sequence-scanner:cb54f18a9944e1962d3fe8e3f09ea809">Sequence Scanner</h2>
+<h2 id="sequence-scanner">Sequence Scanner</h2>
 
 <p>In the <code>sequence</code> package, we implemented a general log message scanner, called <a href="https://github.com/strace/sequence/blob/master/scanner.go">GeneralScanner</a>. GeneralScanner is a sequential lexical analyzer that breaks a log message into a sequence of tokens. It is sequential because it goes through log message sequentially tokentizing each part of the message, without the use of regular expressions. The scanner currently recognizes time stamps, hex strings, IP (v4, v6) addresses, URLs, MAC addresses, integers and floating point numbers.</p>
 
@@ -205,7 +205,7 @@
   Scanned 447745 messages in 1.20 secs, ~ 373170.45 msgs/sec
 </code></pre>
 
-<h3 id="concepts:cb54f18a9944e1962d3fe8e3f09ea809">Concepts</h3>
+<h3 id="concepts">Concepts</h3>
 
 <p>To understand the scanner, you have to understand the following concepts that are part of the package.</p>
 
@@ -221,7 +221,7 @@
 
 <p>Basically, the scanner takes a log message string, tokenizes it and returns a <em>Sequence</em> with the recognized <em>TokenType</em> marked. This <em>Sequence</em> is then fed into the analyzer or parser, and the analyzer or parser in turn returns another <em>Sequence</em> that has the recognized <em>FieldType</em> marked.</p>
 
-<h3 id="design:cb54f18a9944e1962d3fe8e3f09ea809">Design</h3>
+<h3 id="design">Design</h3>
 
 <p>Tokenizers or scanners are usually implemented using finite-state machines. Each FSM (or FSA, finite state automata) understands a specific sequences of characters that make up a type of token.</p>
 
@@ -257,7 +257,7 @@
 </ul></li>
 </ol>
 
-<h3 id="performance:cb54f18a9944e1962d3fe8e3f09ea809">Performance</h3>
+<h3 id="performance">Performance</h3>
 
 <p>To achieve the performance requirements, the following rules and optimizations are followed. Some of these are Go specific, and some are general recommendations.</p>
 
@@ -380,7 +380,7 @@ BenchmarkTimeStep2   2000000         772 ns/op
 
 <p>So by simply adding a couple of checks, I&rsquo;ve increased perfromance by close to 5%.</p>
 
-<h2 id="conclusion:cb54f18a9944e1962d3fe8e3f09ea809">Conclusion</h2>
+<h2 id="conclusion">Conclusion</h2>
 
 <p>At this point I think I have squeezed every bit of performance out of the scanner, to the extend of my knowledge. It&rsquo;s performing relatively well and it&rsquo;s given the parser plenty of head room to do other things. I hope some of these lessons are helpful to whatever you are doing.</p>
 

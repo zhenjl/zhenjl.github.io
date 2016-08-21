@@ -91,7 +91,7 @@
 
 <p>To best understand how logs affect all areas of IT management, it is necessary for us to dissect the logs and see what information they provide.</p>
 
-<h3 id="what-s-in-a-log:34c3feafc3498859243d48967092f612">What&rsquo;s in a log</h3>
+<h3 id="what-s-in-a-log">What&rsquo;s in a log</h3>
 
 <p>Firewalls probably generate the most logs amongst all devices. A busy PIX firewall, with debug logging turned on, can generate 2,000 to 3,000 messages per second (MPS).</p>
 
@@ -102,11 +102,11 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 <p>This is a fairly typical log message from a PIX firewall. Most administrator will probably ignore these logs as there are a ton of them. However, let&rsquo;s look closely to see what information we can find.</p>
 
-<h4 id="pix:34c3feafc3498859243d48967092f612">%PIX</h4>
+<h4 id="pix">%PIX</h4>
 
 <p>This first 4 characters immediately tells us that the log message is a PIX message. With this information, if you are writing a parser for multiple log types, you can throw this over to the PIX parser and go on to the next message. You can also use this to classify or categorize your logs based on device type.</p>
 
-<h4 id="6:34c3feafc3498859243d48967092f612">-6-</h4>
+<h4 id="6">-6-</h4>
 
 <p>The dashes are just delimiters so we will ignore them for now.</p>
 
@@ -116,7 +116,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 <p>In any case, Informational messages are usually harmless in that they don&rsquo;t require our immediate attention. However, <strong>excessive</strong> of informational messages may indicate something suspicious and will need drilling down.</p>
 
-<h4 id="302013:34c3feafc3498859243d48967092f612">302013:</h4>
+<h4 id="302013">302013:</h4>
 
 <p>This number represents the message ID of the PIX message. It gives us an idea what information we will find in the remainder of the message, as well as the format of the message.</p>
 
@@ -128,7 +128,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 <p>We will ignore the colon as it doesn&rsquo;t represent anything important.</p>
 
-<h4 id="built:34c3feafc3498859243d48967092f612">Built</h4>
+<h4 id="built">Built</h4>
 
 <p>This is probably one of the most important words of the whole message as it tells us the action that the firewall took.</p>
 
@@ -142,7 +142,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 <p>Because majority of our logs probably contain this type of information, it&rsquo;s generally a bad idea to use it in a real-time correlation rule. It will overwhelm your correlation engine in no time. However, thresholds can be set using this, probably along with the source or destination information (see below).</p>
 
-<h4 id="inbound:34c3feafc3498859243d48967092f612">inbound</h4>
+<h4 id="inbound">inbound</h4>
 
 <p>In this PIX message, the words &ldquo;inbound&rdquo; and &ldquo;outbound&rdquo; may appear here. &ldquo;Inbound&rdquo; tells us that the original connection was initiated from outside of the firewall. Vice versa, &ldquo;outbound&rdquo; means that the original connection was initiated from inside of the firewall.</p>
 
@@ -154,7 +154,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 <p>Last but not least, we can run a distribution report as we did with the message ID and track it over time. Any sudden increase (or even decrease) in the count may be worth checking into.</p>
 
-<h4 id="tcp:34c3feafc3498859243d48967092f612">TCP</h4>
+<h4 id="tcp">TCP</h4>
 
 <p>TCP stands for Transmission Control Protocol. It is used by many internet services such as HTTP, SMTP, FTP, SSH, etc. By itself, the word &ldquo;TCP&rdquo; isn&rsquo;t all that interesting. However, the protocol and the destination port together determines the service that the connection is for. For example</p>
 
@@ -166,7 +166,7 @@ syslog          514/udp
 
 <p>Most log management systems don&rsquo;t have reports defined for the common protocols such as TCP or UDP. It might, however, be interesting to track the uncommon ones, if you run anything weird.</p>
 
-<h4 id="connection-543127891-for:34c3feafc3498859243d48967092f612">connection 543127891 for</h4>
+<h4 id="connection-543127891-for">connection 543127891 for</h4>
 
 <p>We will skip the words &ldquo;connection&rdquo; and &ldquo;for&rdquo;.</p>
 
@@ -174,7 +174,7 @@ syslog          514/udp
 
 <p>Information such as duration and bytes transferred can be extremely valuable for performance and utilization tracking. We will go over these in more details in Part 2 of Anatomy of Logs.</p>
 
-<h4 id="outside:34c3feafc3498859243d48967092f612">outside:</h4>
+<h4 id="outside">outside:</h4>
 
 <p>We will skip the colon.</p>
 
@@ -182,7 +182,7 @@ syslog          514/udp
 
 <p>Having this information allows us to quickly map the network from the logs. For example, we can easily identify all the IPs that are &ldquo;outside&rdquo; of the firewall vs &ldquo;inside&rdquo; of the firewall. If we identified IPs that have appeared both &ldquo;outside&rdquo; and &ldquo;inside&rdquo;, it may be a cause for concern: there maybe a backdoor out of your network. We have seen this happen many times on bridged networks. It is probably one of the weirdest scenarios in network troubleshooting as it leaves you scratching your head trying to figure out where/what the backdoor is.</p>
 
-<h4 id="192-168-11-250-41612-192-168-11-250-41612:34c3feafc3498859243d48967092f612">192.168.11.<sup>250</sup>&frasl;<sub>41612</sub> (192.168.11.<sup>250</sup>&frasl;<sub>41612</sub>)</h4>
+<h4 id="192-168-11-250-41612-192-168-11-250-41612">192.168.11.<sup>250</sup>&frasl;<sub>41612</sub> (192.168.11.<sup>250</sup>&frasl;<sub>41612</sub>)</h4>
 
 <p>This whole section here shows the source IP address and port of the connection. In this case, the source IP is 192.168.11.250 and the source port is 41612. There are two parts to this section. The first are the &ldquo;real&rdquo; IP and port, before any translation is done. The second part, inside the parenthesis, are the mapped IP and port, after the network address translation is applied.</p>
 
@@ -202,11 +202,11 @@ syslog          514/udp
 <li><p>which IPs are attempting to scan our network by summarizing the destination IP/ports (see below) attempted</p></li>
 </ul>
 
-<h4 id="inside:34c3feafc3498859243d48967092f612">inside:</h4>
+<h4 id="inside">inside:</h4>
 
 <p>This represents &ldquo;inside&rdquo; of the firewall, or the internal network. It is similar to the &ldquo;outside&rdquo; interface as described above.</p>
 
-<h4 id="10-1-241-2-80-10-1-241-2-80:34c3feafc3498859243d48967092f612">10.1.241.<sup>2</sup>&frasl;<sub>80</sub> (10.1.241.<sup>2</sup>&frasl;<sub>80</sub>)</h4>
+<h4 id="10-1-241-2-80-10-1-241-2-80">10.1.241.<sup>2</sup>&frasl;<sub>80</sub> (10.1.241.<sup>2</sup>&frasl;<sub>80</sub>)</h4>
 
 <p>This section describes the destination IP and port of the connection. The first part shows the original, or untranslated, IP and port. The second shows the translated, or mapped, IP and port. For networks that use NAT, these two parts will be different.</p>
 
@@ -232,7 +232,7 @@ syslog          514/udp
 
 <p>When hackers install a backdoor on your system, they don&rsquo;t normally make a lot of noises by connecting to it a thousand times. They try to hide their tracks by connecting at odd hours and very infrequently. So seeing the least requested service may actually tell you if there&rsquo;s any backdoor activities.</p>
 
-<h3 id="what-about-the-time:34c3feafc3498859243d48967092f612">What about the time</h3>
+<h3 id="what-about-the-time">What about the time</h3>
 
 <p>At this point you are probably wondering, &ldquo;where does it tell me when this log was generated?!&rdquo;</p>
 

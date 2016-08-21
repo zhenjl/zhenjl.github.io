@@ -61,7 +61,7 @@
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;modern-app-developer-vs-old-school-developer:81495eb0cd198863461f6e4666c91616&#34;&gt;Modern App Developer vs Old School Developer&lt;/h2&gt;
+&lt;h2 id=&#34;modern-app-developer-vs-old-school-developer&#34;&gt;Modern App Developer vs Old School Developer&lt;/h2&gt;
 
 &lt;p&gt;Let&amp;rsquo;s assume 300 million IPs are up, and has an average of 3 ports open.&lt;/p&gt;
 
@@ -74,7 +74,7 @@
 
 &lt;p&gt;&lt;em&gt;Disclaimer: I don&amp;rsquo;t know ElasticSearch all that well, so feel free to correct me on any of the following.&lt;/em&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;choose-a-language:81495eb0cd198863461f6e4666c91616&#34;&gt;Choose a Language&lt;/h3&gt;
+&lt;h3 id=&#34;choose-a-language&#34;&gt;Choose a Language&lt;/h3&gt;
 
 &lt;p&gt;Modern App Developer:&lt;/p&gt;
 
@@ -88,7 +88,7 @@
 &lt;p&gt;I will use Go. It&amp;rsquo;s fast, performant, and easy to understand/maintain!&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;store-the-host-and-port-states:81495eb0cd198863461f6e4666c91616&#34;&gt;Store the Host and Port States&lt;/h3&gt;
+&lt;h3 id=&#34;store-the-host-and-port-states&#34;&gt;Store the Host and Port States&lt;/h3&gt;
 
 &lt;p&gt;Modern App Developer:&lt;/p&gt;
 
@@ -136,7 +136,7 @@
  to gain some space efficiency, but let&amp;rsquo;s assume we are not compressing for now. Also if I do EWAH bitmap compression, I may lose out on the ability to do population counting (see below).&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;count-the-number-of-up-hosts:81495eb0cd198863461f6e4666c91616&#34;&gt;Count the Number of &amp;ldquo;Up&amp;rdquo; Hosts&lt;/h3&gt;
+&lt;h3 id=&#34;count-the-number-of-up-hosts&#34;&gt;Count the Number of &amp;ldquo;Up&amp;rdquo; Hosts&lt;/h3&gt;
 
 &lt;p&gt;Modern App Developer:&lt;/p&gt;
 
@@ -162,7 +162,7 @@
 &lt;p&gt;I can also split the work by creating multiple goroutines (assuming Go), similar to map/reduce, to gain faster calculation.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;determine-the-up-down-state-of-a-specific-host:81495eb0cd198863461f6e4666c91616&#34;&gt;Determine the Up/Down State of a Specific Host&lt;/h3&gt;
+&lt;h3 id=&#34;determine-the-up-down-state-of-a-specific-host&#34;&gt;Determine the Up/Down State of a Specific Host&lt;/h3&gt;
 
 &lt;p&gt;Modern App Developer:&lt;/p&gt;
 
@@ -178,7 +178,7 @@
 &lt;p&gt;This should be easy. I just need to index into the bit array using the integer value of the IPv4, and find out if the bit value is 1 or 0.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;determine-which-hosts-are-up-in-a-particular-24-subnet:81495eb0cd198863461f6e4666c91616&#34;&gt;Determine Which Hosts are &amp;ldquo;Up&amp;rdquo; in a Particular /24 Subnet&lt;/h3&gt;
+&lt;h3 id=&#34;determine-which-hosts-are-up-in-a-particular-24-subnet&#34;&gt;Determine Which Hosts are &amp;ldquo;Up&amp;rdquo; in a Particular /24 Subnet&lt;/h3&gt;
 
 &lt;p&gt;Modern App Developer:&lt;/p&gt;
 
@@ -196,7 +196,7 @@
 &lt;p&gt;This is just another bit iteration problem. I will use the first IP address of the subnet to determine where in the bit array I should start. Then I calculate the number of IPs in that subnet. From there, I just iterate through the bit array and for every bit that&amp;rsquo;s 1, I convert the index of that bit into an IPv4 address and add to the list of &amp;ldquo;Up&amp;rdquo; hosts.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;count-the-number-of-hosts-that-have-each-of-the-ports-open:81495eb0cd198863461f6e4666c91616&#34;&gt;Count the Number of Hosts That Have Each of the Ports Open&lt;/h3&gt;
+&lt;h3 id=&#34;count-the-number-of-hosts-that-have-each-of-the-ports-open&#34;&gt;Count the Number of Hosts That Have Each of the Ports Open&lt;/h3&gt;
 
 &lt;p&gt;For example, the report could simply be:&lt;/p&gt;
 
@@ -224,7 +224,7 @@
 &lt;p&gt;Again, this can easily be paralleized by creating multiple goroutines (assuming Go).&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;how-many-total-hosts-were-seen-as-up-in-the-past-3-months:81495eb0cd198863461f6e4666c91616&#34;&gt;How Many Total Hosts Were Seen as &amp;ldquo;Up&amp;rdquo; in the Past 3 Months&lt;/h3&gt;
+&lt;h3 id=&#34;how-many-total-hosts-were-seen-as-up-in-the-past-3-months&#34;&gt;How Many Total Hosts Were Seen as &amp;ldquo;Up&amp;rdquo; in the Past 3 Months&lt;/h3&gt;
 
 &lt;p&gt;Modern App Developer:&lt;/p&gt;
 
@@ -240,7 +240,7 @@
 
 &lt;p&gt;_Note: I fixed the original AND to OR based on a &lt;a href=&#34;https://news.ycombinator.com/item?id=11100213&#34;&gt;comment from HN&lt;/a&gt;. Not sure what I was thinking when I typed AND&amp;hellip;duh!&lt;/p&gt;
 
-&lt;h3 id=&#34;how-many-hosts-changed-state-this-month-was-up-but-now-down-or-was-down-but-now-up:81495eb0cd198863461f6e4666c91616&#34;&gt;How Many Hosts Changed State This Month (was &amp;ldquo;up&amp;rdquo; but now &amp;ldquo;down&amp;rdquo;, or was &amp;ldquo;down&amp;rdquo; but now &amp;ldquo;up&amp;rdquo;)&lt;/h3&gt;
+&lt;h3 id=&#34;how-many-hosts-changed-state-this-month-was-up-but-now-down-or-was-down-but-now-up&#34;&gt;How Many Hosts Changed State This Month (was &amp;ldquo;up&amp;rdquo; but now &amp;ldquo;down&amp;rdquo;, or was &amp;ldquo;down&amp;rdquo; but now &amp;ldquo;up&amp;rdquo;)&lt;/h3&gt;
 
 &lt;p&gt;Modern App Developer:&lt;/p&gt;
 
@@ -254,7 +254,7 @@
 &lt;p&gt;I can perform a simple XOR operation on the bit arrays from this and last month. Then count the number of &amp;ldquo;1&amp;rdquo; bits of the resulting bit array.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;how-many-hosts-were-up-last-month-but-now-it-s-down:81495eb0cd198863461f6e4666c91616&#34;&gt;How Many Hosts Were &amp;ldquo;Up&amp;rdquo; Last Month But Now It&amp;rsquo;s &amp;ldquo;Down&amp;rdquo;&lt;/h3&gt;
+&lt;h3 id=&#34;how-many-hosts-were-up-last-month-but-now-it-s-down&#34;&gt;How Many Hosts Were &amp;ldquo;Up&amp;rdquo; Last Month But Now It&amp;rsquo;s &amp;ldquo;Down&amp;rdquo;&lt;/h3&gt;
 
 &lt;p&gt;Modern App Developer:&lt;/p&gt;
 
@@ -268,7 +268,7 @@
 &lt;p&gt;I can perform this opeartion: &lt;code&gt;(this_month XOR last_month) AND last_month&lt;/code&gt;. This will return a bit array that has the bit set if the host was &amp;ldquo;up&amp;rdquo; last month but now it&amp;rsquo;s &amp;ldquo;down&amp;rdquo;. Then count the number of &amp;ldquo;1&amp;rdquo; bits of the resulting bit array.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;how-many-hosts-were-down-last-month-but-now-it-s-up:81495eb0cd198863461f6e4666c91616&#34;&gt;How Many Hosts Were &amp;ldquo;Down&amp;rdquo; Last Month But Now It&amp;rsquo;s &amp;ldquo;Up&amp;rdquo;&lt;/h3&gt;
+&lt;h3 id=&#34;how-many-hosts-were-down-last-month-but-now-it-s-up&#34;&gt;How Many Hosts Were &amp;ldquo;Down&amp;rdquo; Last Month But Now It&amp;rsquo;s &amp;ldquo;Up&amp;rdquo;&lt;/h3&gt;
 
 &lt;p&gt;Modern App Developer:&lt;/p&gt;
 
@@ -310,7 +310,7 @@
 &lt;li&gt;See other findings below.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;top-words:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Top Words&lt;/h3&gt;
+&lt;h3 id=&#34;top-words&#34;&gt;Top Words&lt;/h3&gt;
 
 &lt;p&gt;The top words that vendors use to describe themselves haven&amp;rsquo;t changed much. The following table shows the top 10 words used in RSA conference exhibitor descriptions since 2008. You can find the complete word list &lt;a href=&#34;https://github.com/zhenjl/rsaconf&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
@@ -475,7 +475,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/rsa2016.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;endpoint-vs-network:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Endpoint vs. Network&lt;/h3&gt;
+&lt;h3 id=&#34;endpoint-vs-network&#34;&gt;Endpoint vs. Network&lt;/h3&gt;
 
 &lt;p&gt;While the word &lt;em&gt;network&lt;/em&gt; has mostly maintained its top 10 position (except 2013 when it fell to #11), the big gainer is the word &lt;em&gt;endpoint&lt;/em&gt;, which improved drastically from #266 in 2012 to 2016&amp;rsquo;s #50. This may indicate that enterprises are much more accepting of endpoint technologies.&lt;/p&gt;
 
@@ -483,7 +483,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/endpoint-network.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;compliance-vs-threat:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Compliance vs. Threat&lt;/h3&gt;
+&lt;h3 id=&#34;compliance-vs-threat&#34;&gt;Compliance vs. Threat&lt;/h3&gt;
 
 &lt;p&gt;Not surprisingly, the use of the word &lt;em&gt;compliance&lt;/em&gt; continues to go down, and the word &lt;em&gt;threat&lt;/em&gt; continues to go up.&lt;/p&gt;
 
@@ -491,7 +491,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/compliance-threat.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;mobile-cloud-virtual-and-iot:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Mobile, Cloud, Virtual and IoT&lt;/h3&gt;
+&lt;h3 id=&#34;mobile-cloud-virtual-and-iot&#34;&gt;Mobile, Cloud, Virtual and IoT&lt;/h3&gt;
 
 &lt;p&gt;While the words &lt;em&gt;mobile&lt;/em&gt; and &lt;em&gt;cloud&lt;/em&gt; maintained their relative positioning in 2016, we can also see &lt;em&gt;virtual&lt;/em&gt; continues its slight downward trend.&lt;/p&gt;
 
@@ -499,7 +499,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/mobile-cloud.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;cyber-malware-and-phishing:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Cyber, Malware and Phishing&lt;/h3&gt;
+&lt;h3 id=&#34;cyber-malware-and-phishing&#34;&gt;Cyber, Malware and Phishing&lt;/h3&gt;
 
 &lt;p&gt;The word &lt;em&gt;cyber&lt;/em&gt; continues to gain popularity in the past 4 years; however, the word &lt;em&gt;malware&lt;/em&gt; has fell below the top 100, a position it maintained since 2010.&lt;/p&gt;
 
@@ -507,13 +507,13 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/cyber-malware.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;it-s-all-about-behavior:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;It&amp;rsquo;s all about Behavior!&lt;/h3&gt;
+&lt;h3 id=&#34;it-s-all-about-behavior&#34;&gt;It&amp;rsquo;s all about Behavior!&lt;/h3&gt;
 
 &lt;p&gt;The word &lt;em&gt;behavior&lt;/em&gt; (as in behavioral analysis) has also gained drastically over the past few years, going from #370 in 2012 to #78 in 2016.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/behavior.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;credits:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Credits&lt;/h3&gt;
+&lt;h3 id=&#34;credits&#34;&gt;Credits&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;The word clouds and word rankings are generated using &lt;a href=&#34;http://timdream.org/wordcloud&#34;&gt;Word Cloud&lt;/a&gt;.&lt;/li&gt;
@@ -750,7 +750,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/rsa2015.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;compliance-down-threats-up:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Compliance Down, Threats Up&lt;/h3&gt;
+&lt;h3 id=&#34;compliance-down-threats-up&#34;&gt;Compliance Down, Threats Up&lt;/h3&gt;
 
 &lt;p&gt;While the macro trend has not changed dramatically for the exhibitor descriptions, there have been some micro trends. Here are a couple of examples.&lt;/p&gt;
 
@@ -762,7 +762,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/compliance-threat.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;mobile-and-cloud-up:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Mobile and Cloud Up&lt;/h3&gt;
+&lt;h3 id=&#34;mobile-and-cloud-up&#34;&gt;Mobile and Cloud Up&lt;/h3&gt;
 
 &lt;p&gt;The words &lt;em&gt;mobile&lt;/em&gt; and &lt;em&gt;cloud&lt;/em&gt; has gained dramatically in rankings over past 8 years. In fact, it&amp;rsquo;s been consistently one of the top words used in the last 4. For anyone who hasn&amp;rsquo;t been hiding under a rock in the past few years, this is completely unsurprising.&lt;/p&gt;
 
@@ -774,7 +774,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/mobile-cloud.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;virtual-and-real-time-regaining-ground:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Virtual and Real-Time Regaining Ground&lt;/h3&gt;
+&lt;h3 id=&#34;virtual-and-real-time-regaining-ground&#34;&gt;Virtual and Real-Time Regaining Ground&lt;/h3&gt;
 
 &lt;p&gt;The words &lt;em&gt;virtual&lt;/em&gt; and &lt;em&gt;real-time&lt;/em&gt; dropped dramatically in rankings for a couple of years (2010, 2011) but have since regained all the lost ground and more. I have no precise reasons on why that&amp;rsquo;s the case but I have some theories. These theories are probably completely wrong, and if you have better explanations I would love to hear from you.&lt;/p&gt;
 
@@ -785,7 +785,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/virtual-real-time.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;other-findings:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Other Findings&lt;/h3&gt;
+&lt;h3 id=&#34;other-findings&#34;&gt;Other Findings&lt;/h3&gt;
 
 &lt;p&gt;The word &lt;em&gt;cyber&lt;/em&gt; gained huge popularity in the past 3 years, likely due to the U.S. government&amp;rsquo;s focus on &lt;em&gt;cyber&lt;/em&gt; security. The word &lt;em&gt;malware&lt;/em&gt; has been fairly consistently at the top 100 words since 2010.&lt;/p&gt;
 
@@ -795,7 +795,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/product-service.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;credits:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Credits&lt;/h3&gt;
+&lt;h3 id=&#34;credits&#34;&gt;Credits&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;The word clouds and word rankings are generated using &lt;a href=&#34;http://timdream.org/wordcloud&#34;&gt;Word Cloud&lt;/a&gt;.&lt;/li&gt;
@@ -813,7 +813,7 @@
       <guid>http://zhen.org/blog/papers-i-read-2015-week-8/</guid>
       <description>
 
-&lt;h3 id=&#34;random-ramblings:29724b4ec2d333ad12e89fd98257dccd&#34;&gt;Random Ramblings&lt;/h3&gt;
+&lt;h3 id=&#34;random-ramblings&#34;&gt;Random Ramblings&lt;/h3&gt;
 
 &lt;p&gt;Another week, another report of hacks. This time, &lt;a href=&#34;http://securelist.com/blog/research/68732/the-great-bank-robbery-the-carbanak-apt/&#34;&gt;The Great Bank Robbery&lt;/a&gt;, where up to 100 financial institutions have been hit.Total financial losses could be as a high as $1bn. You can download the &lt;a href=&#34;http://25zbkz3k00wn2tp5092n6di7b5k.wpengine.netdna-cdn.com/files/2015/02/Carbanak_APT_eng.pdf&#34;&gt;full report&lt;/a&gt; and learn all about it.&lt;/p&gt;
 
@@ -825,7 +825,7 @@
 
 &lt;p&gt;Actually I am starting to feel a bit overwhelmed by having both projects. Both of them are very interesting and I can see both move forward in very positive ways. Lots of ideas in my head but not enough time to do them. Now that I am getting feature requests, issues and pull requests, I feel even worse because I haven&amp;rsquo;t spent enough time on them. &amp;lt;sigh&amp;gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;papers-i-read:29724b4ec2d333ad12e89fd98257dccd&#34;&gt;Papers I Read&lt;/h3&gt;
+&lt;h3 id=&#34;papers-i-read&#34;&gt;Papers I Read&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.pdl.cmu.edu/PDL-FTP/HECStorage/git-cercs-12-08.pdf&#34;&gt;Memory-Efficient GroupBy-Aggregate using Compressed Buffer Trees&lt;/a&gt;&lt;/li&gt;
@@ -870,7 +870,7 @@ insights, to make online changes to job functions to adapt to new requirements o
       <guid>http://zhen.org/blog/papers-i-read-2015-week-7/</guid>
       <description>
 
-&lt;h2 id=&#34;random-ramblings:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Random Ramblings&lt;/h2&gt;
+&lt;h2 id=&#34;random-ramblings&#34;&gt;Random Ramblings&lt;/h2&gt;
 
 &lt;p&gt;Well, another week, &lt;a href=&#34;http://www.nytimes.com/2015/02/05/business/hackers-breached-data-of-millions-insurer-says.html&#34;&gt;another big data breach&lt;/a&gt;. This time is Anthem, one of the nation’s largest health insurers. Ok, maybe it was last week that it happend. But this week they revealed that &lt;a href=&#34;http://consumerist.com/2015/02/13/anthem-says-data-from-as-far-back-as-2004-exposed-during-hack-offering-free-identity-theft-protection/&#34;&gt;hackers had access &amp;hellip; going back as far as 2004&lt;/a&gt;. WSJ blamed Anthem for &lt;a href=&#34;http://www.wsj.com/articles/investigators-eye-china-in-anthem-hack-1423167560&#34;&gt;not encrypting the data&lt;/a&gt;. Though I have to agree with Rich Mogull over at Securosis that &amp;ldquo;&lt;a href=&#34;https://securosis.com/blog/even-if-anthem-encrypted-it-probably-wouldnt-have-mattered&#34;&gt;even if Anthem had encrypted, it probably wouldn’t have helped&lt;/a&gt;&amp;rdquo;.&lt;/p&gt;
 
@@ -888,7 +888,7 @@ insights, to make online changes to job functions to adapt to new requirements o
 
 &lt;p&gt;In general I don&amp;rsquo;t really think government mandates like this will work. The industry has to feel the pain enough that they are willing to participate, otherwise it&amp;rsquo;s just a waste of paper and ink. Facebook seems to be taking a lead in security information sharing and &lt;a href=&#34;https://www.facebook.com/notes/protect-the-graph/threatexchange-sharing-for-a-safer-internet/1566584370248375&#34;&gt;launched their ThreatExchange security framework&lt;/a&gt; this week. along with Pinterest, Tumblr, Twitter, and Yahoo. Good for them! I hope this is not a temporary PR thing, and that they keep funding and supporting the framework.&lt;/p&gt;
 
-&lt;h2 id=&#34;papers-i-read:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Papers I Read&lt;/h2&gt;
+&lt;h2 id=&#34;papers-i-read&#34;&gt;Papers I Read&lt;/h2&gt;
 
 &lt;p&gt;Another great resource of computer science papers is Adrian Coyler&amp;rsquo;s &lt;a href=&#34;http://blog.acolyer.org/&#34;&gt;the morning paper&lt;/a&gt;. He selects and summarizes &amp;ldquo;an interesting/influential/important paper from the world of CS every weekday morning&amp;rdquo;.&lt;/p&gt;
 
@@ -961,7 +961,7 @@ choices were made that have been key to its success in our environment, such as 
 
 &lt;p&gt;In any case, if you know of some of the more innovative ways people are approaching these problems, please please please comment below as I would love to hear from you.&lt;/p&gt;
 
-&lt;h3 id=&#34;tl-dr:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;tl;dr&lt;/h3&gt;
+&lt;h3 id=&#34;tl-dr&#34;&gt;tl;dr&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;The &lt;code&gt;sequence&lt;/code&gt; scanner is designed to tokenize free-form log messages.
@@ -984,7 +984,7 @@ choices were made that have been key to its success in our environment, such as 
 &lt;/ol&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;background:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Background&lt;/h2&gt;
+&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;In computer science, lexical analysis is the process of converting a sequence of characters into a sequence of tokens, i.e. meaningful character strings. A program or function that performs lexical analysis is called a lexical analyzer, lexer, tokenizer, or scanner. - &lt;a href=&#34;http://en.wikipedia.org/wiki/Lexical_analysis&#34;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;
@@ -992,7 +992,7 @@ choices were made that have been key to its success in our environment, such as 
 
 &lt;p&gt;One of the most critical functions in the &lt;code&gt;sequence&lt;/code&gt; parser is the message tokenization. At a very high level, message tokenization means taking a single log message and breaking it into a list of tokens.&lt;/p&gt;
 
-&lt;h3 id=&#34;functional-requirements:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Functional Requirements&lt;/h3&gt;
+&lt;h3 id=&#34;functional-requirements&#34;&gt;Functional Requirements&lt;/h3&gt;
 
 &lt;p&gt;The challenge is knowing where the token break points are. Most log messages are free-form text, which means there&amp;rsquo;s no common structure to them.&lt;/p&gt;
 
@@ -1027,7 +1027,7 @@ choices were made that have been key to its success in our environment, such as 
 
 &lt;p&gt;So a log message &lt;em&gt;scanner&lt;/em&gt; or &lt;em&gt;tokenizer&lt;/em&gt; (we will use these terms interchangeably) must understand common components such as timestamp, URL, hex strings, IP addresses (v4 or v6), and mac addresses, so it can break the messages into &lt;em&gt;meaningful components&lt;/em&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;performance-requirements:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Performance Requirements&lt;/h3&gt;
+&lt;h3 id=&#34;performance-requirements&#34;&gt;Performance Requirements&lt;/h3&gt;
 
 &lt;p&gt;From a performance requirements perspective, I really didn&amp;rsquo;t start out with any expectations. However, after achieving 100-200K MPS for parsing (not just tokenizing), I have a strong desire to keep the performance at that level. So the more I can optimize the scanner to tokenize faster, the more head room I have for parsing.&lt;/p&gt;
 
@@ -1043,7 +1043,7 @@ choices were made that have been key to its success in our environment, such as 
 
 &lt;p&gt;Yes, go ahead and tell me I shouldn&amp;rsquo;t worry about micro-optimization, because this post is all about that. :)&lt;/p&gt;
 
-&lt;h2 id=&#34;sequence-scanner:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Sequence Scanner&lt;/h2&gt;
+&lt;h2 id=&#34;sequence-scanner&#34;&gt;Sequence Scanner&lt;/h2&gt;
 
 &lt;p&gt;In the &lt;code&gt;sequence&lt;/code&gt; package, we implemented a general log message scanner, called &lt;a href=&#34;https://github.com/strace/sequence/blob/master/scanner.go&#34;&gt;GeneralScanner&lt;/a&gt;. GeneralScanner is a sequential lexical analyzer that breaks a log message into a sequence of tokens. It is sequential because it goes through log message sequentially tokentizing each part of the message, without the use of regular expressions. The scanner currently recognizes time stamps, hex strings, IP (v4, v6) addresses, URLs, MAC addresses, integers and floating point numbers.&lt;/p&gt;
 
@@ -1071,7 +1071,7 @@ choices were made that have been key to its success in our environment, such as 
   Scanned 447745 messages in 1.20 secs, ~ 373170.45 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;concepts:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Concepts&lt;/h3&gt;
+&lt;h3 id=&#34;concepts&#34;&gt;Concepts&lt;/h3&gt;
 
 &lt;p&gt;To understand the scanner, you have to understand the following concepts that are part of the package.&lt;/p&gt;
 
@@ -1087,7 +1087,7 @@ choices were made that have been key to its success in our environment, such as 
 
 &lt;p&gt;Basically, the scanner takes a log message string, tokenizes it and returns a &lt;em&gt;Sequence&lt;/em&gt; with the recognized &lt;em&gt;TokenType&lt;/em&gt; marked. This &lt;em&gt;Sequence&lt;/em&gt; is then fed into the analyzer or parser, and the analyzer or parser in turn returns another &lt;em&gt;Sequence&lt;/em&gt; that has the recognized &lt;em&gt;FieldType&lt;/em&gt; marked.&lt;/p&gt;
 
-&lt;h3 id=&#34;design:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Design&lt;/h3&gt;
+&lt;h3 id=&#34;design&#34;&gt;Design&lt;/h3&gt;
 
 &lt;p&gt;Tokenizers or scanners are usually implemented using finite-state machines. Each FSM (or FSA, finite state automata) understands a specific sequences of characters that make up a type of token.&lt;/p&gt;
 
@@ -1123,7 +1123,7 @@ choices were made that have been key to its success in our environment, such as 
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h3 id=&#34;performance:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Performance&lt;/h3&gt;
+&lt;h3 id=&#34;performance&#34;&gt;Performance&lt;/h3&gt;
 
 &lt;p&gt;To achieve the performance requirements, the following rules and optimizations are followed. Some of these are Go specific, and some are general recommendations.&lt;/p&gt;
 
@@ -1246,7 +1246,7 @@ BenchmarkTimeStep2   2000000         772 ns/op
 
 &lt;p&gt;So by simply adding a couple of checks, I&amp;rsquo;ve increased perfromance by close to 5%.&lt;/p&gt;
 
-&lt;h2 id=&#34;conclusion:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
 
 &lt;p&gt;At this point I think I have squeezed every bit of performance out of the scanner, to the extend of my knowledge. It&amp;rsquo;s performing relatively well and it&amp;rsquo;s given the parser plenty of head room to do other things. I hope some of these lessons are helpful to whatever you are doing.&lt;/p&gt;
 
@@ -1274,7 +1274,7 @@ BenchmarkTimeStep2   2000000         772 ns/op
 &lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/&#34;&gt;Part 3&lt;/a&gt; is about optimizing Go to achieve very high performance (200,000 - 500,000 MPS depending on message size) for scanning and tokenizing log messages&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;background:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Background&lt;/h2&gt;
+&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
 
 &lt;p&gt;This post really takes me down the memory lane. Back in 2005, while I was at LogLogic, we envisioned an automated approach to tagging, or labeling, log messages. More specifically, we wanted to automatically tag specific components within the log messages with their semantic label, such as a source IP address, or a target user.&lt;/p&gt;
 
@@ -1294,7 +1294,7 @@ BenchmarkTimeStep2   2000000         772 ns/op
 
 &lt;p&gt;It is understandable, unfortunately. Log parsing is &lt;strong&gt;BORING&lt;/strong&gt;. I mean, who wants to sit there and stare at logs all day and try to come up with regular expressions or other types of parsing rules? LogLogic used to have a team of LogLabs analysts that did that, and I have to say I truly appreciated their effort and patience, because I cannot do that.&lt;/p&gt;
 
-&lt;h3 id=&#34;the-end-result:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;The End Result&lt;/h3&gt;
+&lt;h3 id=&#34;the-end-result&#34;&gt;The End Result&lt;/h3&gt;
 
 &lt;p&gt;So instead of writing rules all day long, I decided to create an analyzer that can help us get at least 75% of the way there. The end result is the &lt;code&gt;Analyzer&lt;/code&gt;, written in &lt;a href=&#34;http://golang.org&#34;&gt;Go&lt;/a&gt;, in the &lt;a href=&#34;https://github.com/strace/sequence&#34;&gt;sequence&lt;/a&gt; project I created. Here are some preliminary results. Below, we analyzed 2 files. The first is a file with over 200,000 sshd messages. The second is a file with a mixture of ASA, sshd, sudo and su log messages. It contains almost 450,000 messages.&lt;/p&gt;
 
@@ -1325,7 +1325,7 @@ Analyzed 447745 messages, found 103 unique patterns, 103 are new.
 Analyzed 212897 messages, found 39 unique patterns, 4 are new.
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;parser-quick-review:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Parser - Quick Review&lt;/h3&gt;
+&lt;h3 id=&#34;parser-quick-review&#34;&gt;Parser - Quick Review&lt;/h3&gt;
 
 &lt;p&gt;I wrote about the &lt;a href=&#34;http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/&#34;&gt;sequence parser&lt;/a&gt; a couple of weeks back. It is a &lt;em&gt;high performance sequential log parser&lt;/em&gt;. It &lt;em&gt;sequentially&lt;/em&gt; goes through a log message, &lt;em&gt;parses&lt;/em&gt; out the meaningful parts, without the use regular expressions. It can achieve &lt;em&gt;high performance&lt;/em&gt; parsing of &lt;strong&gt;100,000 - 200,000 messages per second (MPS)&lt;/strong&gt; without the need to separate parsing rules by log source type. Underneath the hood, the &lt;code&gt;sequence&lt;/code&gt; parser basically constructs a tree based on the sequential rules, walks the tree to identify all the possible paths, and returns the path that has the best match (highest weight) for the message.&lt;/p&gt;
 
@@ -1333,11 +1333,11 @@ Analyzed 212897 messages, found 39 unique patterns, 4 are new.
 
 &lt;p&gt;The approach taken by the &lt;code&gt;sequence&lt;/code&gt; parser is pretty much the same as liblognorm or other tree-based approaches.&lt;/p&gt;
 
-&lt;h2 id=&#34;sequence-analyzer:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Sequence Analyzer&lt;/h2&gt;
+&lt;h2 id=&#34;sequence-analyzer&#34;&gt;Sequence Analyzer&lt;/h2&gt;
 
 &lt;p&gt;In the following section I will go through additional details of how the &lt;code&gt;sequence&lt;/code&gt; analyzer reduces 100 of 1000&amp;rsquo;s of raw log messages down to just 10&amp;rsquo;s of unique patterns, and then determining how to label the individual tokens.&lt;/p&gt;
 
-&lt;h3 id=&#34;identifying-unique-patterns:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Identifying Unique Patterns&lt;/h3&gt;
+&lt;h3 id=&#34;identifying-unique-patterns&#34;&gt;Identifying Unique Patterns&lt;/h3&gt;
 
 &lt;p&gt;Analyzer builds an analysis tree that represents all the Sequences from messages. It can be used to determine all of the unique patterns for a large body of messages.&lt;/p&gt;
 
@@ -1370,7 +1370,7 @@ messages is:&lt;/p&gt;
 
 &lt;p&gt;By applying this concept, we can effectively identify all the unique patterns in a log file.&lt;/p&gt;
 
-&lt;h3 id=&#34;determining-the-correct-labels:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Determining the Correct Labels&lt;/h3&gt;
+&lt;h3 id=&#34;determining-the-correct-labels&#34;&gt;Determining the Correct Labels&lt;/h3&gt;
 
 &lt;p&gt;Now that we have the unique patterns, we will scan the tokens to determine which labels we should apply to them.&lt;/p&gt;
 
@@ -1476,7 +1476,7 @@ object = [
 
 &lt;p&gt;Finally, after all that, we scan through the sequence again, and identify any numbers that follow an IP address, but separated by either a &amp;ldquo;/&amp;rdquo; or &amp;ldquo;:&amp;ldquo;. Then we label these numbers as either &lt;code&gt;%srcport%&lt;/code&gt; or &lt;code&gt;%dstport%&lt;/code&gt; based on how the previous IP address is labeled.&lt;/p&gt;
 
-&lt;h3 id=&#34;summary:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Summary&lt;/h3&gt;
+&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
 
 &lt;p&gt;There are some limitations to the &lt;code&gt;sequence&lt;/code&gt; parser and analyzer. For example, currently &lt;code&gt;sequence&lt;/code&gt; does not handle multi-line logs. Each log message must appear as a single line. So if there&amp;rsquo;s multi-line logs, they must be first be converted into a single line. Also, &lt;code&gt;sequence&lt;/code&gt; has been only tested with a limited set of system (Linux, AIX, sudo, ssh, su, dhcp, etc etc), network (ASA, PIX, Neoteris, CheckPoint, Juniper Firewall) and infrastructure application (apache, bluecoat, etc) logs.&lt;/p&gt;
 
@@ -1504,7 +1504,7 @@ object = [
 
 &lt;p&gt;In any case, I thought it might be an interesting idea to share some of the papers I read/scan/skim on weekly basis. This way I can also track what I read over time.&lt;/p&gt;
 
-&lt;h3 id=&#34;random-ramblings:e2137c343047358d9912399632750231&#34;&gt;Random Ramblings&lt;/h3&gt;
+&lt;h3 id=&#34;random-ramblings&#34;&gt;Random Ramblings&lt;/h3&gt;
 
 &lt;p&gt;This week has been a disaster. I was the last one in the family to catch the cold, but probably lasted the longest. In fact I am still only about 50%. This whole week I have been having headaches, body aches, and haven&amp;rsquo;t been able to concentrate. My body must be trying to catch up on sleep or something. For a couple days I actually slept for almost 12 hours a night!&lt;/p&gt;
 
@@ -1522,7 +1522,7 @@ object = [
 
 &lt;p&gt;[Disclaimer: any mistake in my calculations/assumptions I blame on my drugged brain cells.]&lt;/p&gt;
 
-&lt;h3 id=&#34;papers-i-read:e2137c343047358d9912399632750231&#34;&gt;Papers I Read&lt;/h3&gt;
+&lt;h3 id=&#34;papers-i-read&#34;&gt;Papers I Read&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.covert.io/research-papers/security/Beehive%20-%20Large-Scale%20Log%20Analysis%20for%20Detecting%20Suspicious%20Activity%20in%20Enterprise%20Networks.pdf&#34;&gt;Beehive: Large-Scale Log Analysis for Detecting Suspicious Activity in Enterprise Networks&lt;/a&gt;&lt;/li&gt;
@@ -1603,7 +1603,7 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
 
 &lt;hr /&gt;
 
-&lt;h2 id=&#34;background:d4419a1968098b45153921045f06326c&#34;&gt;Background&lt;/h2&gt;
+&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
 
 &lt;p&gt;&lt;code&gt;sequence&lt;/code&gt; is a &lt;em&gt;high performance sequential log parser&lt;/em&gt;. It &lt;em&gt;sequentially&lt;/em&gt; goes through a log message, &lt;em&gt;parses&lt;/em&gt; out the meaningful parts, without the use regular expressions. It can achieve &lt;em&gt;high performance&lt;/em&gt; parsing of &lt;strong&gt;100,000 - 200,000 messages per second (MPS)&lt;/strong&gt; without the need to separate parsing rules by log source type.&lt;/p&gt;
 
@@ -1611,7 +1611,7 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
 
 &lt;p&gt;&lt;strong&gt;If you have a set of logs you would like me to test out, please feel free to &lt;a href=&#34;https://github.com/strace/sequence/issues&#34;&gt;open an issue&lt;/a&gt; and we can arrange a way for me to download and test your logs.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;motivation:d4419a1968098b45153921045f06326c&#34;&gt;Motivation&lt;/h3&gt;
+&lt;h3 id=&#34;motivation&#34;&gt;Motivation&lt;/h3&gt;
 
 &lt;p&gt;Log messages are notoriusly difficult to parse because they all have different formats. Industries (see Splunk, ArcSight, Tibco LogLogic, Sumo Logic, Logentries, Loggly, LogRhythm, etc etc etc) have been built to solve the problems of parsing, understanding and analyzing log messages.&lt;/p&gt;
 
@@ -1627,7 +1627,7 @@ scheme. Furthermore, we apply these criteria in the scope of web intrusion detec
 
 &lt;p&gt;Sequence is developed to make analyzing and parsing log messages a lot easier and faster.&lt;/p&gt;
 
-&lt;h3 id=&#34;performance:d4419a1968098b45153921045f06326c&#34;&gt;Performance&lt;/h3&gt;
+&lt;h3 id=&#34;performance&#34;&gt;Performance&lt;/h3&gt;
 
 &lt;p&gt;The following performance benchmarks are run on a single 4-core (2.8Ghz i7) MacBook Pro. The first file is a
 bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA log file, averaging 180 bytes per message.&lt;/p&gt;
@@ -1654,11 +1654,11 @@ bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA lo
   Parsed 447745 messages in 2.52 secs, ~ 177875.94 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;documentation:d4419a1968098b45153921045f06326c&#34;&gt;Documentation&lt;/h3&gt;
+&lt;h3 id=&#34;documentation&#34;&gt;Documentation&lt;/h3&gt;
 
 &lt;p&gt;Documentation is available at godoc: &lt;a href=&#34;http://godoc.org/github.com/strace/sequence&#34;&gt;package&lt;/a&gt;, &lt;a href=&#34;http://godoc.org/github.com/strace/sequence/sequence&#34;&gt;command&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;license:d4419a1968098b45153921045f06326c&#34;&gt;License&lt;/h3&gt;
+&lt;h3 id=&#34;license&#34;&gt;License&lt;/h3&gt;
 
 &lt;p&gt;Copyright &amp;copy; 2014 Dataence, LLC. All rights reserved.&lt;/p&gt;
 
@@ -1674,11 +1674,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.&lt;/p&gt;
 
-&lt;h3 id=&#34;roadmap-futures:d4419a1968098b45153921045f06326c&#34;&gt;Roadmap / Futures&lt;/h3&gt;
+&lt;h3 id=&#34;roadmap-futures&#34;&gt;Roadmap / Futures&lt;/h3&gt;
 
 &lt;p&gt;There are some pattern files developed for ASA, Sudo and SSH in the &lt;code&gt;patterns&lt;/code&gt; directory. The goal is to continue to develop a set of patterns for the various log messages, and along the way add additional features to the parser that can help make it even easier to parse log messages. So currently there&amp;rsquo;s not a set roadmap.&lt;/p&gt;
 
-&lt;h2 id=&#34;concepts:d4419a1968098b45153921045f06326c&#34;&gt;Concepts&lt;/h2&gt;
+&lt;h2 id=&#34;concepts&#34;&gt;Concepts&lt;/h2&gt;
 
 &lt;p&gt;The following concepts are part of the package:&lt;/p&gt;
 
@@ -1697,7 +1697,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
 &lt;li&gt;&lt;p&gt;A &lt;em&gt;Parser&lt;/em&gt; is a tree-based parsing engine for log messages. It builds a parsing tree based on pattern sequence supplied, and for each message sequence, returns the matching pattern sequence. Each of the message tokens will be marked with the semantic field types.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;sequence-command:d4419a1968098b45153921045f06326c&#34;&gt;Sequence Command&lt;/h2&gt;
+&lt;h2 id=&#34;sequence-command&#34;&gt;Sequence Command&lt;/h2&gt;
 
 &lt;p&gt;The &lt;code&gt;sequence&lt;/code&gt; command is developed to demonstrate the use of this package. You can find it in the &lt;code&gt;sequence&lt;/code&gt; directory. The &lt;code&gt;sequence&lt;/code&gt; command implements the &lt;em&gt;sequential semantic log parser&lt;/em&gt;.&lt;/p&gt;
 
@@ -1711,7 +1711,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
      help [command]            Help about any command
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;scan:d4419a1968098b45153921045f06326c&#34;&gt;Scan&lt;/h3&gt;
+&lt;h3 id=&#34;scan&#34;&gt;Scan&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence scan [flags]
@@ -1749,7 +1749,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
   #  22: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;ustream&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;parse:d4419a1968098b45153921045f06326c&#34;&gt;Parse&lt;/h3&gt;
+&lt;h3 id=&#34;parse&#34;&gt;Parse&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence parse [flags]
@@ -1800,7 +1800,7 @@ To get a more realistic performance number, see the benchmark section below.&lt;
   #  24: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;)&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;benchmark:d4419a1968098b45153921045f06326c&#34;&gt;Benchmark&lt;/h3&gt;
+&lt;h3 id=&#34;benchmark&#34;&gt;Benchmark&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence bench [flags]
@@ -1846,7 +1846,7 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://godoc.org/github.com/surgebase/porter2&#34;&gt;&lt;img src=&#34;http://godoc.org/github.com/surgebase/porter2?status.svg&#34; alt=&#34;GoDoc&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;tl-dr:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;tl;dr&lt;/h2&gt;
+&lt;h2 id=&#34;tl-dr&#34;&gt;tl;dr&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;This post describes the &lt;a href=&#34;https://github.com/surgebase/porter2&#34;&gt;Porter2&lt;/a&gt; package I implemented. It is written in Go (#golang).&lt;/li&gt;
@@ -1855,13 +1855,13 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 &lt;li&gt;Hand-coding FSM is a PITA!!! &lt;a href=&#34;https://github.com/surgebase/porter2/tree/master/cmd/suffixfsm&#34;&gt;Automate&lt;/a&gt; if possible.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;introduction:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Introduction&lt;/h2&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;In a personal project I am working on, I had the need to perform word stemming in two scenarios. First, I need to perform stemming for all the string literals in a LARGE corpus and then determine if the words are in a fixed set of literals. Second, I need to perform stemming for a subset of words in real-time, as messages stream in.&lt;/p&gt;
 
 &lt;p&gt;In the first case, performance is important but not critical; in the second case, performance is a huge factor.&lt;/p&gt;
 
-&lt;h3 id=&#34;stemming:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Stemming&lt;/h3&gt;
+&lt;h3 id=&#34;stemming&#34;&gt;Stemming&lt;/h3&gt;
 
 &lt;p&gt;To start, according to &lt;a href=&#34;http://en.wikipedia.org/wiki/Stemming&#34;&gt;wikipedia&lt;/a&gt;:&lt;/p&gt;
 
@@ -1875,7 +1875,7 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://snowball.tartarus.org/algorithms/english/stemmer.html&#34;&gt;Porter2&lt;/a&gt; is universally considered to be an enhancement over the original Porter algorithm. Porter2 has an improved set of rules and it&amp;rsquo;s widely used as well.&lt;/p&gt;
 
-&lt;h2 id=&#34;implementation:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Implementation&lt;/h2&gt;
+&lt;h2 id=&#34;implementation&#34;&gt;Implementation&lt;/h2&gt;
 
 &lt;p&gt;This package, &lt;a href=&#34;https://github.com/surgebase/porter2&#34;&gt;Porter2&lt;/a&gt;, implements the Porter2 stemmer. It is written completely using finite state machines to perform suffix comparison, rather than the usual string-based or tree-based approaches. As a result, it is 660% faster compare to string comparison-based approach written in the same (Go) language.&lt;/p&gt;
 
@@ -1888,7 +1888,7 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 fmt.Println(porter2.Stem(&amp;quot;seaweed&amp;quot;)) // should get seawe
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;performance:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Performance&lt;/h3&gt;
+&lt;h3 id=&#34;performance&#34;&gt;Performance&lt;/h3&gt;
 
 &lt;p&gt;This implementation by far has the highest performance of the various Go-based implementations, AFAICT. I tested a few of the implementations and the results are below.&lt;/p&gt;
 
@@ -1924,7 +1924,7 @@ fmt.Println(porter2.Stem(&amp;quot;seaweed&amp;quot;)) // should get seawe
 
 &lt;p&gt;To run the test again, you can run &lt;a href=&#34;https://github.com/surgebase/porter2/tree/master/cmd/compare&#34;&gt;compare.go&lt;/a&gt; (&lt;code&gt;go run compare.go&lt;/code&gt;).&lt;/p&gt;
 
-&lt;h3 id=&#34;state-machines:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;State Machines&lt;/h3&gt;
+&lt;h3 id=&#34;state-machines&#34;&gt;State Machines&lt;/h3&gt;
 
 &lt;p&gt;Most of the implementations, like the ones in the table above, rely completely on suffix string comparison. Basically there&amp;rsquo;s a list of suffixes, and the code will loop through the list to see if there&amp;rsquo;s a match. Given most of the time you are looking for the longest match, so you order the list so the longest is the first one. So if you are luckly, the match will be early on the list. But regardless that&amp;rsquo;s a huge performance hit.&lt;/p&gt;
 
@@ -1971,7 +1971,7 @@ fmt.Println(porter2.Stem(&amp;quot;seaweed&amp;quot;)) // should get seawe
 
 &lt;p&gt;To do that, we need to assign a state number to each of the nodes in the suffix tree, and output each of the states and the transitions based on the rune encountered. The tree above is the same as the one before, but now has a state number assigned to each node.&lt;/p&gt;
 
-&lt;h3 id=&#34;generator:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Generator&lt;/h3&gt;
+&lt;h3 id=&#34;generator&#34;&gt;Generator&lt;/h3&gt;
 
 &lt;p&gt;I actually started building all the porter2 FSMs manually with a completely different approach than what I am describing here. I won&amp;rsquo;t go into details here but needless to say, it was disastrous. Not only was hand coding state machines extremely error-prone, the approach I was taking also had a lot of potential for bugs. It took me MANY HOURS to hand build those FSMs but at the end, I was happy to abandon all of them for the approach I am taking now.&lt;/p&gt;
 
@@ -2053,7 +2053,7 @@ loop:
 	return rs
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;finally:cb3ebc7d4c620be4b494c5a79db4f68b&#34;&gt;Finally&lt;/h2&gt;
+&lt;h2 id=&#34;finally&#34;&gt;Finally&lt;/h2&gt;
 
 &lt;p&gt;This is a technique that can probably be applied to any fixed data set. The performance may vary based on the size of the state machine so test it with both maps and FSM to see what works best.&lt;/p&gt;
 
@@ -2079,7 +2079,7 @@ loop:
 
 &lt;p&gt;In short, I like Go. It&amp;rsquo;s the first programming language I&amp;rsquo;ve used in recent years that I can actually build some interesting projects, e.g., &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt; (&lt;a href=&#34;http://zhen.org/blog/surgemq-mqtt-message-queue-750k-mps/&#34;&gt;detailed post&lt;/a&gt;), in my limited spare time.&lt;/p&gt;
 
-&lt;h2 id=&#34;my-background:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;My Background&lt;/h2&gt;
+&lt;h2 id=&#34;my-background&#34;&gt;My Background&lt;/h2&gt;
 
 &lt;p&gt;I am not a programmer/developer. Not full-time, not part-time, not moonlight. I tell my colleagues and teams that &amp;ldquo;I am not technical.&amp;rdquo;&lt;/p&gt;
 
@@ -2095,11 +2095,11 @@ loop:
 
 &lt;p&gt;In the past 12 years, my most used IDE is called Microsoft Office. So, in short, I am probably semi-technical, and know just enough to be dangerous.&lt;/p&gt;
 
-&lt;h3 id=&#34;my-history-with-go:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;My History with Go&lt;/h3&gt;
+&lt;h3 id=&#34;my-history-with-go&#34;&gt;My History with Go&lt;/h3&gt;
 
 &lt;p&gt;In &lt;sup&gt;2011&lt;/sup&gt;&amp;frasl;&lt;sub&gt;2012&lt;/sub&gt;, I had the responsibility of building a brand new engineering team (I was already running product management) at VMware to embark on a new strategic initiative. The nature of the product/service is not important now. However, at the time, because the team is brand new, we had some leeway in choosing a language for the project. VMware at the time was heavily Java, and specifically Spring given the &lt;a href=&#34;http://www.vmware.com/company/news/releases/springsource&#34;&gt;2009 acquisition of SpringSource&lt;/a&gt;. While the new team had mostly Java experience, there was desire to choose something less bloated, and something that had good support for the emerging patterns of distributed software.&lt;/p&gt;
 
-&lt;h4 id=&#34;first-touch:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;First Touch&lt;/h4&gt;
+&lt;h4 id=&#34;first-touch&#34;&gt;First Touch&lt;/h4&gt;
 
 &lt;p&gt;Some of the team members had experience with Scala, so that became an obvious option. I did some research on the web, and found some discussions of Go. At the time, Go hasn&amp;rsquo;t reached 1.0 yet, but there was already a buzz around it. I looked on Amazon, and found &lt;a href=&#34;http://www.amazon.com/gp/product/B0083RVAJW/ref=docs-os-doi_0&#34;&gt;The Way to Go&lt;/a&gt;, which was probably the only Go book around at the time. For $3 on the Kindle, it was well worth it. However, due to the nascent nature of Go (pre 1.0), it was not a comfortable choice so I didn&amp;rsquo;t put that as an option. But this was my &lt;strong&gt;first touch of Go and it felt relatively painless&lt;/strong&gt;.&lt;/p&gt;
 
@@ -2109,7 +2109,7 @@ loop:
 
 &lt;p&gt;I also tried to read up Scala and at least understand the concept. I even tried to take the online course on Coursera offered by Martin Odersky. However, I just could not get my non-functional mind to wrap around the functional Scala. And since I really didn&amp;rsquo;t need to code (nor the developers want me to), I gave up on learning Scala.&lt;/p&gt;
 
-&lt;h4 id=&#34;second-touch:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;Second Touch&lt;/h4&gt;
+&lt;h4 id=&#34;second-touch&#34;&gt;Second Touch&lt;/h4&gt;
 
 &lt;p&gt;In any case, fast forward 2 years to Q3 of 2013. I had since left VMware and joined my current company, &lt;a href=&#34;http://jolata.com&#34;&gt;Jolata&lt;/a&gt;, to build a big data network analytics solutions for mobile carriers and high-frequency trading financial services firms. We are a small startup that&amp;rsquo;s trying to do a ton of things. So even though I run products, I have to get my hands dirty often.&lt;/p&gt;
 
@@ -2123,7 +2123,7 @@ loop:
 
 &lt;p&gt;In the end, I wrote the data generator in Go (private repo) and got the first taste of goroutines. Again, &lt;strong&gt;this second touch with Go was also relatively painless&lt;/strong&gt;. The only confusion I had at the time was the Go source tree structure. Trying to understand $GOROOT, $GOPATH and other Go environment variables were all new to me. This was also the first time in 10 years that I really spent time writing a piece of software, so I just considered the confusion as my inexperience.&lt;/p&gt;
 
-&lt;h4 id=&#34;third-touch-and-beyond:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;Third Touch and Beyond&lt;/h4&gt;
+&lt;h4 id=&#34;third-touch-and-beyond&#34;&gt;Third Touch and Beyond&lt;/h4&gt;
 
 &lt;p&gt;Today, I no longer code at work as we have more developers now. Also, the Jolata product is mostly C/C++, Java and Node, so Go is also no longer in the mix. However, After getting a taste of Go in the first couple of Go projects, I&amp;rsquo;ve since spent a tremendous amount of my limited personal spare time working with it.&lt;/p&gt;
 
@@ -2133,11 +2133,11 @@ loop:
 
 &lt;p&gt;All these have allowed me to learn Go enough to build a real project, &lt;a href=&#34;https://github.com/surge/surgemq&#34;&gt;SurgeMQ&lt;/a&gt;. It is by far my most popular project and one that I expect to continue developing.&lt;/p&gt;
 
-&lt;h2 id=&#34;my-views-on-go:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;My Views on Go&lt;/h2&gt;
+&lt;h2 id=&#34;my-views-on-go&#34;&gt;My Views on Go&lt;/h2&gt;
 
 &lt;p&gt;Go is not just a langauge, it also has a very active community around it. The views are based on my observation over the past 1.5 years of using Go. My Go environment is primary Sublime Text 3 with GoSublime plugin.&lt;/p&gt;
 
-&lt;h3 id=&#34;as-a-language:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;As a Language&amp;hellip;&lt;/h3&gt;
+&lt;h3 id=&#34;as-a-language&#34;&gt;As a Language&amp;hellip;&lt;/h3&gt;
 
 &lt;p&gt;I am not a language theorist, nor do I claim to be a language expert. In fact, prior to actually using Go, I&amp;rsquo;ve barely heard of generics, communicating sequential processes, and other &amp;ldquo;cool&amp;rdquo; and &amp;ldquo;advanced&amp;rdquo; concepts. I&amp;rsquo;ve heard of all the new cool programming languages such as Clojure and Rust, but have never looked at any of the code. So my view of Go is basically one of a developer n00b.&lt;/p&gt;
 
@@ -2147,7 +2147,7 @@ loop:
 
 &lt;p&gt;However, as long as the language doesn&amp;rsquo;t slow me down, then I feel it&amp;rsquo;s serving my needs.&lt;/p&gt;
 
-&lt;h4 id=&#34;go-is-simple:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;Go is Simple&lt;/h4&gt;
+&lt;h4 id=&#34;go-is-simple&#34;&gt;Go is Simple&lt;/h4&gt;
 
 &lt;p&gt;As a language for a new deverloper, Go was very easy to pick up. Go&amp;rsquo;s design is fairly simple and minimalistic. You can sit down and read through the &lt;a href=&#34;https://golang.org/ref/spec&#34;&gt;Language Specification&lt;/a&gt; fairly quickly in an idle afternoon. I actually didn&amp;rsquo;t find the language reference until later. My first touch of Go was by scanning through the book &lt;em&gt;The Way To Go&lt;/em&gt;. Regardless, there&amp;rsquo;s not a lot to the language so it&amp;rsquo;s relatively easy for someone like myself to pick up the basics. (Btw, I&amp;rsquo;ve also never gone through the &lt;a href=&#34;https://tour.golang.org/&#34;&gt;Go Tour&lt;/a&gt;. I know it&amp;rsquo;s highly recommended to all new Go developers. I just never did it.)&lt;/p&gt;
 
@@ -2161,7 +2161,7 @@ loop:
 
 &lt;p&gt;As a language a team, the simplicity of Go is &lt;em&gt;HUGE&lt;/em&gt;. It allows develoeprs to quickly come up to speed and be productive in the shortest period of time. And in this case, time is literally money.&lt;/p&gt;
 
-&lt;h4 id=&#34;go-is-opinionated:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;Go is Opinionated&lt;/h4&gt;
+&lt;h4 id=&#34;go-is-opinionated&#34;&gt;Go is Opinionated&lt;/h4&gt;
 
 &lt;p&gt;Go is opinionated in many ways. For example, probably one of the most frustrating thing about Go is how to structure the code directory. Unlike other languages where you can just create a directory and get started, Go wants you to put things in $GOPATH. It took a few readings of &lt;a href=&#34;https://golang.org/doc/code.html&#34;&gt;How to Write Go Code&lt;/a&gt; for me to grasp what&amp;rsquo;s going on, and it took even longer for me to really get the hang of code organization, and how Go imports packages (e.g., &lt;code&gt;go get&lt;/code&gt;).&lt;/p&gt;
 
@@ -2173,7 +2173,7 @@ loop:
 
 &lt;p&gt;Go is also very opininated in terms of variable use and package import. If a variable is declared but not used, the Go compiler will complain. If a package is imported but not used, the Go compiler will complain. Personally, I like the compiler complaining about the unused variables. It keeps the code clean, and reduce the chance of unexpected bugs. I am less concerned about unused packages but have also learned to live with the compiler complains. I use &lt;a href=&#34;https://github.com/bradfitz/goimports&#34;&gt;goimports&lt;/a&gt; in Sublime Text 3 to effectively and quickly take care of the import statements. In fact, in 99% of the cases I don&amp;rsquo;t even need to type in the import statements myself.&lt;/p&gt;
 
-&lt;h4 id=&#34;go-is-safe:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;Go is Safe&lt;/h4&gt;
+&lt;h4 id=&#34;go-is-safe&#34;&gt;Go is Safe&lt;/h4&gt;
 
 &lt;p&gt;Go is safe for a couple of reasons. For a new developer, Go does not make it easy for you to be lazy. For example, Go is a statically typed language, which means every variable must explicitly have a type associated with it. The Go compiler does infer types under certain situations, but regardless, there&amp;rsquo;s a type for every variable. This may feel uncomfortable for developers coming from dynamic languages, but the benefit definitely outweighs the cost. I&amp;rsquo;ve experience first hand, as a product person waiting for bugs to be fixed, how long it takes to troubleshoot problems in Node. Having static types gives you a feeling of &amp;ldquo;correctness&amp;rdquo; after you have written the code.&lt;/p&gt;
 
@@ -2185,7 +2185,7 @@ loop:
 
 &lt;p&gt;Again, as a team langauge, the safety aspect is very important. The team will likely end up spending much less time dealing with memory bugs and focus more on feature development.&lt;/p&gt;
 
-&lt;h4 id=&#34;go-is-powerful:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;Go is Powerful&lt;/h4&gt;
+&lt;h4 id=&#34;go-is-powerful&#34;&gt;Go is Powerful&lt;/h4&gt;
 
 &lt;p&gt;What makes Go powerful are its simplicity, its high performance, and advanced concepts such as channels, goroutines, interfaces, type composition, etc. We have discussed all of these in previous sections.&lt;/p&gt;
 
@@ -2199,7 +2199,7 @@ loop:
 
 &lt;p&gt;One last thing, Go has a very large and complete standard library. It enables developers to do most, if not all, of their work quickly and efficiently. As the language matures and the community grows, there will be more and more 3rd party open source libraries one can leverage.&lt;/p&gt;
 
-&lt;h3 id=&#34;as-a-community:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;As a Community&lt;/h3&gt;
+&lt;h3 id=&#34;as-a-community&#34;&gt;As a Community&lt;/h3&gt;
 
 &lt;p&gt;Today, Go has a very active community behind it. Specifically, the information sources I&amp;rsquo;ve followed and gotten help from include &lt;a href=&#34;https://botbot.me/freenode/go-nuts/&#34;&gt;#go-nuts IRC&lt;/a&gt;, &lt;a href=&#34;http://www.reddit.com/r/golang/search?q=golang&amp;amp;sort=new&amp;amp;restrict_sr=on&amp;amp;t=all&#34;&gt;golang subreddit&lt;/a&gt;, and obviously the &lt;a href=&#34;https://groups.google.com/forum/#!forum/golang-nuts&#34;&gt;golang-nuts mailing list&lt;/a&gt;.&lt;/p&gt;
 
@@ -2229,7 +2229,7 @@ loop:
 
 &lt;p&gt;Overall though, I felt I&amp;rsquo;ve learned a ton from the Go community. People have generally been helpful and are willing to offer solutions to problems. I have nothing to compare to, but I feel that the positives of the Go community far outweighs any negatives.&lt;/p&gt;
 
-&lt;h2 id=&#34;conclusion:b5701f21733ea64a37f8a0bc7a6884f3&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
 
 &lt;p&gt;In conclusion, it has been a tremendous 1.5 years of working with Go, and seeing Go grow both as a language and as a community has been very rewarding.&lt;/p&gt;
 
@@ -2281,7 +2281,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 8 bytes from 8.8.8.8: seq=1 ttl=56 tos=32 time=21.753711ms
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;commands:2953f7aa0fe0aa3757fe6bf025e7fa57&#34;&gt;Commands&lt;/h3&gt;
+&lt;h3 id=&#34;commands&#34;&gt;Commands&lt;/h3&gt;
 
 &lt;p&gt;There are two builtin commands for &lt;code&gt;pingmq&lt;/code&gt;.&lt;/p&gt;
 
@@ -2309,7 +2309,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
   -t, --topic=[]: Comma separated list of topics to subscribe to
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;ip-addresses:2953f7aa0fe0aa3757fe6bf025e7fa57&#34;&gt;IP Addresses&lt;/h3&gt;
+&lt;h3 id=&#34;ip-addresses&#34;&gt;IP Addresses&lt;/h3&gt;
 
 &lt;p&gt;To list IPs you like to use with &lt;code&gt;pingmq&lt;/code&gt;, you can use the following formats:&lt;/p&gt;
 
@@ -2335,7 +2335,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 10.1.1.128/25 -&amp;gt; 10.1.1.128 ... 10.1.1.255
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;topic-format:2953f7aa0fe0aa3757fe6bf025e7fa57&#34;&gt;Topic Format&lt;/h3&gt;
+&lt;h3 id=&#34;topic-format&#34;&gt;Topic Format&lt;/h3&gt;
 
 &lt;p&gt;TO subscribe to the &lt;code&gt;pingmq&lt;/code&gt; results, you can use the following formats:&lt;/p&gt;
 
@@ -2346,7 +2346,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 &lt;li&gt;&lt;code&gt;ping/+/8.8.8.8&lt;/code&gt; will subscribe to both success and failed pings for all IP 8.8.8.8&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;building:2953f7aa0fe0aa3757fe6bf025e7fa57&#34;&gt;Building&lt;/h3&gt;
+&lt;h3 id=&#34;building&#34;&gt;Building&lt;/h3&gt;
 
 &lt;p&gt;To build &lt;code&gt;pingmq&lt;/code&gt;, you need to have installed &lt;a href=&#34;http://golang.org&#34;&gt;Go 1.3.3 or 1.4&lt;/a&gt;. Then run the following:&lt;/p&gt;
 
@@ -2379,7 +2379,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 
 &lt;p&gt;&lt;strong&gt;SurgeMQ is currently under active development and should be considered unstable until further notice.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;mqtt:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;MQTT&lt;/h3&gt;
+&lt;h3 id=&#34;mqtt&#34;&gt;MQTT&lt;/h3&gt;
 
 &lt;p&gt;According to the &lt;a href=&#34;http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html&#34;&gt;MQTT spec&lt;/a&gt;:&lt;/p&gt;
 
@@ -2405,7 +2405,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 
 &lt;p&gt;There&amp;rsquo;s some very large implementation of MQTT such as &lt;a href=&#34;https://www.facebook.com/notes/facebook-engineering/building-facebook-messenger/10150259350998920&#34;&gt;Facebook Messenger&lt;/a&gt;. There&amp;rsquo;s also an active Eclipse project, &lt;a href=&#34;https://eclipse.org/paho/&#34;&gt;Paho&lt;/a&gt;, that provides scalable open-source client implementations for many different languages, including C/C++, Java, Python, JavaScript, C# .Net and Go.&lt;/p&gt;
 
-&lt;h3 id=&#34;features-limitations-and-future:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Features, Limitations, and Future&lt;/h3&gt;
+&lt;h3 id=&#34;features-limitations-and-future&#34;&gt;Features, Limitations, and Future&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;
 
@@ -2439,7 +2439,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 &lt;li&gt;Better authentication modules&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;performance:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Performance&lt;/h3&gt;
+&lt;h3 id=&#34;performance&#34;&gt;Performance&lt;/h3&gt;
 
 &lt;p&gt;Current performance benchmark of SurgeMQ, running all publishers, subscribers and broker on a single 4-core (2.8Ghz i7) MacBook Pro, is able to achieve:&lt;/p&gt;
 
@@ -2450,7 +2450,7 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 &lt;li&gt;over &lt;strong&gt;700,000 MPS&lt;/strong&gt; in a full mesh configuration with 20 clients&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;compatibility:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Compatibility&lt;/h3&gt;
+&lt;h3 id=&#34;compatibility&#34;&gt;Compatibility&lt;/h3&gt;
 
 &lt;p&gt;In addition, SurgeMQ has been tested with the following client libraries and it &lt;em&gt;seems&lt;/em&gt; to work:&lt;/p&gt;
 
@@ -2467,13 +2467,13 @@ $ sudo ./pingmq server -p 8.8.8.0/28 -i 30
 &lt;li&gt;&lt;em&gt;Paho C Client library (in C).&lt;/em&gt; Tested with most of the test cases and failed the same ones as the conformance test because the features are not yet implemented. Actually I think there&amp;rsquo;s a bug in the test suite as it calls the PUBLISH handler function for non-PUBLISH messages.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;documentation:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Documentation&lt;/h3&gt;
+&lt;h3 id=&#34;documentation&#34;&gt;Documentation&lt;/h3&gt;
 
 &lt;p&gt;Documentation is available at &lt;a href=&#34;http://godoc.org/github.com/surge/surgemq&#34;&gt;godoc&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;More information regarding the design of the SurgeMQ is available at &lt;a href=&#34;http://surgemq.com&#34;&gt;zen 3.1&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;license:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;License&lt;/h3&gt;
+&lt;h3 id=&#34;license&#34;&gt;License&lt;/h3&gt;
 
 &lt;p&gt;Copyright &amp;copy; 2014 Dataence, LLC. All rights reserved.&lt;/p&gt;
 
@@ -2489,9 +2489,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.&lt;/p&gt;
 
-&lt;h3 id=&#34;examples:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Examples&lt;/h3&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
 
-&lt;h4 id=&#34;server-example:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Server Example&lt;/h4&gt;
+&lt;h4 id=&#34;server-example&#34;&gt;Server Example&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;// Create a new server
 svr := &amp;amp;service.Server{
@@ -2506,7 +2506,7 @@ svr := &amp;amp;service.Server{
 svr.ListenAndServe(&amp;quot;tcp://:1883&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;client-example:924dac401fc2f0061be94c47a8c89e4c&#34;&gt;Client Example&lt;/h4&gt;
+&lt;h4 id=&#34;client-example&#34;&gt;Client Example&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;// Instantiates a new Client
 c := &amp;amp;Client{}

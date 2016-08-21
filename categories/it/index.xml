@@ -24,7 +24,7 @@
 
 &lt;p&gt;In order to understand why thats the case, it is necessary to understand the process of IT problem management. There are generally five steps in the problem management process: detection, identification, determination, resolution, and reflection.&lt;/p&gt;
 
-&lt;h3 id=&#34;detection:1979b5a4b95172a3b4fc7da57e58fe38&#34;&gt;Detection&lt;/h3&gt;
+&lt;h3 id=&#34;detection&#34;&gt;Detection&lt;/h3&gt;
 
 &lt;p&gt;The ability to detect whats happening in your infrastructure is a crucial first step in managing problems. Is your router or switch down? Is your web server or email server down? Is your network connection degraded? Is someone intruding your network or servers? Has someone transferred intellectual property out of your network?&lt;/p&gt;
 
@@ -32,13 +32,13 @@
 
 &lt;p&gt;All the technologies, however, are designed for detection but cannot tell you where the actual cause of the problem might be nor can it tell you what caused the problem to occur.&lt;/p&gt;
 
-&lt;h3 id=&#34;identification:1979b5a4b95172a3b4fc7da57e58fe38&#34;&gt;Identification&lt;/h3&gt;
+&lt;h3 id=&#34;identification&#34;&gt;Identification&lt;/h3&gt;
 
 &lt;p&gt;Given that most of the technologies only perform detection, IT administrators must spent a lot of their time in identifying where the problem has actually occurred. These IT administrators utilize the most basic network tools such as ping and traceroute, rely on domain knowledge of their own network to perform process of elimination, or analyzing network traffic using sniffers to help determine the actual location of the problem.&lt;/p&gt;
 
 &lt;p&gt;To accelerate the process, some companies have developed technologies in the attempt to identify where the problem actually occurred. One such example is EMC Smarts. Smarts starts by mapping out an infrastructure using various automated tools as well as human knowledge. The mapping will identify, for example, which switch ports are connected via the same cable or what servers are behind the same router or switch. Once the mapping is complete, Smarts will utilize its proprietary Codebook Correlation Technology, SNMP traps and log messages from routers/switches/servers to identify where the fault or problem may have occurred.&lt;/p&gt;
 
-&lt;h3 id=&#34;determination:1979b5a4b95172a3b4fc7da57e58fe38&#34;&gt;Determination&lt;/h3&gt;
+&lt;h3 id=&#34;determination&#34;&gt;Determination&lt;/h3&gt;
 
 &lt;p&gt;Even though some of these newer technologies may help IT administrators identify where the problem might be, they are still very limited in determining the actual root cause. Why did my web server go down? Was it due to memory corruption? Was it due to a security exploit? Was it due to misconfiguration? Why is my network so slow? Is it because of a router or switch interface mismatch? Is it because someone is transferring a movie over the wire?&lt;/p&gt;
 
@@ -46,7 +46,7 @@
 
 &lt;p&gt;However, even today, IT administrators must manually perform root-cause or forensic analysis by digging through mountains of log files or analyzing seas of traffic packets. No technologies have been developed to help IT administrators to automate the determination process.&lt;/p&gt;
 
-&lt;h3 id=&#34;resolution:1979b5a4b95172a3b4fc7da57e58fe38&#34;&gt;Resolution&lt;/h3&gt;
+&lt;h3 id=&#34;resolution&#34;&gt;Resolution&lt;/h3&gt;
 
 &lt;p&gt;Once the problem has been identified and root cause has been determined, IT administrators can most of the time fix the problem quickly, e.g., fix the interface mismatch or restart the web server. There are obviously some problems that require long-term resolution such as fixing the memory corruption of applications or upgrading the network bandwidth due to increase in number of users.&lt;/p&gt;
 
@@ -54,7 +54,7 @@
 
 &lt;p&gt;This type of technology can be extremely dangerous as mistakes can lead to the network or infrastructure to become unavailable. Intruders may also be able to exploit these automated resolution mechanisms to perform Denial-of-Service attacks against the IT infrastructure.&lt;/p&gt;
 
-&lt;h3 id=&#34;reflection:1979b5a4b95172a3b4fc7da57e58fe38&#34;&gt;Reflection&lt;/h3&gt;
+&lt;h3 id=&#34;reflection&#34;&gt;Reflection&lt;/h3&gt;
 
 &lt;p&gt;Reflection, or post mortem is probably one of the most important stages in this whole process. The idea of reflection is that IT administrators should take time to&lt;/p&gt;
 

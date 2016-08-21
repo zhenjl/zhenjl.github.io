@@ -36,7 +36,7 @@
 &lt;li&gt;See other findings below.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;top-words:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Top Words&lt;/h3&gt;
+&lt;h3 id=&#34;top-words&#34;&gt;Top Words&lt;/h3&gt;
 
 &lt;p&gt;The top words that vendors use to describe themselves haven&amp;rsquo;t changed much. The following table shows the top 10 words used in RSA conference exhibitor descriptions since 2008. You can find the complete word list &lt;a href=&#34;https://github.com/zhenjl/rsaconf&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
@@ -201,7 +201,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/rsa2016.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;endpoint-vs-network:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Endpoint vs. Network&lt;/h3&gt;
+&lt;h3 id=&#34;endpoint-vs-network&#34;&gt;Endpoint vs. Network&lt;/h3&gt;
 
 &lt;p&gt;While the word &lt;em&gt;network&lt;/em&gt; has mostly maintained its top 10 position (except 2013 when it fell to #11), the big gainer is the word &lt;em&gt;endpoint&lt;/em&gt;, which improved drastically from #266 in 2012 to 2016&amp;rsquo;s #50. This may indicate that enterprises are much more accepting of endpoint technologies.&lt;/p&gt;
 
@@ -209,7 +209,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/endpoint-network.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;compliance-vs-threat:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Compliance vs. Threat&lt;/h3&gt;
+&lt;h3 id=&#34;compliance-vs-threat&#34;&gt;Compliance vs. Threat&lt;/h3&gt;
 
 &lt;p&gt;Not surprisingly, the use of the word &lt;em&gt;compliance&lt;/em&gt; continues to go down, and the word &lt;em&gt;threat&lt;/em&gt; continues to go up.&lt;/p&gt;
 
@@ -217,7 +217,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/compliance-threat.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;mobile-cloud-virtual-and-iot:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Mobile, Cloud, Virtual and IoT&lt;/h3&gt;
+&lt;h3 id=&#34;mobile-cloud-virtual-and-iot&#34;&gt;Mobile, Cloud, Virtual and IoT&lt;/h3&gt;
 
 &lt;p&gt;While the words &lt;em&gt;mobile&lt;/em&gt; and &lt;em&gt;cloud&lt;/em&gt; maintained their relative positioning in 2016, we can also see &lt;em&gt;virtual&lt;/em&gt; continues its slight downward trend.&lt;/p&gt;
 
@@ -225,7 +225,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/mobile-cloud.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;cyber-malware-and-phishing:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Cyber, Malware and Phishing&lt;/h3&gt;
+&lt;h3 id=&#34;cyber-malware-and-phishing&#34;&gt;Cyber, Malware and Phishing&lt;/h3&gt;
 
 &lt;p&gt;The word &lt;em&gt;cyber&lt;/em&gt; continues to gain popularity in the past 4 years; however, the word &lt;em&gt;malware&lt;/em&gt; has fell below the top 100, a position it maintained since 2010.&lt;/p&gt;
 
@@ -233,13 +233,13 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/cyber-malware.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;it-s-all-about-behavior:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;It&amp;rsquo;s all about Behavior!&lt;/h3&gt;
+&lt;h3 id=&#34;it-s-all-about-behavior&#34;&gt;It&amp;rsquo;s all about Behavior!&lt;/h3&gt;
 
 &lt;p&gt;The word &lt;em&gt;behavior&lt;/em&gt; (as in behavioral analysis) has also gained drastically over the past few years, going from #370 in 2012 to #78 in 2016.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/2016/behavior.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;credits:bb7656c12180a6a78a8c54c60f6a51ce&#34;&gt;Credits&lt;/h3&gt;
+&lt;h3 id=&#34;credits&#34;&gt;Credits&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;The word clouds and word rankings are generated using &lt;a href=&#34;http://timdream.org/wordcloud&#34;&gt;Word Cloud&lt;/a&gt;.&lt;/li&gt;
@@ -426,7 +426,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/rsa2015.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;compliance-down-threats-up:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Compliance Down, Threats Up&lt;/h3&gt;
+&lt;h3 id=&#34;compliance-down-threats-up&#34;&gt;Compliance Down, Threats Up&lt;/h3&gt;
 
 &lt;p&gt;While the macro trend has not changed dramatically for the exhibitor descriptions, there have been some micro trends. Here are a couple of examples.&lt;/p&gt;
 
@@ -438,7 +438,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/compliance-threat.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;mobile-and-cloud-up:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Mobile and Cloud Up&lt;/h3&gt;
+&lt;h3 id=&#34;mobile-and-cloud-up&#34;&gt;Mobile and Cloud Up&lt;/h3&gt;
 
 &lt;p&gt;The words &lt;em&gt;mobile&lt;/em&gt; and &lt;em&gt;cloud&lt;/em&gt; has gained dramatically in rankings over past 8 years. In fact, it&amp;rsquo;s been consistently one of the top words used in the last 4. For anyone who hasn&amp;rsquo;t been hiding under a rock in the past few years, this is completely unsurprising.&lt;/p&gt;
 
@@ -450,7 +450,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/mobile-cloud.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;virtual-and-real-time-regaining-ground:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Virtual and Real-Time Regaining Ground&lt;/h3&gt;
+&lt;h3 id=&#34;virtual-and-real-time-regaining-ground&#34;&gt;Virtual and Real-Time Regaining Ground&lt;/h3&gt;
 
 &lt;p&gt;The words &lt;em&gt;virtual&lt;/em&gt; and &lt;em&gt;real-time&lt;/em&gt; dropped dramatically in rankings for a couple of years (2010, 2011) but have since regained all the lost ground and more. I have no precise reasons on why that&amp;rsquo;s the case but I have some theories. These theories are probably completely wrong, and if you have better explanations I would love to hear from you.&lt;/p&gt;
 
@@ -461,7 +461,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/virtual-real-time.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;other-findings:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Other Findings&lt;/h3&gt;
+&lt;h3 id=&#34;other-findings&#34;&gt;Other Findings&lt;/h3&gt;
 
 &lt;p&gt;The word &lt;em&gt;cyber&lt;/em&gt; gained huge popularity in the past 3 years, likely due to the U.S. government&amp;rsquo;s focus on &lt;em&gt;cyber&lt;/em&gt; security. The word &lt;em&gt;malware&lt;/em&gt; has been fairly consistently at the top 100 words since 2010.&lt;/p&gt;
 
@@ -471,7 +471,7 @@
 
 &lt;p&gt;&lt;img src=&#34;http://zhen.org/images/rsaconf/product-service.png&#34;&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;credits:b082a5c20b5449f4372a8955a4b5d0dd&#34;&gt;Credits&lt;/h3&gt;
+&lt;h3 id=&#34;credits&#34;&gt;Credits&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;The word clouds and word rankings are generated using &lt;a href=&#34;http://timdream.org/wordcloud&#34;&gt;Word Cloud&lt;/a&gt;.&lt;/li&gt;

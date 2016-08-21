@@ -18,7 +18,7 @@
       <guid>http://zhen.org/blog/papers-i-read-2015-week-8/</guid>
       <description>
 
-&lt;h3 id=&#34;random-ramblings:29724b4ec2d333ad12e89fd98257dccd&#34;&gt;Random Ramblings&lt;/h3&gt;
+&lt;h3 id=&#34;random-ramblings&#34;&gt;Random Ramblings&lt;/h3&gt;
 
 &lt;p&gt;Another week, another report of hacks. This time, &lt;a href=&#34;http://securelist.com/blog/research/68732/the-great-bank-robbery-the-carbanak-apt/&#34;&gt;The Great Bank Robbery&lt;/a&gt;, where up to 100 financial institutions have been hit.Total financial losses could be as a high as $1bn. You can download the &lt;a href=&#34;http://25zbkz3k00wn2tp5092n6di7b5k.wpengine.netdna-cdn.com/files/2015/02/Carbanak_APT_eng.pdf&#34;&gt;full report&lt;/a&gt; and learn all about it.&lt;/p&gt;
 
@@ -30,7 +30,7 @@
 
 &lt;p&gt;Actually I am starting to feel a bit overwhelmed by having both projects. Both of them are very interesting and I can see both move forward in very positive ways. Lots of ideas in my head but not enough time to do them. Now that I am getting feature requests, issues and pull requests, I feel even worse because I haven&amp;rsquo;t spent enough time on them. &amp;lt;sigh&amp;gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;papers-i-read:29724b4ec2d333ad12e89fd98257dccd&#34;&gt;Papers I Read&lt;/h3&gt;
+&lt;h3 id=&#34;papers-i-read&#34;&gt;Papers I Read&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.pdl.cmu.edu/PDL-FTP/HECStorage/git-cercs-12-08.pdf&#34;&gt;Memory-Efficient GroupBy-Aggregate using Compressed Buffer Trees&lt;/a&gt;&lt;/li&gt;
@@ -75,7 +75,7 @@ insights, to make online changes to job functions to adapt to new requirements o
       <guid>http://zhen.org/blog/papers-i-read-2015-week-7/</guid>
       <description>
 
-&lt;h2 id=&#34;random-ramblings:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Random Ramblings&lt;/h2&gt;
+&lt;h2 id=&#34;random-ramblings&#34;&gt;Random Ramblings&lt;/h2&gt;
 
 &lt;p&gt;Well, another week, &lt;a href=&#34;http://www.nytimes.com/2015/02/05/business/hackers-breached-data-of-millions-insurer-says.html&#34;&gt;another big data breach&lt;/a&gt;. This time is Anthem, one of the nation’s largest health insurers. Ok, maybe it was last week that it happend. But this week they revealed that &lt;a href=&#34;http://consumerist.com/2015/02/13/anthem-says-data-from-as-far-back-as-2004-exposed-during-hack-offering-free-identity-theft-protection/&#34;&gt;hackers had access &amp;hellip; going back as far as 2004&lt;/a&gt;. WSJ blamed Anthem for &lt;a href=&#34;http://www.wsj.com/articles/investigators-eye-china-in-anthem-hack-1423167560&#34;&gt;not encrypting the data&lt;/a&gt;. Though I have to agree with Rich Mogull over at Securosis that &amp;ldquo;&lt;a href=&#34;https://securosis.com/blog/even-if-anthem-encrypted-it-probably-wouldnt-have-mattered&#34;&gt;even if Anthem had encrypted, it probably wouldn’t have helped&lt;/a&gt;&amp;rdquo;.&lt;/p&gt;
 
@@ -93,7 +93,7 @@ insights, to make online changes to job functions to adapt to new requirements o
 
 &lt;p&gt;In general I don&amp;rsquo;t really think government mandates like this will work. The industry has to feel the pain enough that they are willing to participate, otherwise it&amp;rsquo;s just a waste of paper and ink. Facebook seems to be taking a lead in security information sharing and &lt;a href=&#34;https://www.facebook.com/notes/protect-the-graph/threatexchange-sharing-for-a-safer-internet/1566584370248375&#34;&gt;launched their ThreatExchange security framework&lt;/a&gt; this week. along with Pinterest, Tumblr, Twitter, and Yahoo. Good for them! I hope this is not a temporary PR thing, and that they keep funding and supporting the framework.&lt;/p&gt;
 
-&lt;h2 id=&#34;papers-i-read:10248ddcf524aa32198bc5cded1aa098&#34;&gt;Papers I Read&lt;/h2&gt;
+&lt;h2 id=&#34;papers-i-read&#34;&gt;Papers I Read&lt;/h2&gt;
 
 &lt;p&gt;Another great resource of computer science papers is Adrian Coyler&amp;rsquo;s &lt;a href=&#34;http://blog.acolyer.org/&#34;&gt;the morning paper&lt;/a&gt;. He selects and summarizes &amp;ldquo;an interesting/influential/important paper from the world of CS every weekday morning&amp;rdquo;.&lt;/p&gt;
 
@@ -156,7 +156,7 @@ choices were made that have been key to its success in our environment, such as 
 
 &lt;p&gt;In any case, I thought it might be an interesting idea to share some of the papers I read/scan/skim on weekly basis. This way I can also track what I read over time.&lt;/p&gt;
 
-&lt;h3 id=&#34;random-ramblings:e2137c343047358d9912399632750231&#34;&gt;Random Ramblings&lt;/h3&gt;
+&lt;h3 id=&#34;random-ramblings&#34;&gt;Random Ramblings&lt;/h3&gt;
 
 &lt;p&gt;This week has been a disaster. I was the last one in the family to catch the cold, but probably lasted the longest. In fact I am still only about 50%. This whole week I have been having headaches, body aches, and haven&amp;rsquo;t been able to concentrate. My body must be trying to catch up on sleep or something. For a couple days I actually slept for almost 12 hours a night!&lt;/p&gt;
 
@@ -174,7 +174,7 @@ choices were made that have been key to its success in our environment, such as 
 
 &lt;p&gt;[Disclaimer: any mistake in my calculations/assumptions I blame on my drugged brain cells.]&lt;/p&gt;
 
-&lt;h3 id=&#34;papers-i-read:e2137c343047358d9912399632750231&#34;&gt;Papers I Read&lt;/h3&gt;
+&lt;h3 id=&#34;papers-i-read&#34;&gt;Papers I Read&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.covert.io/research-papers/security/Beehive%20-%20Large-Scale%20Log%20Analysis%20for%20Detecting%20Suspicious%20Activity%20in%20Enterprise%20Networks.pdf&#34;&gt;Beehive: Large-Scale Log Analysis for Detecting Suspicious Activity in Enterprise Networks&lt;/a&gt;&lt;/li&gt;

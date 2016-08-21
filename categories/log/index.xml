@@ -30,7 +30,7 @@
 &lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/&#34;&gt;Part 3&lt;/a&gt; is about optimizing Go to achieve very high performance (200,000 - 500,000 MPS depending on message size) for scanning and tokenizing log messages&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;background:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Background&lt;/h2&gt;
+&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
 
 &lt;p&gt;This post really takes me down the memory lane. Back in 2005, while I was at LogLogic, we envisioned an automated approach to tagging, or labeling, log messages. More specifically, we wanted to automatically tag specific components within the log messages with their semantic label, such as a source IP address, or a target user.&lt;/p&gt;
 
@@ -50,7 +50,7 @@
 
 &lt;p&gt;It is understandable, unfortunately. Log parsing is &lt;strong&gt;BORING&lt;/strong&gt;. I mean, who wants to sit there and stare at logs all day and try to come up with regular expressions or other types of parsing rules? LogLogic used to have a team of LogLabs analysts that did that, and I have to say I truly appreciated their effort and patience, because I cannot do that.&lt;/p&gt;
 
-&lt;h3 id=&#34;the-end-result:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;The End Result&lt;/h3&gt;
+&lt;h3 id=&#34;the-end-result&#34;&gt;The End Result&lt;/h3&gt;
 
 &lt;p&gt;So instead of writing rules all day long, I decided to create an analyzer that can help us get at least 75% of the way there. The end result is the &lt;code&gt;Analyzer&lt;/code&gt;, written in &lt;a href=&#34;http://golang.org&#34;&gt;Go&lt;/a&gt;, in the &lt;a href=&#34;https://github.com/strace/sequence&#34;&gt;sequence&lt;/a&gt; project I created. Here are some preliminary results. Below, we analyzed 2 files. The first is a file with over 200,000 sshd messages. The second is a file with a mixture of ASA, sshd, sudo and su log messages. It contains almost 450,000 messages.&lt;/p&gt;
 
@@ -81,7 +81,7 @@ Analyzed 447745 messages, found 103 unique patterns, 103 are new.
 Analyzed 212897 messages, found 39 unique patterns, 4 are new.
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;parser-quick-review:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Parser - Quick Review&lt;/h3&gt;
+&lt;h3 id=&#34;parser-quick-review&#34;&gt;Parser - Quick Review&lt;/h3&gt;
 
 &lt;p&gt;I wrote about the &lt;a href=&#34;http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/&#34;&gt;sequence parser&lt;/a&gt; a couple of weeks back. It is a &lt;em&gt;high performance sequential log parser&lt;/em&gt;. It &lt;em&gt;sequentially&lt;/em&gt; goes through a log message, &lt;em&gt;parses&lt;/em&gt; out the meaningful parts, without the use regular expressions. It can achieve &lt;em&gt;high performance&lt;/em&gt; parsing of &lt;strong&gt;100,000 - 200,000 messages per second (MPS)&lt;/strong&gt; without the need to separate parsing rules by log source type. Underneath the hood, the &lt;code&gt;sequence&lt;/code&gt; parser basically constructs a tree based on the sequential rules, walks the tree to identify all the possible paths, and returns the path that has the best match (highest weight) for the message.&lt;/p&gt;
 
@@ -89,11 +89,11 @@ Analyzed 212897 messages, found 39 unique patterns, 4 are new.
 
 &lt;p&gt;The approach taken by the &lt;code&gt;sequence&lt;/code&gt; parser is pretty much the same as liblognorm or other tree-based approaches.&lt;/p&gt;
 
-&lt;h2 id=&#34;sequence-analyzer:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Sequence Analyzer&lt;/h2&gt;
+&lt;h2 id=&#34;sequence-analyzer&#34;&gt;Sequence Analyzer&lt;/h2&gt;
 
 &lt;p&gt;In the following section I will go through additional details of how the &lt;code&gt;sequence&lt;/code&gt; analyzer reduces 100 of 1000&amp;rsquo;s of raw log messages down to just 10&amp;rsquo;s of unique patterns, and then determining how to label the individual tokens.&lt;/p&gt;
 
-&lt;h3 id=&#34;identifying-unique-patterns:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Identifying Unique Patterns&lt;/h3&gt;
+&lt;h3 id=&#34;identifying-unique-patterns&#34;&gt;Identifying Unique Patterns&lt;/h3&gt;
 
 &lt;p&gt;Analyzer builds an analysis tree that represents all the Sequences from messages. It can be used to determine all of the unique patterns for a large body of messages.&lt;/p&gt;
 
@@ -126,7 +126,7 @@ messages is:&lt;/p&gt;
 
 &lt;p&gt;By applying this concept, we can effectively identify all the unique patterns in a log file.&lt;/p&gt;
 
-&lt;h3 id=&#34;determining-the-correct-labels:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Determining the Correct Labels&lt;/h3&gt;
+&lt;h3 id=&#34;determining-the-correct-labels&#34;&gt;Determining the Correct Labels&lt;/h3&gt;
 
 &lt;p&gt;Now that we have the unique patterns, we will scan the tokens to determine which labels we should apply to them.&lt;/p&gt;
 
@@ -232,7 +232,7 @@ object = [
 
 &lt;p&gt;Finally, after all that, we scan through the sequence again, and identify any numbers that follow an IP address, but separated by either a &amp;ldquo;/&amp;rdquo; or &amp;ldquo;:&amp;ldquo;. Then we label these numbers as either &lt;code&gt;%srcport%&lt;/code&gt; or &lt;code&gt;%dstport%&lt;/code&gt; based on how the previous IP address is labeled.&lt;/p&gt;
 
-&lt;h3 id=&#34;summary:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Summary&lt;/h3&gt;
+&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
 
 &lt;p&gt;There are some limitations to the &lt;code&gt;sequence&lt;/code&gt; parser and analyzer. For example, currently &lt;code&gt;sequence&lt;/code&gt; does not handle multi-line logs. Each log message must appear as a single line. So if there&amp;rsquo;s multi-line logs, they must be first be converted into a single line. Also, &lt;code&gt;sequence&lt;/code&gt; has been only tested with a limited set of system (Linux, AIX, sudo, ssh, su, dhcp, etc etc), network (ASA, PIX, Neoteris, CheckPoint, Juniper Firewall) and infrastructure application (apache, bluecoat, etc) logs.&lt;/p&gt;
 
@@ -268,7 +268,7 @@ object = [
 
 &lt;hr /&gt;
 
-&lt;h2 id=&#34;background:d4419a1968098b45153921045f06326c&#34;&gt;Background&lt;/h2&gt;
+&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
 
 &lt;p&gt;&lt;code&gt;sequence&lt;/code&gt; is a &lt;em&gt;high performance sequential log parser&lt;/em&gt;. It &lt;em&gt;sequentially&lt;/em&gt; goes through a log message, &lt;em&gt;parses&lt;/em&gt; out the meaningful parts, without the use regular expressions. It can achieve &lt;em&gt;high performance&lt;/em&gt; parsing of &lt;strong&gt;100,000 - 200,000 messages per second (MPS)&lt;/strong&gt; without the need to separate parsing rules by log source type.&lt;/p&gt;
 
@@ -276,7 +276,7 @@ object = [
 
 &lt;p&gt;&lt;strong&gt;If you have a set of logs you would like me to test out, please feel free to &lt;a href=&#34;https://github.com/strace/sequence/issues&#34;&gt;open an issue&lt;/a&gt; and we can arrange a way for me to download and test your logs.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;motivation:d4419a1968098b45153921045f06326c&#34;&gt;Motivation&lt;/h3&gt;
+&lt;h3 id=&#34;motivation&#34;&gt;Motivation&lt;/h3&gt;
 
 &lt;p&gt;Log messages are notoriusly difficult to parse because they all have different formats. Industries (see Splunk, ArcSight, Tibco LogLogic, Sumo Logic, Logentries, Loggly, LogRhythm, etc etc etc) have been built to solve the problems of parsing, understanding and analyzing log messages.&lt;/p&gt;
 
@@ -292,7 +292,7 @@ object = [
 
 &lt;p&gt;Sequence is developed to make analyzing and parsing log messages a lot easier and faster.&lt;/p&gt;
 
-&lt;h3 id=&#34;performance:d4419a1968098b45153921045f06326c&#34;&gt;Performance&lt;/h3&gt;
+&lt;h3 id=&#34;performance&#34;&gt;Performance&lt;/h3&gt;
 
 &lt;p&gt;The following performance benchmarks are run on a single 4-core (2.8Ghz i7) MacBook Pro. The first file is a
 bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA log file, averaging 180 bytes per message.&lt;/p&gt;
@@ -319,11 +319,11 @@ bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA lo
   Parsed 447745 messages in 2.52 secs, ~ 177875.94 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;documentation:d4419a1968098b45153921045f06326c&#34;&gt;Documentation&lt;/h3&gt;
+&lt;h3 id=&#34;documentation&#34;&gt;Documentation&lt;/h3&gt;
 
 &lt;p&gt;Documentation is available at godoc: &lt;a href=&#34;http://godoc.org/github.com/strace/sequence&#34;&gt;package&lt;/a&gt;, &lt;a href=&#34;http://godoc.org/github.com/strace/sequence/sequence&#34;&gt;command&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;license:d4419a1968098b45153921045f06326c&#34;&gt;License&lt;/h3&gt;
+&lt;h3 id=&#34;license&#34;&gt;License&lt;/h3&gt;
 
 &lt;p&gt;Copyright &amp;copy; 2014 Dataence, LLC. All rights reserved.&lt;/p&gt;
 
@@ -339,11 +339,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.&lt;/p&gt;
 
-&lt;h3 id=&#34;roadmap-futures:d4419a1968098b45153921045f06326c&#34;&gt;Roadmap / Futures&lt;/h3&gt;
+&lt;h3 id=&#34;roadmap-futures&#34;&gt;Roadmap / Futures&lt;/h3&gt;
 
 &lt;p&gt;There are some pattern files developed for ASA, Sudo and SSH in the &lt;code&gt;patterns&lt;/code&gt; directory. The goal is to continue to develop a set of patterns for the various log messages, and along the way add additional features to the parser that can help make it even easier to parse log messages. So currently there&amp;rsquo;s not a set roadmap.&lt;/p&gt;
 
-&lt;h2 id=&#34;concepts:d4419a1968098b45153921045f06326c&#34;&gt;Concepts&lt;/h2&gt;
+&lt;h2 id=&#34;concepts&#34;&gt;Concepts&lt;/h2&gt;
 
 &lt;p&gt;The following concepts are part of the package:&lt;/p&gt;
 
@@ -362,7 +362,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
 &lt;li&gt;&lt;p&gt;A &lt;em&gt;Parser&lt;/em&gt; is a tree-based parsing engine for log messages. It builds a parsing tree based on pattern sequence supplied, and for each message sequence, returns the matching pattern sequence. Each of the message tokens will be marked with the semantic field types.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;sequence-command:d4419a1968098b45153921045f06326c&#34;&gt;Sequence Command&lt;/h2&gt;
+&lt;h2 id=&#34;sequence-command&#34;&gt;Sequence Command&lt;/h2&gt;
 
 &lt;p&gt;The &lt;code&gt;sequence&lt;/code&gt; command is developed to demonstrate the use of this package. You can find it in the &lt;code&gt;sequence&lt;/code&gt; directory. The &lt;code&gt;sequence&lt;/code&gt; command implements the &lt;em&gt;sequential semantic log parser&lt;/em&gt;.&lt;/p&gt;
 
@@ -376,7 +376,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
      help [command]            Help about any command
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;scan:d4419a1968098b45153921045f06326c&#34;&gt;Scan&lt;/h3&gt;
+&lt;h3 id=&#34;scan&#34;&gt;Scan&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence scan [flags]
@@ -414,7 +414,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
   #  22: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;ustream&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;parse:d4419a1968098b45153921045f06326c&#34;&gt;Parse&lt;/h3&gt;
+&lt;h3 id=&#34;parse&#34;&gt;Parse&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence parse [flags]
@@ -465,7 +465,7 @@ To get a more realistic performance number, see the benchmark section below.&lt;
   #  24: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;)&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;benchmark:d4419a1968098b45153921045f06326c&#34;&gt;Benchmark&lt;/h3&gt;
+&lt;h3 id=&#34;benchmark&#34;&gt;Benchmark&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence bench [flags]
@@ -515,11 +515,11 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 
 &lt;p&gt;There are several options here, obviously.&lt;/p&gt;
 
-&lt;h3 id=&#34;batch-retrieval:84589856f6bf915d36fdbdbbfb405e41&#34;&gt;Batch Retrieval&lt;/h3&gt;
+&lt;h3 id=&#34;batch-retrieval&#34;&gt;Batch Retrieval&lt;/h3&gt;
 
 &lt;p&gt;First, the simplest thing to do is wait until the log file is closed and rotated, then upload the file to a central log server. Or the central log server comes and collect the log file using SCP/SFTP/HTTP/HTTPS/FTP. The problem with this approach is that the file may only get rotated every hour, day or week. This is not a feasible solution if there&amp;rsquo;s real-time analysis requirements. For example, you wouldn&amp;rsquo;t want to find some malicious sudo commands were executed a week later.&lt;/p&gt;
 
-&lt;h3 id=&#34;tail-logger:84589856f6bf915d36fdbdbbfb405e41&#34;&gt;Tail + Logger&lt;/h3&gt;
+&lt;h3 id=&#34;tail-logger&#34;&gt;Tail + Logger&lt;/h3&gt;
 
 &lt;p&gt;The second approach is to tail the file and convert it to syslog using something like logger. This approach works somewhat. However, there are also several issues. One is that the tail command may exit for whatever reason. When that happens, you will stop sending logs. The obvious thing to do is to wrap tail in some script that will catch the exit and restart it. However, you may lose some logs during the process (probably unlikely unless lots of logs are being written.) In addition, converting to UDP syslog always has that slight chance of UDP packets being lost on a busy network.&lt;/p&gt;
 
@@ -527,7 +527,7 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 
 &lt;p&gt;Be sure to use the &lt;strong&gt;-F&lt;/strong&gt; option with tail in case files get rotated or modified by hand by some user.&lt;/p&gt;
 
-&lt;h3 id=&#34;continuous-curl:84589856f6bf915d36fdbdbbfb405e41&#34;&gt;Continuous Curl&lt;/h3&gt;
+&lt;h3 id=&#34;continuous-curl&#34;&gt;Continuous Curl&lt;/h3&gt;
 
 &lt;p&gt;The third approach I thought of is to use &lt;a href=&#34;http://curl.haxx.se&#34;&gt;curl&lt;/a&gt; to upload the files to the central server periodically. However, I don&amp;rsquo;t want to upload the whole file every time, otherwise I will get a ton of duplicate data. So I wrote a small wrapper in perl, &lt;a href=&#34;http://www.zhen.org/misc/ccurl.txt&#34;&gt;ccurl&lt;/a&gt; (continuous curl), to remember the last position uploaded, and upload only the new logs next time. Basically the script does the following:&lt;/p&gt;
 
@@ -558,7 +558,7 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 
 &lt;p&gt;[Disclaimer: this script is by no means production quality. Use/test at your own risk.]&lt;/p&gt;
 
-&lt;h3 id=&#34;tail-curl:84589856f6bf915d36fdbdbbfb405e41&#34;&gt;Tail + Curl&lt;/h3&gt;
+&lt;h3 id=&#34;tail-curl&#34;&gt;Tail + Curl&lt;/h3&gt;
 
 &lt;p&gt;The last idea I have is to do a combination of #2 and #3. Basically I will write a script to wrap around &lt;strong&gt;tail -F&lt;/strong&gt;, read the data for a while, upload the data to the central server using curl, and repeat.&lt;/p&gt;
 
@@ -588,7 +588,7 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 
 &lt;p&gt;So how does a company go about securing their intellectual properties and make sure access to the IPs are tracked?&lt;/p&gt;
 
-&lt;h3 id=&#34;enterprise-content-management:37ddc207bc04095ce3d048d1effdd828&#34;&gt;Enterprise Content Management&lt;/h3&gt;
+&lt;h3 id=&#34;enterprise-content-management&#34;&gt;Enterprise Content Management&lt;/h3&gt;
 
 &lt;p&gt;The first class of companies who attacked this problem is the Enterprise Content Management (ECM) vendors such as FileNet, Documentum, Interwoven, Open Text, Stellent and Vignette. These vendors generally provide centralized document management capabilities that allow users to&lt;/p&gt;
 
@@ -612,7 +612,7 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 
 &lt;p&gt;But what happens when the file has been downloaded to the user&amp;rsquo;s desktop? Once that happens, these products can no longer protect or track the documents. What happens if the user emails the file via Yahoo Mail or Gmail? What happens if the user uploads the file to another server using FTP or HTTP? What happens if the user copies it to an USB drive or prints it out?&lt;/p&gt;
 
-&lt;h3 id=&#34;ip-leakage-detection:37ddc207bc04095ce3d048d1effdd828&#34;&gt;IP Leakage Detection&lt;/h3&gt;
+&lt;h3 id=&#34;ip-leakage-detection&#34;&gt;IP Leakage Detection&lt;/h3&gt;
 
 &lt;p&gt;A whole new class of companies, including Vericept, Vidius, and Vontu, has been founded to detect IP leakage on the network. These companies&amp;rsquo; products are designed to detected IP leakage by monitoring all the exit points in which information can leave the corporate network.&lt;/p&gt;
 
@@ -632,7 +632,7 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 
 &lt;p&gt;However, some vendors, such as Vericept, claims to have additional technology that performs statistical or linguistic analysis on the content and are able to detect leakage much more accurately and efficiently.&lt;/p&gt;
 
-&lt;h3 id=&#34;ip-leakage-control:37ddc207bc04095ce3d048d1effdd828&#34;&gt;IP Leakage Control&lt;/h3&gt;
+&lt;h3 id=&#34;ip-leakage-control&#34;&gt;IP Leakage Control&lt;/h3&gt;
 
 &lt;p&gt;One major problem that the network-based detection products cannot solve is sneakerware leakage. Sneakerware leakage includes scenarios where the user copies the file onto removable media such as CDs, USB drives and floppies, or the user prints the documents out. The user can then carry these removable medias or printouts with them and no one will notice.&lt;/p&gt;
 
@@ -640,7 +640,7 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 
 &lt;p&gt;In general, however, these products cannot detect whether a document contains confidential information. Administrators or users must explicitly mark documents as either confidential and should be protected, or not confidential. Administrators can also set up policies to globally disallow copying to removable medias, or file sharing via P2P networks.&lt;/p&gt;
 
-&lt;h3 id=&#34;the-future:37ddc207bc04095ce3d048d1effdd828&#34;&gt;The Future&lt;/h3&gt;
+&lt;h3 id=&#34;the-future&#34;&gt;The Future&lt;/h3&gt;
 
 &lt;p&gt;What&amp;rsquo;s in the future in fighting against IP leakage?&lt;/p&gt;
 
@@ -680,7 +680,7 @@ log file, averaging 180 bytes per message.&lt;/p&gt;
 
 &lt;p&gt;To best understand how logs affect all areas of IT management, it is necessary for us to dissect the logs and see what information they provide.&lt;/p&gt;
 
-&lt;h3 id=&#34;what-s-in-a-log:34c3feafc3498859243d48967092f612&#34;&gt;What&amp;rsquo;s in a log&lt;/h3&gt;
+&lt;h3 id=&#34;what-s-in-a-log&#34;&gt;What&amp;rsquo;s in a log&lt;/h3&gt;
 
 &lt;p&gt;Firewalls probably generate the most logs amongst all devices. A busy PIX firewall, with debug logging turned on, can generate 2,000 to 3,000 messages per second (MPS).&lt;/p&gt;
 
@@ -691,11 +691,11 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;This is a fairly typical log message from a PIX firewall. Most administrator will probably ignore these logs as there are a ton of them. However, let&amp;rsquo;s look closely to see what information we can find.&lt;/p&gt;
 
-&lt;h4 id=&#34;pix:34c3feafc3498859243d48967092f612&#34;&gt;%PIX&lt;/h4&gt;
+&lt;h4 id=&#34;pix&#34;&gt;%PIX&lt;/h4&gt;
 
 &lt;p&gt;This first 4 characters immediately tells us that the log message is a PIX message. With this information, if you are writing a parser for multiple log types, you can throw this over to the PIX parser and go on to the next message. You can also use this to classify or categorize your logs based on device type.&lt;/p&gt;
 
-&lt;h4 id=&#34;6:34c3feafc3498859243d48967092f612&#34;&gt;-6-&lt;/h4&gt;
+&lt;h4 id=&#34;6&#34;&gt;-6-&lt;/h4&gt;
 
 &lt;p&gt;The dashes are just delimiters so we will ignore them for now.&lt;/p&gt;
 
@@ -705,7 +705,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;In any case, Informational messages are usually harmless in that they don&amp;rsquo;t require our immediate attention. However, &lt;strong&gt;excessive&lt;/strong&gt; of informational messages may indicate something suspicious and will need drilling down.&lt;/p&gt;
 
-&lt;h4 id=&#34;302013:34c3feafc3498859243d48967092f612&#34;&gt;302013:&lt;/h4&gt;
+&lt;h4 id=&#34;302013&#34;&gt;302013:&lt;/h4&gt;
 
 &lt;p&gt;This number represents the message ID of the PIX message. It gives us an idea what information we will find in the remainder of the message, as well as the format of the message.&lt;/p&gt;
 
@@ -717,7 +717,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;We will ignore the colon as it doesn&amp;rsquo;t represent anything important.&lt;/p&gt;
 
-&lt;h4 id=&#34;built:34c3feafc3498859243d48967092f612&#34;&gt;Built&lt;/h4&gt;
+&lt;h4 id=&#34;built&#34;&gt;Built&lt;/h4&gt;
 
 &lt;p&gt;This is probably one of the most important words of the whole message as it tells us the action that the firewall took.&lt;/p&gt;
 
@@ -731,7 +731,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;Because majority of our logs probably contain this type of information, it&amp;rsquo;s generally a bad idea to use it in a real-time correlation rule. It will overwhelm your correlation engine in no time. However, thresholds can be set using this, probably along with the source or destination information (see below).&lt;/p&gt;
 
-&lt;h4 id=&#34;inbound:34c3feafc3498859243d48967092f612&#34;&gt;inbound&lt;/h4&gt;
+&lt;h4 id=&#34;inbound&#34;&gt;inbound&lt;/h4&gt;
 
 &lt;p&gt;In this PIX message, the words &amp;ldquo;inbound&amp;rdquo; and &amp;ldquo;outbound&amp;rdquo; may appear here. &amp;ldquo;Inbound&amp;rdquo; tells us that the original connection was initiated from outside of the firewall. Vice versa, &amp;ldquo;outbound&amp;rdquo; means that the original connection was initiated from inside of the firewall.&lt;/p&gt;
 
@@ -743,7 +743,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;Last but not least, we can run a distribution report as we did with the message ID and track it over time. Any sudden increase (or even decrease) in the count may be worth checking into.&lt;/p&gt;
 
-&lt;h4 id=&#34;tcp:34c3feafc3498859243d48967092f612&#34;&gt;TCP&lt;/h4&gt;
+&lt;h4 id=&#34;tcp&#34;&gt;TCP&lt;/h4&gt;
 
 &lt;p&gt;TCP stands for Transmission Control Protocol. It is used by many internet services such as HTTP, SMTP, FTP, SSH, etc. By itself, the word &amp;ldquo;TCP&amp;rdquo; isn&amp;rsquo;t all that interesting. However, the protocol and the destination port together determines the service that the connection is for. For example&lt;/p&gt;
 
@@ -755,7 +755,7 @@ syslog          514/udp
 
 &lt;p&gt;Most log management systems don&amp;rsquo;t have reports defined for the common protocols such as TCP or UDP. It might, however, be interesting to track the uncommon ones, if you run anything weird.&lt;/p&gt;
 
-&lt;h4 id=&#34;connection-543127891-for:34c3feafc3498859243d48967092f612&#34;&gt;connection 543127891 for&lt;/h4&gt;
+&lt;h4 id=&#34;connection-543127891-for&#34;&gt;connection 543127891 for&lt;/h4&gt;
 
 &lt;p&gt;We will skip the words &amp;ldquo;connection&amp;rdquo; and &amp;ldquo;for&amp;rdquo;.&lt;/p&gt;
 
@@ -763,7 +763,7 @@ syslog          514/udp
 
 &lt;p&gt;Information such as duration and bytes transferred can be extremely valuable for performance and utilization tracking. We will go over these in more details in Part 2 of Anatomy of Logs.&lt;/p&gt;
 
-&lt;h4 id=&#34;outside:34c3feafc3498859243d48967092f612&#34;&gt;outside:&lt;/h4&gt;
+&lt;h4 id=&#34;outside&#34;&gt;outside:&lt;/h4&gt;
 
 &lt;p&gt;We will skip the colon.&lt;/p&gt;
 
@@ -771,7 +771,7 @@ syslog          514/udp
 
 &lt;p&gt;Having this information allows us to quickly map the network from the logs. For example, we can easily identify all the IPs that are &amp;ldquo;outside&amp;rdquo; of the firewall vs &amp;ldquo;inside&amp;rdquo; of the firewall. If we identified IPs that have appeared both &amp;ldquo;outside&amp;rdquo; and &amp;ldquo;inside&amp;rdquo;, it may be a cause for concern: there maybe a backdoor out of your network. We have seen this happen many times on bridged networks. It is probably one of the weirdest scenarios in network troubleshooting as it leaves you scratching your head trying to figure out where/what the backdoor is.&lt;/p&gt;
 
-&lt;h4 id=&#34;192-168-11-250-41612-192-168-11-250-41612:34c3feafc3498859243d48967092f612&#34;&gt;192.168.11.&lt;sup&gt;250&lt;/sup&gt;&amp;frasl;&lt;sub&gt;41612&lt;/sub&gt; (192.168.11.&lt;sup&gt;250&lt;/sup&gt;&amp;frasl;&lt;sub&gt;41612&lt;/sub&gt;)&lt;/h4&gt;
+&lt;h4 id=&#34;192-168-11-250-41612-192-168-11-250-41612&#34;&gt;192.168.11.&lt;sup&gt;250&lt;/sup&gt;&amp;frasl;&lt;sub&gt;41612&lt;/sub&gt; (192.168.11.&lt;sup&gt;250&lt;/sup&gt;&amp;frasl;&lt;sub&gt;41612&lt;/sub&gt;)&lt;/h4&gt;
 
 &lt;p&gt;This whole section here shows the source IP address and port of the connection. In this case, the source IP is 192.168.11.250 and the source port is 41612. There are two parts to this section. The first are the &amp;ldquo;real&amp;rdquo; IP and port, before any translation is done. The second part, inside the parenthesis, are the mapped IP and port, after the network address translation is applied.&lt;/p&gt;
 
@@ -791,11 +791,11 @@ syslog          514/udp
 &lt;li&gt;&lt;p&gt;which IPs are attempting to scan our network by summarizing the destination IP/ports (see below) attempted&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&#34;inside:34c3feafc3498859243d48967092f612&#34;&gt;inside:&lt;/h4&gt;
+&lt;h4 id=&#34;inside&#34;&gt;inside:&lt;/h4&gt;
 
 &lt;p&gt;This represents &amp;ldquo;inside&amp;rdquo; of the firewall, or the internal network. It is similar to the &amp;ldquo;outside&amp;rdquo; interface as described above.&lt;/p&gt;
 
-&lt;h4 id=&#34;10-1-241-2-80-10-1-241-2-80:34c3feafc3498859243d48967092f612&#34;&gt;10.1.241.&lt;sup&gt;2&lt;/sup&gt;&amp;frasl;&lt;sub&gt;80&lt;/sub&gt; (10.1.241.&lt;sup&gt;2&lt;/sup&gt;&amp;frasl;&lt;sub&gt;80&lt;/sub&gt;)&lt;/h4&gt;
+&lt;h4 id=&#34;10-1-241-2-80-10-1-241-2-80&#34;&gt;10.1.241.&lt;sup&gt;2&lt;/sup&gt;&amp;frasl;&lt;sub&gt;80&lt;/sub&gt; (10.1.241.&lt;sup&gt;2&lt;/sup&gt;&amp;frasl;&lt;sub&gt;80&lt;/sub&gt;)&lt;/h4&gt;
 
 &lt;p&gt;This section describes the destination IP and port of the connection. The first part shows the original, or untranslated, IP and port. The second shows the translated, or mapped, IP and port. For networks that use NAT, these two parts will be different.&lt;/p&gt;
 
@@ -821,7 +821,7 @@ syslog          514/udp
 
 &lt;p&gt;When hackers install a backdoor on your system, they don&amp;rsquo;t normally make a lot of noises by connecting to it a thousand times. They try to hide their tracks by connecting at odd hours and very infrequently. So seeing the least requested service may actually tell you if there&amp;rsquo;s any backdoor activities.&lt;/p&gt;
 
-&lt;h3 id=&#34;what-about-the-time:34c3feafc3498859243d48967092f612&#34;&gt;What about the time&lt;/h3&gt;
+&lt;h3 id=&#34;what-about-the-time&#34;&gt;What about the time&lt;/h3&gt;
 
 &lt;p&gt;At this point you are probably wondering, &amp;ldquo;where does it tell me when this log was generated?!&amp;rdquo;&lt;/p&gt;
 
@@ -856,59 +856,59 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;Below are the top ten requirements that any MSP should consider when building their log management solution.&lt;/p&gt;
 
-&lt;h3 id=&#34;1-segregation-of-logs-by-customer:56aee1bbd1a2db3a43a548408d69f041&#34;&gt;1. Segregation of Logs by Customer&lt;/h3&gt;
+&lt;h3 id=&#34;1-segregation-of-logs-by-customer&#34;&gt;1. Segregation of Logs by Customer&lt;/h3&gt;
 
 &lt;p&gt;As an MSSP, one of the biggest concern we had was the segregation of logs for the many customers we had. We didn&amp;rsquo;t want any of the customer data to be mixed in the same files or database tables as other customers. This requirement drove many of the design decisions we made during the building of the support infrastructure.&lt;/p&gt;
 
 &lt;p&gt;Imagine two competitors had their firewalls managed by the MSP and their data were mixed in the same files, what happens if the data of one competitor were shown to the other because of a bug in the software that&amp;rsquo;s used to filter logs?&lt;/p&gt;
 
-&lt;h3 id=&#34;2-raw-log-retention-is-required:56aee1bbd1a2db3a43a548408d69f041&#34;&gt;2. Raw Log Retention Is Required&lt;/h3&gt;
+&lt;h3 id=&#34;2-raw-log-retention-is-required&#34;&gt;2. Raw Log Retention Is Required&lt;/h3&gt;
 
 &lt;p&gt;One of the requirements we had was that we needed to provide the raw logs to our customers so that they can do their own analysis. We can do all the necessary analysis on our side, but sometimes the customers may want other information from the logs that we don&amp;rsquo;t. Also, customers sometime have information that are proprietary and they can use that information to correlate with the logs.&lt;/p&gt;
 
 &lt;p&gt;Remember, MSPs built everything based on scale of economy and sometimes it&amp;rsquo;s difficult to customize the solution for individual customers. Obviously if the customer wanted to pay for professional services, there&amp;rsquo;s customization we can do. But not every customer wants to or have the budget to do that.&lt;/p&gt;
 
-&lt;h3 id=&#34;3-reporting-is-1:56aee1bbd1a2db3a43a548408d69f041&#34;&gt;3. Reporting is #1&lt;/h3&gt;
+&lt;h3 id=&#34;3-reporting-is-1&#34;&gt;3. Reporting is #1&lt;/h3&gt;
 
 &lt;p&gt;Customers wanted to reports on their security infrastructure. They wanted to see how much traffic (bytes, connections, etc) the firewalls are passing so they can properly plan for the future. They wanted to see how often users are VPN&amp;rsquo;ing into the infrastructure so they can identify any mis-use. They want to see trend reports to show how their infrastructure is holding up. They wanted to see correlated reports of the various devices (firewalls, VPN, IDS, etc) to see if there are any anomalies.&lt;/p&gt;
 
 &lt;p&gt;Our #1 priority was to provide all these reports and more to our customers.&lt;/p&gt;
 
-&lt;h3 id=&#34;4-then-comes-real-time-analysis-alerting:56aee1bbd1a2db3a43a548408d69f041&#34;&gt;4. Then Comes Real-Time Analysis/Alerting&lt;/h3&gt;
+&lt;h3 id=&#34;4-then-comes-real-time-analysis-alerting&#34;&gt;4. Then Comes Real-Time Analysis/Alerting&lt;/h3&gt;
 
 &lt;p&gt;Alerting is another important feature that our customers wanted. They wanted to know when something really bad is happening to their infrastructure. They don&amp;rsquo;t want to get alerted every time some script kiddie scans their network, but they do want to know if their network all the sudden has a huge increase in traffic and continues to increase for a long period of time. They want to know when an unauthorized connection is made to their production database. They want to know when a successful attack has been happened.&lt;/p&gt;
 
 &lt;p&gt;However, the MSPs are the first to receive these alerts and will filter the alerts based on the internal knowledge and SLA. Then the MSP will pass the alerts onto the customer if they are determined to be real.&lt;/p&gt;
 
-&lt;h3 id=&#34;5-support-all-my-log-sources:56aee1bbd1a2db3a43a548408d69f041&#34;&gt;5. Support All My Log Sources&lt;/h3&gt;
+&lt;h3 id=&#34;5-support-all-my-log-sources&#34;&gt;5. Support All My Log Sources&lt;/h3&gt;
 
 &lt;p&gt;Most MSPs support an array of devices and applications as part of their service. For examples, most MSPs will support firewalls such as PIX, Netscreen, Check Point or IP Tables, Network IDSes such as ISS or Cisco, Host-based IDS such as ISS, Okena, or Trip Wire. Some MSPs will support SSL accelerators or proxies, vulnerability scanning tools, servers, and many other applications.&lt;/p&gt;
 
 &lt;p&gt;At Cable &amp;amp; Wireless, we had firewalls, Network or Host based IDSes, scanning tools and authentication services. We needed a solution that will support all these different devices or applications. Most of the logs are sent via syslog except for Check Point firewall, Cisco IDS and Nessus scanning results. The Check Point logs were aggregated at the Provider-1 boxes and they need to be off loaded using LEA. The Cisco IDS alerts need to be retrieved via RDEP. The Nessus scan results were XML files and they needed to be parsed.&lt;/p&gt;
 
-&lt;h3 id=&#34;6-web-based-gui-only:56aee1bbd1a2db3a43a548408d69f041&#34;&gt;6. Web-based GUI Only&lt;/h3&gt;
+&lt;h3 id=&#34;6-web-based-gui-only&#34;&gt;6. Web-based GUI Only&lt;/h3&gt;
 
 &lt;p&gt;We needed a web-based GUI so that the customers can access reports, alerts, raw logs and device policies. It&amp;rsquo;s difficult to support any GUI that requires installation on the customer&amp;rsquo;s desktop. Non-web applications will eventually have conflicts with other applications and will require support from the MSP. That model is not scalable.&lt;/p&gt;
 
 &lt;p&gt;We also needed to embed this interface in our own web based interface. It is much easier to embed another web interface than an application. It is also much easier to skin a web interface as we wanted to have our corporate color scheme and logos there.&lt;/p&gt;
 
-&lt;h3 id=&#34;7-distributed-collection-points:56aee1bbd1a2db3a43a548408d69f041&#34;&gt;7. Distributed Collection Points&lt;/h3&gt;
+&lt;h3 id=&#34;7-distributed-collection-points&#34;&gt;7. Distributed Collection Points&lt;/h3&gt;
 
 &lt;p&gt;Cable &amp;amp; Wireless had over 40 data centers all over the world. Most MSPs probably have distributed environments as well. The devices that we managed were spread all over the data centers. They can be in UK or NY or SF or even HK or Japan. We needed a solution that can collect logs in all these different locations. We needed to be able to collect logs close to the log source so that the chance of dropped logs is minimized. We also wanted to keep the cost of these remote collectors relatively low comparing to the central archive.&lt;/p&gt;
 
-&lt;h3 id=&#34;8-secure-connections-all-the-way:56aee1bbd1a2db3a43a548408d69f041&#34;&gt;8. Secure Connections All The Way&lt;/h3&gt;
+&lt;h3 id=&#34;8-secure-connections-all-the-way&#34;&gt;8. Secure Connections All The Way&lt;/h3&gt;
 
 &lt;p&gt;As a security organization, everything we did that can be secured must be secured. Unfortunately we cannot secure protocols such as syslog from a PIX, but we must support SSL for the web interface, Cisco RDEP, Check Point LEA, and encryption between remote collectors and the central storage. We also needed to secure the connection between the database and other components if they are in different networks.&lt;/p&gt;
 
-&lt;h3 id=&#34;9-no-agents-whatsoever:56aee1bbd1a2db3a43a548408d69f041&#34;&gt;9. No Agents Whatsoever&lt;/h3&gt;
+&lt;h3 id=&#34;9-no-agents-whatsoever&#34;&gt;9. No Agents Whatsoever&lt;/h3&gt;
 
 &lt;p&gt;Due to the risk (performance, application conflicts, etc) of installing additional software (custom agents) on servers, we needed a solution that doesn&amp;rsquo;t require agents. This requirement is generally not a problem for most devices since they send logs via syslog. However, it&amp;rsquo;s a big issue for Windows based operating systems. There are several methods that one can collect Windows events, as I have written &lt;a href=&#34;http://www.trustpath.com/logmatters/index.php?p=9&#34;&gt;previously&lt;/a&gt;. However, all these methods have their problems such as requirements of agents or performance issues or none-real-time logging. Since we didn&amp;rsquo;t manage many Windows devices, this was not our major concern.&lt;/p&gt;
 
-&lt;h3 id=&#34;10-open-api-for-integration:56aee1bbd1a2db3a43a548408d69f041&#34;&gt;10. Open API for Integration&lt;/h3&gt;
+&lt;h3 id=&#34;10-open-api-for-integration&#34;&gt;10. Open API for Integration&lt;/h3&gt;
 
 &lt;p&gt;Another requirement was that we needed to run reports or search logs via scripts or web applications. We ran many background processes that sent out reports to customers or create custom reports based on some other condition. All these needed to be automated due to the need for scale of economy. This required that the solution to provide some type of open API that can be used within other programs.&lt;/p&gt;
 
-&lt;h3 id=&#34;11-granular-permission-model:56aee1bbd1a2db3a43a548408d69f041&#34;&gt;11. Granular Permission Model&lt;/h3&gt;
+&lt;h3 id=&#34;11-granular-permission-model&#34;&gt;11. Granular Permission Model&lt;/h3&gt;
 
 &lt;p&gt;Since we needed to provide alerts, reports and raw logs to customers, we need to make sure customers have access to ONLY their own information. It was critical that customers don&amp;rsquo;t see other customers&amp;rsquo; data. We needed the solution to have a granular permission model that can determine which devices belong to which customer, which reports the customers/users can see, which log files can be viewed by customers, etc.&lt;/p&gt;
 
@@ -928,7 +928,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;Whether you are building your own home-grown logging infrastructure (which of course I do not recommend ;)) or evaluating a log management solution, there are at least five factors you should consider.&lt;/p&gt;
 
-&lt;h3 id=&#34;1-log-retention:51a6349598c35862d615dd9fb99fd935&#34;&gt;1. Log Retention&lt;/h3&gt;
+&lt;h3 id=&#34;1-log-retention&#34;&gt;1. Log Retention&lt;/h3&gt;
 
 &lt;p&gt;The log retention period obviously depends on your requirements. If you are building out the infrastructure for troubleshooting and short term reporting, you may only need to keep 1-2 months of logs. But if you are doing it so you can be in compliance with SOX or HIPAA regulations, you will need to keep AT LEAST 6 months for the auditors.&lt;/p&gt;
 
@@ -936,7 +936,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;Obviously how long your retention period is also depend on the volume of logs you receive as well as the product/tool&amp;rsquo;s ability to manage the log storage. If you are building your own, be sure to take into consideration of building a log rotation process. For example, if your retention period is 12 months. Your process should remove the old logs or put them on tape. If you are evaluating a product, be sure the product has the capability of rotating/purging old logs for you. Don&amp;rsquo;t spend $200K and then have to write your own scripts.&lt;/p&gt;
 
-&lt;h3 id=&#34;2-log-volume:51a6349598c35862d615dd9fb99fd935&#34;&gt;2. Log Volume&lt;/h3&gt;
+&lt;h3 id=&#34;2-log-volume&#34;&gt;2. Log Volume&lt;/h3&gt;
 
 &lt;p&gt;Log volume is probably one of the most critical factors in building your infrastructure. It has direct impacts on your retention policy, report/search performance, aggregation performance and correlation performance.&lt;/p&gt;
 
@@ -955,7 +955,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;Last but not least, your log volume really impacts the performance of the product you choose. Some of the products, as the volume grow in the database, will have problem running reports for a long period of time. If you need to run a report for over a month or two, sometimes it may take hours for a single report. It&amp;rsquo;s difficult to test this during a evaluation period, but many of the implementations fail because of this.&lt;/p&gt;
 
-&lt;h3 id=&#34;3-log-sources:51a6349598c35862d615dd9fb99fd935&#34;&gt;3. Log Sources&lt;/h3&gt;
+&lt;h3 id=&#34;3-log-sources&#34;&gt;3. Log Sources&lt;/h3&gt;
 
 &lt;p&gt;What are all the devices, servers and applications that will be logging? If you are developing your own solution, there may be a lot of work for you to do in order to parse the various log messages. The good thing is you will only need to parse the specific logs you need and not everything.&lt;/p&gt;
 
@@ -971,7 +971,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;However, some products will hardcode the parsers in their code and no way for you to create any new parsing intelligence. Beware of what you are getting into if that&amp;rsquo;s the product you are looking at.&lt;/p&gt;
 
-&lt;h3 id=&#34;4-log-analysis:51a6349598c35862d615dd9fb99fd935&#34;&gt;4. Log Analysis&lt;/h3&gt;
+&lt;h3 id=&#34;4-log-analysis&#34;&gt;4. Log Analysis&lt;/h3&gt;
 
 &lt;p&gt;Ok, so this is a huge area. Log analysis includes everything from reports, correlation, anomaly detection, and trend analysis. It again depends on your requirements. However, your solution or product should have some of the basic functions such as threshold and rule-based alerts via email or SNMP.&lt;/p&gt;
 
@@ -981,7 +981,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;Report and correlation performance is a critical factor. If reports takes hours, it&amp;rsquo;d be somewhat useless when you need a quick ad-hoc report to figure out which IPs are DOSing you. Build your infrastructure w/ at least 30% more performance than you need. That way you have some room to grow and also allow you to do quick reports when you are receiving a spike of logs.&lt;/p&gt;
 
-&lt;h3 id=&#34;5-network-topology:51a6349598c35862d615dd9fb99fd935&#34;&gt;5. Network Topology&lt;/h3&gt;
+&lt;h3 id=&#34;5-network-topology&#34;&gt;5. Network Topology&lt;/h3&gt;
 
 &lt;p&gt;Your network topology impacts how you should architect your logging infrastructure. If you have a fairly distributed topology, e.g. many remote locations, you will want to design a solution or look for a product that have a distributed architecture, that can retrieve/receive logs in a distributed manner and forward logs back to a central location for analysis and archival.&lt;/p&gt;
 
@@ -1011,13 +1011,13 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;Some suggestions out of this discussion are listed here.&lt;/p&gt;
 
-&lt;h3 id=&#34;clustering:3c222746e3699b8e738708a96aaa7f24&#34;&gt;Clustering&lt;/h3&gt;
+&lt;h3 id=&#34;clustering&#34;&gt;Clustering&lt;/h3&gt;
 
 &lt;p&gt;Anton listed this as an option using tools such as &lt;a href=&#34;http://www.estpak.ee/~risto/slct/&#34;&gt;slct&lt;/a&gt;. Another effort that I am aware of that&amp;rsquo;s using this approach is &lt;a href=&#34;http://www.securimine.com/&#34;&gt;Securimine for Snort (SFS) from Securimine&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Securimine is founded by Ophir Rachman, who also founded &lt;a href=&#34;http://www.mcafee.com/us/products/mcafee/host_ips/category.htm&#34;&gt;Entercept Security Technologies&lt;/a&gt; (later on acquired by McAfee).&lt;/p&gt;
 
-&lt;h3 id=&#34;brute-force-parsing:3c222746e3699b8e738708a96aaa7f24&#34;&gt;Brute-force Parsing&lt;/h3&gt;
+&lt;h3 id=&#34;brute-force-parsing&#34;&gt;Brute-force Parsing&lt;/h3&gt;
 
 &lt;p&gt;This method basically tries to guess some of the data structures inside a log message, such as IP address, hostname, username, password, action, etc etc.&lt;/p&gt;
 
@@ -1029,7 +1029,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;(One may ask the question of, is it better to not do anything so the users won&amp;rsquo;t be misled? or is it better to attempt in guessing and possibly give the wrong information? what do you think?)&lt;/p&gt;
 
-&lt;h3 id=&#34;bayes-markov-expert-systems-neural-nets-genetic-algorithms:3c222746e3699b8e738708a96aaa7f24&#34;&gt;Bayes/Markov/Expert Systems/Neural Nets/Genetic Algorithms&lt;/h3&gt;
+&lt;h3 id=&#34;bayes-markov-expert-systems-neural-nets-genetic-algorithms&#34;&gt;Bayes/Markov/Expert Systems/Neural Nets/Genetic Algorithms&lt;/h3&gt;
 
 &lt;p&gt;Several of the statisitical type of analysis were mentioned here.&lt;/p&gt;
 
@@ -1043,7 +1043,7 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;Obviously I am no mathematician nor do I claim to understand the nitty-gritty details of statistical analysis, so I can&amp;rsquo;t comment much on the technical merit of these methods. But love to hear from anyone who have more knowledge.&lt;/p&gt;
 
-&lt;h3 id=&#34;indexing:3c222746e3699b8e738708a96aaa7f24&#34;&gt;Indexing&lt;/h3&gt;
+&lt;h3 id=&#34;indexing&#34;&gt;Indexing&lt;/h3&gt;
 
 &lt;p&gt;One of the newer methods of analyzing logs is indexing and providing Google like search capabilities for all logs. This is something &lt;a href=&#34;http://www.loglogic.com&#34;&gt;LogLogic&lt;/a&gt; and &lt;a href=&#34;http://www.splunk.com&#34;&gt;Splunk&lt;/a&gt; are doing.&lt;/p&gt;
 
@@ -1053,13 +1053,13 @@ inside:10.1.241.2/80 (10.1.241.2/80)
 
 &lt;p&gt;I wrote an article on &lt;a href=&#34;http://www.computerworld.com/developmenttopics/development/webservices/story/0,10801,105905,00.html&#34;&gt;Searching for Root Cause&lt;/a&gt; a while back on the benefit of using Google-like indexed search on logs.&lt;/p&gt;
 
-&lt;h3 id=&#34;tokenizing:3c222746e3699b8e738708a96aaa7f24&#34;&gt;Tokenizing&lt;/h3&gt;
+&lt;h3 id=&#34;tokenizing&#34;&gt;Tokenizing&lt;/h3&gt;
 
 &lt;p&gt;This is the way most log analyzers are using today. This method generally require writing regular expressions or similar methods to parse the individual pieces of information out of the log messages.&lt;/p&gt;
 
 &lt;p&gt;Rainer Gerhards has a great summary in his paper &lt;a href=&#34;http://www.monitorware.com/en/workinprogress/nature-of-syslog-data.php&#34;&gt;On the Nature of Syslog Data&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;various-standards:3c222746e3699b8e738708a96aaa7f24&#34;&gt;Various standards&lt;/h3&gt;
+&lt;h3 id=&#34;various-standards&#34;&gt;Various standards&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://msdn.microsoft.com/library/default.asp?url=/library/en-us/wes/wes/about_the_windows_event_log.asp&#34;&gt;About Windows Event Log&lt;/a&gt;&lt;/p&gt;
 
@@ -1130,7 +1130,7 @@ Services v1.0 (WSDM-MUWS)&lt;/a&gt; .&lt;/p&gt;
 
 &lt;p&gt;Below are five common mistakes that are commonly seen in organizations.&lt;/p&gt;
 
-&lt;h3 id=&#34;1-lack-of-clear-understanding-of-the-values:226169e54190e70cb5970c243dcd9686&#34;&gt;1. Lack of clear understanding of the values&lt;/h3&gt;
+&lt;h3 id=&#34;1-lack-of-clear-understanding-of-the-values&#34;&gt;1. Lack of clear understanding of the values&lt;/h3&gt;
 
 &lt;p&gt;Return on Investment (ROI) is usually a metric organizations use to justify any capital investments. Most SIM vendors have one, and they usually use it to help the buyers in the organizations to justify the investment to the upper management. Most ROI are centered around four different areas: revenue, cost, asset and risk.&lt;/p&gt;
 
@@ -1150,7 +1150,7 @@ Services v1.0 (WSDM-MUWS)&lt;/a&gt; .&lt;/p&gt;
 
 &lt;p&gt;Understanding the various ROI metrics, knowing that these are fuzzy metrics, and clearly defining what the organization expects from a successful implementation will help shape the clear understanding of the values.&lt;/p&gt;
 
-&lt;h3 id=&#34;2-lack-of-clear-understanding-of-the-users:226169e54190e70cb5970c243dcd9686&#34;&gt;2. Lack of clear understanding of the users&lt;/h3&gt;
+&lt;h3 id=&#34;2-lack-of-clear-understanding-of-the-users&#34;&gt;2. Lack of clear understanding of the users&lt;/h3&gt;
 
 &lt;p&gt;Who are the main users of the solution you are implementing? Are they business users or technical users? Are they power users or casual users?&lt;/p&gt;
 
@@ -1164,7 +1164,7 @@ Services v1.0 (WSDM-MUWS)&lt;/a&gt; .&lt;/p&gt;
 
 &lt;p&gt;Knowing who your users are directly affect the solution you choose. If your users are mostly business users, you may want to choose a solution that&amp;rsquo;s easy to use and provide the necessary views for these users. If most of your users are technical users, you will want a solution that provides the users the flexibilities that they need. Giving a technical users&amp;rsquo; interface to the business users will intimidate them and turn them off.&lt;/p&gt;
 
-&lt;h3 id=&#34;3-lack-of-clear-understanding-of-the-requirements:226169e54190e70cb5970c243dcd9686&#34;&gt;3. Lack of clear understanding of the requirements&lt;/h3&gt;
+&lt;h3 id=&#34;3-lack-of-clear-understanding-of-the-requirements&#34;&gt;3. Lack of clear understanding of the requirements&lt;/h3&gt;
 
 &lt;p&gt;Simply stating that &amp;ldquo;we need to analyze our firewall and web server logs&amp;rdquo; is not a requirement.  Having a SIM vendor come in to pitch, then draft the requirements based on the conversations is also the wrong way to go. These are just lazy ways of trying to get out of identifying the real requirements. There&amp;rsquo;s no other way to detail out the requirements other than talking to the potential users.&lt;/p&gt;
 
@@ -1182,7 +1182,7 @@ Services v1.0 (WSDM-MUWS)&lt;/a&gt; .&lt;/p&gt;
 
 &lt;p&gt;Before evaluating any solutions, all these questions should be answered in details. Knowing your requirements will help you find the best product to fit your needs. Try not to choose a product or create unreasonable requirements because of brand loyalty (we only work with vendor X) or FOE (Friends of Executives).&lt;/p&gt;
 
-&lt;h3 id=&#34;4-lack-of-clear-understanding-of-the-options:226169e54190e70cb5970c243dcd9686&#34;&gt;4. Lack of clear understanding of the options&lt;/h3&gt;
+&lt;h3 id=&#34;4-lack-of-clear-understanding-of-the-options&#34;&gt;4. Lack of clear understanding of the options&lt;/h3&gt;
 
 &lt;p&gt;With all the talks these days about security information or event management and log analysis, it&amp;rsquo;s easy for organizations to jump on the bandwagon and decide that they must have a SIM product in order to meet the requirements.&lt;/p&gt;
 
@@ -1204,7 +1204,7 @@ Services v1.0 (WSDM-MUWS)&lt;/a&gt; .&lt;/p&gt;
 
 &lt;p&gt;Knowing your requirements will allow you to find the right option to meet your requirements.&lt;/p&gt;
 
-&lt;h3 id=&#34;5-lack-of-clear-understanding-of-the-products:226169e54190e70cb5970c243dcd9686&#34;&gt;5. Lack of clear understanding of the products&lt;/h3&gt;
+&lt;h3 id=&#34;5-lack-of-clear-understanding-of-the-products&#34;&gt;5. Lack of clear understanding of the products&lt;/h3&gt;
 
 &lt;p&gt;Many of the log analysis solutions out there are strong in some areas and weak in others. For example, some of the solutions provide better real-time analysis, whereas others are better at historical analysis. Some solutions are better at integrating the MANY log sources (network, system, application) whereas others provide better reports. Some solutions come in an appliance form factor, others are packaged software. Some solutions are targeted towards business users whereas others are targeted towards power users. Some solutions have much better visualizations while others have none.&lt;/p&gt;
 

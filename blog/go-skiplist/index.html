@@ -91,7 +91,7 @@
 
 <p>This skiplist implementation also uses search fingers, based on William Pugh&rsquo;s work, <a href="http://drum.lib.umd.edu/bitstream/1903/544/2/CS-TR-2286.1.pdf">A Skiplist Cookbook</a>. So the efficiency is O(log k) where k is the distance between the last searched/updated item and the current one.</p>
 
-<h3 id="performance:1df45c670e50a048b6e2b3cb9be0fc80">Performance</h3>
+<h3 id="performance">Performance</h3>
 
 <p>{% gist e8779545c102c69aae10 %}</p>
 
@@ -103,7 +103,7 @@
 
 <p>The other benchmarks should have the average O(log k) efficiency.</p>
 
-<h3 id="example-int:1df45c670e50a048b6e2b3cb9be0fc80">Example (Int)</h3>
+<h3 id="example-int">Example (Int)</h3>
 
 <p>You can see additional examples in the <a href="https://github.com/reducedb/skiplist/blob/master/skiplist_test.go">test file</a>.</p>
 
@@ -142,7 +142,7 @@ rIter, err = list.SelectRange(1, 2)
 rIter, err = list.DeleteRange(1, 2)
 </code></pre>
 
-<h3 id="bultin-comparators:1df45c670e50a048b6e2b3cb9be0fc80">Bultin Comparators</h3>
+<h3 id="bultin-comparators">Bultin Comparators</h3>
 
 <p>There are three built-in comparator functions:</p>
 

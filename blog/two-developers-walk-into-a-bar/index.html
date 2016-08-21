@@ -110,7 +110,7 @@
 </ul></li>
 </ul>
 
-<h2 id="modern-app-developer-vs-old-school-developer:81495eb0cd198863461f6e4666c91616">Modern App Developer vs Old School Developer</h2>
+<h2 id="modern-app-developer-vs-old-school-developer">Modern App Developer vs Old School Developer</h2>
 
 <p>Let&rsquo;s assume 300 million IPs are up, and has an average of 3 ports open.</p>
 
@@ -123,7 +123,7 @@
 
 <p><em>Disclaimer: I don&rsquo;t know ElasticSearch all that well, so feel free to correct me on any of the following.</em></p>
 
-<h3 id="choose-a-language:81495eb0cd198863461f6e4666c91616">Choose a Language</h3>
+<h3 id="choose-a-language">Choose a Language</h3>
 
 <p>Modern App Developer:</p>
 
@@ -137,7 +137,7 @@
 <p>I will use Go. It&rsquo;s fast, performant, and easy to understand/maintain!</p>
 </blockquote>
 
-<h3 id="store-the-host-and-port-states:81495eb0cd198863461f6e4666c91616">Store the Host and Port States</h3>
+<h3 id="store-the-host-and-port-states">Store the Host and Port States</h3>
 
 <p>Modern App Developer:</p>
 
@@ -185,7 +185,7 @@
  to gain some space efficiency, but let&rsquo;s assume we are not compressing for now. Also if I do EWAH bitmap compression, I may lose out on the ability to do population counting (see below).</p>
 </blockquote>
 
-<h3 id="count-the-number-of-up-hosts:81495eb0cd198863461f6e4666c91616">Count the Number of &ldquo;Up&rdquo; Hosts</h3>
+<h3 id="count-the-number-of-up-hosts">Count the Number of &ldquo;Up&rdquo; Hosts</h3>
 
 <p>Modern App Developer:</p>
 
@@ -211,7 +211,7 @@
 <p>I can also split the work by creating multiple goroutines (assuming Go), similar to map/reduce, to gain faster calculation.</p>
 </blockquote>
 
-<h3 id="determine-the-up-down-state-of-a-specific-host:81495eb0cd198863461f6e4666c91616">Determine the Up/Down State of a Specific Host</h3>
+<h3 id="determine-the-up-down-state-of-a-specific-host">Determine the Up/Down State of a Specific Host</h3>
 
 <p>Modern App Developer:</p>
 
@@ -227,7 +227,7 @@
 <p>This should be easy. I just need to index into the bit array using the integer value of the IPv4, and find out if the bit value is 1 or 0.</p>
 </blockquote>
 
-<h3 id="determine-which-hosts-are-up-in-a-particular-24-subnet:81495eb0cd198863461f6e4666c91616">Determine Which Hosts are &ldquo;Up&rdquo; in a Particular /24 Subnet</h3>
+<h3 id="determine-which-hosts-are-up-in-a-particular-24-subnet">Determine Which Hosts are &ldquo;Up&rdquo; in a Particular /24 Subnet</h3>
 
 <p>Modern App Developer:</p>
 
@@ -245,7 +245,7 @@
 <p>This is just another bit iteration problem. I will use the first IP address of the subnet to determine where in the bit array I should start. Then I calculate the number of IPs in that subnet. From there, I just iterate through the bit array and for every bit that&rsquo;s 1, I convert the index of that bit into an IPv4 address and add to the list of &ldquo;Up&rdquo; hosts.</p>
 </blockquote>
 
-<h3 id="count-the-number-of-hosts-that-have-each-of-the-ports-open:81495eb0cd198863461f6e4666c91616">Count the Number of Hosts That Have Each of the Ports Open</h3>
+<h3 id="count-the-number-of-hosts-that-have-each-of-the-ports-open">Count the Number of Hosts That Have Each of the Ports Open</h3>
 
 <p>For example, the report could simply be:</p>
 
@@ -273,7 +273,7 @@
 <p>Again, this can easily be paralleized by creating multiple goroutines (assuming Go).</p>
 </blockquote>
 
-<h3 id="how-many-total-hosts-were-seen-as-up-in-the-past-3-months:81495eb0cd198863461f6e4666c91616">How Many Total Hosts Were Seen as &ldquo;Up&rdquo; in the Past 3 Months</h3>
+<h3 id="how-many-total-hosts-were-seen-as-up-in-the-past-3-months">How Many Total Hosts Were Seen as &ldquo;Up&rdquo; in the Past 3 Months</h3>
 
 <p>Modern App Developer:</p>
 
@@ -289,7 +289,7 @@
 
 <p>_Note: I fixed the original AND to OR based on a <a href="https://news.ycombinator.com/item?id=11100213">comment from HN</a>. Not sure what I was thinking when I typed AND&hellip;duh!</p>
 
-<h3 id="how-many-hosts-changed-state-this-month-was-up-but-now-down-or-was-down-but-now-up:81495eb0cd198863461f6e4666c91616">How Many Hosts Changed State This Month (was &ldquo;up&rdquo; but now &ldquo;down&rdquo;, or was &ldquo;down&rdquo; but now &ldquo;up&rdquo;)</h3>
+<h3 id="how-many-hosts-changed-state-this-month-was-up-but-now-down-or-was-down-but-now-up">How Many Hosts Changed State This Month (was &ldquo;up&rdquo; but now &ldquo;down&rdquo;, or was &ldquo;down&rdquo; but now &ldquo;up&rdquo;)</h3>
 
 <p>Modern App Developer:</p>
 
@@ -303,7 +303,7 @@
 <p>I can perform a simple XOR operation on the bit arrays from this and last month. Then count the number of &ldquo;1&rdquo; bits of the resulting bit array.</p>
 </blockquote>
 
-<h3 id="how-many-hosts-were-up-last-month-but-now-it-s-down:81495eb0cd198863461f6e4666c91616">How Many Hosts Were &ldquo;Up&rdquo; Last Month But Now It&rsquo;s &ldquo;Down&rdquo;</h3>
+<h3 id="how-many-hosts-were-up-last-month-but-now-it-s-down">How Many Hosts Were &ldquo;Up&rdquo; Last Month But Now It&rsquo;s &ldquo;Down&rdquo;</h3>
 
 <p>Modern App Developer:</p>
 
@@ -317,7 +317,7 @@
 <p>I can perform this opeartion: <code>(this_month XOR last_month) AND last_month</code>. This will return a bit array that has the bit set if the host was &ldquo;up&rdquo; last month but now it&rsquo;s &ldquo;down&rdquo;. Then count the number of &ldquo;1&rdquo; bits of the resulting bit array.</p>
 </blockquote>
 
-<h3 id="how-many-hosts-were-down-last-month-but-now-it-s-up:81495eb0cd198863461f6e4666c91616">How Many Hosts Were &ldquo;Down&rdquo; Last Month But Now It&rsquo;s &ldquo;Up&rdquo;</h3>
+<h3 id="how-many-hosts-were-down-last-month-but-now-it-s-up">How Many Hosts Were &ldquo;Down&rdquo; Last Month But Now It&rsquo;s &ldquo;Up&rdquo;</h3>
 
 <p>Modern App Developer:</p>
 

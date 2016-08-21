@@ -34,7 +34,7 @@
 
 &lt;p&gt;In any case, if you know of some of the more innovative ways people are approaching these problems, please please please comment below as I would love to hear from you.&lt;/p&gt;
 
-&lt;h3 id=&#34;tl-dr:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;tl;dr&lt;/h3&gt;
+&lt;h3 id=&#34;tl-dr&#34;&gt;tl;dr&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;The &lt;code&gt;sequence&lt;/code&gt; scanner is designed to tokenize free-form log messages.
@@ -57,7 +57,7 @@
 &lt;/ol&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;background:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Background&lt;/h2&gt;
+&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;In computer science, lexical analysis is the process of converting a sequence of characters into a sequence of tokens, i.e. meaningful character strings. A program or function that performs lexical analysis is called a lexical analyzer, lexer, tokenizer, or scanner. - &lt;a href=&#34;http://en.wikipedia.org/wiki/Lexical_analysis&#34;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;
@@ -65,7 +65,7 @@
 
 &lt;p&gt;One of the most critical functions in the &lt;code&gt;sequence&lt;/code&gt; parser is the message tokenization. At a very high level, message tokenization means taking a single log message and breaking it into a list of tokens.&lt;/p&gt;
 
-&lt;h3 id=&#34;functional-requirements:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Functional Requirements&lt;/h3&gt;
+&lt;h3 id=&#34;functional-requirements&#34;&gt;Functional Requirements&lt;/h3&gt;
 
 &lt;p&gt;The challenge is knowing where the token break points are. Most log messages are free-form text, which means there&amp;rsquo;s no common structure to them.&lt;/p&gt;
 
@@ -100,7 +100,7 @@
 
 &lt;p&gt;So a log message &lt;em&gt;scanner&lt;/em&gt; or &lt;em&gt;tokenizer&lt;/em&gt; (we will use these terms interchangeably) must understand common components such as timestamp, URL, hex strings, IP addresses (v4 or v6), and mac addresses, so it can break the messages into &lt;em&gt;meaningful components&lt;/em&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;performance-requirements:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Performance Requirements&lt;/h3&gt;
+&lt;h3 id=&#34;performance-requirements&#34;&gt;Performance Requirements&lt;/h3&gt;
 
 &lt;p&gt;From a performance requirements perspective, I really didn&amp;rsquo;t start out with any expectations. However, after achieving 100-200K MPS for parsing (not just tokenizing), I have a strong desire to keep the performance at that level. So the more I can optimize the scanner to tokenize faster, the more head room I have for parsing.&lt;/p&gt;
 
@@ -116,7 +116,7 @@
 
 &lt;p&gt;Yes, go ahead and tell me I shouldn&amp;rsquo;t worry about micro-optimization, because this post is all about that. :)&lt;/p&gt;
 
-&lt;h2 id=&#34;sequence-scanner:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Sequence Scanner&lt;/h2&gt;
+&lt;h2 id=&#34;sequence-scanner&#34;&gt;Sequence Scanner&lt;/h2&gt;
 
 &lt;p&gt;In the &lt;code&gt;sequence&lt;/code&gt; package, we implemented a general log message scanner, called &lt;a href=&#34;https://github.com/strace/sequence/blob/master/scanner.go&#34;&gt;GeneralScanner&lt;/a&gt;. GeneralScanner is a sequential lexical analyzer that breaks a log message into a sequence of tokens. It is sequential because it goes through log message sequentially tokentizing each part of the message, without the use of regular expressions. The scanner currently recognizes time stamps, hex strings, IP (v4, v6) addresses, URLs, MAC addresses, integers and floating point numbers.&lt;/p&gt;
 
@@ -144,7 +144,7 @@
   Scanned 447745 messages in 1.20 secs, ~ 373170.45 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;concepts:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Concepts&lt;/h3&gt;
+&lt;h3 id=&#34;concepts&#34;&gt;Concepts&lt;/h3&gt;
 
 &lt;p&gt;To understand the scanner, you have to understand the following concepts that are part of the package.&lt;/p&gt;
 
@@ -160,7 +160,7 @@
 
 &lt;p&gt;Basically, the scanner takes a log message string, tokenizes it and returns a &lt;em&gt;Sequence&lt;/em&gt; with the recognized &lt;em&gt;TokenType&lt;/em&gt; marked. This &lt;em&gt;Sequence&lt;/em&gt; is then fed into the analyzer or parser, and the analyzer or parser in turn returns another &lt;em&gt;Sequence&lt;/em&gt; that has the recognized &lt;em&gt;FieldType&lt;/em&gt; marked.&lt;/p&gt;
 
-&lt;h3 id=&#34;design:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Design&lt;/h3&gt;
+&lt;h3 id=&#34;design&#34;&gt;Design&lt;/h3&gt;
 
 &lt;p&gt;Tokenizers or scanners are usually implemented using finite-state machines. Each FSM (or FSA, finite state automata) understands a specific sequences of characters that make up a type of token.&lt;/p&gt;
 
@@ -196,7 +196,7 @@
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h3 id=&#34;performance:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Performance&lt;/h3&gt;
+&lt;h3 id=&#34;performance&#34;&gt;Performance&lt;/h3&gt;
 
 &lt;p&gt;To achieve the performance requirements, the following rules and optimizations are followed. Some of these are Go specific, and some are general recommendations.&lt;/p&gt;
 
@@ -319,7 +319,7 @@ BenchmarkTimeStep2   2000000         772 ns/op
 
 &lt;p&gt;So by simply adding a couple of checks, I&amp;rsquo;ve increased perfromance by close to 5%.&lt;/p&gt;
 
-&lt;h2 id=&#34;conclusion:cb54f18a9944e1962d3fe8e3f09ea809&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
 
 &lt;p&gt;At this point I think I have squeezed every bit of performance out of the scanner, to the extend of my knowledge. It&amp;rsquo;s performing relatively well and it&amp;rsquo;s given the parser plenty of head room to do other things. I hope some of these lessons are helpful to whatever you are doing.&lt;/p&gt;
 
@@ -347,7 +347,7 @@ BenchmarkTimeStep2   2000000         772 ns/op
 &lt;li&gt;&lt;a href=&#34;http://zhen.org/blog/sequence-optimizing-go-for-high-performance-log-scanner/&#34;&gt;Part 3&lt;/a&gt; is about optimizing Go to achieve very high performance (200,000 - 500,000 MPS depending on message size) for scanning and tokenizing log messages&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;background:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Background&lt;/h2&gt;
+&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
 
 &lt;p&gt;This post really takes me down the memory lane. Back in 2005, while I was at LogLogic, we envisioned an automated approach to tagging, or labeling, log messages. More specifically, we wanted to automatically tag specific components within the log messages with their semantic label, such as a source IP address, or a target user.&lt;/p&gt;
 
@@ -367,7 +367,7 @@ BenchmarkTimeStep2   2000000         772 ns/op
 
 &lt;p&gt;It is understandable, unfortunately. Log parsing is &lt;strong&gt;BORING&lt;/strong&gt;. I mean, who wants to sit there and stare at logs all day and try to come up with regular expressions or other types of parsing rules? LogLogic used to have a team of LogLabs analysts that did that, and I have to say I truly appreciated their effort and patience, because I cannot do that.&lt;/p&gt;
 
-&lt;h3 id=&#34;the-end-result:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;The End Result&lt;/h3&gt;
+&lt;h3 id=&#34;the-end-result&#34;&gt;The End Result&lt;/h3&gt;
 
 &lt;p&gt;So instead of writing rules all day long, I decided to create an analyzer that can help us get at least 75% of the way there. The end result is the &lt;code&gt;Analyzer&lt;/code&gt;, written in &lt;a href=&#34;http://golang.org&#34;&gt;Go&lt;/a&gt;, in the &lt;a href=&#34;https://github.com/strace/sequence&#34;&gt;sequence&lt;/a&gt; project I created. Here are some preliminary results. Below, we analyzed 2 files. The first is a file with over 200,000 sshd messages. The second is a file with a mixture of ASA, sshd, sudo and su log messages. It contains almost 450,000 messages.&lt;/p&gt;
 
@@ -398,7 +398,7 @@ Analyzed 447745 messages, found 103 unique patterns, 103 are new.
 Analyzed 212897 messages, found 39 unique patterns, 4 are new.
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;parser-quick-review:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Parser - Quick Review&lt;/h3&gt;
+&lt;h3 id=&#34;parser-quick-review&#34;&gt;Parser - Quick Review&lt;/h3&gt;
 
 &lt;p&gt;I wrote about the &lt;a href=&#34;http://zhen.org/blog/sequence-high-performance-sequential-semantic-log--parser/&#34;&gt;sequence parser&lt;/a&gt; a couple of weeks back. It is a &lt;em&gt;high performance sequential log parser&lt;/em&gt;. It &lt;em&gt;sequentially&lt;/em&gt; goes through a log message, &lt;em&gt;parses&lt;/em&gt; out the meaningful parts, without the use regular expressions. It can achieve &lt;em&gt;high performance&lt;/em&gt; parsing of &lt;strong&gt;100,000 - 200,000 messages per second (MPS)&lt;/strong&gt; without the need to separate parsing rules by log source type. Underneath the hood, the &lt;code&gt;sequence&lt;/code&gt; parser basically constructs a tree based on the sequential rules, walks the tree to identify all the possible paths, and returns the path that has the best match (highest weight) for the message.&lt;/p&gt;
 
@@ -406,11 +406,11 @@ Analyzed 212897 messages, found 39 unique patterns, 4 are new.
 
 &lt;p&gt;The approach taken by the &lt;code&gt;sequence&lt;/code&gt; parser is pretty much the same as liblognorm or other tree-based approaches.&lt;/p&gt;
 
-&lt;h2 id=&#34;sequence-analyzer:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Sequence Analyzer&lt;/h2&gt;
+&lt;h2 id=&#34;sequence-analyzer&#34;&gt;Sequence Analyzer&lt;/h2&gt;
 
 &lt;p&gt;In the following section I will go through additional details of how the &lt;code&gt;sequence&lt;/code&gt; analyzer reduces 100 of 1000&amp;rsquo;s of raw log messages down to just 10&amp;rsquo;s of unique patterns, and then determining how to label the individual tokens.&lt;/p&gt;
 
-&lt;h3 id=&#34;identifying-unique-patterns:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Identifying Unique Patterns&lt;/h3&gt;
+&lt;h3 id=&#34;identifying-unique-patterns&#34;&gt;Identifying Unique Patterns&lt;/h3&gt;
 
 &lt;p&gt;Analyzer builds an analysis tree that represents all the Sequences from messages. It can be used to determine all of the unique patterns for a large body of messages.&lt;/p&gt;
 
@@ -443,7 +443,7 @@ messages is:&lt;/p&gt;
 
 &lt;p&gt;By applying this concept, we can effectively identify all the unique patterns in a log file.&lt;/p&gt;
 
-&lt;h3 id=&#34;determining-the-correct-labels:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Determining the Correct Labels&lt;/h3&gt;
+&lt;h3 id=&#34;determining-the-correct-labels&#34;&gt;Determining the Correct Labels&lt;/h3&gt;
 
 &lt;p&gt;Now that we have the unique patterns, we will scan the tokens to determine which labels we should apply to them.&lt;/p&gt;
 
@@ -549,7 +549,7 @@ object = [
 
 &lt;p&gt;Finally, after all that, we scan through the sequence again, and identify any numbers that follow an IP address, but separated by either a &amp;ldquo;/&amp;rdquo; or &amp;ldquo;:&amp;ldquo;. Then we label these numbers as either &lt;code&gt;%srcport%&lt;/code&gt; or &lt;code&gt;%dstport%&lt;/code&gt; based on how the previous IP address is labeled.&lt;/p&gt;
 
-&lt;h3 id=&#34;summary:61b1adc09fb9bc31a28d4faabfef3631&#34;&gt;Summary&lt;/h3&gt;
+&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
 
 &lt;p&gt;There are some limitations to the &lt;code&gt;sequence&lt;/code&gt; parser and analyzer. For example, currently &lt;code&gt;sequence&lt;/code&gt; does not handle multi-line logs. Each log message must appear as a single line. So if there&amp;rsquo;s multi-line logs, they must be first be converted into a single line. Also, &lt;code&gt;sequence&lt;/code&gt; has been only tested with a limited set of system (Linux, AIX, sudo, ssh, su, dhcp, etc etc), network (ASA, PIX, Neoteris, CheckPoint, Juniper Firewall) and infrastructure application (apache, bluecoat, etc) logs.&lt;/p&gt;
 
@@ -585,7 +585,7 @@ object = [
 
 &lt;hr /&gt;
 
-&lt;h2 id=&#34;background:d4419a1968098b45153921045f06326c&#34;&gt;Background&lt;/h2&gt;
+&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
 
 &lt;p&gt;&lt;code&gt;sequence&lt;/code&gt; is a &lt;em&gt;high performance sequential log parser&lt;/em&gt;. It &lt;em&gt;sequentially&lt;/em&gt; goes through a log message, &lt;em&gt;parses&lt;/em&gt; out the meaningful parts, without the use regular expressions. It can achieve &lt;em&gt;high performance&lt;/em&gt; parsing of &lt;strong&gt;100,000 - 200,000 messages per second (MPS)&lt;/strong&gt; without the need to separate parsing rules by log source type.&lt;/p&gt;
 
@@ -593,7 +593,7 @@ object = [
 
 &lt;p&gt;&lt;strong&gt;If you have a set of logs you would like me to test out, please feel free to &lt;a href=&#34;https://github.com/strace/sequence/issues&#34;&gt;open an issue&lt;/a&gt; and we can arrange a way for me to download and test your logs.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;motivation:d4419a1968098b45153921045f06326c&#34;&gt;Motivation&lt;/h3&gt;
+&lt;h3 id=&#34;motivation&#34;&gt;Motivation&lt;/h3&gt;
 
 &lt;p&gt;Log messages are notoriusly difficult to parse because they all have different formats. Industries (see Splunk, ArcSight, Tibco LogLogic, Sumo Logic, Logentries, Loggly, LogRhythm, etc etc etc) have been built to solve the problems of parsing, understanding and analyzing log messages.&lt;/p&gt;
 
@@ -609,7 +609,7 @@ object = [
 
 &lt;p&gt;Sequence is developed to make analyzing and parsing log messages a lot easier and faster.&lt;/p&gt;
 
-&lt;h3 id=&#34;performance:d4419a1968098b45153921045f06326c&#34;&gt;Performance&lt;/h3&gt;
+&lt;h3 id=&#34;performance&#34;&gt;Performance&lt;/h3&gt;
 
 &lt;p&gt;The following performance benchmarks are run on a single 4-core (2.8Ghz i7) MacBook Pro. The first file is a
 bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA log file, averaging 180 bytes per message.&lt;/p&gt;
@@ -636,11 +636,11 @@ bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA lo
   Parsed 447745 messages in 2.52 secs, ~ 177875.94 msgs/sec
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;documentation:d4419a1968098b45153921045f06326c&#34;&gt;Documentation&lt;/h3&gt;
+&lt;h3 id=&#34;documentation&#34;&gt;Documentation&lt;/h3&gt;
 
 &lt;p&gt;Documentation is available at godoc: &lt;a href=&#34;http://godoc.org/github.com/strace/sequence&#34;&gt;package&lt;/a&gt;, &lt;a href=&#34;http://godoc.org/github.com/strace/sequence/sequence&#34;&gt;command&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;license:d4419a1968098b45153921045f06326c&#34;&gt;License&lt;/h3&gt;
+&lt;h3 id=&#34;license&#34;&gt;License&lt;/h3&gt;
 
 &lt;p&gt;Copyright &amp;copy; 2014 Dataence, LLC. All rights reserved.&lt;/p&gt;
 
@@ -656,11 +656,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.&lt;/p&gt;
 
-&lt;h3 id=&#34;roadmap-futures:d4419a1968098b45153921045f06326c&#34;&gt;Roadmap / Futures&lt;/h3&gt;
+&lt;h3 id=&#34;roadmap-futures&#34;&gt;Roadmap / Futures&lt;/h3&gt;
 
 &lt;p&gt;There are some pattern files developed for ASA, Sudo and SSH in the &lt;code&gt;patterns&lt;/code&gt; directory. The goal is to continue to develop a set of patterns for the various log messages, and along the way add additional features to the parser that can help make it even easier to parse log messages. So currently there&amp;rsquo;s not a set roadmap.&lt;/p&gt;
 
-&lt;h2 id=&#34;concepts:d4419a1968098b45153921045f06326c&#34;&gt;Concepts&lt;/h2&gt;
+&lt;h2 id=&#34;concepts&#34;&gt;Concepts&lt;/h2&gt;
 
 &lt;p&gt;The following concepts are part of the package:&lt;/p&gt;
 
@@ -679,7 +679,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
 &lt;li&gt;&lt;p&gt;A &lt;em&gt;Parser&lt;/em&gt; is a tree-based parsing engine for log messages. It builds a parsing tree based on pattern sequence supplied, and for each message sequence, returns the matching pattern sequence. Each of the message tokens will be marked with the semantic field types.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;sequence-command:d4419a1968098b45153921045f06326c&#34;&gt;Sequence Command&lt;/h2&gt;
+&lt;h2 id=&#34;sequence-command&#34;&gt;Sequence Command&lt;/h2&gt;
 
 &lt;p&gt;The &lt;code&gt;sequence&lt;/code&gt; command is developed to demonstrate the use of this package. You can find it in the &lt;code&gt;sequence&lt;/code&gt; directory. The &lt;code&gt;sequence&lt;/code&gt; command implements the &lt;em&gt;sequential semantic log parser&lt;/em&gt;.&lt;/p&gt;
 
@@ -693,7 +693,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
      help [command]            Help about any command
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;scan:d4419a1968098b45153921045f06326c&#34;&gt;Scan&lt;/h3&gt;
+&lt;h3 id=&#34;scan&#34;&gt;Scan&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence scan [flags]
@@ -731,7 +731,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&amp;ld
   #  22: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;ustream&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;parse:d4419a1968098b45153921045f06326c&#34;&gt;Parse&lt;/h3&gt;
+&lt;h3 id=&#34;parse&#34;&gt;Parse&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence parse [flags]
@@ -782,7 +782,7 @@ To get a more realistic performance number, see the benchmark section below.&lt;
   #  24: { Field=&amp;quot;%funknown%&amp;quot;, Type=&amp;quot;%literal%&amp;quot;, Value=&amp;quot;)&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;benchmark:d4419a1968098b45153921045f06326c&#34;&gt;Benchmark&lt;/h3&gt;
+&lt;h3 id=&#34;benchmark&#34;&gt;Benchmark&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;  Usage:
     sequence bench [flags]

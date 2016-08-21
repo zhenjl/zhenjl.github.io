@@ -85,11 +85,11 @@
 
 <p>There are several options here, obviously.</p>
 
-<h3 id="batch-retrieval:84589856f6bf915d36fdbdbbfb405e41">Batch Retrieval</h3>
+<h3 id="batch-retrieval">Batch Retrieval</h3>
 
 <p>First, the simplest thing to do is wait until the log file is closed and rotated, then upload the file to a central log server. Or the central log server comes and collect the log file using SCP/SFTP/HTTP/HTTPS/FTP. The problem with this approach is that the file may only get rotated every hour, day or week. This is not a feasible solution if there&rsquo;s real-time analysis requirements. For example, you wouldn&rsquo;t want to find some malicious sudo commands were executed a week later.</p>
 
-<h3 id="tail-logger:84589856f6bf915d36fdbdbbfb405e41">Tail + Logger</h3>
+<h3 id="tail-logger">Tail + Logger</h3>
 
 <p>The second approach is to tail the file and convert it to syslog using something like logger. This approach works somewhat. However, there are also several issues. One is that the tail command may exit for whatever reason. When that happens, you will stop sending logs. The obvious thing to do is to wrap tail in some script that will catch the exit and restart it. However, you may lose some logs during the process (probably unlikely unless lots of logs are being written.) In addition, converting to UDP syslog always has that slight chance of UDP packets being lost on a busy network.</p>
 
@@ -97,7 +97,7 @@
 
 <p>Be sure to use the <strong>-F</strong> option with tail in case files get rotated or modified by hand by some user.</p>
 
-<h3 id="continuous-curl:84589856f6bf915d36fdbdbbfb405e41">Continuous Curl</h3>
+<h3 id="continuous-curl">Continuous Curl</h3>
 
 <p>The third approach I thought of is to use <a href="http://curl.haxx.se">curl</a> to upload the files to the central server periodically. However, I don&rsquo;t want to upload the whole file every time, otherwise I will get a ton of duplicate data. So I wrote a small wrapper in perl, <a href="http://www.zhen.org/misc/ccurl.txt">ccurl</a> (continuous curl), to remember the last position uploaded, and upload only the new logs next time. Basically the script does the following:</p>
 
@@ -128,7 +128,7 @@
 
 <p>[Disclaimer: this script is by no means production quality. Use/test at your own risk.]</p>
 
-<h3 id="tail-curl:84589856f6bf915d36fdbdbbfb405e41">Tail + Curl</h3>
+<h3 id="tail-curl">Tail + Curl</h3>
 
 <p>The last idea I have is to do a combination of #2 and #3. Basically I will write a script to wrap around <strong>tail -F</strong>, read the data for a while, upload the data to the central server using curl, and repeat.</p>
 

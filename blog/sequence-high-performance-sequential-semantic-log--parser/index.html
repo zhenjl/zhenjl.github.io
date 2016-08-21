@@ -93,7 +93,7 @@
 
 <hr />
 
-<h2 id="background:d4419a1968098b45153921045f06326c">Background</h2>
+<h2 id="background">Background</h2>
 
 <p><code>sequence</code> is a <em>high performance sequential log parser</em>. It <em>sequentially</em> goes through a log message, <em>parses</em> out the meaningful parts, without the use regular expressions. It can achieve <em>high performance</em> parsing of <strong>100,000 - 200,000 messages per second (MPS)</strong> without the need to separate parsing rules by log source type.</p>
 
@@ -101,7 +101,7 @@
 
 <p><strong>If you have a set of logs you would like me to test out, please feel free to <a href="https://github.com/strace/sequence/issues">open an issue</a> and we can arrange a way for me to download and test your logs.</strong></p>
 
-<h3 id="motivation:d4419a1968098b45153921045f06326c">Motivation</h3>
+<h3 id="motivation">Motivation</h3>
 
 <p>Log messages are notoriusly difficult to parse because they all have different formats. Industries (see Splunk, ArcSight, Tibco LogLogic, Sumo Logic, Logentries, Loggly, LogRhythm, etc etc etc) have been built to solve the problems of parsing, understanding and analyzing log messages.</p>
 
@@ -117,7 +117,7 @@
 
 <p>Sequence is developed to make analyzing and parsing log messages a lot easier and faster.</p>
 
-<h3 id="performance:d4419a1968098b45153921045f06326c">Performance</h3>
+<h3 id="performance">Performance</h3>
 
 <p>The following performance benchmarks are run on a single 4-core (2.8Ghz i7) MacBook Pro. The first file is a
 bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA log file, averaging 180 bytes per message.</p>
@@ -144,11 +144,11 @@ bunch of sshd logs, averaging 98 bytes per message. The second is a Cisco ASA lo
   Parsed 447745 messages in 2.52 secs, ~ 177875.94 msgs/sec
 </code></pre>
 
-<h3 id="documentation:d4419a1968098b45153921045f06326c">Documentation</h3>
+<h3 id="documentation">Documentation</h3>
 
 <p>Documentation is available at godoc: <a href="http://godoc.org/github.com/strace/sequence">package</a>, <a href="http://godoc.org/github.com/strace/sequence/sequence">command</a>.</p>
 
-<h3 id="license:d4419a1968098b45153921045f06326c">License</h3>
+<h3 id="license">License</h3>
 
 <p>Copyright &copy; 2014 Dataence, LLC. All rights reserved.</p>
 
@@ -164,11 +164,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
 
-<h3 id="roadmap-futures:d4419a1968098b45153921045f06326c">Roadmap / Futures</h3>
+<h3 id="roadmap-futures">Roadmap / Futures</h3>
 
 <p>There are some pattern files developed for ASA, Sudo and SSH in the <code>patterns</code> directory. The goal is to continue to develop a set of patterns for the various log messages, and along the way add additional features to the parser that can help make it even easier to parse log messages. So currently there&rsquo;s not a set roadmap.</p>
 
-<h2 id="concepts:d4419a1968098b45153921045f06326c">Concepts</h2>
+<h2 id="concepts">Concepts</h2>
 
 <p>The following concepts are part of the package:</p>
 
@@ -187,7 +187,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&ldquo;
 <li><p>A <em>Parser</em> is a tree-based parsing engine for log messages. It builds a parsing tree based on pattern sequence supplied, and for each message sequence, returns the matching pattern sequence. Each of the message tokens will be marked with the semantic field types.</p></li>
 </ul>
 
-<h2 id="sequence-command:d4419a1968098b45153921045f06326c">Sequence Command</h2>
+<h2 id="sequence-command">Sequence Command</h2>
 
 <p>The <code>sequence</code> command is developed to demonstrate the use of this package. You can find it in the <code>sequence</code> directory. The <code>sequence</code> command implements the <em>sequential semantic log parser</em>.</p>
 
@@ -201,7 +201,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&ldquo;
      help [command]            Help about any command
 </code></pre>
 
-<h3 id="scan:d4419a1968098b45153921045f06326c">Scan</h3>
+<h3 id="scan">Scan</h3>
 
 <pre><code>  Usage:
     sequence scan [flags]
@@ -239,7 +239,7 @@ integers and floating point numbers. It also recgonizes key=value or key=&ldquo;
   #  22: { Field=&quot;%funknown%&quot;, Type=&quot;%literal%&quot;, Value=&quot;ustream&quot; }
 </code></pre>
 
-<h3 id="parse:d4419a1968098b45153921045f06326c">Parse</h3>
+<h3 id="parse">Parse</h3>
 
 <pre><code>  Usage:
     sequence parse [flags]
@@ -290,7 +290,7 @@ To get a more realistic performance number, see the benchmark section below.</p>
   #  24: { Field=&quot;%funknown%&quot;, Type=&quot;%literal%&quot;, Value=&quot;)&quot; }
 </code></pre>
 
-<h3 id="benchmark:d4419a1968098b45153921045f06326c">Benchmark</h3>
+<h3 id="benchmark">Benchmark</h3>
 
 <pre><code>  Usage:
     sequence bench [flags]

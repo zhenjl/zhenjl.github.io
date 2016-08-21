@@ -91,7 +91,7 @@
 
 <p><strong>SurgeMQ is currently under active development and should be considered unstable until further notice.</strong></p>
 
-<h3 id="mqtt:924dac401fc2f0061be94c47a8c89e4c">MQTT</h3>
+<h3 id="mqtt">MQTT</h3>
 
 <p>According to the <a href="http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html">MQTT spec</a>:</p>
 
@@ -117,7 +117,7 @@
 
 <p>There&rsquo;s some very large implementation of MQTT such as <a href="https://www.facebook.com/notes/facebook-engineering/building-facebook-messenger/10150259350998920">Facebook Messenger</a>. There&rsquo;s also an active Eclipse project, <a href="https://eclipse.org/paho/">Paho</a>, that provides scalable open-source client implementations for many different languages, including C/C++, Java, Python, JavaScript, C# .Net and Go.</p>
 
-<h3 id="features-limitations-and-future:924dac401fc2f0061be94c47a8c89e4c">Features, Limitations, and Future</h3>
+<h3 id="features-limitations-and-future">Features, Limitations, and Future</h3>
 
 <p><strong>Features</strong></p>
 
@@ -151,7 +151,7 @@
 <li>Better authentication modules</li>
 </ul>
 
-<h3 id="performance:924dac401fc2f0061be94c47a8c89e4c">Performance</h3>
+<h3 id="performance">Performance</h3>
 
 <p>Current performance benchmark of SurgeMQ, running all publishers, subscribers and broker on a single 4-core (2.8Ghz i7) MacBook Pro, is able to achieve:</p>
 
@@ -162,7 +162,7 @@
 <li>over <strong>700,000 MPS</strong> in a full mesh configuration with 20 clients</li>
 </ul>
 
-<h3 id="compatibility:924dac401fc2f0061be94c47a8c89e4c">Compatibility</h3>
+<h3 id="compatibility">Compatibility</h3>
 
 <p>In addition, SurgeMQ has been tested with the following client libraries and it <em>seems</em> to work:</p>
 
@@ -179,13 +179,13 @@
 <li><em>Paho C Client library (in C).</em> Tested with most of the test cases and failed the same ones as the conformance test because the features are not yet implemented. Actually I think there&rsquo;s a bug in the test suite as it calls the PUBLISH handler function for non-PUBLISH messages.</li>
 </ul>
 
-<h3 id="documentation:924dac401fc2f0061be94c47a8c89e4c">Documentation</h3>
+<h3 id="documentation">Documentation</h3>
 
 <p>Documentation is available at <a href="http://godoc.org/github.com/surge/surgemq">godoc</a>.</p>
 
 <p>More information regarding the design of the SurgeMQ is available at <a href="http://surgemq.com">zen 3.1</a>.</p>
 
-<h3 id="license:924dac401fc2f0061be94c47a8c89e4c">License</h3>
+<h3 id="license">License</h3>
 
 <p>Copyright &copy; 2014 Dataence, LLC. All rights reserved.</p>
 
@@ -201,9 +201,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
 
-<h3 id="examples:924dac401fc2f0061be94c47a8c89e4c">Examples</h3>
+<h3 id="examples">Examples</h3>
 
-<h4 id="server-example:924dac401fc2f0061be94c47a8c89e4c">Server Example</h4>
+<h4 id="server-example">Server Example</h4>
 
 <pre><code>// Create a new server
 svr := &amp;service.Server{
@@ -218,7 +218,7 @@ svr := &amp;service.Server{
 svr.ListenAndServe(&quot;tcp://:1883&quot;)
 </code></pre>
 
-<h4 id="client-example:924dac401fc2f0061be94c47a8c89e4c">Client Example</h4>
+<h4 id="client-example">Client Example</h4>
 
 <pre><code>// Instantiates a new Client
 c := &amp;Client{}

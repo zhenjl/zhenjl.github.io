@@ -84,7 +84,7 @@
 <li>jacques_chester on HN has an <a href="https://news.ycombinator.com/item?id=8709146">EXCELLENT comment</a> that&rsquo;s definitely worth reading. <a href="https://news.ycombinator.com/item?id=8709557">My response</a>.</li>
 </ul>
 
-<h3 id="tl-dr:6ef28047216284b846a43eee6e7c23b5">tl;dr</h3>
+<h3 id="tl-dr">tl;dr</h3>
 
 <ul>
 <li><a href="https://github.com/surge/surgemq">SurgeMQ</a> aims to provide a MQTT broker and client library that&rsquo;s fully compliant with <a href="http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html">MQTT spec 3.1.1</a>. In addition, it tries to be backward compatible with 3.1.</li>
@@ -112,7 +112,7 @@
 <p>Lesson 4: Use the race detector!</p>
 </blockquote>
 
-<h3 id="go-learn-project-8-message-queue:6ef28047216284b846a43eee6e7c23b5">Go Learn Project #8 - Message Queue</h3>
+<h3 id="go-learn-project-8-message-queue">Go Learn Project #8 - Message Queue</h3>
 
 <p>It&rsquo;s now been over a year since my last post! Family and work have occupied pretty much all of my time so spare time to learn Go was hard to come by.</p>
 
@@ -120,7 +120,7 @@
 
 <p>Now months later, I am finally able spend a few weekends and nights developing <a href="https://github.com/surge/surgemq">SurgeMQ</a>, a (soon to be) full MQTT 3.1.1 compliant message broker.</p>
 
-<h4 id="message-queues:6ef28047216284b846a43eee6e7c23b5">Message Queues</h4>
+<h4 id="message-queues">Message Queues</h4>
 
 <p>According to <a href="http://en.wikipedia.org/wiki/Message_queue">Wikipedia</a>:</p>
 
@@ -132,7 +132,7 @@
 
 <p>In that post, Tyler found that borkerless queues had the highest throughput, achieving millions of MPS sent and received. Brokered message queue performances ranged from 12,000 MPS (<a href="nsq.io">NSQ</a>) to 195,000 MPS (<a href="nats.io">Gnatsd</a>). While the post showed that the Gnatsd latency to be around 300+ microseconds, in reality it&rsquo;s probably more like the NSQ in terms of latency due to the sender sleeping whenever Gnatsd is 10+ messages behind. Regardless, hats off to Tyler. Great job!</p>
 
-<h4 id="mqtt:6ef28047216284b846a43eee6e7c23b5">MQTT</h4>
+<h4 id="mqtt">MQTT</h4>
 
 <p>I got interested in MQTT because &ldquo;<a href="http://mqtt.org">MQTT</a> is a machine-to-machine (M2M)/&ldquo;Internet of Things&rdquo; connectivity protocol. It was designed as an extremely lightweight publish/subscribe messaging transport.&rdquo;</p>
 
@@ -162,7 +162,7 @@
 
 <p>Given the popularity, I decided to implement a MQTT broker in order to learn about message queues.</p>
 
-<h3 id="architecture:6ef28047216284b846a43eee6e7c23b5">Architecture</h3>
+<h3 id="architecture">Architecture</h3>
 
 <p><img src="/images/surgemq-mqtt-message-queue-750k-mps/smqfailedarch.png"></p>
 
@@ -193,7 +193,7 @@
 
 <p>After profiling and looking at the <a href="/images/surgemq-mqtt-message-queue-750k-mps/2ndfailcpuprof.svg">CPU profile</a>, I realized there are a lot of memory copying (io.Copy and io.CopyN), as well as there are still quite a bit GC activities (scanblock). On the memory copying front, there&rsquo;s copying from net.Conn into bufio, then more copying from bufio to the MQTT messages internal buffer, then more copying from MQTT message internal buffers to the outgoing bufio, then to the net.Conn. So lots and lots of memory copying, not a good thing.</p>
 
-<h4 id="buffered-network-io:6ef28047216284b846a43eee6e7c23b5">Buffered Network IO</h4>
+<h4 id="buffered-network-io">Buffered Network IO</h4>
 
 <p>The buffered network IO is a good approach, however, there are two things I wished I had:</p>
 
@@ -228,7 +228,7 @@
 <p>Lesson 2: Reduce or remove memory copying.</p>
 </blockquote>
 
-<h4 id="final-architecture:6ef28047216284b846a43eee6e7c23b5">Final Architecture</h4>
+<h4 id="final-architecture">Final Architecture</h4>
 
 <p>This the final architecture I ended up with and it&rsquo;s working very well. The cost of each client connection are:</p>
 
@@ -241,7 +241,7 @@
 
 <p><img src="/images/surgemq-mqtt-message-queue-750k-mps/finalarch.png"></p>
 
-<h3 id="race-conditions:6ef28047216284b846a43eee6e7c23b5">Race Conditions</h3>
+<h3 id="race-conditions">Race Conditions</h3>
 
 <p>With the ring bufer implementation, I was able to achieve 400,000 MPS with a 1:1 configuration. This worked well until I started doing multiple publishers and subscribers. The first problem I ran into was the Processor hanging. <code>go test -race</code> also didn&rsquo;t show anything that could help me.</p>
 
@@ -299,7 +299,7 @@
 <p>Lesson 3: Race conditions can happen even if you think you followed all the right steps.</p>
 </blockquote>
 
-<h4 id="but-wait-there-s-more-race-conditions:6ef28047216284b846a43eee6e7c23b5">But Wait, There&rsquo;s More (Race Conditions)</h4>
+<h4 id="but-wait-there-s-more-race-conditions">But Wait, There&rsquo;s More (Race Conditions)</h4>
 
 <p>As I increase the number of publishers and subscribers, all the sudden I was getting errors about receiving RESERVED messages, and this happens intermittenly, and only when I blast enough messages. Sometimes I have to run the tests many times to catch this from happening.</p>
 
@@ -313,7 +313,7 @@
 <p>Lesson 4: Use the race detector!</p>
 </blockquote>
 
-<h3 id="performance-benchmarks:6ef28047216284b846a43eee6e7c23b5">Performance Benchmarks</h3>
+<h3 id="performance-benchmarks">Performance Benchmarks</h3>
 
 <p>These performance numbers are calculated as follows:</p>
 
@@ -322,7 +322,7 @@
 <li>received messages MPS = total messages received / total elapsed time between 1st and last message received for all receivers</li>
 </ul>
 
-<h4 id="environment:6ef28047216284b846a43eee6e7c23b5">Environment</h4>
+<h4 id="environment">Environment</h4>
 
 <pre><code>$ go version
 go version go1.3.3 darwin/amd64
@@ -334,7 +334,7 @@ Macbook Pro Late 2013
 16 GB 1600 MHz DDR3
 </code></pre>
 
-<h4 id="server:6ef28047216284b846a43eee6e7c23b5">Server</h4>
+<h4 id="server">Server</h4>
 
 <p>To start the server,</p>
 
@@ -343,7 +343,7 @@ $ GOMAXPROCS=2 go test -run=TestServer -vv=2 -logtostderr
 server/ListenAndServe: server is ready...
 </code></pre>
 
-<h4 id="1-1:6ef28047216284b846a43eee6e7c23b5">1:1</h4>
+<h4 id="1-1">1:1</h4>
 
 <p>To run the single publisher and single subscriber test case:</p>
 
@@ -352,7 +352,7 @@ Total Sent 1000000 messages in 2434523153 ns, 2434 ns/msg, 410758 msgs/sec
 Total Received 1000000 messages in 2434523153 ns, 2434 ns/msg, 410758 msgs/sec
 </code></pre>
 
-<h4 id="fan-in:6ef28047216284b846a43eee6e7c23b5">Fan-In</h4>
+<h4 id="fan-in">Fan-In</h4>
 
 <p>To run the Fan-In test with 20 senders and 1 receiver:</p>
 
@@ -361,7 +361,7 @@ Total Sent 1035436 messages in 2212609304 ns, 2136 ns/msg, 467970 msgs/sec
 Total Received 1000022 messages in 2212609304 ns, 2212 ns/msg, 451965 msgs/sec
 </code></pre>
 
-<h4 id="fan-out:6ef28047216284b846a43eee6e7c23b5">Fan-Out</h4>
+<h4 id="fan-out">Fan-Out</h4>
 
 <p>To run the Fan-Out test with 1 sender and 20 receivers:</p>
 
@@ -370,7 +370,7 @@ Total Sent 1000000 messages in 10715317340 ns, 10715 ns/msg, 93324 msgs/sec
 Total Received 8180723 messages in 10715317340 ns, 1309 ns/msg, 763460 msgs/sec
 </code></pre>
 
-<h4 id="mesh:6ef28047216284b846a43eee6e7c23b5">Mesh</h4>
+<h4 id="mesh">Mesh</h4>
 
 <p>To run a full mesh test where every client is subscribed to the same topic, thus every message sent w/ the right topic will go to ALL of the other clients:</p>
 
@@ -379,7 +379,7 @@ Total Sent 2000000 messages in 51385336097 ns, 25692 ns/msg, 38921 msgs/sec
 Total Received 40000000 messages in 51420975243 ns, 1285 ns/msg, 777892 msgs/sec
 </code></pre>
 
-<h3 id="next-steps:6ef28047216284b846a43eee6e7c23b5">Next Steps</h3>
+<h3 id="next-steps">Next Steps</h3>
 
 <p>There&rsquo;s a lot more to do with SurgeMQ. Given the limited time I have, I expect it will take me a while to get to full compliant with the MQTT spec. But that will be my focus, now that performance is out of the way, as I get time.</p>
 

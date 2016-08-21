@@ -89,7 +89,7 @@
 
 <p>However, since family and work pretty much occupied most of my waking hours over the past few weeks, I haven&rsquo;t made much progress on the &ldquo;Go Learn&rdquo; projects. To keep myself going, I picked a smaller task over the weekend and decided to go back to &ldquo;Go Learn Project #1&rdquo;, my <a href="https://github.com/reducedb/cityhash">cityhash</a> Go implementation.</p>
 
-<h3 id="go-learn-project-1:c82123e7d16007176a816d99942a250f">Go Learn Project #1</h3>
+<h3 id="go-learn-project-1">Go Learn Project #1</h3>
 
 <p>When I first decided to learn Go, I struggled quite a bit to find a project that I can sink my teeth into. I am not sure if others are the same way, for me to learn a new language, I have to have something meaningful to work on. I can&rsquo;t just write hello world programs or follow tutorials. I can read books and articles, but I will also procrastinate for weeks if I can&rsquo;t find a relevant project.</p>
 
@@ -101,13 +101,13 @@
 
 <p>In any case, the porting process wasn&rsquo;t too difficult, as it turned out. Overall I was able to do that over a weekend. I was also able to port the test program (city-test.cc) over as well (vim substitution FTW) to validate that my implementation was functionally correct.</p>
 
-<h3 id="performance-sucked:c82123e7d16007176a816d99942a250f">Performance Sucked</h3>
+<h3 id="performance-sucked">Performance Sucked</h3>
 
 <p>I had always suspected that my Go cityhash implementation wasn&rsquo;t great performance wise. At the time I hadn&rsquo;t learned how to benchmark or profile Go programs, so I didn&rsquo;t do a whole lot except ensuring functionally the results are correct. Also my data generator at work was working fine so I left the implementation as is.</p>
 
 <p>In September, I implemented a <a href="https://github.com/reducedb/bloom">Bloom Filter package</a> which required a hash function as part of the implementation. For that package, I <a href="http://zhen.org/blog/benchmarking-bloom-filters-and-hash-functions-in-go/">tested different hash functions</a> to see how they affect the performance of the bloom filter. As you can see from those benchmarks, Cityhash is consistently 3x slower compare to the others. At the time I knew it was because of my implementation but didn&rsquo;t look into it further.</p>
 
-<h3 id="profiling-go-cityhash:c82123e7d16007176a816d99942a250f">Profiling Go Cityhash</h3>
+<h3 id="profiling-go-cityhash">Profiling Go Cityhash</h3>
 
 <p>Since that first project, I have learned quite a bit more about benchmarking and profiling. So this weekend I finally took time to profile the Go implementation and found some interesting results. Now Go experts probably will read this and say &ldquo;of course, you had no idea what you were doing.&rdquo; And that would be true. I had no idea at the time. Hopefully this post will make up for it.</p>
 
@@ -141,7 +141,7 @@ Total: 4295 samples
 
 <p>By this time, some of the readers are probably wondering why the heck I am using binary.Read() if I knew that I will be reading a uint64 from a slice. And they would be right again. Only excuse I have is that I had no clue and that was the first thing I found to work a few months back, so I just used it.</p>
 
-<h3 id="modifying-the-implementation:c82123e7d16007176a816d99942a250f">Modifying the Implementation</h3>
+<h3 id="modifying-the-implementation">Modifying the Implementation</h3>
 
 <p>The change turned out to be relatively simple. Instead of using binary.Read(), I used LittleEndian.Uint64() to read the uint64. After the change, I ran the same program again.</p>
 
@@ -163,7 +163,7 @@ Total: 245 samples
 
 <p>Also, nothing really jumps out when looking at the <a href="/images/2013-11-10-improving-cithhash-performance-by-go-profiling/after.svg">post-change profile data graph</a>.</p>
 
-<h3 id="bloom-filter-benchmarks:c82123e7d16007176a816d99942a250f">Bloom Filter Benchmarks</h3>
+<h3 id="bloom-filter-benchmarks">Bloom Filter Benchmarks</h3>
 
 <p>Now that the changes are in, I went back and re-ran some of the bloom filter benchmarks. They look a lot more reasonable as well. Below is a comparison of the Scalable Bloom Filter. The post-change run is almost 2.5x faster than the pre-change run. Also, the post-change number (1442 ns/op) is a lot closer to some of the other hash functions (~1100 ns/op).</p>
 
@@ -173,7 +173,7 @@ BenchmarkBloomCityHash   1000000              1442 ns/op (after cityhash change)
 BenchmarkBloomCityHash   1000000              3375 ns/op (before cityhash change)
 </code></pre>
 
-<h3 id="summary:c82123e7d16007176a816d99942a250f">Summary</h3>
+<h3 id="summary">Summary</h3>
 
 <p>The Go authors have made it extermely simple to test, benchmark and profile Go programs so there&rsquo;s really reason for anyone not to do that often. It helps you see how your program works and where the bottlenecks are. It can also help you identify surprises that you may not have though of. A good example is in my case, I had no idea binary.Read() works the way it works until I profiled my program.</p>
 

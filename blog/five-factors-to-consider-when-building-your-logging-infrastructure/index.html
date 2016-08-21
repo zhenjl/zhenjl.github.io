@@ -81,7 +81,7 @@
 
 <p>Whether you are building your own home-grown logging infrastructure (which of course I do not recommend ;)) or evaluating a log management solution, there are at least five factors you should consider.</p>
 
-<h3 id="1-log-retention:51a6349598c35862d615dd9fb99fd935">1. Log Retention</h3>
+<h3 id="1-log-retention">1. Log Retention</h3>
 
 <p>The log retention period obviously depends on your requirements. If you are building out the infrastructure for troubleshooting and short term reporting, you may only need to keep 1-2 months of logs. But if you are doing it so you can be in compliance with SOX or HIPAA regulations, you will need to keep AT LEAST 6 months for the auditors.</p>
 
@@ -89,7 +89,7 @@
 
 <p>Obviously how long your retention period is also depend on the volume of logs you receive as well as the product/tool&rsquo;s ability to manage the log storage. If you are building your own, be sure to take into consideration of building a log rotation process. For example, if your retention period is 12 months. Your process should remove the old logs or put them on tape. If you are evaluating a product, be sure the product has the capability of rotating/purging old logs for you. Don&rsquo;t spend $200K and then have to write your own scripts.</p>
 
-<h3 id="2-log-volume:51a6349598c35862d615dd9fb99fd935">2. Log Volume</h3>
+<h3 id="2-log-volume">2. Log Volume</h3>
 
 <p>Log volume is probably one of the most critical factors in building your infrastructure. It has direct impacts on your retention policy, report/search performance, aggregation performance and correlation performance.</p>
 
@@ -108,7 +108,7 @@
 
 <p>Last but not least, your log volume really impacts the performance of the product you choose. Some of the products, as the volume grow in the database, will have problem running reports for a long period of time. If you need to run a report for over a month or two, sometimes it may take hours for a single report. It&rsquo;s difficult to test this during a evaluation period, but many of the implementations fail because of this.</p>
 
-<h3 id="3-log-sources:51a6349598c35862d615dd9fb99fd935">3. Log Sources</h3>
+<h3 id="3-log-sources">3. Log Sources</h3>
 
 <p>What are all the devices, servers and applications that will be logging? If you are developing your own solution, there may be a lot of work for you to do in order to parse the various log messages. The good thing is you will only need to parse the specific logs you need and not everything.</p>
 
@@ -124,7 +124,7 @@
 
 <p>However, some products will hardcode the parsers in their code and no way for you to create any new parsing intelligence. Beware of what you are getting into if that&rsquo;s the product you are looking at.</p>
 
-<h3 id="4-log-analysis:51a6349598c35862d615dd9fb99fd935">4. Log Analysis</h3>
+<h3 id="4-log-analysis">4. Log Analysis</h3>
 
 <p>Ok, so this is a huge area. Log analysis includes everything from reports, correlation, anomaly detection, and trend analysis. It again depends on your requirements. However, your solution or product should have some of the basic functions such as threshold and rule-based alerts via email or SNMP.</p>
 
@@ -134,7 +134,7 @@
 
 <p>Report and correlation performance is a critical factor. If reports takes hours, it&rsquo;d be somewhat useless when you need a quick ad-hoc report to figure out which IPs are DOSing you. Build your infrastructure w/ at least 30% more performance than you need. That way you have some room to grow and also allow you to do quick reports when you are receiving a spike of logs.</p>
 
-<h3 id="5-network-topology:51a6349598c35862d615dd9fb99fd935">5. Network Topology</h3>
+<h3 id="5-network-topology">5. Network Topology</h3>
 
 <p>Your network topology impacts how you should architect your logging infrastructure. If you have a fairly distributed topology, e.g. many remote locations, you will want to design a solution or look for a product that have a distributed architecture, that can retrieve/receive logs in a distributed manner and forward logs back to a central location for analysis and archival.</p>
 
