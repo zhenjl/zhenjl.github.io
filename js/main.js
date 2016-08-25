@@ -1,96 +1,120 @@
-jQuery(window).resize(function(){
-	sideBarFix();
-})
-jQuery(window).scroll(function(){
-	sideBarFix();
-})
-jQuery(document).ready(function(){
-	sideBarFix();
-	jQuery('.nav a').click(function(){
-		if($(this).next().is('ul')){
-			if($(this).hasClass('open')){
-				$(this).next('ul').slideUp(200);
-				$(this).removeClass('open');
-			}
-			else{
-				$(this).next('ul').slideDown(200);
-				$(this).addClass('open');
-			}
-			
-			return false;
-		}
-		else{
-			return true;
-		};
-	});
-	jQuery('#expand_content_menu, #body_hover').click(function(){
-		var expandAreaWide = jQuery('.left_sidebar_content_area').width();
-		if(!jQuery('#expand_content_menu').hasClass('open'))
-		{
-			jQuery('#expand_content_menu').addClass('open');
-			jQuery('#expand_content_menu span').removeClass('icon icon-fontawesome-webfont-1 ');
-			jQuery('#expand_content_menu span').addClass('menu_cross');
-			jQuery('#expand_content_menu span').html('&times;');
-			jQuery('#body_hover').fadeIn(200);
-			jQuery('.left_sidebar_content_area').animate({'margin-left':"0px"},100);
-			jQuery('.main_content_area').animate({"margin-right":'-'+expandAreaWide+'px'},100);
-			if(jQuery(window).width()>=768){
-				jQuery('#expand_content_menu').animate({left:290},100);
-			}
-		}
-		else{
-			jQuery('#expand_content_menu').removeClass('open');
-			jQuery('#expand_content_menu span').addClass('icon icon-fontawesome-webfont-1 ');
-			jQuery('#expand_content_menu span').removeClass('menu_cross');
-			jQuery('#expand_content_menu span').html('');
-			jQuery('#body_hover').fadeOut(200);
-			jQuery('.left_sidebar_content_area').animate({"margin-left":"-100%"},500);
-			jQuery('.main_content_area').animate({"margin-right":'0px'},500);
-			if(jQuery(window).width()>=768){
-				jQuery('#expand_content_menu').animate({left:10},100);
-			}
-		}
-	});
-	// ********************** Accordion Code start ******************
-	$('.accordion_title').each(function(){
-		var activeIcon = $(this).attr('data-active-icon');
-		var DeActiveIcon = $(this).attr('data-deactive-icon');
-		$(this).find('.icon').removeClass(activeIcon);
-		$(this).find('.icon').addClass(DeActiveIcon);
-	})
-	$('.panel-heading').click(function(){
-		$('.panel-heading').removeClass('active');
-		if(!$(this).next('.panel-collapse').hasClass('in')){
-			$(this).addClass('active');
-		}
-		$('.accordion_title').each(function(){
-			var activeIcon = $(this).attr('data-active-icon');
-			var DeActiveIcon = $(this).attr('data-deactive-icon');
-			$(this).find('.icon').removeClass(activeIcon);
-			$(this).find('.icon').addClass(DeActiveIcon);
-		})
-		var activeIcon = $(this).find('.accordion_title').attr('data-active-icon');
-		var DeActiveIcon = $(this).find('.accordion_title').attr('data-deactive-icon');
-		if($(this).hasClass('active')){
-			$(this).find('.icon').removeClass(DeActiveIcon);
-			$(this).find('.icon').addClass(activeIcon);
-		}
-		var activeColor = $(this).find('.accordion_title').css('background-color');
-		$(this).next().find('.panel-body').css({"border-color":activeColor});
-	});
-	// ********************** Accordion Code End ******************
-});
+/*
+	Strata by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+*/
 
-function sideBarFix(){
-	var SelectHeight;
-	if(jQuery('.left_sidebar_content_area').height()>=jQuery('.main_content_area').height()){
-		SelectHeight = jQuery('.left_sidebar_content_area').height();
-		SelectHeight += "px"; 
-		jQuery('.left_sidebar_content_area, .main_content_area').css({'min-height':SelectHeight});
-	}
-	else{
-		SelectHeight = jQuery('.main_content_area').height();
-		SelectHeight += "px"; 
-		jQuery('.left_sidebar_content_area, .main_content_area').css({'min-height':SelectHeight});
-	}
-}
+(function($) {
+
+	var settings = {
+
+		// Parallax background effect?
+			parallax: true,
+
+		// Parallax factor (lower = more intense, higher = less intense).
+			parallaxFactor: 20
+
+	};
+
+	skel.breakpoints({
+		xlarge: '(max-width: 1800px)',
+		large: '(max-width: 1280px)',
+		medium: '(max-width: 980px)',
+		small: '(max-width: 736px)',
+		xsmall: '(max-width: 480px)'
+	});
+
+	$(function() {
+
+		var $window = $(window),
+			$body = $('body'),
+			$header = $('#header');
+
+		// Disable animations/transitions until the page has loaded.
+			$body.addClass('is-loading');
+
+			$window.on('load', function() {
+				$body.removeClass('is-loading');
+			});
+
+		// Touch?
+			if (skel.vars.mobile) {
+
+				// Turn on touch mode.
+					$body.addClass('is-touch');
+
+				// Height fix (mostly for iOS).
+					window.setTimeout(function() {
+						$window.scrollTop($window.scrollTop() + 1);
+					}, 0);
+
+			}
+
+		// Fix: Placeholder polyfill.
+			$('form').placeholder();
+
+		// Prioritize "important" elements on medium.
+			skel.on('+medium -medium', function() {
+				$.prioritize(
+					'.important\\28 medium\\29',
+					skel.breakpoint('medium').active
+				);
+			});
+
+		// Header.
+
+			// Parallax background.
+
+				// Disable parallax on IE (smooth scrolling is jerky), and on mobile platforms (= better performance).
+					if (skel.vars.browser == 'ie'
+					||	skel.vars.mobile)
+						settings.parallax = false;
+
+				if (settings.parallax) {
+
+					skel.on('change', function() {
+
+						if (skel.breakpoint('medium').active) {
+
+							$window.off('scroll.strata_parallax');
+							$header.css('background-position', 'top left, center center');
+
+						}
+						else {
+
+							$header.css('background-position', 'left 0px');
+
+							$window.on('scroll.strata_parallax', function() {
+								$header.css('background-position', 'left ' + (-1 * (parseInt($window.scrollTop()) / settings.parallaxFactor)) + 'px');
+							});
+
+						}
+
+					});
+
+				}
+
+		// Main Sections: Two.
+
+			// Lightbox gallery.
+				$window.on('load', function() {
+
+					$('#two').poptrox({
+						caption: function($a) { return $a.next('h3').text(); },
+						overlayColor: '#2c2c2c',
+						overlayOpacity: 0.85,
+						popupCloserText: '',
+						popupLoaderText: '',
+						selector: '.work-item a.image',
+						usePopupCaption: true,
+						usePopupDefaultStyling: false,
+						usePopupEasyClose: false,
+						usePopupNav: true,
+						windowMargin: (skel.breakpoint('small').active ? 0 : 50)
+					});
+
+				});
+
+	});
+
+})(jQuery);
