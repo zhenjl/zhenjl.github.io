@@ -37,5 +37,5 @@ _testmain.go
 *.sublime-project
 *.sublime-workspace
 
-.sass-cache
 sass
+.sass-cache
